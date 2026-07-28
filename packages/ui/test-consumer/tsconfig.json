@@ -1,0 +1,14 @@
+{
+    "extends": "../../../tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "paths": {
+            "@h0nio/ui": ["../src/index.ts"],
+            "@h0nio/ui/icons": ["../src/icons/index.ts"],
+            "@h0nio/ui/components/*": ["../src/components/*/index.ts"],
+            "@h0nio/ui/composables/*": ["../src/composables/*.ts"]
+        },
+        "types": ["vue"]
+    },
+    "include": ["./*.ts", "./*.d.ts", "../src/**/*.ts", "../src/**/*.vue"]
+}

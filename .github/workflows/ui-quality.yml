@@ -1,0 +1,81 @@
+name: UI quality
+
+on:
+    pull_request:
+    push:
+        branches: [main]
+
+permissions:
+    contents: read
+
+concurrency:
+    group: ui-quality-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    quality:
+        name: Ubuntu quality
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        steps:
+            - uses: actions/checkout@v6
+            - uses: pnpm/action-setup@v6
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm --filter @h0nio/ui typecheck
+            - run: pnpm --filter @h0nio/ui test
+            - run: pnpm --filter @h0nio/ui build
+            - run: pnpm --filter @h0n/ui-documentation agents:test
+            - run: pnpm --filter @h0n/ui-documentation build
+
+    browser:
+        name: Ubuntu ${{ matrix.browser }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 25
+        strategy:
+            fail-fast: false
+            matrix:
+                browser: [chromium, firefox, webkit]
+        steps:
+            - uses: actions/checkout@v6
+            - uses: pnpm/action-setup@v6
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
+            - run: pnpm --filter @h0nio/ui exec playwright test tests-visual/component-smoke.spec.ts tests-visual/component-interactions.spec.ts tests-visual/documentation-navigation.spec.ts tests-visual/table-geometry.spec.ts tests-visual/floating-performance.spec.ts tests-visual/runtime-hardening.spec.ts --config playwright.config.ts --project=${{ matrix.browser }}
+
+    accessibility:
+        name: Chromium accessibility
+        runs-on: ubuntu-latest
+        timeout-minutes: 25
+        steps:
+            - uses: actions/checkout@v6
+            - uses: pnpm/action-setup@v6
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm exec playwright install --with-deps chromium
+            - run: pnpm --filter @h0nio/ui exec playwright test tests-visual/accessibility.spec.ts --config playwright.config.ts --project=chromium
+
+    windows-table:
+        name: Windows Chromium Table geometry
+        runs-on: windows-latest
+        timeout-minutes: 20
+        steps:
+            - uses: actions/checkout@v6
+            - uses: pnpm/action-setup@v6
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: pnpm
+            - run: pnpm install --frozen-lockfile
+            - run: pnpm exec playwright install chromium
+            - run: pnpm --filter @h0nio/ui exec playwright test tests-visual/table-geometry.spec.ts tests-visual/runtime-hardening.spec.ts --config playwright.config.ts --project=chromium

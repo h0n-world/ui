@@ -1,0 +1,200 @@
+@use './theme.scss';
+
+@layer h0n.tokens, h0n.base, h0n.components;
+
+:where([data-h0n-component], [data-h0n-component]::before, [data-h0n-component]::after, [data-h0n-component] *, [data-h0n-component] *::before, [data-h0n-component] *::after) {
+    box-sizing: border-box;
+}
+
+:root {
+    --h0n-ui-font-family: 'Inter Display', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --h0n-ui-font-weight-regular: 400;
+    --h0n-ui-font-weight-medium: 500;
+    --h0n-ui-font-weight-semibold: 600;
+    --h0n-ui-font-weight-bold: 700;
+    --h0n-ui-badge-sm-font-size: 0.6875rem;
+    --h0n-ui-badge-md-font-size: 0.75rem;
+    --h0n-ui-duration-fast: 160ms;
+    --h0n-ui-duration-normal: 220ms;
+    --h0n-ui-duration-slow: 280ms;
+    --h0n-ui-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --h0n-ui-easing-emphasized: cubic-bezier(0.2, 0, 0, 1.2);
+    --h0n-ui-control-padding-inline: 12px;
+    --h0n-ui-control-padding-block: 8px;
+    --h0n-ui-control-border-width: 1px;
+    --h0n-ui-icon-scale: 1;
+    --h0n-ui-overlay-inset: 16px;
+    --h0n-ui-overlay-width: 560px;
+    --h0n-ui-scrollbar-size: 12px;
+    --h0n-ui-disabled-opacity: 0.55;
+    --h0n-ui-table-row-height: 48px;
+    --h0n-ui-table-cell-padding-block: 12px;
+    --h0n-ui-table-cell-padding-inline: 14px;
+
+    --h0n-ui-control-height-sm: 40px;
+    --h0n-ui-control-height-md: 46px;
+    --h0n-ui-control-height-lg: 52px;
+    --h0n-ui-icon-control-size-sm: 36px;
+    --h0n-ui-icon-control-size-md: 40px;
+    --h0n-ui-icon-control-size-lg: 46px;
+
+    --h0n-ui-layer-popover: 50;
+    --h0n-ui-layer-overlay: 1000;
+    --h0n-ui-layer-critical: 1100;
+    --h0n-ui-layer-toast: 1200;
+
+    --h0n-ui-spacing-xxs: 2px;
+    --h0n-ui-spacing-xs: 4px;
+    --h0n-ui-spacing-sm: 8px;
+    --h0n-ui-spacing-md: 12px;
+    --h0n-ui-spacing-lg: 16px;
+    --h0n-ui-spacing-xl: 24px;
+    --h0n-ui-spacing-2xl: 32px;
+    --h0n-ui-spacing-3xl: 40px;
+    --h0n-ui-spacing-4xl: 48px;
+    --h0n-ui-spacing-5xl: 64px;
+}
+
+:root,
+[data-h0n-density='default'] {
+    --h0n-ui-density-factor: 1;
+}
+
+[data-h0n-density='compact'] {
+    --h0n-ui-density-factor: 0.875;
+    --h0n-ui-control-height-sm: 34px;
+    --h0n-ui-control-height-md: 40px;
+    --h0n-ui-control-height-lg: 46px;
+    --h0n-ui-control-padding-inline: 10px;
+    --h0n-ui-control-padding-block: 6px;
+    --h0n-ui-table-row-height: 40px;
+    --h0n-ui-table-cell-padding-block: 8px;
+    --h0n-ui-table-cell-padding-inline: 10px;
+}
+
+[data-h0n-density='comfortable'] {
+    --h0n-ui-density-factor: 1.125;
+    --h0n-ui-control-height-sm: 44px;
+    --h0n-ui-control-height-md: 50px;
+    --h0n-ui-control-height-lg: 56px;
+    --h0n-ui-control-padding-inline: 14px;
+    --h0n-ui-control-padding-block: 10px;
+    --h0n-ui-table-row-height: 56px;
+    --h0n-ui-table-cell-padding-block: 16px;
+    --h0n-ui-table-cell-padding-inline: 16px;
+}
+
+[data-h0n-animation='low'] {
+    --h0n-ui-duration-fast: 100ms;
+    --h0n-ui-duration-normal: 160ms;
+    --h0n-ui-duration-slow: 220ms;
+}
+
+[data-h0n-animation='high'] {
+    --h0n-ui-duration-fast: 160ms;
+    --h0n-ui-duration-normal: 220ms;
+    --h0n-ui-duration-slow: 280ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root,
+    [data-h0n-animation='low'],
+    [data-h0n-animation='high'] {
+        --h0n-ui-duration-fast: 0ms;
+        --h0n-ui-duration-normal: 0ms;
+        --h0n-ui-duration-slow: 0ms;
+    }
+}
+
+:root,
+[data-h0n-radius-size='lg'] {
+    --h0n-ui-radius-sm: 0.375rem;
+    --h0n-ui-radius-md: 0.5rem;
+    --h0n-ui-radius-lg: 0.875rem;
+    --h0n-ui-radius-xl: 1rem;
+    --h0n-ui-radius-xxl: 1.125rem;
+    --h0n-ui-radius-round: 999px;
+}
+
+[data-h0n-radius-size='md'] {
+    --h0n-ui-radius-sm: 0.25rem;
+    --h0n-ui-radius-md: 0.375rem;
+    --h0n-ui-radius-lg: 0.625rem;
+    --h0n-ui-radius-xl: 0.75rem;
+    --h0n-ui-radius-xxl: 0.875rem;
+    --h0n-ui-radius-round: 999px;
+}
+
+[data-h0n-radius-size='sm'] {
+    --h0n-ui-radius-sm: 0.125rem;
+    --h0n-ui-radius-md: 0.25rem;
+    --h0n-ui-radius-lg: 0.375rem;
+    --h0n-ui-radius-xl: 0.5rem;
+    --h0n-ui-radius-xxl: 0.625rem;
+    --h0n-ui-radius-round: 999px;
+}
+
+:root,
+[data-h0n-typography-size='sm'] {
+    --h0n-ui-typography-h1-size: 2.125rem;
+    --h0n-ui-typography-h2-size: 1.75rem;
+    --h0n-ui-typography-h3-size: 1.375rem;
+    --h0n-ui-typography-h4-size: 1.125rem;
+    --h0n-ui-typography-h5-size: 1rem;
+    --h0n-ui-typography-h6-size: 0.875rem;
+    --h0n-ui-typography-body-size: 0.875rem;
+    --h0n-ui-typography-body-sm-size: 0.75rem;
+    --h0n-ui-typography-body-xs-size: 0.625rem;
+    --h0n-ui-typography-code-size: 0.75rem;
+}
+
+[data-h0n-typography-size='md'] {
+    --h0n-ui-typography-h1-size: 2.25rem;
+    --h0n-ui-typography-h2-size: 1.875rem;
+    --h0n-ui-typography-h3-size: 1.5rem;
+    --h0n-ui-typography-h4-size: 1.25rem;
+    --h0n-ui-typography-h5-size: 1.125rem;
+    --h0n-ui-typography-h6-size: 1rem;
+    --h0n-ui-typography-body-size: 0.938rem;
+    --h0n-ui-typography-body-sm-size: 0.875rem;
+    --h0n-ui-typography-body-xs-size: 0.75rem;
+    --h0n-ui-typography-code-size: 0.875rem;
+}
+
+[data-h0n-typography-size='lg'] {
+    --h0n-ui-typography-h1-size: 2.375rem;
+    --h0n-ui-typography-h2-size: 2rem;
+    --h0n-ui-typography-h3-size: 1.625rem;
+    --h0n-ui-typography-h4-size: 1.375rem;
+    --h0n-ui-typography-h5-size: 1.25rem;
+    --h0n-ui-typography-h6-size: 1.125rem;
+    --h0n-ui-typography-body-size: 1.063rem;
+    --h0n-ui-typography-body-sm-size: 1rem;
+    --h0n-ui-typography-body-xs-size: 0.875rem;
+    --h0n-ui-typography-code-size: 1rem;
+}
+
+@media (forced-colors: active) {
+    :where([data-h0n-component] :focus-visible) {
+        outline: 2px solid Highlight !important;
+        outline-offset: 2px;
+    }
+
+    :where([data-h0n-component][aria-disabled='true'], [data-h0n-component] :disabled) {
+        color: GrayText;
+        forced-color-adjust: none;
+    }
+
+    :where([data-h0n-component][aria-selected='true'], [data-h0n-component][aria-checked='true']) {
+        border-color: Highlight;
+    }
+}
+
+:root,
+[data-h0n-typography-size='sm'],
+[data-h0n-typography-size='md'],
+[data-h0n-typography-size='lg'] {
+    --h0n-ui-button-sm-font-size: var(--h0n-ui-typography-body-sm-size);
+    --h0n-ui-button-md-font-size: var(--h0n-ui-typography-body-size);
+    --h0n-ui-button-lg-font-size: var(--h0n-ui-typography-h5-size);
+}

@@ -1,0 +1,132 @@
+{
+    "name": "@h0nio/ui",
+    "version": "1.0.0",
+    "description": "Production-ready Vue 3 component library for the H0N design system.",
+    "keywords": [
+        "vue",
+        "vue3",
+        "components",
+        "component-library",
+        "design-system",
+        "typescript",
+        "accessibility",
+        "ui"
+    ],
+    "license": "MIT",
+    "author": {
+        "name": "h0n-world",
+        "url": "https://github.com/h0n-world"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/h0n-world/ui.git",
+        "directory": "packages/ui"
+    },
+    "homepage": "https://github.com/h0n-world/ui#readme",
+    "bugs": {
+        "url": "https://github.com/h0n-world/ui/issues"
+    },
+    "type": "module",
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "main": "./dist/h0n-ui.umd.cjs",
+    "module": "./dist/h0n-ui.js",
+    "types": "./dist/index.d.ts",
+    "typings": "./dist/index.d.ts",
+    "style": "./dist/h0n-ui.css",
+    "sideEffects": [
+        "**/*.css"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "typings": "./dist/index.d.ts",
+            "import": "./dist/h0n-ui.js",
+            "module": "./dist/h0n-ui.js",
+            "require": "./dist/h0n-ui.umd.cjs",
+            "default": "./dist/h0n-ui.js"
+        },
+        "./style.css": {
+            "types": "./dist/style.css.d.ts",
+            "default": "./dist/h0n-ui.css"
+        },
+        "./components/*": {
+            "types": "./dist/components/*/index.d.ts",
+            "import": "./dist/components/*/index.js",
+            "default": "./dist/components/*/index.js"
+        },
+        "./components/*/style.css": {
+            "types": "./dist/style.css.d.ts",
+            "default": "./dist/components/*/style.css"
+        },
+        "./composables": {
+            "types": "./dist/composables/index.d.ts",
+            "import": "./dist/composables/index.js",
+            "default": "./dist/composables/index.js"
+        },
+        "./composables/*": {
+            "types": "./dist/composables/*.d.ts",
+            "import": "./dist/composables/*.js",
+            "default": "./dist/composables/*.js"
+        },
+        "./locale": {
+            "types": "./dist/locale.d.ts",
+            "import": "./dist/locale.js",
+            "default": "./dist/locale.js"
+        },
+        "./theme": {
+            "types": "./dist/theme.d.ts",
+            "import": "./dist/theme.js",
+            "default": "./dist/theme.js"
+        },
+        "./manifest": {
+            "types": "./dist/manifest.d.ts",
+            "import": "./dist/manifest.js",
+            "default": "./dist/manifest.js"
+        },
+        "./icons": {
+            "types": "./dist/icons/index.d.ts",
+            "import": "./dist/icons/index.js",
+            "default": "./dist/icons/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "build": "vite build --mode umd && vite build --mode es && vue-tsc -p tsconfig.json --emitDeclarationOnly && node scripts/write-style-types.mjs && node scripts/build-consumer-fixtures.mjs && node scripts/verify-size-budget.mjs && node scripts/verify-package-contents.mjs",
+        "prepublishOnly": "pnpm run test && pnpm run build",
+        "test": "vitest run",
+        "test:unit": "vitest run",
+        "test:consumer": "node scripts/build-consumer-fixtures.mjs",
+        "test:visual": "node scripts/run-visual-tests.mjs",
+        "test:visual:update": "node scripts/run-visual-tests.mjs --project=chromium --update-snapshots",
+        "test:watch": "vitest",
+        "typecheck": "vue-tsc -p tsconfig.check.json --noEmit && vue-tsc -p test-dts/tsconfig.json --noEmit && vue-tsc -p test-consumer/tsconfig.json --noEmit",
+        "typecheck:consumer": "vue-tsc -p test-dts/tsconfig.json --noEmit",
+        "typecheck:fixtures": "vue-tsc -p test-consumer/tsconfig.json --noEmit",
+        "verify:size": "node scripts/verify-size-budget.mjs",
+        "verify:package": "node scripts/verify-package-contents.mjs"
+    },
+    "dependencies": {
+        "@floating-ui/dom": "^1.8.0"
+    },
+    "peerDependencies": {
+        "vue": "^3.5.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^6.0.7",
+        "@vue/test-utils": "^2.4.11",
+        "jsdom": "^29.1.1",
+        "sass": "^1.96.0",
+        "typescript": "^5.9.3",
+        "vite": "^8.0.16",
+        "vitest": "^4.1.10",
+        "vue": "^3.5.25",
+        "vue-tsc": "^3.1.8"
+    }
+}

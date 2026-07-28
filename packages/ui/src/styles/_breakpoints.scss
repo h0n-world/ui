@@ -1,0 +1,22 @@
+$h0n-breakpoint-xs: 520px;
+$h0n-breakpoint-sm: 640px;
+$h0n-breakpoint-md: 768px;
+$h0n-breakpoint-lg: 1024px;
+$h0n-breakpoint-xl: 1280px;
+
+$h0n-container-sm: 640px;
+$h0n-container-md: 768px;
+$h0n-container-lg: 1024px;
+$h0n-container-xl: 1280px;
+
+@mixin h0n-at-most($breakpoint) {
+    @media (max-width: $breakpoint) {
+        @content;
+    }
+}
+
+@mixin h0n-at-least($breakpoint) {
+    @media (min-width: $breakpoint) {
+        @content;
+    }
+}

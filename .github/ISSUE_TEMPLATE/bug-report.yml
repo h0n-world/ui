@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a reproducible defect in @h0nio/ui or its documentation.
+title: '[Bug]: '
+labels:
+    - bug
+body:
+    - type: markdown
+      attributes:
+          value: For suspected vulnerabilities, use the private security advisory link instead of this form.
+    - type: input
+      id: version
+      attributes:
+          label: Package version
+          description: The exact installed @h0nio/ui version.
+          placeholder: 1.0.0
+      validations:
+          required: true
+    - type: input
+      id: environment
+      attributes:
+          label: Environment
+          description: Vue, browser or runtime, operating system, and relevant tooling versions.
+      validations:
+          required: true
+    - type: input
+      id: reproduction
+      attributes:
+          label: Minimal reproduction
+          description: Link to a small repository or sandbox that reproduces the problem.
+      validations:
+          required: true
+    - type: textarea
+      id: actual
+      attributes:
+          label: Actual behavior
+          description: Include errors, warnings, interaction details, and screenshots where useful.
+      validations:
+          required: true
+    - type: textarea
+      id: expected
+      attributes:
+          label: Expected behavior
+      validations:
+          required: true
+    - type: textarea
+      id: accessibility
+      attributes:
+          label: Accessibility and input method
+          description: Note whether this affects keyboard, pointer, touch, screen-reader, forced-colors, RTL, or reduced-motion behavior.
+    - type: checkboxes
+      id: checks
+      attributes:
+          label: Checklist
+          options:
+              - label: I reproduced this with the latest published patch version.
+                required: true
+              - label: This report does not contain a suspected security vulnerability.
+                required: true

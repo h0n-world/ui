@@ -1,0 +1,55 @@
+@use './fonts.scss';
+@use './common.scss';
+@use './variable.scss';
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: var(--h0n-background);
+    color: var(--h0n-color-text);
+    font-family: var(--h0n-ui-font-family);
+    font-size: var(--h0n-ui-typography-body-size);
+    line-height: 1.4;
+    font-weight: 500;
+
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+
+    text-rendering: geometricPrecision;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+    min-width: 320px;
+    height: 100%;
+    overscroll-behavior: none;
+}

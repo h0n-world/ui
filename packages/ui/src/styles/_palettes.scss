@@ -1,0 +1,187 @@
+$h0n-overall-palette: (
+    '--h0n-accent': lab(54.5335% 3.31545 -66.5298),
+    '--h0n-accent-hover': color-mix(in oklab, var(--h0n-accent) 90%, var(--h0n-snow) 10%),
+    '--h0n-ghost-hover': var(--h0n-secondary),
+    '--h0n-surface-hover': var(--h0n-secondary-hover)
+);
+
+$h0n-light-palette: (
+    '--h0n-background': lab(96.5432% -0.0000596046 0),
+    '--h0n-eclipse': lab(8.34178% 0.607349 -2.12998),
+    '--h0n-snow': lab(98.9676% -0.0000298023 -0.0000119209),
+    '--h0n-border-color': lab(88.3653% 0.399351 -1.45447),
+    //
+    '--h0n-secondary': lab(94.4672% 0.129223 -0.473213),
+    '--h0n-secondary-hover': color-mix(in oklab, var(--h0n-secondary) 96%, var(--h0n-snow) 4%),
+    //
+    '--h0n-surface': lab(100% 0 0),
+    //
+    '--h0n-outline': var(--h0n-border-color),
+    '--h0n-outline-hover': color-mix(in srgb, var(--h0n-secondary) 60%, transparent),
+    //
+    '--h0n-success': lab(71.4376% -59.4106 38.0321),
+    '--h0n-success-hover': color-mix(in oklab, var(--h0n-success) 20%, transparent),
+    //
+    '--h0n-warning': lab(74.4448% 23.7172 71.6451),
+    '--h0n-warning-hover': color-mix(in oklab, var(--h0n-warning) 90%, var(--h0n-snow) 10%),
+    //
+    '--h0n-danger': lab(57.4234% 73.5589 48.0136),
+    '--h0n-danger-hover': color-mix(in oklab, var(--h0n-danger) 90%, var(--h0n-snow) 10%),
+    //
+    '--h0n-danger-soft': color-mix(in oklab, var(--h0n-danger) 15%, transparent),
+    '--h0n-danger-soft-fg': color-mix(in oklab, var(--h0n-danger) 70%, var(--h0n-eclipse) 40%),
+    '--h0n-danger-soft-hover': color-mix(in oklab, var(--h0n-danger) 20%, transparent),
+    //
+    '--h0n-text': #0f172a,
+    '--h0n-text-secondary': lab(48.496% 0 0),
+    '--h0n-text-muted': lab(47.8738% 1.41454 -4.98644),
+    '--h0n-focus-ring': rgba(23, 107, 135, 0.24),
+    '--h0n-shadow': rgba(15, 23, 42, 0.08),
+    '--h0n-shadow-lg': rgba(15, 23, 42, 0.18),
+    '--h0n-backdrop': rgba(15, 23, 42, 0.52),
+    '--h0n-backdrop-soft': rgba(15, 23, 42, 0.34),
+    '--h0n-surface-subtle': color-mix(in srgb, var(--h0n-surface) 88%, var(--h0n-eclipse) 12%),
+    '--h0n-control-muted': color-mix(in srgb, var(--h0n-text-muted) 18%, transparent),
+    '--h0n-control-muted-hover': color-mix(in srgb, var(--h0n-text-muted) 26%, transparent),
+    '--h0n-scrollbar-thumb': color-mix(in srgb, var(--h0n-text-muted) 34%, transparent),
+    '--h0n-scrollbar-thumb-hover': color-mix(in srgb, var(--h0n-text-muted) 54%, transparent),
+    '--h0n-info-text': color-mix(in oklab, var(--h0n-accent) 80%, var(--h0n-eclipse) 20%),
+    '--h0n-success-text': color-mix(in oklab, var(--h0n-success) 78%, var(--h0n-eclipse) 22%),
+    '--h0n-warning-text': color-mix(in oklab, var(--h0n-warning) 76%, var(--h0n-eclipse) 24%),
+    '--h0n-danger-text': color-mix(in oklab, var(--h0n-danger) 82%, var(--h0n-eclipse) 18%)
+);
+
+$h0n-dark-palette: (
+    '--h0n-background': lab(1.54547% 0.178337 -0.64671),
+    '--h0n-snow': lab(98.9676% -0.0000298023 -0.0000119209),
+    '--h0n-border-color': lab(16.4266% 0.613093 -2.16998),
+    //
+    '--h0n-secondary': lab(13.7794% 0.374213 -1.34113),
+    //
+    '--h0n-surface': lab(8.34178% 0.607349 -2.12998),
+    '--h0n-surface-hover': color-mix(in oklab, var(--h0n-surface) 96%, var(--h0n-snow) 4%),
+    //
+    '--h0n-outline': var(--h0n-border-color),
+    '--h0n-outline-hover': color-mix(in srgb, var(--h0n-secondary) 60%, transparent),
+    //
+    '--h0n-success': lab(71.4376% -59.4106 38.0321),
+    '--h0n-success-hover': color-mix(in oklab, var(--h0n-success) 90%, var(--h0n-snow) 10%),
+    //
+    '--h0n-warning': lab(79.1095% 16.747 59.9157),
+    '--h0n-warning-hover': color-mix(in oklab, var(--h0n-warning) 90%, var(--h0n-snow) 10%),
+    //
+    '--h0n-danger': lab(50.9109% 62.2712 37.59),
+    '--h0n-danger-hover': color-mix(in oklab, var(--h0n-danger) 90%, var(--h0n-snow) 10%),
+    //
+    '--h0n-danger-soft': color-mix(in oklab, var(--h0n-danger) 15%, transparent),
+    '--h0n-danger-soft-fg': color-mix(in oklab, var(--h0n-danger) 80%, var(--h0n-snow) 30%),
+    '--h0n-danger-soft-hover': color-mix(in oklab, var(--h0n-danger) 20%, transparent),
+    //
+    '--h0n-text': #f8fafc,
+    '--h0n-text-secondary': lab(48.496% 0 0),
+    '--h0n-text-muted': lab(65.6464% 1.53497 -5.42429),
+    '--h0n-focus-ring': rgba(103, 232, 249, 0.28),
+    '--h0n-shadow': rgba(0, 0, 0, 0.32),
+    '--h0n-shadow-lg': rgba(0, 0, 0, 0.48),
+    '--h0n-backdrop': rgba(0, 0, 0, 0.62),
+    '--h0n-backdrop-soft': rgba(0, 0, 0, 0.42),
+    '--h0n-surface-subtle': color-mix(in srgb, var(--h0n-surface) 88%, var(--h0n-snow) 12%),
+    '--h0n-control-muted': color-mix(in srgb, var(--h0n-text-muted) 18%, transparent),
+    '--h0n-control-muted-hover': color-mix(in srgb, var(--h0n-text-muted) 26%, transparent),
+    '--h0n-scrollbar-thumb': color-mix(in srgb, var(--h0n-text-muted) 34%, transparent),
+    '--h0n-scrollbar-thumb-hover': color-mix(in srgb, var(--h0n-text-muted) 54%, transparent),
+    '--h0n-info-text': color-mix(in oklab, var(--h0n-accent) 72%, var(--h0n-snow) 28%),
+    '--h0n-success-text': color-mix(in oklab, var(--h0n-success) 88%, var(--h0n-snow) 12%),
+    '--h0n-warning-text': color-mix(in oklab, var(--h0n-warning) 88%, var(--h0n-snow) 12%),
+    '--h0n-danger-text': color-mix(in oklab, var(--h0n-danger) 88%, var(--h0n-snow) 12%)
+);
+
+$h0n-avatar-palette: (
+    '--h0n-avatar-blue': linear-gradient(180deg, #7cb7f2 0%, #3390ec 100%),
+    '--h0n-avatar-red': linear-gradient(180deg, #ff845e 0%, #d45246 100%),
+    '--h0n-avatar-green': linear-gradient(180deg, #9ad164 0%, #46ba43 100%),
+    '--h0n-avatar-purple': linear-gradient(180deg, #b694f9 0%, #6c61df 100%),
+    '--h0n-avatar-pink': linear-gradient(180deg, #ff8aac 0%, #d95574 100%),
+    '--h0n-avatar-cyan': linear-gradient(180deg, #53edd6 0%, #28c9b7 100%),
+    '--h0n-avatar-orange': linear-gradient(180deg, #febb5b 0%, #f68136 100%)
+);
+
+$h0n-button-light-palette: (
+    '--h0n-ui-button-default': var(--h0n-eclipse),
+    '--h0n-ui-button-default-contrast': var(--h0n-snow),
+    '--h0n-ui-button-default-hover': color-mix(in oklab, var(--h0n-eclipse) 88%, var(--h0n-snow) 12%),
+    '--h0n-ui-button-primary': var(--h0n-ui-color-primary),
+    '--h0n-ui-button-primary-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-primary-hover': var(--h0n-ui-color-primary-hover),
+    '--h0n-ui-button-primary-soft': color-mix(in oklab, var(--h0n-ui-color-primary) 15%, transparent),
+    '--h0n-ui-button-primary-soft-contrast': var(--h0n-ui-color-info-text),
+    '--h0n-ui-button-primary-soft-hover': color-mix(in oklab, var(--h0n-ui-color-primary) 20%, transparent),
+    '--h0n-ui-button-secondary': var(--h0n-ui-color-secondary),
+    '--h0n-ui-button-secondary-contrast': var(--h0n-ui-color-text),
+    '--h0n-ui-button-secondary-hover': var(--h0n-ui-color-secondary-hover),
+    '--h0n-ui-button-ghost': transparent,
+    '--h0n-ui-button-ghost-contrast': var(--h0n-ui-color-text),
+    '--h0n-ui-button-ghost-hover': var(--h0n-ui-color-secondary-hover),
+    '--h0n-ui-button-outline': transparent,
+    '--h0n-ui-button-outline-contrast': var(--h0n-ui-color-text),
+    '--h0n-ui-button-outline-hover': var(--h0n-ui-color-secondary-hover),
+    '--h0n-ui-button-outline-border': var(--h0n-ui-color-border),
+    '--h0n-ui-button-success': var(--h0n-ui-color-success),
+    '--h0n-ui-button-success-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-success-hover': var(--h0n-ui-color-success-hover),
+    '--h0n-ui-button-success-soft': color-mix(in oklab, var(--h0n-ui-color-success) 15%, transparent),
+    '--h0n-ui-button-success-soft-contrast': var(--h0n-ui-color-success-text),
+    '--h0n-ui-button-success-soft-hover': color-mix(in oklab, var(--h0n-ui-color-success) 20%, transparent),
+    '--h0n-ui-button-warning': var(--h0n-ui-color-warning),
+    '--h0n-ui-button-warning-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-warning-hover': var(--h0n-ui-color-warning-hover),
+    '--h0n-ui-button-warning-soft': color-mix(in oklab, var(--h0n-ui-color-warning) 15%, transparent),
+    '--h0n-ui-button-warning-soft-contrast': var(--h0n-ui-color-warning-text),
+    '--h0n-ui-button-warning-soft-hover': color-mix(in oklab, var(--h0n-ui-color-warning) 20%, transparent),
+    '--h0n-ui-button-danger': color-mix(in oklab, var(--h0n-ui-color-danger) 90%, var(--h0n-eclipse) 10%),
+    '--h0n-ui-button-danger-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-danger-hover': var(--h0n-ui-color-danger-hover),
+    '--h0n-ui-button-danger-soft': var(--h0n-ui-color-danger-soft),
+    '--h0n-ui-button-danger-soft-contrast': var(--h0n-ui-color-danger-soft-fg),
+    '--h0n-ui-button-danger-soft-hover': var(--h0n-ui-color-danger-soft-hover)
+);
+
+$h0n-button-dark-palette: (
+    '--h0n-ui-button-default': var(--h0n-snow),
+    '--h0n-ui-button-default-contrast': var(--h0n-background),
+    '--h0n-ui-button-default-hover': color-mix(in oklab, var(--h0n-snow) 88%, var(--h0n-background) 12%),
+    '--h0n-ui-button-primary': var(--h0n-ui-color-primary),
+    '--h0n-ui-button-primary-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-primary-hover': var(--h0n-ui-color-primary-hover),
+    '--h0n-ui-button-primary-soft': color-mix(in oklab, var(--h0n-ui-color-primary) 15%, transparent),
+    '--h0n-ui-button-primary-soft-contrast': var(--h0n-ui-color-info-text),
+    '--h0n-ui-button-primary-soft-hover': color-mix(in oklab, var(--h0n-ui-color-primary) 20%, transparent),
+    '--h0n-ui-button-secondary': var(--h0n-ui-color-secondary),
+    '--h0n-ui-button-secondary-contrast': var(--h0n-ui-color-text),
+    '--h0n-ui-button-secondary-hover': var(--h0n-ui-color-secondary-hover),
+    '--h0n-ui-button-ghost': transparent,
+    '--h0n-ui-button-ghost-contrast': var(--h0n-ui-color-text),
+    '--h0n-ui-button-ghost-hover': var(--h0n-ui-color-secondary-hover),
+    '--h0n-ui-button-outline': transparent,
+    '--h0n-ui-button-outline-contrast': var(--h0n-ui-color-text),
+    '--h0n-ui-button-outline-hover': var(--h0n-ui-color-secondary-hover),
+    '--h0n-ui-button-outline-border': var(--h0n-ui-color-border),
+    '--h0n-ui-button-success': var(--h0n-ui-color-success),
+    '--h0n-ui-button-success-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-success-hover': var(--h0n-ui-color-success-hover),
+    '--h0n-ui-button-success-soft': color-mix(in oklab, var(--h0n-ui-color-success) 15%, transparent),
+    '--h0n-ui-button-success-soft-contrast': var(--h0n-ui-color-success-text),
+    '--h0n-ui-button-success-soft-hover': color-mix(in oklab, var(--h0n-ui-color-success) 20%, transparent),
+    '--h0n-ui-button-warning': var(--h0n-ui-color-warning),
+    '--h0n-ui-button-warning-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-warning-hover': var(--h0n-ui-color-warning-hover),
+    '--h0n-ui-button-warning-soft': color-mix(in oklab, var(--h0n-ui-color-warning) 15%, transparent),
+    '--h0n-ui-button-warning-soft-contrast': var(--h0n-ui-color-warning-text),
+    '--h0n-ui-button-warning-soft-hover': color-mix(in oklab, var(--h0n-ui-color-warning) 20%, transparent),
+    '--h0n-ui-button-danger': color-mix(in oklab, var(--h0n-ui-color-danger) 88%, var(--h0n-background) 12%),
+    '--h0n-ui-button-danger-contrast': var(--h0n-ui-color-primary-contrast),
+    '--h0n-ui-button-danger-hover': var(--h0n-ui-color-danger-hover),
+    '--h0n-ui-button-danger-soft': var(--h0n-ui-color-danger-soft),
+    '--h0n-ui-button-danger-soft-contrast': var(--h0n-ui-color-danger-soft-fg),
+    '--h0n-ui-button-danger-soft-hover': var(--h0n-ui-color-danger-soft-hover)
+);

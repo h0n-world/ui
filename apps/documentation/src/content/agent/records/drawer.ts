@@ -1,0 +1,55 @@
+import type { ComponentAgentRecordV1 } from '../schema.ts'
+
+export const drawerAgentRecord = {
+    schemaVersion: 1,
+    component: 'H0Drawer',
+    status: 'migrated',
+    summary: 'Modal edge panel for navigation, filters, and supporting workflows.',
+    imports: { components: ['H0Drawer'], types: ['H0DrawerBackdrop', 'H0DrawerEmits', 'H0DrawerProps', 'H0DrawerSide'], styles: ['@h0nio/ui/style.css'] },
+    api: {
+        props: [
+            { name: 'modelValue', type: 'boolean', default: 'undefined', description: 'Controlled open state used by v-model.' },
+            { name: 'defaultValue', type: 'boolean', default: 'false', description: 'Initial open state in uncontrolled mode.' },
+            { name: 'side', type: 'H0DrawerSide', default: "'right'", description: "Entering viewport edge: 'top', 'right', 'bottom', or 'left'." },
+            { name: 'backdrop', type: 'H0DrawerBackdrop', default: "'opaque'", description: "Backdrop appearance: 'opaque', 'blur', or 'transparent'." },
+            { name: 'title', type: 'string', default: "''", description: 'Visible header title and preferred accessible name.' },
+            { name: 'closeOnBackdrop', type: 'boolean', default: 'true', description: 'Closes after a backdrop click.' },
+            { name: 'closeOnEsc', type: 'boolean', default: 'true', description: 'Closes when Escape is pressed.' },
+            { name: 'ariaLabel', type: 'string', default: "''", description: 'Accessible name used when title is empty before locale fallback.' },
+            { name: 'closeAriaLabel', type: 'string', default: "''", description: 'Accessible label for the header close button.' },
+            { name: 'teleportTo', type: 'string | HTMLElement', default: "'body'", description: 'Teleport destination.' },
+            { name: 'teleportDisabled', type: 'boolean', default: 'false', description: 'Renders the overlay in place.' },
+            { name: 'initialFocus', type: 'string | HTMLElement', default: 'undefined', description: 'Selector or element focused after opening.' },
+            { name: 'returnFocus', type: 'boolean | HTMLElement', default: 'true', description: 'Controls focus restoration after closing.' },
+            { name: 'lockScroll', type: 'boolean', default: 'true', description: 'Locks document scrolling while open.' },
+        ],
+        events: [
+            { name: 'update:modelValue', type: 'boolean', description: 'Requests controlled state changes.' },
+            { name: 'change', type: 'boolean', description: 'Reports committed open-state changes.' },
+            { name: 'close', type: '—', description: 'Reports any close path.' },
+        ],
+        slots: [
+            { name: 'default', type: '—', description: 'Scrollable drawer content.' },
+            { name: 'header', type: '—', description: 'Replaces the title and built-in close-button header.' },
+            { name: 'footer', type: '{ close: () => void }', description: 'Footer actions with a close callback.' },
+        ],
+        exposed: [],
+        types: [
+            { name: 'H0DrawerSide', fields: [{ name: 'H0DrawerSide', type: "'top' | 'right' | 'bottom' | 'left'", description: 'Viewport edge from which the drawer enters.' }] },
+            { name: 'H0DrawerBackdrop', fields: [{ name: 'H0DrawerBackdrop', type: "'opaque' | 'blur' | 'transparent'", description: 'Available backdrop appearances.' }] },
+        ],
+    },
+    useWhen: ['Navigation or filters need a full-height supporting surface.', 'A secondary workflow should enter from a viewport edge.'],
+    avoidWhen: ['The task needs a compact centered dialog.', 'The content is short contextual help.'],
+    accessibility: ['Provide a visible title or ariaLabel.', 'Retain a clear dismissal action.', 'Let focus return to the opener.'],
+    styling: ['Style slot wrappers with public tokens.', 'Treat drawer classes as implementation details.'],
+    responsive: ['Prefer bottom placement for short mobile actions.', 'Allow long content to scroll inside the drawer.'],
+    performance: ['Avoid duplicating a full application shell in the mounted overlay.'],
+    examples: [
+        { key: 'components/drawer/BasicExample', purpose: 'Controlled navigation drawer with a footer close callback.' },
+        { key: 'components/drawer/FiltersExample', purpose: 'Filter workflow composed from H0N form controls with initial focus and footer actions.' },
+        { key: 'components/drawer/SidesExample', purpose: 'Drawer entering from each viewport edge.' },
+        { key: 'components/drawer/BackdropsExample', purpose: 'Opaque, blurred, and transparent backdrop treatments.' },
+    ],
+    relatedComponents: ['H0Modal', 'H0Sheet', 'H0SideNav'],
+} satisfies ComponentAgentRecordV1

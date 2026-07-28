@@ -1,0 +1,36 @@
+{
+    "name": "@h0n/documentation-template",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "run-p type-check build-only",
+        "build-only": "vite build",
+        "preview": "vite preview",
+        "type-check": "vue-tsc --build",
+        "format": "prettier --write src/"
+    },
+    "dependencies": {
+        "@h0n/ui": "file:../../../packages/ui",
+        "markdown-it": "^14.1.0",
+        "vue": "3.5.39",
+        "vue-router": "^5.0.3"
+    },
+    "devDependencies": {
+        "@tsconfig/node24": "^24.0.4",
+        "@types/markdown-it": "^14.1.2",
+        "@types/node": "^24.10.0",
+        "@vitejs/plugin-vue": "^6.0.7",
+        "@vue/tsconfig": "^0.9.0",
+        "npm-run-all2": "^8.0.4",
+        "prettier": "^3.7.4",
+        "sass": "^1.96.0",
+        "typescript": "~5.9.3",
+        "vite": "^8.0.16",
+        "vue-tsc": "^3.1.8"
+    },
+    "engines": {
+        "node": ">=22.12.0"
+    }
+}

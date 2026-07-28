@@ -1,0 +1,2 @@
+<script setup lang="ts">import{H0Select,type H0SelectOption}from'@h0nio/ui';import{ref}from'vue';const value=ref<string|null>(null);const options:H0SelectOption<string>[]=[{value:'design',label:'Design',description:'Product and brand'},{value:'engineering',label:'Engineering'},{value:'operations',label:'Operations'},{value:'legacy',label:'Legacy',disabled:true}]</script>
+<template><H0Select v-model="value" class="control" :options="options" label="Team" placeholder="Select a team"/></template><style scoped>.control{width:min(28rem,100%)}</style>

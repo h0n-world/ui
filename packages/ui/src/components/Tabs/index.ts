@@ -1,0 +1,5 @@
+export { default as H0Tab } from './H0Tab.vue'
+export { default as H0TabList } from './H0TabList.vue'
+export { default as H0TabPanel } from './H0TabPanel.vue'
+export { default as H0Tabs } from './H0Tabs.vue'
+export type * from './Tabs.types'

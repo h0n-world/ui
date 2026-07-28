@@ -1,0 +1,5 @@
+<script setup lang="ts">
+import { computed } from 'vue';import type { H0InlineProps } from './Layout.types';import { responsiveStyles,resolveAlign,resolveJustify,resolveSpace,resolveWrap } from './responsive'
+defineOptions({name:'H0Inline'});const props=withDefaults(defineProps<H0InlineProps>(),{as:'div',gap:'md',align:'center',justify:'start',wrap:true});const styles=computed(()=>({...responsiveStyles('inline-gap',props.gap,resolveSpace),...responsiveStyles('inline-align',props.align,resolveAlign),...responsiveStyles('inline-justify',props.justify,resolveJustify),...responsiveStyles('inline-wrap',props.wrap,resolveWrap)}))
+</script><template><component :is="as" data-h0n-component="inline" class="h-inline" :style="styles"><slot /></component></template>
+<style scoped lang="scss">@use './responsive' as r;.h-inline{display:flex;flex-direction:row;min-width:0;@include r.responsive-property(gap,inline-gap,0);@include r.responsive-property(align-items,inline-align,center);@include r.responsive-property(justify-content,inline-justify,flex-start);@include r.responsive-property(flex-wrap,inline-wrap,wrap)}</style>

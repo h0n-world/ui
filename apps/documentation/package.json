@@ -1,0 +1,37 @@
+{
+    "name": "@h0n/ui-documentation",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite --host 0.0.0.0 --port 5201",
+        "build": "npm run agents:check && vue-tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit && vite build",
+        "preview": "vite preview",
+        "typecheck": "vue-tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+        "agents:generate": "node --experimental-strip-types scripts/generate-agent-artifacts.ts --write",
+        "agents:check": "node --experimental-strip-types scripts/generate-agent-artifacts.ts --check",
+        "agents:test": "node --experimental-strip-types --test scripts/agent-foundation.test.ts",
+        "format": "prettier --write src/"
+    },
+    "dependencies": {
+        "@h0nio/ui": "workspace:*",
+        "highlight.js": "^11.11.1",
+        "markdown-it": "^14.1.0",
+        "vue": "^3.5.25",
+        "vue-router": "^4.6.4"
+    },
+    "devDependencies": {
+        "@types/markdown-it": "^14.1.2",
+        "@types/node": "^24.10.0",
+        "@vitejs/plugin-vue": "^6.0.7",
+        "@vue/tsconfig": "^0.9.0",
+        "prettier": "^3.7.4",
+        "sass": "^1.96.0",
+        "typescript": "~5.9.3",
+        "vite": "^8.0.16",
+        "vue-tsc": "^3.1.8"
+    },
+    "engines": {
+        "node": ">=22.12.0"
+    }
+}

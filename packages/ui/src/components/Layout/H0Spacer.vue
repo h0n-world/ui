@@ -1,0 +1,3 @@
+<script setup lang="ts">import { computed } from 'vue';import type { H0SpacerProps } from './Layout.types';import { responsiveStyles,resolveSpace } from './responsive';defineOptions({name:'H0Spacer'});const props=withDefaults(defineProps<H0SpacerProps>(),{axis:'vertical',size:'md'});const styles=computed(()=>responsiveStyles('spacer-size',props.size,resolveSpace))</script>
+<template><span data-h0n-component="spacer" aria-hidden="true" class="h-spacer" :class="`h-spacer--${axis}`" :style="styles" /></template>
+<style scoped lang="scss">@use './responsive' as r;.h-spacer{display:block;flex:0 0 auto}.h-spacer--vertical{@include r.responsive-property(block-size,spacer-size,0)}.h-spacer--horizontal{@include r.responsive-property(inline-size,spacer-size,0)}</style>

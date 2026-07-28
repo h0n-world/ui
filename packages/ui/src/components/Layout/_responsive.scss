@@ -1,0 +1,8 @@
+@mixin responsive-property($property, $name, $fallback: initial) {
+    #{$property}: var(--h-#{$name}-base, #{$fallback});
+    @media (min-width: 520px) { #{$property}: var(--h-#{$name}-xs, var(--h-#{$name}-base, #{$fallback})); }
+    @media (min-width: 640px) { #{$property}: var(--h-#{$name}-sm, var(--h-#{$name}-xs, var(--h-#{$name}-base, #{$fallback}))); }
+    @media (min-width: 768px) { #{$property}: var(--h-#{$name}-md, var(--h-#{$name}-sm, var(--h-#{$name}-xs, var(--h-#{$name}-base, #{$fallback})))); }
+    @media (min-width: 1024px) { #{$property}: var(--h-#{$name}-lg, var(--h-#{$name}-md, var(--h-#{$name}-sm, var(--h-#{$name}-xs, var(--h-#{$name}-base, #{$fallback}))))); }
+    @media (min-width: 1280px) { #{$property}: var(--h-#{$name}-xl, var(--h-#{$name}-lg, var(--h-#{$name}-md, var(--h-#{$name}-sm, var(--h-#{$name}-xs, var(--h-#{$name}-base, #{$fallback})))))); }
+}

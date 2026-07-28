@@ -1,0 +1,3 @@
+<script setup lang="ts">import{H0Button,H0Checkbox,H0Form,H0Input,type H0FormSubmitPayload}from'@h0nio/ui';import{ref}from'vue';const result=ref('');function submit(payload:H0FormSubmitPayload){result.value=payload.valid?`Submitted ${String(payload.values.email??'')}`:'Please fix the form'}</script>
+<template><H0Form class="form" @submit="submit"><H0Input name="email" type="email" label="Email" required/><H0Checkbox name="updates" label="Product updates"/><H0Button type="submit">Create account</H0Button><output aria-live="polite">{{result}}</output></H0Form></template>
+<style scoped>.form{width:min(30rem,100%)}output{color:var(--h0n-ui-color-muted)}</style>

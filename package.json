@@ -1,0 +1,41 @@
+{
+    "name": "@h0n/ui-workspace",
+    "private": true,
+    "type": "module",
+    "packageManager": "pnpm@11.17.0",
+    "workspaces": [
+        "packages/*",
+        "apps/*"
+    ],
+    "scripts": {
+        "build": "pnpm run build:packages && pnpm --filter @h0n/ui-documentation build",
+        "build:packages": "pnpm --filter @h0nio/ui build",
+        "dev": "pnpm --filter @h0n/ui-documentation dev",
+        "dev:documentation": "pnpm --filter @h0n/ui-documentation dev",
+        "agents:generate": "pnpm --filter @h0n/ui-documentation agents:generate",
+        "agents:check": "pnpm --filter @h0n/ui-documentation agents:check",
+        "test": "pnpm run test:packages && pnpm --filter @h0n/ui-documentation agents:test",
+        "test:packages": "pnpm --filter @h0nio/ui test",
+        "test:visual": "pnpm --filter @h0nio/ui test:visual",
+        "typecheck": "pnpm run typecheck:packages && pnpm --filter @h0n/ui-documentation typecheck",
+        "typecheck:packages": "pnpm --filter @h0nio/ui typecheck"
+    },
+    "devDependencies": {
+        "@axe-core/playwright": "^4.12.1",
+        "@playwright/test": "^1.61.1",
+        "@types/node": "^25.9.3",
+        "@vitejs/plugin-vue": "^6.0.7",
+        "@vue/server-renderer": "3.5.25",
+        "@vue/test-utils": "^2.4.11",
+        "esbuild": "^0.28.1",
+        "jsdom": "^29.1.1",
+        "sass": "^1.96.0",
+        "sass-embedded": "^1.100.0",
+        "terser": "5.46.0",
+        "typescript": "^5.9.3",
+        "vite": "^8.0.16",
+        "vitest": "^4.1.10",
+        "vue": "^3.5.25",
+        "vue-tsc": "^3.1.8"
+    }
+}

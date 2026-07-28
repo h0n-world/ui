@@ -1,0 +1,151 @@
+@mixin h0n-focus-visible {
+    &:focus-visible {
+        box-shadow: var(--h0n-ui-focus-ring);
+        outline: none;
+    }
+}
+
+@mixin h0n-input-root {
+    --h0n-input-control-background: var(--h0n-ui-color-surface);
+
+    display: grid;
+    font-family: var(--h0n-ui-font-family);
+    gap: 8px;
+    min-width: 0;
+}
+
+@mixin h0n-input-control {
+    align-items: center;
+    background: var(--h0n-input-control-background);
+    border: 1px solid transparent;
+    border-radius: var(--h0n-ui-radius-lg);
+    display: flex;
+    gap: 8px;
+    min-height: 48px;
+    min-width: 0;
+    padding: 0 12px;
+    transition:
+        background-color var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard),
+        box-shadow var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard);
+}
+
+@mixin h0n-input-variant($variant) {
+    @if $variant == 'surface' {
+        --h0n-input-control-background: var(--h0n-ui-color-surface);
+    } @else if $variant == 'secondary' {
+        --h0n-input-control-background: var(--h0n-ui-color-secondary);
+    }
+}
+
+@mixin h0n-input-field {
+    background: transparent;
+    border: 0;
+    color: var(--h0n-ui-color-text);
+    flex: 1 1 auto;
+    font: inherit;
+    font-size: var(--h0n-ui-typography-body-size);
+    font-weight: var(--h0n-ui-font-weight-medium);
+    min-width: 0;
+    outline: none;
+    padding: 0;
+    width: 100%;
+
+    &::placeholder {
+        color: var(--h0n-ui-color-muted);
+        font-weight: var(--h0n-ui-font-weight-regular);
+        opacity: 1;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+@mixin h0n-input-control-size($size) {
+    @if $size == 'sm' {
+        min-height: 40px;
+        padding-inline: 11px;
+    } @else if $size == 'md' {
+        min-height: 46px;
+        padding-inline: 12px;
+    } @else if $size == 'lg' {
+        min-height: 52px;
+        padding-inline: 12px;
+    }
+}
+
+@mixin h0n-input-field-size($size) {
+    @if $size == 'sm' or $size == 'md' {
+        font-size: var(--h0n-ui-typography-body-sm-size);
+    }
+}
+
+@mixin h0n-input-focus {
+    box-shadow: 0 0 0 2px var(--h0n-ui-color-primary);
+}
+
+@mixin h0n-input-error {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--h0n-ui-color-danger) 52%, transparent);
+}
+
+@mixin h0n-input-disabled {
+    opacity: 0.55;
+}
+
+@mixin h0n-icon-button-reset($size: 32px, $radius: var(--h0n-ui-radius-sm)) {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: $radius;
+    color: var(--h0n-ui-color-muted);
+    cursor: pointer;
+    display: inline-flex;
+    height: $size;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    width: $size;
+
+    @include h0n-focus-visible;
+}
+
+@mixin h0n-overlay-backdrop($background: var(--h0n-ui-color-backdrop)) {
+    background: $background;
+    inset: 0;
+    position: absolute;
+}
+
+@mixin h0n-scrollbar {
+    scrollbar-color: var(--h0n-ui-color-scrollbar-thumb) transparent;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        height: 10px;
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--h0n-ui-color-scrollbar-thumb);
+        border: 3px solid transparent;
+        border-radius: var(--h0n-ui-radius-round);
+        background-clip: padding-box;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--h0n-ui-color-scrollbar-thumb-hover);
+    }
+}
+
+@mixin h0n-transition($properties...) {
+    $transitions: ();
+
+    @each $property in $properties {
+        $transitions: append($transitions, #{$property} var(--h0n-ui-duration-fast) ease, comma);
+    }
+
+    transition: $transitions;
+}

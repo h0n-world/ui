@@ -1,0 +1,72 @@
+import type { ComponentAgentRecordV1 } from '../schema.ts'
+import { attributeRoutingProps, fieldProps, focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
+
+export const inputAgentRecord = {
+    schemaVersion: 1,
+    component: 'H0Input',
+    status: 'migrated',
+    summary: 'General-purpose single-line input with adornments, clear action, native attributes, and shared H0N field feedback.',
+    imports: { components: ['H0Input'], types: ['H0AttributeRoutingProps', 'H0InputEmits', 'H0InputInputMode', 'H0InputProps', 'H0InputSize', 'H0InputVariant'], styles: ['@h0nio/ui/style.css'] },
+    api: {
+        props: [
+            { name: 'modelValue', type: 'string', default: 'undefined', description: 'Controlled input value.' },
+            { name: 'defaultValue', type: 'string', default: "''", description: 'Initial uncontrolled value.' },
+            { name: 'type', type: 'string', default: "'text'", description: 'Native input type.' },
+            { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Control size.' },
+            { name: 'variant', type: "'surface' | 'secondary'", default: "'surface'", description: 'Field background treatment shared by specialized inputs.' },
+            { name: 'ariaLabel', type: 'string', default: "''", description: 'Accessible name override.' },
+            { name: 'placeholder', type: 'string', default: "''", description: 'Empty input copy.' },
+            { name: 'prefix', type: 'string', default: "''", description: 'Text before the value.' },
+            { name: 'suffix', type: 'string', default: "''", description: 'Text after the value.' },
+            { name: 'prefixIcon', type: 'H0IconDefinition', default: 'undefined', description: 'Leading icon.' },
+            { name: 'suffixIcon', type: 'H0IconDefinition', default: 'undefined', description: 'Trailing icon.' },
+            { name: 'readonly', type: 'boolean', default: 'false', description: 'Prevents editing while preserving focus.' },
+            { name: 'clearable', type: 'boolean', default: 'false', description: 'Shows a clear action for an editable non-empty value.' },
+            { name: 'autocomplete', type: 'string', default: "''", description: 'Native autocomplete hint.' },
+            { name: 'inputmode', type: 'H0InputInputMode', default: 'undefined', description: 'Virtual keyboard hint.' },
+            { name: 'min', type: 'string | number', default: 'undefined', description: 'Native minimum.' },
+            { name: 'max', type: 'string | number', default: 'undefined', description: 'Native maximum.' },
+            { name: 'step', type: 'string | number', default: 'undefined', description: 'Native numeric step.' },
+            ...fieldProps,
+            ...attributeRoutingProps,
+        ],
+        events: [
+            { name: 'update:modelValue', type: 'string', description: 'Requests value update.' },
+            { name: 'change', type: 'string', description: 'Reports a committed native change.' },
+            { name: 'input', type: '[string, Event]', description: 'Reports the current value and native input event.' },
+            { name: 'clear', type: '—', description: 'Reports clearing the value.' },
+            ...focusBlurEvents,
+        ],
+        slots: [
+            { name: 'label', type: '—', description: 'Custom label.' },
+            { name: 'start', type: '—', description: 'Leading control content around the prefix.' },
+            { name: 'prefix', type: '—', description: 'Custom prefix.' },
+            { name: 'end', type: '—', description: 'Trailing control content around the suffix.' },
+            { name: 'suffix', type: '—', description: 'Custom suffix.' },
+        ],
+        exposed: [
+            { name: 'clear', type: '() => void', description: 'Clears the value.' },
+            { name: 'focus', type: '() => void', description: 'Focuses the native input.' },
+            { name: 'setValue', type: '(value: string) => void', description: 'Sets the field value.' },
+        ],
+        types: [
+            { name: 'H0AttributeRoutingProps', fields: [
+                { name: 'rootAttrs', type: 'Record<string, unknown> | undefined', description: 'Explicit root attributes merged after ordinary fallthrough attributes.' },
+                { name: 'controlAttrs', type: 'Record<string, unknown> | undefined', description: 'Additional attributes for the actual interactive control.' },
+            ] },
+            { name: 'H0InputInputMode', fields: [{ name: 'H0InputInputMode', type: "'decimal' | 'email' | 'none' | 'numeric' | 'search' | 'tel' | 'text' | 'url'", description: 'Supported native virtual-keyboard hints.' }] },
+            { name: 'H0InputSize', fields: [{ name: 'H0InputSize', type: "'sm' | 'md' | 'lg'", description: 'Supported control sizes.' }] },
+            { name: 'H0InputVariant', fields: [{ name: 'H0InputVariant', type: "'surface' | 'secondary'", description: 'Shared input background treatments.' }] },
+        ],
+    },
+    useWhen: ['A form needs a standard single-line native input.'],
+    avoidWhen: ['The value needs domain-specific parsing such as dates or numbers.'],
+    ...standardFormGuidance,
+    examples: [
+        { key: 'components/input/BasicExample', purpose: 'Labeled clearable input with an icon.' },
+        { key: 'components/input/VariantsExample', purpose: 'Surface and secondary field variants.' },
+        { key: 'components/input/AppearanceExample', purpose: 'Sizes and text or icon adornments.' },
+        { key: 'components/input/StatesExample', purpose: 'Read-only, disabled, invalid, and clear states.' },
+    ],
+    relatedComponents: ['H0Field', 'H0Form', 'H0Textarea'],
+} satisfies ComponentAgentRecordV1

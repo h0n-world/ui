@@ -1,0 +1,71 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+
+# Build output and framework caches
+dist/
+dist-ssr/
+.vite/
+.cache/
+*.tsbuildinfo
+*.timestamp-*-*.mjs
+
+# Test output
+coverage/
+playwright-report/
+blob-report/
+test-results/
+cypress/videos/
+cypress/screenshots/
+apps/**/__screenshots__/
+junit.xml
+
+# Logs and runtime state
+logs/
+*.log
+*.log.*
+*.pid
+*.pid.lock
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+
+# Editor settings
+**/.vscode/*
+!**/.vscode/extensions.json
+**/.idea/
+**/.history/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating-system metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Temporary files and package archives
+.tmp/
+tmp/
+temp/
+*.tmp
+*.temp
+*.tgz
+
+# Tool caches
+.eslintcache
+.stylelintcache
+
+# AI
+.codex/

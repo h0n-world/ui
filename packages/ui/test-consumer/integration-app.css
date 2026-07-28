@@ -1,0 +1,12 @@
+.integration-shell {
+    margin-inline: auto;
+    max-inline-size: 80rem;
+    padding: clamp(1rem, 3vw, 3rem);
+}
+
+.integration-toolbar {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}

@@ -1,0 +1,55 @@
+import type { ComponentAgentRecordV1 } from '../schema.ts'
+
+export const modalAgentRecord = {
+    schemaVersion: 1,
+    component: 'H0Modal',
+    status: 'migrated',
+    summary: 'Blocking dialog surface for a self-contained task or workflow.',
+    imports: { components: ['H0Modal'], types: ['H0ModalBackdrop', 'H0ModalEmits', 'H0ModalProps', 'H0ModalSide'], styles: ['@h0nio/ui/style.css'] },
+    api: {
+        props: [
+            { name: 'modelValue', type: 'boolean', default: 'undefined', description: 'Controlled open state used by v-model.' },
+            { name: 'defaultValue', type: 'boolean', default: 'false', description: 'Initial uncontrolled open state.' },
+            { name: 'side', type: 'H0ModalSide', default: "'center'", description: "Panel placement: 'center', 'top', 'right', 'bottom', or 'left'." },
+            { name: 'backdrop', type: 'H0ModalBackdrop', default: "'opaque'", description: "Backdrop appearance: 'opaque', 'blur', or 'transparent'." },
+            { name: 'title', type: 'string', default: "''", description: 'Visible header title and preferred accessible name.' },
+            { name: 'closeOnBackdrop', type: 'boolean', default: 'true', description: 'Allows backdrop dismissal.' },
+            { name: 'closeOnEsc', type: 'boolean', default: 'true', description: 'Allows Escape dismissal.' },
+            { name: 'ariaLabel', type: 'string', default: "''", description: 'Accessible name when title is empty before locale fallback.' },
+            { name: 'closeAriaLabel', type: 'string', default: "''", description: 'Accessible label for the header close button.' },
+            { name: 'teleportTo', type: 'string | HTMLElement', default: "'body'", description: 'Teleport destination.' },
+            { name: 'teleportDisabled', type: 'boolean', default: 'false', description: 'Renders the overlay in place.' },
+            { name: 'initialFocus', type: 'string | HTMLElement', default: 'undefined', description: 'Selector or element focused after opening.' },
+            { name: 'returnFocus', type: 'boolean | HTMLElement', default: 'true', description: 'Controls focus restoration.' },
+            { name: 'lockScroll', type: 'boolean', default: 'true', description: 'Locks document scrolling while open.' },
+        ],
+        events: [
+            { name: 'update:modelValue', type: 'boolean', description: 'Requests controlled state changes.' },
+            { name: 'change', type: 'boolean', description: 'Reports committed state changes.' },
+            { name: 'close', type: '—', description: 'Reports any close path.' },
+        ],
+        slots: [
+            { name: 'default', type: '—', description: 'Scrollable modal content.' },
+            { name: 'header', type: '—', description: 'Replaces the title and built-in close-button header.' },
+            { name: 'footer', type: '{ close: () => void }', description: 'Footer actions with a close callback.' },
+        ],
+        exposed: [],
+        types: [
+            { name: 'H0ModalSide', fields: [{ name: 'H0ModalSide', type: "'center' | 'top' | 'right' | 'bottom' | 'left'", description: 'Centered or viewport-edge panel placement.' }] },
+            { name: 'H0ModalBackdrop', fields: [{ name: 'H0ModalBackdrop', type: "'opaque' | 'blur' | 'transparent'", description: 'Available backdrop appearances.' }] },
+        ],
+    },
+    useWhen: ['A focused task must temporarily block the underlying page.', 'A form needs a dedicated dialog surface.'],
+    avoidWhen: ['Only a short confirmation is needed.', 'Content should remain non-modal and anchored to a trigger.'],
+    accessibility: ['Provide a visible title or ariaLabel.', 'Keep a clear dismissal action.', 'Use initialFocus only when the default panel focus is unsuitable.'],
+    styling: ['Use public surface and overlay tokens.', 'Do not target internal modal selectors.'],
+    responsive: ['Keep centered content fluid and allow the content region to scroll.'],
+    performance: ['Content mounts only while open; keep background work scoped to that lifecycle.'],
+    examples: [
+        { key: 'components/modal/BasicExample', purpose: 'Controlled task modal with footer actions.' },
+        { key: 'components/modal/FormExample', purpose: 'Form workflow composed from H0N controls with explicit dismissal and initial focus.' },
+        { key: 'components/modal/SidesExample', purpose: 'Modal aligned to each of the four viewport edges.' },
+        { key: 'components/modal/BackdropsExample', purpose: 'Opaque, blurred, and transparent backdrop treatments.' },
+    ],
+    relatedComponents: ['H0AlertDialog', 'H0Drawer', 'H0Sheet'],
+} satisfies ComponentAgentRecordV1

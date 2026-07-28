@@ -1,0 +1,146 @@
+# H0N UI 1.0.0
+
+> Self-contained Vue 3.5+ component library with accessible interaction patterns, public design tokens, app-scoped runtime services, and typed APIs.
+
+## Scope and installation
+
+- Install only `@h0nio/ui`; there is no required H0N icon package.
+- Register the default plugin once and import `@h0nio/ui/style.css`.
+- Use the small system icon set from `@h0nio/ui/icons`, or pass a compatible `H0IconDefinition`/documented custom icon slot.
+- See [Quick Start](/docs/quick-start) for the current plugin and style setup.
+
+## Start here
+
+- [Introduction](/docs/introduction)
+- [Quick Start](/docs/quick-start)
+- [Colors and public CSS variables](/docs/colors)
+- [Component selection overview](/components/overview)
+- [All Components](/components/all)
+
+## Machine-readable resources
+
+- [Component catalog schema v1](/agent-data/components.v1.json): exact imports, props, events, slots, exposed APIs, public types, examples, accessibility, styling, responsive, performance, use-when, and avoid-when guidance.
+- [Consumer AGENTS.md template](/agents/AGENTS.md): reusable implementation rules for projects consuming H0N UI.
+- [llms.txt guide](/docs/agents/llms-txt)
+
+Paths in this file are relative to the H0N UI documentation origin. They are not routes in the consuming application.
+
+## Agent workflow
+
+1. Confirm the installed `@h0nio/ui` version and inspect its TypeScript declarations.
+2. Select a component by interaction semantics, then read its catalog record and documentation page.
+3. Use only documented root or package subpath imports, props, events, slots, exposed methods, and `--h0n-ui-*` variables.
+4. Preserve controlled `modelValue` / `update:modelValue` behavior; use `defaultValue` only for uncontrolled initialization.
+5. Preserve accessible names, native semantics, keyboard behavior, focus management, disabled/busy states, and error relationships.
+6. Run the consumer project's typecheck, production build, tests, and relevant responsive or visual checks.
+
+## Public package boundaries
+
+- Components and public types: `@h0nio/ui`
+- Selective components: `@h0nio/ui/components/<Family>`
+- Global styles: `@h0nio/ui/style.css`
+- Matching selective styles: `@h0nio/ui/components/<Family>/style.css`
+- System icons: `@h0nio/ui/icons`
+- Public composables: `@h0nio/ui/composables` or documented individual composable subpaths
+- Runtime services and metadata: `@h0nio/ui/theme`, `@h0nio/ui/locale`, and `@h0nio/ui/manifest`
+
+Do not import `src`, `_shared`, generated chunks, private selectors, or component-local CSS variables.
+
+## Supported components (71)
+
+### Actions
+
+- [H0Button](/components/button): Base action control for forms, toolbars, dialogs, command surfaces, and link-like actions.
+- [H0ButtonGroup](/components/buttongroup): Accessible group of adjacent H0Button controls for a short set of closely related actions.
+- [H0Toolbar](/components/toolbar): Keyboard-navigable command surface for a compact set of related actions.
+- [H0ToolbarGroup](/components/toolbar#h0toolbargroup): Accessible subgroup for related compound toolbar commands.
+- [H0ToolbarItem](/components/toolbar#h0toolbaritem): Compound toolbar command participating in the parent toolbar roving-focus sequence.
+- [H0ToolbarSeparator](/components/toolbar#h0toolbarseparator): Orientation-aware visual and semantic separator between compound toolbar command groups.
+
+### Forms
+
+- [H0Checkbox](/components/checkbox): Controlled or uncontrolled native boolean checkbox with indeterminate, validation, and Form integration.
+- [H0CheckboxGroup](/components/checkbox#h0checkboxgroup): Labeled multi-choice checkbox set backed by an array of string option values.
+- [H0Field](/components/field): Form layout primitive that connects a label, control, hint, and validation error through accessible attributes.
+- [H0FileUpload](/components/fileupload): Accessible file picker and drop zone with validation, upload queue state, progress, retry, cancellation, and optional reordering.
+- [H0Form](/components/form): Form coordinator for H0N fields with shared values, validation errors, reset behavior, and typed submit payloads.
+- [H0ImageUpload](/components/imageupload): Single-image picker with preview, drag and drop, preset dimensions, validation, and removable controlled state.
+- [H0Input](/components/input): General-purpose single-line input with adornments, clear action, native attributes, and shared H0N field feedback.
+- [H0InputOTP](/components/inputotp): Segmented one-time-code input with paste distribution, validation, completion events, and accessible grouped semantics.
+- [H0NumberInput](/components/numberinput): Localized numeric input with parsing, formatting, precision, bounds, step controls, and controlled null state.
+- [H0PasswordInput](/components/passwordinput): Password field with controlled visibility, optional strength feedback, autocomplete guidance, and H0N validation messaging.
+- [H0Radio](/components/radio): Standalone native radio control with label, description, validation, and programmatic focus.
+- [H0RadioGroup](/components/radio#h0radiogroup): Single-choice fieldset generated from options with responsive layout, validation, and custom option rendering.
+- [H0SearchField](/components/searchfield): Compact native search control with clear action, controlled value, icon customization, and imperative focus helpers.
+- [H0Select](/components/select): Accessible single or multiple option picker with custom rendering, virtualization, loading state, and teleported listbox.
+- [H0Switch](/components/switch): Immediate boolean setting control with native checkbox semantics, switch role, label, hint, and validation state.
+- [H0Textarea](/components/textarea): Multiline text control with automatic height, optional manual resizing, character count, and shared H0N form feedback.
+
+### Navigation
+
+- [H0Breadcrumbs](/components/breadcrumbs): Ordered location trail with native or router-compatible ancestor links and current-page semantics.
+- [H0Link](/components/link): Polymorphic navigation link with semantic tones, external disclosure, disabled behavior, and attribute forwarding.
+- [H0Pagination](/components/pagination): Numbered page navigation with derived totals, boundary and sibling items, ellipses, sizes, and optional result summary.
+- [H0Segment](/components/segment): Controlled or uncontrolled radiogroup for a compact set of mutually exclusive modes with an animated indicator.
+- [H0SideNav](/components/sidenav): Grouped sidebar navigation surface with configurable group spacing and animated item indicators.
+- [H0SideNavGroup](/components/sidenav#h0sidenavgroup): Labeled list grouping for related destinations inside H0SideNav.
+- [H0SideNavItem](/components/sidenav#h0sidenavitem): Polymorphic sidebar destination with explicit or router-derived active state and optional trailing indicator.
+- [H0Stepper](/components/stepper): Non-interactive progress indicator for a fixed sequence with completed, active, and pending states.
+- [H0Tab](/components/tabs#h0tab): Compound tab control linked to one H0TabPanel through the shared H0Tabs value and generated IDs.
+- [H0TabList](/components/tabs#h0tablist): Compound tablist that applies orientation-aware arrow, Home, End, loop, and RTL keyboard navigation.
+- [H0TabPanel](/components/tabs#h0tabpanel): Focusable compound tabpanel whose visibility and mount lifecycle follow H0Tabs state.
+- [H0Tabs](/components/tabs): Controlled or uncontrolled tabs coordinator with data-driven and compound composition, keyboard modes, and panel mount strategies.
+
+### Overlays
+
+- [H0AlertDialog](/components/alertdialog): Blocking alert dialog for explicit confirmation or cancellation of a consequential action.
+- [H0Drawer](/components/drawer): Modal edge panel for navigation, filters, and supporting workflows.
+- [H0Modal](/components/modal): Blocking dialog surface for a self-contained task or workflow.
+- [H0Sheet](/components/sheet): Compact inset modal surface positioned near a viewport edge.
+- [H0Tooltip](/components/tooltip): Concise non-interactive description shown on hover or keyboard focus.
+
+### Feedback
+
+- [H0Alert](/components/alert): Persistent assertive inline feedback with semantic tones, compact and loading states, actions, dismissal, and rich content.
+- [H0EmptyState](/components/emptystate): Centered empty-content explanation with visual, description, actions, and inline, surface, or page layout.
+- [H0Ripple](/components/ripple): Low-level pointer-origin animation for custom positioned interactive surfaces.
+- [H0Skeleton](/components/skeleton): Decorative loading placeholder with block, text, and circular geometry and reduced-motion shimmer handling.
+- [H0Spinner](/components/spinner): Compact indeterminate status indicator with CSS sizing, current-color styling, and accessible label.
+- [H0Toast](/components/toast): Visual transient notification with semantic tone, icon, content slots, localized close control, and polite status announcement.
+- [H0Toasts](/components/toast#h0toasts): Teleported toast stack that renders recent service items with placement, stacking, transitions, and dismissal delegation.
+
+### Data
+
+- [H0DataTable](/components/datatable): Data-driven table with client or server state, filters, sorting, selection, pagination, infinite loading, and fixed-row virtualization.
+- [H0InfiniteScroll](/components/infinitescroll): IntersectionObserver sentinel that requests bounded chunks in a page viewport or nearest scrollable ancestor.
+- [H0Table](/components/table): Semantic presentational table with typed columns, custom cells, density variants, and managed scroll geometry.
+
+### Layout
+
+- [H0Container](/components/layout): Polymorphic full-width page container with a maximum width, optional centering, and responsive token gutters.
+- [H0Divider](/components/layout#h0divider): Horizontal or vertical separator with optional label content, responsive inset, and decorative mode.
+- [H0Grid](/components/grid): Polymorphic CSS grid with common page and collection presets plus explicit column and row templates.
+- [H0Inline](/components/layout#h0inline): Polymorphic horizontal flex layout with responsive gap, alignment, distribution, and wrapping.
+- [H0ScrollArea](/components/scrollarea): Focusable native scroll region with shared scrollbar styling, bounded axes, stable gutter, edge fades, and boundary events.
+- [H0Spacer](/components/layout#h0spacer): Non-semantic horizontal or vertical token-sized space with responsive sizing.
+- [H0Stack](/components/layout#h0stack): Polymorphic vertical flex layout with responsive gap, cross-axis alignment, distribution, and wrapping.
+
+### Content
+
+- [H0Accordion](/components/accordion): Uncontrolled stack of accessible disclosure sections for progressively revealing related content.
+- [H0Avatar](/components/avatar): User or account image with skeleton loading, deterministic color, and initials fallback.
+- [H0Badge](/components/badge): Compact non-interactive status, category, or metadata label.
+- [H0Card](/components/card): Composable surface for grouped content, metadata, and actions with optional interactivity.
+- [H0Carousel](/components/carousel): Generic controlled or uncontrolled carousel with drag, keyboard, pagination, autoplay, and imperative navigation.
+- [H0Chip](/components/chip): Selectable and optionally removable token with separate primary and remove actions.
+- [H0Description](/components/description): Muted regular-weight supporting text preset for fields, cards, and metadata.
+- [H0ErrorMessage](/components/errormessage): Danger-colored text preset for persistent validation and action errors.
+- [H0Icon](/components/icon): SVG renderer for lightweight structural icon definitions with no external icon dependency.
+- [H0Image](/components/image): Responsive image with intersection-based lazy loading, skeleton state, sizing, and fallback content.
+- [H0Label](/components/label): Consistent form label preset supporting label, legend, and span semantics.
+- [H0List](/components/list): Grouped collection wrapper with optional accessible label, spacing, and item separators.
+- [H0ListItem](/components/list#h0listitem): Interactive or static polymorphic row with structured text, start/end slots, state, and sizing.
+- [H0Message](/components/message): Compact supporting or status text with an optional tone-specific decorative icon.
+- [H0Typography](/components/typography): Semantic text primitive with H0N type variants, alignment, color, weight, and truncation.
+
+Every component in this index has a synchronized public export, manifest entry, documentation route, and validated typed record. MCP and distributable Agent Skills are not published yet.

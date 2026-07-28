@@ -1,0 +1,3 @@
+<script setup lang="ts">import { H0Checkbox,H0CheckboxGroup,type H0CheckboxOption } from '@h0nio/ui';import{ref}from'vue';const enabled=ref(true);const values=ref<string[]>(['email']);const options:H0CheckboxOption[]=[{label:'Email',value:'email'},{label:'Push',value:'push'},{label:'SMS',value:'sms',disabled:true}]</script>
+<template><div class="stack"><H0Checkbox v-model="enabled" label="Enable notifications" hint="You can change channels below."/><H0CheckboxGroup v-model="values" :options="options" label="Channels" name="channels"/></div></template>
+<style scoped>.stack{display:grid;gap:var(--h0n-ui-spacing-lg);width:min(28rem,100%)}</style>

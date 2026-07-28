@@ -1,0 +1,69 @@
+@use './palettes.scss' as palettes;
+
+@mixin h0n-token-vars($palette) {
+    @each $name, $value in $palette {
+        #{$name}: #{$value};
+    }
+}
+
+@mixin h0n-ui-compat-vars {
+    --h0n-ui-color-primary: var(--h0n-accent);
+    --h0n-ui-color-primary-hover: var(--h0n-accent-hover);
+    --h0n-ui-color-primary-contrast: var(--h0n-snow);
+    --h0n-ui-color-secondary: var(--h0n-secondary);
+    --h0n-ui-color-secondary-hover: var(--h0n-secondary-hover);
+    --h0n-ui-color-surface: var(--h0n-surface);
+    --h0n-ui-color-surface-hover: var(--h0n-surface-hover);
+    --h0n-ui-color-surface-subtle: var(--h0n-surface-subtle);
+    --h0n-ui-color-border: var(--h0n-border-color);
+    --h0n-ui-color-text: var(--h0n-text);
+    --h0n-ui-color-text-secondary: var(--h0n-text-secondary);
+    --h0n-ui-color-muted: var(--h0n-text-muted);
+    --h0n-ui-color-control-muted: var(--h0n-control-muted);
+    --h0n-ui-color-control-muted-hover: var(--h0n-control-muted-hover);
+    --h0n-ui-color-backdrop: var(--h0n-backdrop);
+    --h0n-ui-color-backdrop-soft: var(--h0n-backdrop-soft);
+    --h0n-ui-color-scrollbar-thumb: var(--h0n-scrollbar-thumb);
+    --h0n-ui-color-scrollbar-thumb-hover: var(--h0n-scrollbar-thumb-hover);
+    --h0n-ui-focus-ring: 0 0 0 3px var(--h0n-focus-ring);
+    --h0n-ui-shadow: 0 10px 24px var(--h0n-shadow);
+    --h0n-ui-shadow-lg: 0 24px 70px var(--h0n-shadow-lg);
+    --h0n-ui-color-success: var(--h0n-success);
+    --h0n-ui-color-success-hover: var(--h0n-success-hover);
+    --h0n-ui-color-success-text: var(--h0n-success-text);
+    --h0n-ui-color-warning: var(--h0n-warning);
+    --h0n-ui-color-warning-hover: var(--h0n-warning-hover);
+    --h0n-ui-color-warning-text: var(--h0n-warning-text);
+    --h0n-ui-color-danger: var(--h0n-danger);
+    --h0n-ui-color-danger-hover: var(--h0n-danger-hover);
+    --h0n-ui-color-danger-text: var(--h0n-danger-text);
+    --h0n-ui-color-danger-soft: var(--h0n-danger-soft);
+    --h0n-ui-color-danger-soft-hover: var(--h0n-danger-soft-hover);
+    --h0n-ui-color-danger-soft-fg: var(--h0n-danger-soft-fg);
+    --h0n-ui-color-info-text: var(--h0n-info-text);
+
+    --h0n-ui-color-ghost-hover: var(--h0n-ghost-hover);
+    --h0n-ui-color-accent-hover: var(--h0n-accent-hover);
+    --h0n-ui-color-accent: var(--h0n-accent);
+}
+
+:root,
+[data-h0n-theme='light'] {
+    color-scheme: light;
+    @include h0n-token-vars(palettes.$h0n-overall-palette);
+    @include h0n-token-vars(palettes.$h0n-light-palette);
+    @include h0n-token-vars(palettes.$h0n-avatar-palette);
+
+    @include h0n-ui-compat-vars;
+    @include h0n-token-vars(palettes.$h0n-button-light-palette);
+}
+
+[data-h0n-theme='dark'] {
+    color-scheme: dark;
+    @include h0n-token-vars(palettes.$h0n-overall-palette);
+    @include h0n-token-vars(palettes.$h0n-dark-palette);
+    @include h0n-token-vars(palettes.$h0n-avatar-palette);
+
+    @include h0n-ui-compat-vars;
+    @include h0n-token-vars(palettes.$h0n-button-dark-palette);
+}

@@ -1,0 +1,2 @@
+<script setup lang="ts">import{H0PasswordInput}from'@h0nio/ui';import{ref}from'vue';const password=ref('');const visible=ref(false)</script>
+<template><H0PasswordInput v-model="password" v-model:visible="visible" class="control" label="Password" autocomplete="new-password" :strength="password.length>11?4:password.length>7?3:password.length>3?2:1" hint="Use at least 12 characters."/></template><style scoped>.control{width:min(28rem,100%)}</style>
