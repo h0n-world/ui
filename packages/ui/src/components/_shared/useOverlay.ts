@@ -2,6 +2,9 @@ import { nextTick, onBeforeUnmount, toValue, watch, type MaybeRefOrGetter, type 
 
 type H0DocumentOverlayState = {
     locks: Map<string, number>
+    scrollLockSnapshot?: {
+        paddingInlineEnd: string
+    }
     stack: symbol[]
 }
 
@@ -19,6 +22,34 @@ function getDocumentState(document: Document) {
     return state
 }
 
+function getScrollLockCount(state: H0DocumentOverlayState) {
+    return Array.from(state.locks.values()).reduce((total, count) => total + count, 0)
+}
+
+function applyScrollbarCompensation(ownerDocument: Document, state: H0DocumentOverlayState) {
+    const view = ownerDocument.defaultView
+    const viewport = ownerDocument.documentElement
+
+    if (!view || viewport.clientWidth <= 0) return
+
+    const scrollbarWidth = Math.max(0, view.innerWidth - viewport.clientWidth)
+    if (!scrollbarWidth) return
+
+    const body = ownerDocument.body
+    const currentPadding = Number.parseFloat(view.getComputedStyle(body).paddingInlineEnd) || 0
+    state.scrollLockSnapshot = {
+        paddingInlineEnd: body.style.paddingInlineEnd
+    }
+    body.style.paddingInlineEnd = `${currentPadding + scrollbarWidth}px`
+}
+
+function restoreScrollbarCompensation(ownerDocument: Document, state: H0DocumentOverlayState) {
+    if (!state.scrollLockSnapshot) return
+
+    ownerDocument.body.style.paddingInlineEnd = state.scrollLockSnapshot.paddingInlineEnd
+    state.scrollLockSnapshot = undefined
+}
+
 function isFocusable(element: HTMLElement) {
     if (element.matches(':disabled, [hidden], [inert], [aria-hidden="true"]') || element.closest('[hidden], [inert], [aria-hidden="true"], fieldset:disabled')) {
         return false
@@ -34,6 +65,7 @@ export type H0OverlayOptions = {
     initialFocus?: MaybeRefOrGetter<string | HTMLElement | undefined>
     lockClass: string
     lockScroll?: WatchSource<boolean>
+    scrollLockActive?: WatchSource<boolean>
     onClose: () => void
     panel: Readonly<Ref<HTMLElement | null>>
     returnFocus?: MaybeRefOrGetter<boolean | HTMLElement | undefined>
@@ -79,13 +111,16 @@ export function useOverlay(options: H0OverlayOptions) {
         const currentCount = state.locks.get(options.lockClass) ?? 0
 
         if (shouldLock && !lockedDocument) {
+            const isFirstLock = getScrollLockCount(state) === 0
             lockedDocument = ownerDocument
             state.locks.set(options.lockClass, currentCount + 1)
+            if (isFirstLock) applyScrollbarCompensation(ownerDocument, state)
         } else if (!shouldLock && lockedDocument) {
             const nextCount = Math.max(currentCount - 1, 0)
             if (nextCount) state.locks.set(options.lockClass, nextCount)
             else state.locks.delete(options.lockClass)
             lockedDocument = undefined
+            if (getScrollLockCount(state) === 0) restoreScrollbarCompensation(ownerDocument, state)
         }
 
         ownerDocument.body.classList.toggle(options.lockClass, (state.locks.get(options.lockClass) ?? 0) > 0)
@@ -151,7 +186,6 @@ export function useOverlay(options: H0OverlayOptions) {
     watch(
         options.isOpen,
         async (isOpen) => {
-            setScrollLock(isOpen)
             setKeydownListener(isOpen)
             if (isOpen) {
                 const ownerDocument = getDocument()
@@ -171,6 +205,8 @@ export function useOverlay(options: H0OverlayOptions) {
         },
         { immediate: true }
     )
+
+    watch(options.scrollLockActive ?? options.isOpen, setScrollLock, { immediate: true })
 
     onBeforeUnmount(() => {
         const wasTop = isTopOverlay()

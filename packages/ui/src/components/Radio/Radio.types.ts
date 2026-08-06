@@ -1,4 +1,5 @@
 export type H0RadioValue = string | number
+export type H0RadioVariant = 'secondary' | 'surface'
 
 export type H0RadioValidator = (value: H0RadioValue | null | undefined) => boolean | string
 

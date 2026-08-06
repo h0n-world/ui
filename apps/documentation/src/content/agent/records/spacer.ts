@@ -9,5 +9,5 @@ export const spacerAgentRecord = {
     ], events: [], slots: [], exposed: [], types: [] },
     useWhen: ['An intentional empty gap cannot be expressed by a parent gap or wrapper padding.'], avoidWhen: ['Stack, Inline, or Grid gap can own the relationship.'], ...standardLayoutGuidance,
     accessibility: ['The spacer is always aria-hidden.', 'Do not use empty space as the only indication of a content relationship.'],
-    examples: [{ key: 'components/layout/BasicExample', purpose: 'Responsive spacing and semantic layout composition.' }], relatedComponents: ['H0Stack', 'H0Inline'],
+    examples: [{ key: 'components/layout/SpacerExample', purpose: 'Highlighted responsive vertical and fixed horizontal empty space.' }], relatedComponents: ['H0Stack', 'H0Inline'],
 } satisfies ComponentAgentRecordV1

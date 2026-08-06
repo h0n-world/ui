@@ -6,6 +6,7 @@ import H0Description from '../Typography/H0Description.vue'
 import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
 import { useFormField } from '../_shared/useFormField'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
+import type { H0CheckboxSize, H0CheckboxVariant } from './Checkbox.types'
 
 defineOptions({
     name: 'H0Checkbox',
@@ -15,6 +16,8 @@ defineOptions({
 const props = withDefaults(
     defineProps<{
         modelValue?: boolean
+        size?: H0CheckboxSize
+        variant?: H0CheckboxVariant
         label?: string
         disabled?: boolean
         indeterminate?: boolean
@@ -30,6 +33,8 @@ const props = withDefaults(
     }>(),
     {
         modelValue: undefined,
+        size: 'md',
+        variant: 'surface',
         label: '',
         disabled: false,
         indeterminate: false,
@@ -95,7 +100,7 @@ watchEffect(() => {
 
 <template>
     <div v-bind="mergedRootAttrs" data-h0n-component="checkbox" class="h-checkbox-field" :class="visibleError && 'h-checkbox-field--error'">
-        <label class="h-checkbox" :class="[resolvedDisabled && 'h-checkbox--disabled', checked && 'h-checkbox--checked', indeterminate && 'h-checkbox--indeterminate']">
+        <label class="h-checkbox" :class="[`h-checkbox--${size}`, `h-checkbox--${variant}`, resolvedDisabled && 'h-checkbox--disabled', checked && 'h-checkbox--checked', indeterminate && 'h-checkbox--indeterminate']">
             <input
                 v-bind="props.controlAttrs"
                 :id="controlId"
@@ -115,7 +120,7 @@ watchEffect(() => {
                 @focus="emit('focus', $event)"
             />
             <span class="h-checkbox__box" aria-hidden="true">
-                <H0Icon class="h-checkbox__mark" :icon="indeterminate ? minusIcon : checkIcon" :size="14" :stroke-width="3" />
+                <H0Icon class="h-checkbox__mark" :icon="indeterminate ? minusIcon : checkIcon" :size="size === 'sm' ? 12 : size === 'lg' ? 16 : 14" :stroke-width="3" />
             </span>
             <span v-if="!fieldContext && (resolvedLabel || $slots.default)" class="h-checkbox__label"><slot>{{ resolvedLabel }}</slot></span>
         </label>
@@ -126,6 +131,8 @@ watchEffect(() => {
 
 <style scoped lang="scss">
 .h-checkbox {
+    --h0n-checkbox-box-background: var(--h0n-ui-color-surface);
+
     align-items: center;
     color: var(--h0n-ui-color-text);
     cursor: pointer;
@@ -149,7 +156,7 @@ watchEffect(() => {
 
     &__box {
         align-items: center;
-        background: var(--h0n-ui-color-secondary);
+        background: var(--h0n-checkbox-box-background);
         border-radius: var(--h0n-ui-radius-sm);
         display: inline-flex;
         flex: 0 0 auto;
@@ -160,6 +167,14 @@ watchEffect(() => {
             border-color var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard),
             box-shadow var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard);
         width: 22px;
+    }
+
+    &--surface {
+        --h0n-checkbox-box-background: var(--h0n-ui-color-surface);
+    }
+
+    &--secondary {
+        --h0n-checkbox-box-background: var(--h0n-ui-color-secondary);
     }
 
     &__mark {
@@ -176,6 +191,32 @@ watchEffect(() => {
         font-weight: var(--h0n-ui-font-weight-medium);
         line-height: 1.35;
         min-width: 0;
+    }
+
+    &--sm {
+        gap: 8px;
+    }
+
+    &--sm &__box {
+        height: 18px;
+        width: 18px;
+    }
+
+    &--sm &__label {
+        font-size: var(--h0n-ui-typography-body-sm-size);
+    }
+
+    &--lg {
+        gap: 12px;
+    }
+
+    &--lg &__box {
+        height: 26px;
+        width: 26px;
+    }
+
+    &--lg &__label {
+        font-size: var(--h0n-ui-typography-h5-size);
     }
 
     &--checked &__box,

@@ -30,6 +30,13 @@ Choose four or six cells. Numeric validation removes non-digits; alphanumeric va
 :::example components/input-otp/VariantsExample
 :::
 
+## Sizes
+
+Use `sm`, `md`, or `lg` to align the OTP cells with the size of adjacent form controls. The default size is `md`.
+
+:::example components/input-otp/SizesExample
+:::
+
 ## Manual confirmation
 
 Set `autoComplete` to `false` when a separate action should confirm the code. A custom validator may return `false` or a message; `confirm()` emits `complete` only for a full valid value.
@@ -54,6 +61,11 @@ Set `autoComplete` to `false` when a separate action should confirm the code. A 
 ### H0InputOTPLength
 
 :::component-api type H0InputOTPLength
+:::
+
+### H0InputOTPSize
+
+:::component-api type H0InputOTPSize
 :::
 
 ### H0InputOTPVariant

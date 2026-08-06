@@ -20,10 +20,13 @@ import {
     type H0CarouselPaginationVariant,
     type H0CardRadius,
     type H0CheckboxOption,
+    type H0CheckboxSize,
+    type H0CheckboxVariant,
     type H0DataTableColumn,
     type H0DataTableFilters,
     type H0DataTableSort,
     type H0GridGap,
+    type H0FileUploadVariant,
     type H0InputInputMode,
     type H0InputVariant,
     type H0ListItemElement,
@@ -31,12 +34,15 @@ import {
     type H0RadioOption,
     type H0RadioOrientation,
     type H0RadioValue,
+    type H0RadioVariant,
     type H0SearchFieldVariant,
+    type H0SelectVariant,
     type H0SegmentItem,
     type H0SideNavGap,
     type H0DrawerSide,
     type H0ModalSide,
     type H0TabItem,
+    type H0TextareaVariant,
     type H0SheetBackdrop,
     type H0SheetSide,
     type H0TypographyAlign,
@@ -150,6 +156,8 @@ export type H0PublicEmitsFixture = [
 
 const accordionItem: H0AccordionItem = { title: 'Question', content: 'Answer' }
 const checkboxOption: H0CheckboxOption = { label: 'Accept', value: 'yes' }
+const checkboxSize: H0CheckboxSize = 'lg'
+const checkboxVariant: H0CheckboxVariant = 'secondary'
 const dataTableColumns: H0DataTableColumn[] = [{ key: 'name', label: 'Name', sortable: true }]
 const dataTableFilters: H0DataTableFilters = { name: 'Ada' }
 const dataTableSort: H0DataTableSort = { key: 'name', direction: 'asc' }
@@ -163,14 +171,18 @@ const carouselControlsPosition: H0CarouselControlsPosition = 'outside'
 const carouselPaginationVariant: H0CarouselPaginationVariant = 'pills'
 const cardRadius: H0CardRadius = ['top-left', 'top-right']
 const gridGap: H0GridGap = 'lg'
+const fileUploadVariant: H0FileUploadVariant = 'secondary'
 const inputMode: H0InputInputMode = 'email'
 const inputVariant: H0InputVariant = 'secondary'
 const listItemElement: H0ListItemElement = 'button'
 const radioValue: H0RadioValue = 'standard'
+const radioVariant: H0RadioVariant = 'secondary'
 const radioOrientation: H0RadioOrientation = 'horizontal'
 const radioGroupVariant: H0RadioGroupVariant = 'cards'
 const radioOptions: H0RadioOption[] = [{ title: 'Standard', value: radioValue, price: '$5.00' }]
 const searchFieldVariant: H0SearchFieldVariant = 'surface'
+const selectVariant: H0SelectVariant = 'secondary'
+const textareaVariant: H0TextareaVariant = 'surface'
 const sheetBackdrop: H0SheetBackdrop = 'blur'
 const overlaySide: H0Public.H0OverlaySide = 'top'
 const sheetSide: H0SheetSide = 'left'
@@ -189,6 +201,8 @@ const pluginConfig: H0Public.H0PluginConfig = {
     theme: 'dark'
 }
 const inputProps: H0Public.H0InputProps = { clearable: true, modelValue: 'Search', variant: inputVariant }
+const checkboxProps: H0Public.H0CheckboxProps = { size: checkboxSize, variant: checkboxVariant }
+const fileUploadProps: H0Public.H0FileUploadProps = { variant: fileUploadVariant }
 const attributeRoutingProps: H0Public.H0AttributeRoutingProps = {
     rootAttrs: { 'data-testid': 'field-root' },
     controlAttrs: { 'aria-labelledby': 'field-label', enterkeyhint: 'next' }
@@ -197,7 +211,9 @@ const routedInputProps: H0Public.H0InputProps = { ...attributeRoutingProps, defa
 const buttonProps: H0Public.H0ButtonProps = { size: 'md', tone: buttonTone, variant: buttonVariant }
 const carouselProps: H0Public.H0CarouselProps = { autoplay: true, controlsPosition: carouselControlsPosition, paginationVariant: carouselPaginationVariant }
 const searchFieldProps: H0Public.H0SearchFieldProps = { modelValue: 'Search', variant: searchFieldVariant }
-const radioProps: H0Public.H0RadioProps = { modelValue: radioValue, value: radioValue }
+const selectProps: H0Public.H0SelectProps = { options: [], variant: selectVariant }
+const textareaProps: H0Public.H0TextareaProps = { variant: textareaVariant }
+const radioProps: H0Public.H0RadioProps = { modelValue: radioValue, value: radioValue, variant: radioVariant }
 const radioGroupProps: H0Public.H0RadioGroupProps = { modelValue: radioValue, options: radioOptions, orientation: radioOrientation, variant: radioGroupVariant }
 const inferredSelectOption: H0Public.H0SelectOption<'daily' | 'weekly'> = { label: 'Daily', value: 'daily' }
 const typedTableColumn: H0Public.H0TableColumn<{ id: number; name: string }> = { key: 'name', label: 'Name', value: (row) => row.name }
@@ -219,6 +235,7 @@ void [
     H0Segment,
     accordionItem,
     checkboxOption,
+    checkboxSize,
     dataTableColumns,
     dataTableFilters,
     dataTableSort,
@@ -230,13 +247,17 @@ void [
     carouselPaginationVariant,
     cardRadius,
     gridGap,
+    fileUploadVariant,
     inputMode,
     listItemElement,
     radioValue,
+    radioVariant,
     radioOrientation,
     radioGroupVariant,
     radioOptions,
     searchFieldVariant,
+    selectVariant,
+    textareaVariant,
     sheetBackdrop,
     overlaySide,
     sheetSide,
@@ -248,11 +269,15 @@ void [
     semanticTone,
     pluginConfig,
     inputProps,
+    checkboxProps,
+    fileUploadProps,
     attributeRoutingProps,
     routedInputProps,
     buttonProps,
     carouselProps,
     searchFieldProps,
+    selectProps,
+    textareaProps,
     radioProps,
     radioGroupProps,
     inferredSelectOption,

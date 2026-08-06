@@ -18,5 +18,5 @@ export const segmentAgentRecord = {
     ] },
     useWhen: ['A small set of peer views or modes needs compact immediate selection.'], avoidWhen: ['Each choice controls a semantic tabpanel; use H0Tabs.', 'The choices are form data better represented by H0RadioGroup.'], ...standardNavigationGuidance,
     performance: ['Keep the item list short and stable.', 'Indicator measurements update on selection, size, items, and observed layout changes.'],
-    examples: [{ key: 'components/segment/BasicExample', purpose: 'Controlled reporting-period selection.' }, { key: 'components/segment/AppearanceExample', purpose: 'Variants and large size.' }, { key: 'components/segment/IconsExample', purpose: 'Icon expansion and disabled item.' }], relatedComponents: ['H0Tabs', 'H0RadioGroup', 'H0ButtonGroup'],
+    examples: [{ key: 'components/segment/BasicExample', purpose: 'Controlled reporting-period selection.' }, { key: 'components/segment/AppearanceExample', purpose: 'Default, secondary, outline, and ghost variants.' }, { key: 'components/segment/SizesExample', purpose: 'Small, medium, and large controls.' }, { key: 'components/segment/IconsExample', purpose: 'Icon expansion and disabled item.' }], relatedComponents: ['H0Tabs', 'H0RadioGroup', 'H0ButtonGroup'],
 } satisfies ComponentAgentRecordV1

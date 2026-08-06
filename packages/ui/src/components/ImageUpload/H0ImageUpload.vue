@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { plusIcon, trashIcon } from '../../icons'
 import { computed, ref, watch } from 'vue'
+import { useH0ControllableState } from '../../composables/useH0ControllableState'
+import { plusIcon, trashIcon } from '../../icons'
+import { useH0Locale } from '../../locale'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Image from '../Image/H0Image.vue'
 import H0Spinner from '../Spinner/H0Spinner.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
 import H0Typography from '../Typography/H0Typography.vue'
-import { useFormField } from '../_shared/useFormField'
-import type { H0ImageUploadError, H0ImageUploadFit, H0ImageUploadPreset } from './ImageUpload.types'
-import { useH0ControllableState } from '../../composables/useH0ControllableState'
-import { toH0CssSize, useH0ObjectUrl } from '../_shared/utils'
-import { useH0Locale } from '../../locale'
 import { matchesH0FileAccept } from '../_shared/upload'
+import { useFormField } from '../_shared/useFormField'
+import { toH0CssSize, useH0ObjectUrl } from '../_shared/utils'
+import type { H0ImageUploadError, H0ImageUploadFit, H0ImageUploadPreset } from './ImageUpload.types'
 
 defineOptions({
     name: 'H0ImageUpload'
@@ -100,7 +100,18 @@ const resolvedRemoveLabel = computed(() => props.removeLabel || locale.value.ima
 const resolvedLoadingLabel = computed(() => props.loadingLabel || locale.value.common.loading)
 const isDragging = ref(false)
 const errorMessage = ref('')
-const { controlId, fieldContext, hasMessage, messageId, resolvedDisabled: fieldDisabled, resolvedHint: fieldHint, resolvedName: fieldName, resolvedRequired: fieldRequired, setFormValue, visibleError } = useFormField({
+const {
+    controlId,
+    fieldContext,
+    hasMessage,
+    messageId,
+    resolvedDisabled: fieldDisabled,
+    resolvedHint: fieldHint,
+    resolvedName: fieldName,
+    resolvedRequired: fieldRequired,
+    setFormValue,
+    visibleError
+} = useFormField({
     id: () => props.id,
     name: () => props.name,
     label: () => resolvedLabel.value,
@@ -135,7 +146,9 @@ const acceptedFormats = computed(() =>
         .filter(Boolean)
 )
 const maxSizeLabel = computed(() => formatBytes(props.maxSize))
-const detailsText = computed(() => props.hint || `${acceptedFormats.value.join(', ')} up to ${maxSizeLabel.value}`)
+const detailsText = computed(() => `${acceptedFormats.value.map(formatAcceptedFormat).join(', ')} · Max ${maxSizeLabel.value}`)
+const detailsId = computed(() => `${controlId.value}-details`)
+const describedBy = computed(() => [detailsId.value, hasMessage.value ? messageId.value : ''].filter(Boolean).join(' '))
 
 const rootStyle = computed(() => ({
     '--h-image-upload-width': resolvedWidth.value,
@@ -153,6 +166,29 @@ function formatBytes(value: number) {
     }
 
     return `${value} B`
+}
+
+function formatAcceptedFormat(value: string) {
+    const normalized = value.toLowerCase()
+    const knownFormats: Record<string, string> = {
+        'image/jpeg': 'JPEG',
+        'image/jpg': 'JPG',
+        'image/png': 'PNG',
+        'image/webp': 'WebP',
+        'image/gif': 'GIF',
+        'image/avif': 'AVIF',
+        'image/svg+xml': 'SVG'
+    }
+
+    if (knownFormats[normalized]) {
+        return knownFormats[normalized]
+    }
+
+    if (normalized.startsWith('.')) {
+        return normalized.slice(1).toUpperCase()
+    }
+
+    return value
 }
 
 function revokeObjectUrl() {
@@ -284,12 +320,12 @@ watch(
     },
     { immediate: true }
 )
-
 </script>
 
 <template>
     <div
-        data-h0n-component="image-upload" class="h-image-upload"
+        data-h0n-component="image-upload"
+        class="h-image-upload"
         :class="[
             `h-image-upload--${preset}`,
             hasPreview && 'h-image-upload--has-preview',
@@ -311,7 +347,7 @@ watch(
             :disabled="fieldDisabled || loading"
             :aria-invalid="Boolean(visibleError)"
             :aria-label="resolvedLabel"
-            :aria-describedby="hasMessage ? messageId : undefined"
+            :aria-describedby="describedBy"
             @blur="emit('blur', $event)"
             @change="handleInputChange"
             @focus="emit('focus', $event)"
@@ -323,7 +359,7 @@ watch(
             :disabled="fieldDisabled || loading"
             :aria-label="resolvedLabel"
             :aria-busy="loading || undefined"
-            :aria-describedby="hasMessage ? messageId : undefined"
+            :aria-describedby="describedBy"
             @click="openFileDialog"
             @dragenter="handleDragEnter"
             @dragover="handleDragOver"
@@ -349,13 +385,11 @@ watch(
                 <span class="h-image-upload__copy">
                     <H0Typography class="h-image-upload__title" as="span" variant="body" :weight="600">{{ dropLabel }}</H0Typography>
                     <H0Description class="h-image-upload__text" as="span">{{ browseLabel }}</H0Description>
-                    <H0Description class="h-image-upload__details" as="span" variant="body-xs">{{ detailsText }}</H0Description>
                 </span>
             </span>
 
             <span v-if="loading" class="h-image-upload__overlay">
                 <H0Spinner size="24px" :label="resolvedLoadingLabel" />
-                <H0Typography as="span" variant="body-sm" :weight="600">{{ resolvedLoadingLabel }}</H0Typography>
             </span>
         </button>
 
@@ -363,8 +397,11 @@ watch(
             <H0Icon :icon="trashIcon" :size="16" />
         </button>
 
-        <H0ErrorMessage v-if="!fieldContext && visibleError" :id="messageId" class="h-image-upload__error" role="alert">{{ visibleError }}</H0ErrorMessage>
-        <H0Description v-else-if="!fieldContext && fieldHint" :id="messageId" as="span">{{ fieldHint }}</H0Description>
+        <span class="h-image-upload__supporting">
+            <H0Description :id="detailsId" class="h-image-upload__details" as="span" variant="body-xs">{{ detailsText }}</H0Description>
+            <H0ErrorMessage v-if="!fieldContext && visibleError" :id="messageId" class="h-image-upload__error" role="alert">{{ visibleError }}</H0ErrorMessage>
+            <H0Description v-else-if="!fieldContext && fieldHint" :id="messageId" class="h-image-upload__hint" as="span">{{ fieldHint }}</H0Description>
+        </span>
     </div>
 </template>
 
@@ -373,11 +410,11 @@ watch(
     color: var(--h0n-ui-color-text);
     display: inline-grid;
     font-family: var(--h0n-ui-font-family);
-    gap: 8px;
+    gap: var(--h0n-ui-spacing-md);
     max-width: 100%;
     min-width: 0;
     position: relative;
-    width: var(--h-image-upload-width);
+    width: min(100%, max(var(--h-image-upload-width), 220px));
 
     &__surface {
         align-items: center;
@@ -385,6 +422,8 @@ watch(
         border: 1px dashed color-mix(in srgb, var(--h0n-ui-color-muted) 45%, transparent);
         border-radius: var(--h-image-upload-radius);
         color: inherit;
+        container-name: h-image-upload-surface;
+        container-type: inline-size;
         cursor: pointer;
         display: grid;
         font: inherit;
@@ -399,7 +438,8 @@ watch(
             background-color var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard),
             border-color var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard),
             box-shadow var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard);
-        width: 100%;
+        justify-self: center;
+        width: min(100%, var(--h-image-upload-width));
     }
 
     &__surface:hover:not(:disabled),
@@ -462,26 +502,46 @@ watch(
         line-height: 1.25;
     }
 
-    &__text,
-    &__details {
+    &__text {
         line-height: 1.35;
     }
 
     &__details {
+        color: var(--h0n-ui-color-muted);
         line-height: 1.35;
+        min-width: 0;
+        text-align: center;
+    }
+
+    &__supporting {
+        display: grid;
+        gap: 4px;
+        justify-items: center;
+        min-width: 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    &__hint,
+    &__error {
+        max-width: 100%;
+        text-align: center;
     }
 
     &__overlay {
         align-items: center;
-        background: color-mix(in srgb, var(--h0n-ui-color-secondary) 72%, transparent);
+        background: var(--h0n-ui-color-secondary);
         color: var(--h0n-ui-color-text);
         display: grid;
-        gap: 10px;
         inset: 0;
-        justify-items: center;
+        place-items: center;
         line-height: 1.2;
         position: absolute;
         z-index: 2;
+    }
+
+    &--has-preview &__overlay {
+        background: color-mix(in srgb, var(--h0n-ui-color-secondary) 72%, transparent);
     }
 
     &__remove {
@@ -528,6 +588,24 @@ watch(
 
     &--disabled {
         opacity: 0.58;
+    }
+
+    &--avatar &__empty {
+        padding: 0;
+    }
+
+    &--avatar &__copy {
+        display: none;
+    }
+}
+
+@container h-image-upload-surface (max-width: 179px) {
+    .h-image-upload__empty {
+        padding: 10px;
+    }
+
+    .h-image-upload__copy {
+        display: none;
     }
 }
 </style>

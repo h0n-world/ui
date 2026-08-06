@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { checkIcon } from '../../icons'
 import { computed } from 'vue'
+import { checkIcon } from '../../icons'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
@@ -163,8 +163,8 @@ function getStepState(index: number) {
     font-size: var(--h0n-ui-typography-body-sm-size);
     font-weight: var(--h0n-ui-font-weight-semibold);
     height: var(--h-stepper-marker-size);
-    justify-content: center;
     line-height: 1;
+    place-items: center;
     position: relative;
     transition:
         background-color var(--h0n-ui-duration-fast) ease,
@@ -176,7 +176,7 @@ function getStepState(index: number) {
 
 .h-stepper__marker-content {
     grid-area: 1 / 1;
-    transform: translateX(1px);
+    line-height: 1;
 }
 
 .h-stepper__content {
@@ -272,12 +272,13 @@ function getStepState(index: number) {
 
     .h-stepper__item:not(:last-child)::before {
         background: var(--h-stepper-line-pending);
-        bottom: 0;
+        bottom: calc(var(--h-stepper-marker-size) / -2);
         content: '';
-        left: calc((var(--h-stepper-marker-size) - var(--h-stepper-line-size)) / 2);
+        left: calc((var(--h-stepper-marker-size) - var(--h-stepper-line-size)) / 1.6);
         position: absolute;
-        top: var(--h-stepper-marker-size);
+        top: calc(var(--h-stepper-marker-size) / 2);
         width: var(--h-stepper-line-size);
+        z-index: 0;
     }
 
     .h-stepper__item--complete:not(:last-child)::before {

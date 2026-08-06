@@ -23,6 +23,13 @@ Use `maxlength` to enforce a native character limit and display the built-in cou
 :::example components/textarea/BasicExample
 :::
 
+## Variants
+
+`surface` is the default neutral container. Use `secondary` when the textarea needs stronger separation from the surrounding surface.
+
+:::example components/textarea/VariantsExample
+:::
+
 ## Sizes
 
 Use `sm` in dense forms, `md` for most text entry, and `lg` when longer content needs more visual prominence.
@@ -72,6 +79,11 @@ Ordinary fallthrough attributes target the component root. Use `rootAttrs` to ov
 :::component-api type H0TextareaSize
 :::
 
+### H0TextareaVariant
+
+:::component-api type H0TextareaVariant
+:::
+
 ## Slots
 
 :::component-api slots
@@ -99,4 +111,4 @@ Automatic resizing measures after value updates; avoid mounting hundreds of simu
 
 ## Styling
 
-Use size, resize props, validation state, and public tokens; native textarea selectors are internal.
+Use variant, size, resize props, validation state, and public tokens; native textarea selectors are internal.

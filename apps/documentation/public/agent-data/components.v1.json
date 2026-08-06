@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "library": {
     "name": "@h0nio/ui",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "components": [
     {
@@ -1999,14 +1999,16 @@
       "schemaVersion": 1,
       "component": "H0Checkbox",
       "status": "migrated",
-      "summary": "Controlled or uncontrolled native boolean checkbox with indeterminate, validation, and Form integration.",
+      "summary": "Controlled or uncontrolled native boolean checkbox with surface variants, indeterminate, validation, sizing, and Form integration.",
       "imports": {
         "components": [
           "H0Checkbox"
         ],
         "types": [
           "H0CheckboxEmits",
-          "H0CheckboxProps"
+          "H0CheckboxProps",
+          "H0CheckboxSize",
+          "H0CheckboxVariant"
         ],
         "styles": [
           "@h0nio/ui/style.css"
@@ -2025,6 +2027,18 @@
             "type": "boolean",
             "default": "false",
             "description": "Initial uncontrolled state."
+          },
+          {
+            "name": "size",
+            "type": "H0CheckboxSize",
+            "default": "'md'",
+            "description": "Checkbox and label size."
+          },
+          {
+            "name": "variant",
+            "type": "H0CheckboxVariant",
+            "default": "'surface'",
+            "description": "Unchecked box surface treatment."
           },
           {
             "name": "indeterminate",
@@ -2123,7 +2137,28 @@
           }
         ],
         "exposed": [],
-        "types": []
+        "types": [
+          {
+            "name": "H0CheckboxSize",
+            "fields": [
+              {
+                "name": "H0CheckboxSize",
+                "type": "'sm' | 'md' | 'lg'",
+                "description": "Supported standalone checkbox sizes."
+              }
+            ]
+          },
+          {
+            "name": "H0CheckboxVariant",
+            "fields": [
+              {
+                "name": "H0CheckboxVariant",
+                "type": "'surface' | 'secondary'",
+                "description": "Unchecked box surface treatment."
+              }
+            ]
+          }
+        ]
       },
       "useWhen": [
         "One independent boolean choice is required."
@@ -2150,6 +2185,14 @@
         {
           "key": "components/checkbox/BasicExample",
           "purpose": "Controlled checkbox and group."
+        },
+        {
+          "key": "components/checkbox/VariantsExample",
+          "purpose": "Surface and secondary standalone checkboxes."
+        },
+        {
+          "key": "components/checkbox/SizesExample",
+          "purpose": "Small, medium, and large standalone checkboxes."
         },
         {
           "key": "components/checkbox/StatesExample",
@@ -2637,7 +2680,7 @@
       "examples": [
         {
           "key": "components/layout/BasicExample",
-          "purpose": "Responsive spacing and semantic layout composition."
+          "purpose": "Bounded page-section composition."
         },
         {
           "key": "components/layout/ContainerSizesExample",
@@ -3382,7 +3425,11 @@
       "examples": [
         {
           "key": "components/layout/BasicExample",
-          "purpose": "Responsive spacing and semantic layout composition."
+          "purpose": "Meaningful boundary in a composed page section."
+        },
+        {
+          "key": "components/layout/DividerExample",
+          "purpose": "Labeled, inset, decorative, and vertical separators."
         }
       ],
       "relatedComponents": [
@@ -4057,6 +4104,7 @@
           "H0FileUploadEmits",
           "H0FileUploadProps",
           "H0FileUploadValidationError",
+          "H0FileUploadVariant",
           "H0UploadAdapter",
           "H0UploadAdapterContext",
           "H0UploadItem",
@@ -4133,6 +4181,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Enables queue reordering."
+          },
+          {
+            "name": "variant",
+            "type": "H0FileUploadVariant",
+            "default": "'surface'",
+            "description": "Drop-area background treatment."
           },
           {
             "name": "id",
@@ -4305,6 +4359,16 @@
         ],
         "types": [
           {
+            "name": "H0FileUploadVariant",
+            "fields": [
+              {
+                "name": "H0FileUploadVariant",
+                "type": "'secondary' | 'surface'",
+                "description": "Supported drop-area surface treatments."
+              }
+            ]
+          },
+          {
             "name": "H0FileUploadValidationError",
             "fields": [
               {
@@ -4421,6 +4485,10 @@
         {
           "key": "components/file-upload/BasicExample",
           "purpose": "Validated multi-file selection."
+        },
+        {
+          "key": "components/file-upload/VariantsExample",
+          "purpose": "Surface and secondary drop-area treatments."
         },
         {
           "key": "components/file-upload/ValidationExample",
@@ -5310,6 +5378,10 @@
           "purpose": "Default and custom failed-image fallbacks."
         },
         {
+          "key": "components/image/LoadingExample",
+          "purpose": "Default skeleton while a lazy image waits to load."
+        },
+        {
           "key": "components/image/LifecycleExample",
           "purpose": "Successful and failed reloads with status-change, load, and error telemetry."
         }
@@ -5601,11 +5673,27 @@
         },
         {
           "key": "components/image-upload/PresetsExample",
-          "purpose": "Avatar, square, and banner presets."
+          "purpose": "Avatar, square, and custom empty upload surfaces."
         },
         {
-          "key": "components/image-upload/StatesExample",
-          "purpose": "Loading, disabled, custom, and error states."
+          "key": "components/image-upload/BannerPresetExample",
+          "purpose": "Fluid banner upload surface."
+        },
+        {
+          "key": "components/image-upload/VerticalPresetExample",
+          "purpose": "Tall portrait upload surface."
+        },
+        {
+          "key": "components/image-upload/LoadingExample",
+          "purpose": "Centered spinner-only pending state."
+        },
+        {
+          "key": "components/image-upload/DisabledExample",
+          "purpose": "Unavailable avatar upload."
+        },
+        {
+          "key": "components/image-upload/ErrorExample",
+          "purpose": "Banner upload with external validation feedback."
         }
       ],
       "relatedComponents": [
@@ -5877,7 +5965,11 @@
       "examples": [
         {
           "key": "components/layout/BasicExample",
-          "purpose": "Responsive spacing and semantic layout composition."
+          "purpose": "Nested page-section composition."
+        },
+        {
+          "key": "components/layout/InlineExample",
+          "purpose": "Wrapping status and action groups with space-between distribution."
         }
       ],
       "relatedComponents": [
@@ -6269,6 +6361,7 @@
           "H0InputOTPEmits",
           "H0InputOTPLength",
           "H0InputOTPProps",
+          "H0InputOTPSize",
           "H0InputOTPValidation",
           "H0InputOTPValidator",
           "H0InputOTPVariant"
@@ -6296,6 +6389,12 @@
             "type": "4 | 6",
             "default": "6",
             "description": "Number of cells."
+          },
+          {
+            "name": "size",
+            "type": "H0InputOTPSize",
+            "default": "'md'",
+            "description": "Cell size."
           },
           {
             "name": "variant",
@@ -6438,6 +6537,16 @@
             ]
           },
           {
+            "name": "H0InputOTPSize",
+            "fields": [
+              {
+                "name": "H0InputOTPSize",
+                "type": "'sm' | 'md' | 'lg'",
+                "description": "Supported cell sizes."
+              }
+            ]
+          },
+          {
             "name": "H0InputOTPVariant",
             "fields": [
               {
@@ -6498,6 +6607,10 @@
         {
           "key": "components/input-otp/VariantsExample",
           "purpose": "Four and six cells with both validation modes."
+        },
+        {
+          "key": "components/input-otp/SizesExample",
+          "purpose": "Small, medium, and large OTP cells."
         },
         {
           "key": "components/input-otp/ValidationExample",
@@ -7754,6 +7867,10 @@
           "purpose": "Shared surface and secondary variants."
         },
         {
+          "key": "components/number-input/SizesExample",
+          "purpose": "Small, medium, and large numeric fields."
+        },
+        {
           "key": "components/number-input/FormattingExample",
           "purpose": "Intl and custom number formatting."
         },
@@ -8157,6 +8274,10 @@
           "purpose": "Shared surface and secondary variants."
         },
         {
+          "key": "components/password-input/SizesExample",
+          "purpose": "Small, medium, and large password fields."
+        },
+        {
           "key": "components/password-input/VisibilityExample",
           "purpose": "Controlled reveal state."
         },
@@ -8183,7 +8304,7 @@
       "schemaVersion": 1,
       "component": "H0Radio",
       "status": "migrated",
-      "summary": "Standalone native radio control with label, description, validation, and programmatic focus.",
+      "summary": "Standalone native radio control with surface variants, label, description, validation, and programmatic focus.",
       "imports": {
         "components": [
           "H0Radio"
@@ -8192,7 +8313,8 @@
           "H0RadioEmits",
           "H0RadioProps",
           "H0RadioValidator",
-          "H0RadioValue"
+          "H0RadioValue",
+          "H0RadioVariant"
         ],
         "styles": [
           "@h0nio/ui/style.css"
@@ -8216,6 +8338,12 @@
             "name": "value",
             "type": "H0RadioValue",
             "description": "Value represented by this radio."
+          },
+          {
+            "name": "variant",
+            "type": "H0RadioVariant",
+            "default": "'surface'",
+            "description": "Unchecked indicator surface treatment."
           },
           {
             "name": "label",
@@ -8338,6 +8466,16 @@
             ]
           },
           {
+            "name": "H0RadioVariant",
+            "fields": [
+              {
+                "name": "H0RadioVariant",
+                "type": "'surface' | 'secondary'",
+                "description": "Unchecked indicator surface treatment."
+              }
+            ]
+          },
+          {
             "name": "H0RadioValidator",
             "fields": [
               {
@@ -8374,6 +8512,10 @@
         {
           "key": "components/radio/BasicExample",
           "purpose": "Standalone and card choices."
+        },
+        {
+          "key": "components/radio/VariantsExample",
+          "purpose": "Surface and secondary standalone radios."
         },
         {
           "key": "components/radio/GroupExample",
@@ -9146,7 +9288,15 @@
         },
         {
           "key": "components/search-field/VariantsExample",
-          "purpose": "Surface variants and interaction states."
+          "purpose": "Surface variants."
+        },
+        {
+          "key": "components/search-field/SizesExample",
+          "purpose": "Small, medium, and large search fields."
+        },
+        {
+          "key": "components/search-field/StatesExample",
+          "purpose": "Read-only, disabled, and invalid states."
         },
         {
           "key": "components/search-field/ApiExample",
@@ -9340,7 +9490,11 @@
         },
         {
           "key": "components/segment/AppearanceExample",
-          "purpose": "Variants and large size."
+          "purpose": "Default, secondary, outline, and ghost variants."
+        },
+        {
+          "key": "components/segment/SizesExample",
+          "purpose": "Small, medium, and large controls."
         },
         {
           "key": "components/segment/IconsExample",
@@ -9374,7 +9528,8 @@
           "H0SelectOption",
           "H0SelectProps",
           "H0SelectSize",
-          "H0SelectValue"
+          "H0SelectValue",
+          "H0SelectVariant"
         ],
         "styles": [
           "@h0nio/ui/style.css"
@@ -9414,9 +9569,15 @@
           },
           {
             "name": "size",
-            "type": "'sm' | 'md' | 'lg'",
+            "type": "H0SelectSize",
             "default": "'md'",
             "description": "Control size."
+          },
+          {
+            "name": "variant",
+            "type": "H0SelectVariant",
+            "default": "'surface'",
+            "description": "Trigger background treatment."
           },
           {
             "name": "label",
@@ -9621,6 +9782,16 @@
             ]
           },
           {
+            "name": "H0SelectVariant",
+            "fields": [
+              {
+                "name": "H0SelectVariant",
+                "type": "'secondary' | 'surface'",
+                "description": "Supported trigger surface treatments."
+              }
+            ]
+          },
+          {
             "name": "H0SelectOption",
             "fields": [
               {
@@ -9683,8 +9854,16 @@
           "purpose": "Multiple selection with a maximum."
         },
         {
+          "key": "components/select/VariantsExample",
+          "purpose": "Surface and secondary trigger treatments."
+        },
+        {
+          "key": "components/select/SizesExample",
+          "purpose": "Small, medium, and large trigger sizes."
+        },
+        {
           "key": "components/select/StatesExample",
-          "purpose": "Sizes, loading, disabled, invalid, and empty states."
+          "purpose": "Loading, disabled, invalid, and empty states."
         },
         {
           "key": "components/select/VirtualExample",
@@ -10408,8 +10587,8 @@
       ],
       "examples": [
         {
-          "key": "components/layout/BasicExample",
-          "purpose": "Responsive spacing and semantic layout composition."
+          "key": "components/layout/SpacerExample",
+          "purpose": "Highlighted responsive vertical and fixed horizontal empty space."
         }
       ],
       "relatedComponents": [
@@ -10618,7 +10797,11 @@
       "examples": [
         {
           "key": "components/layout/BasicExample",
-          "purpose": "Responsive spacing and semantic layout composition."
+          "purpose": "Nested page-section composition."
+        },
+        {
+          "key": "components/layout/StackExample",
+          "purpose": "Responsive vertical rhythm between repeated sections."
         }
       ],
       "relatedComponents": [
@@ -10777,8 +10960,12 @@
           "purpose": "Four-step workspace setup progress."
         },
         {
-          "key": "components/stepper/VariantsExample",
-          "purpose": "Semantic colors and small size."
+          "key": "components/stepper/ColorsExample",
+          "purpose": "All semantic progress treatments at full width."
+        },
+        {
+          "key": "components/stepper/SizesExample",
+          "purpose": "Small, medium, and large marker and typography scales."
         },
         {
           "key": "components/stepper/VerticalExample",
@@ -11821,7 +12008,8 @@
           "H0TextareaEmits",
           "H0TextareaInputMode",
           "H0TextareaProps",
-          "H0TextareaSize"
+          "H0TextareaSize",
+          "H0TextareaVariant"
         ],
         "styles": [
           "@h0nio/ui/style.css"
@@ -11846,6 +12034,12 @@
             "type": "H0TextareaSize",
             "default": "'md'",
             "description": "Control size."
+          },
+          {
+            "name": "variant",
+            "type": "H0TextareaVariant",
+            "default": "'surface'",
+            "description": "Control background treatment."
           },
           {
             "name": "placeholder",
@@ -12017,6 +12211,16 @@
                 "description": "Supported control sizes."
               }
             ]
+          },
+          {
+            "name": "H0TextareaVariant",
+            "fields": [
+              {
+                "name": "H0TextareaVariant",
+                "type": "'secondary' | 'surface'",
+                "description": "Supported control surface treatments."
+              }
+            ]
           }
         ]
       },
@@ -12045,6 +12249,10 @@
         {
           "key": "components/textarea/BasicExample",
           "purpose": "Auto-resizing message with character count."
+        },
+        {
+          "key": "components/textarea/VariantsExample",
+          "purpose": "Surface and secondary control treatments."
         },
         {
           "key": "components/textarea/SizesExample",

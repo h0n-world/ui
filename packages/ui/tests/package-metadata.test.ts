@@ -32,7 +32,7 @@ describe('@h0nio/ui package metadata', () => {
     it('declares its public npm identity and MIT license', () => {
         expect(packageJson).toMatchObject({
             name: '@h0nio/ui',
-            version: '1.0.0',
+            version: '1.1.0',
             license: 'MIT',
             author: {
                 name: 'h0n-world',
@@ -43,7 +43,7 @@ describe('@h0nio/ui package metadata', () => {
                 url: 'git+https://github.com/h0n-world/ui.git',
                 directory: 'packages/ui'
             },
-            homepage: 'https://github.com/h0n-world/ui#readme',
+            homepage: 'https://ui.h0n.io',
             bugs: { url: 'https://github.com/h0n-world/ui/issues' },
             publishConfig: { access: 'public' }
         })
@@ -51,7 +51,7 @@ describe('@h0nio/ui package metadata', () => {
         expect(packageJson.description).toBeTruthy()
         expect(packageJson.keywords).toEqual(expect.arrayContaining(['vue', 'component-library', 'design-system', 'typescript', 'accessibility']))
         expect(readFileSync(resolve(packageRoot, 'LICENSE'), 'utf8')).toContain('MIT License')
-        expect(readFileSync(resolve(packageRoot, 'README.md'), 'utf8')).toContain('# @h0nio/ui')
+        expect(readFileSync(resolve(packageRoot, 'README.md'), 'utf8')).toContain('# H0N UI')
     })
 
     it('publishes only intentional artifacts and marks CSS as side-effectful', () => {

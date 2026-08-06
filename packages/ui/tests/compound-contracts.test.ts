@@ -7,6 +7,20 @@ import { useH0CollectionNavigation } from '../src/components/_shared/useCollecti
 
 afterEach(() => { document.body.innerHTML = ''; vi.useRealTimers() })
 
+function createRect(left: number, top: number, width: number, height: number): DOMRect {
+    return {
+        bottom: top + height,
+        height,
+        left,
+        right: left + width,
+        top,
+        width,
+        x: left,
+        y: top,
+        toJSON: () => ({})
+    }
+}
+
 describe('compound component contracts', () => {
     it('registers every component listed by the manifest', () => {
         const app = createApp({ render: () => null })
@@ -30,6 +44,35 @@ describe('compound component contracts', () => {
         await wrapper.findAll('[role=tab]')[1].trigger('click')
         expect(wrapper.emitted('change')?.[0]).toEqual(['two'])
         expect(wrapper.findAll('[role=tabpanel]').filter((panel) => panel.isVisible())).toHaveLength(1)
+    })
+
+    it.each([
+        ['horizontal', createRect(180, 40, 80, 36), 'translate3d(80px, 0, 0)', 'width: 80px'],
+        ['vertical', createRect(100, 76, 96, 36), 'translate3d(0, 36px, 0)', 'height: 36px']
+    ] as const)('moves the Tabs indicator along the %s axis', async (orientation, activeRect, expectedTransform, expectedSize) => {
+        const wrapper = mount(H0Tabs, {
+            props: { defaultValue: 'one', orientation },
+            slots: {
+                default: () => [
+                    h(H0TabList, () => [h(H0Tab, { value: 'one' }, () => 'One'), h(H0Tab, { value: 'two' }, () => 'Two')]),
+                    h(H0TabPanel, { value: 'one' }, () => 'Panel one'),
+                    h(H0TabPanel, { value: 'two' }, () => 'Panel two')
+                ]
+            }
+        })
+        const tabList = wrapper.get<HTMLElement>('[role=tablist]')
+        const tabs = wrapper.findAll<HTMLButtonElement>('[role=tab]')
+
+        vi.spyOn(tabList.element, 'getBoundingClientRect').mockReturnValue(createRect(100, 40, 160, 72))
+        vi.spyOn(tabs[1].element, 'getBoundingClientRect').mockReturnValue(activeRect)
+
+        await tabs[1].trigger('click')
+        await nextTick()
+        await nextTick()
+
+        const indicatorStyle = wrapper.get<HTMLElement>('.h-tab-list__indicator').attributes('style')
+        expect(indicatorStyle).toContain(`transform: ${expectedTransform}`)
+        expect(indicatorStyle).toContain(expectedSize)
     })
 
     it('inherits Field metadata while direct control props take precedence', () => {

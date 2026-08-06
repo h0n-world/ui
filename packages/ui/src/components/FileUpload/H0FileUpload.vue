@@ -9,11 +9,11 @@ import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
 import H0Label from '../Typography/H0Label.vue'
 import { createH0UploadId, validateH0File } from '../_shared/upload'
 import { useFormField } from '../_shared/useFormField'
-import type { H0FileUploadValidationError } from './FileUpload.types'
+import type { H0FileUploadValidationError, H0FileUploadVariant } from './FileUpload.types'
 
 defineOptions({ name: 'H0FileUpload' })
 type QueueItem = H0UploadItem<Result> & { previewUrl?: string }
-const props = withDefaults(defineProps<{ modelValue?: File[]; defaultValue?: File[]; multiple?: boolean; accept?: string; maxSize?: number; maxFiles?: number; validator?: (file: File, files: readonly File[]) => string | null | undefined | Promise<string | null | undefined>; upload?: H0UploadAdapter<Result>; autoUpload?: boolean; concurrency?: number; reorderable?: boolean; id?: string; name?: string; label?: string; required?: boolean; disabled?: boolean; error?: string; hint?: string }>(), { modelValue: undefined, defaultValue: () => [], multiple: false, accept: '', maxSize: undefined, maxFiles: undefined, validator: undefined, upload: undefined, autoUpload: false, concurrency: 3, reorderable: false, id: '', name: '', label: '', required: false, disabled: false, error: '', hint: '' })
+const props = withDefaults(defineProps<{ modelValue?: File[]; defaultValue?: File[]; multiple?: boolean; accept?: string; maxSize?: number; maxFiles?: number; validator?: (file: File, files: readonly File[]) => string | null | undefined | Promise<string | null | undefined>; upload?: H0UploadAdapter<Result>; autoUpload?: boolean; concurrency?: number; reorderable?: boolean; variant?: H0FileUploadVariant; id?: string; name?: string; label?: string; required?: boolean; disabled?: boolean; error?: string; hint?: string }>(), { modelValue: undefined, defaultValue: () => [], multiple: false, accept: '', maxSize: undefined, maxFiles: undefined, validator: undefined, upload: undefined, autoUpload: false, concurrency: 3, reorderable: false, variant: 'surface', id: '', name: '', label: '', required: false, disabled: false, error: '', hint: '' })
 const emit = defineEmits<{ 'update:modelValue': [files: File[]]; change: [files: File[]]; add: [files: File[]]; remove: [file: File]; clear: []; invalid: [error: H0FileUploadValidationError]; 'upload-start': [item: H0UploadItem<Result>]; progress: [item: H0UploadItem<Result>]; success: [item: H0UploadItem<Result>]; error: [item: H0UploadItem<Result>]; cancel: [item: H0UploadItem<Result>]; reorder: [files: File[]]; focus: [event: FocusEvent]; blur: [event: FocusEvent] }>()
 const input = ref<HTMLInputElement>()
 const dragging = ref(false)
@@ -50,7 +50,7 @@ onBeforeUnmount(cleanup)
 </script>
 
 <template>
-    <div data-h0n-component="file-upload" class="h-file-upload">
+    <div data-h0n-component="file-upload" class="h-file-upload" :class="`h-file-upload--${variant}`">
         <H0Label v-if="!fieldContext && resolvedLabel" :for="controlId" :required="resolvedRequired">{{ resolvedLabel }}</H0Label>
         <button class="h-file-upload__drop" type="button" :disabled="resolvedDisabled" :class="{ 'is-dragging': dragging }" @click="open" @dragover.prevent="dragging = true" @dragleave="dragging = false" @drop.prevent="dragging = false; addFiles(Array.from($event.dataTransfer?.files ?? []))">
             <slot name="drop" :open="open">{{ text.drop }}</slot>
@@ -90,6 +90,81 @@ onBeforeUnmount(cleanup)
     </div>
 </template>
 
-<style scoped>
-.h-file-upload{display:grid;gap:var(--h0n-ui-spacing-sm);font-family:var(--h0n-ui-font-family)}.h-file-upload__drop{background:var(--h0n-ui-color-surface);border:1px dashed var(--h0n-ui-color-border);border-radius:var(--h0n-ui-radius-lg);color:inherit;cursor:pointer;min-block-size:7rem;padding:var(--h0n-ui-spacing-lg)}.h-file-upload__drop.is-dragging{border-color:var(--h0n-ui-color-primary);background:var(--h0n-ui-color-surface-hover)}.h-file-upload__input{block-size:1px;clip:rect(0 0 0 0);clip-path:inset(50%);inline-size:1px;overflow:hidden;position:absolute;white-space:nowrap}.h-file-upload__list{display:grid;gap:var(--h0n-ui-spacing-xs);list-style:none;margin:0;padding:0}.h-file-upload__list li{align-items:center;border:1px solid var(--h0n-ui-color-border);border-radius:var(--h0n-ui-radius-md);display:flex;flex-wrap:wrap;gap:var(--h0n-ui-spacing-sm);padding:var(--h0n-ui-spacing-sm)}.h-file-upload__list li>span:first-child{flex:1;min-inline-size:0;overflow:hidden;text-overflow:ellipsis}.h-file-upload__actions{display:flex;flex-wrap:wrap;gap:var(--h0n-ui-spacing-sm)}
+<style scoped lang="scss">
+@use '../../styles/mixins' as mixins;
+
+.h-file-upload {
+    @include mixins.h0n-input-root;
+
+    --h-file-upload-drop-hover: var(--h0n-ui-color-surface-hover);
+
+    &--surface {
+        @include mixins.h0n-input-variant('surface');
+    }
+
+    &--secondary {
+        @include mixins.h0n-input-variant('secondary');
+
+        --h-file-upload-drop-hover: var(--h0n-ui-color-secondary-hover);
+    }
+
+    &__drop {
+        background: var(--h0n-input-control-background);
+        border: 1px dashed var(--h0n-ui-color-border);
+        border-radius: var(--h0n-ui-radius-lg);
+        color: inherit;
+        cursor: pointer;
+        min-block-size: 7rem;
+        padding: var(--h0n-ui-spacing-lg);
+        transition:
+            background-color var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard),
+            border-color var(--h0n-ui-duration-fast) var(--h0n-ui-easing-standard);
+
+        &.is-dragging {
+            background: var(--h-file-upload-drop-hover);
+            border-color: var(--h0n-ui-color-primary);
+        }
+    }
+
+    &__input {
+        block-size: 1px;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        inline-size: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+    }
+
+    &__list {
+        display: grid;
+        gap: var(--h0n-ui-spacing-xs);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            align-items: center;
+            border: 1px solid var(--h0n-ui-color-border);
+            border-radius: var(--h0n-ui-radius-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--h0n-ui-spacing-sm);
+            padding: var(--h0n-ui-spacing-sm);
+        }
+
+        li > span:first-child {
+            flex: 1;
+            min-inline-size: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--h0n-ui-spacing-sm);
+    }
+}
 </style>

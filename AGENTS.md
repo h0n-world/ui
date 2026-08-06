@@ -1,6 +1,6 @@
 # H0N UI Codex Instructions
 
-H0N UI is a pnpm workspace for a self-contained Vue 3 component library and a source-linked documentation application. The stable library baseline is `@h0nio/ui` version `1.0.0`.
+H0N UI is a pnpm workspace for a self-contained Vue 3 component library and a source-linked documentation application. The current library version is `@h0nio/ui` `1.1.0`.
 
 ## Current Scope
 
@@ -31,7 +31,7 @@ Files under `apps/documentation/public/llms.txt`, `apps/documentation/public/age
 
 ## Package Manager and Commands
 
-Use pnpm. `package.json` declares `pnpm@11.15.1`, `pnpm-lock.yaml` is the only lockfile, and root scripts use pnpm filters. Do not use npm workspace flags or create `package-lock.json`.
+Use pnpm. `package.json` declares `pnpm@11.17.0`, `pnpm-lock.yaml` is the only lockfile, and root scripts use pnpm filters. Do not use npm workspace flags or create `package-lock.json`.
 
 Package-specific checks:
 
@@ -132,6 +132,6 @@ The documentation app aliases `@h0nio/ui` and `@h0nio/ui/icons` to UI workspace 
 
 ## Versioning and Git Hygiene
 
-- `@h0nio/ui` is at the stable `1.0.0` baseline. Patch releases fix behavior, minor releases add compatible API, and breaking supported API changes require a major release.
+- `@h0nio/ui` is currently at `1.1.0`. Patch releases fix behavior, minor releases add compatible API, and breaking supported API changes require a major release.
 - Do not add historical migration notes during ordinary development. Record durable architecture in `ARCHITECTURE.md`; add a migration guide only for an actual released breaking change.
 - Preserve user changes, keep edits scoped, and avoid unrelated formatting or lockfile churn.

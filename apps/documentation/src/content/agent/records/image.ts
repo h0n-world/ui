@@ -34,6 +34,7 @@ export const imageAgentRecord = {
         { key: 'components/image/BasicExample', purpose: 'Responsive image with reserved ratio and observable status.' },
         { key: 'components/image/SizingExample', purpose: 'All object-fit values with numeric and CSS dimensions.' },
         { key: 'components/image/FallbackExample', purpose: 'Default and custom failed-image fallbacks.' },
+        { key: 'components/image/LoadingExample', purpose: 'Default skeleton while a lazy image waits to load.' },
         { key: 'components/image/LifecycleExample', purpose: 'Successful and failed reloads with status-change, load, and error telemetry.' },
     ],
     relatedComponents: ['H0Avatar', 'H0Skeleton'],

@@ -23,6 +23,12 @@ pnpm add @h0nio/ui
 
 The application must use Vue `3.5` or newer. H0N UI has no required icon package: its controls include their own system icons, while the small optional system set is available from `@h0nio/ui/icons`.
 
+## Install with an AI agent
+
+Prefer an automated setup? Copy the versioned [AI installation prompt](/docs/agents/install-prompt) and give it to a coding agent with access to your project. It instructs the agent to detect the existing package manager and Vue bootstrap, preserve the current architecture, install the matching H0N UI version, register styles and the plugin once, and run the project's actual validation commands.
+
+The raw copy-paste prompt is available at [`/agents/install-prompt.md`](/agents/install-prompt.md).
+
 ## Register the plugin
 
 Register the default export once in the application entry and import the shared stylesheet.

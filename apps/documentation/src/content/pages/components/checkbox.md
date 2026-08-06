@@ -23,6 +23,20 @@ Use `H0Checkbox` for one independent choice. Its model is a boolean; `defaultVal
 :::example components/checkbox/BasicExample
 :::
 
+## Variants
+
+Use `surface` by default for neutral surfaces and `secondary` when the checkbox needs stronger separation from its background.
+
+:::example components/checkbox/VariantsExample
+:::
+
+## Sizes
+
+Use `sm` for dense forms, `md` for most choices, and `lg` when the checkbox needs additional visual prominence.
+
+:::example components/checkbox/SizesExample
+:::
+
 ## States and indeterminate
 
 `indeterminate` communicates a partially selected collection. It is visual metadata, not a third model value: interaction still emits `true` or `false`.
@@ -62,6 +76,16 @@ For standalone `H0Checkbox`, ordinary fallthrough attributes target the componen
 ## Types
 
 `H0CheckboxProps` and `H0CheckboxEmits` describe the standalone control. `H0CheckboxGroupProps` and `H0CheckboxGroupEmits` describe the grouped control.
+
+### H0CheckboxVariant
+
+:::component-api type H0CheckboxVariant
+:::
+
+### H0CheckboxSize
+
+:::component-api type H0CheckboxSize
+:::
 
 ### H0CheckboxOption
 
@@ -112,4 +136,4 @@ Keep options stable and use groups for moderate sets; use search or selection co
 
 ## Styling
 
-Use error, hint, disabled, and public tokens instead of targeting the native input internals.
+Use variant, size, error, hint, disabled, and public tokens instead of targeting the native input internals.

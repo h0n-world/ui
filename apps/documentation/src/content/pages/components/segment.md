@@ -22,11 +22,18 @@ order: 194
 
 Use Segment for a small set of peer views or modes. Use Tabs when each choice controls an associated semantic tabpanel.
 
-## Variants and sizes
+## Variants
 
 Variants change surface and indicator emphasis. Use one appearance consistently within a region and keep the item set short.
 
 :::example components/segment/AppearanceExample
+:::
+
+## Sizes
+
+Use `sm` in dense toolbars, `md` for most controls, and `lg` when the segmented choice needs more prominence.
+
+:::example components/segment/SizesExample
 :::
 
 ## Icons and expansion

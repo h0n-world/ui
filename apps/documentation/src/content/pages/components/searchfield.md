@@ -23,11 +23,25 @@ Use SearchField for a query that filters or searches content. Update the visible
 :::example components/search-field/BasicExample
 :::
 
-## Variants and states
+## Variants
 
-`surface` is the default neutral container. Use `secondary` when the field sits on another surface and needs stronger separation. SearchField also inherits H0Input sizes, validation feedback, labels, read-only behavior, and disabled state.
+`surface` is the default neutral container. Use `secondary` when the field sits on another surface and needs stronger separation.
 
 :::example components/search-field/VariantsExample
+:::
+
+## Sizes
+
+SearchField inherits the `sm`, `md`, and `lg` sizes from H0Input. The compact `sm` size is used by default.
+
+:::example components/search-field/SizesExample
+:::
+
+## States
+
+Use read-only state when the query must remain focusable and selectable, disabled state when search is unavailable, and `error` for validation feedback.
+
+:::example components/search-field/StatesExample
 :::
 
 ## Events and imperative API

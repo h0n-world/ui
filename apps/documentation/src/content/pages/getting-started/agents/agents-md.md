@@ -4,12 +4,14 @@ description: Reusable instructions for coding agents working in projects that co
 path: /docs/agents/agents-md
 group: Getting started
 section: UI for Agents
-order: 53
+order: 54
 ---
 
 # AGENTS.md
 
 Use the generated [`/agents/AGENTS.md`](/agents/AGENTS.md) as a starting point for projects that consume `@h0nio/ui`. Copy its relevant rules into the project's own agent instructions and add project-specific commands, architecture, and product constraints.
+
+For the first installation, start with the [AI installation prompt](/docs/agents/install-prompt). Add this reusable template after setup so future agent work keeps the same package boundaries and validation rules.
 
 The template establishes an authority order between the installed TypeScript declarations, [versioned component catalog](/agent-data/components.v1.json), [`llms.txt`](/llms.txt), and human documentation. It also records supported package boundaries, controlled-state and event conventions, component-selection semantics, icon extensibility, styling limits, accessibility, responsive behavior, and verification expectations.
 

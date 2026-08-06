@@ -9,5 +9,5 @@ export const dividerAgentRecord = {
     ], events: [], slots: [{ name: 'default', type: '—', description: 'Optional label between the two line segments.' }], exposed: [], types: [] },
     useWhen: ['Adjacent content groups need a meaningful or visual boundary.'], avoidWhen: ['Spacing alone already communicates the grouping.'], ...standardLayoutGuidance,
     accessibility: ['Keep meaningful boundaries as separators.', 'Set decorative when the line adds no structural information.', 'Do not place essential content in a decorative divider.'],
-    examples: [{ key: 'components/layout/BasicExample', purpose: 'Responsive spacing and semantic layout composition.' }], relatedComponents: ['H0Stack'],
+    examples: [{ key: 'components/layout/BasicExample', purpose: 'Meaningful boundary in a composed page section.' }, { key: 'components/layout/DividerExample', purpose: 'Labeled, inset, decorative, and vertical separators.' }], relatedComponents: ['H0Stack'],
 } satisfies ComponentAgentRecordV1

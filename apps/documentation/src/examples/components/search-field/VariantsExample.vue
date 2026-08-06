@@ -14,8 +14,6 @@ import { H0SearchField } from '@h0nio/ui'
             placeholder="Search members"
             aria-label="Search members"
         />
-        <H0SearchField model-value="Release notes" aria-label="Read-only query" readonly />
-        <H0SearchField placeholder="Unavailable search" aria-label="Unavailable search" disabled />
     </div>
 </template>
 

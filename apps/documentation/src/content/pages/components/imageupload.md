@@ -25,16 +25,48 @@ Use `src` for an existing image and `v-model` for a newly selected file. Removin
 
 ## Presets
 
-Use `avatar`, `square`, `banner`, or `vertical` for common geometry. `custom` combines explicit width, height, radius, and object fit.
+Use `avatar`, `square`, `banner`, or `vertical` for common geometry. `custom` combines explicit width, height, radius, and object fit. Format and size restrictions remain outside the image surface, so compact presets do not have to contain supporting copy.
+
+### Compact and custom presets
+
+Avatar, square, and custom frames are useful for bounded images embedded in forms, cards, and profile settings.
 
 :::example components/image-upload/PresetsExample
 :::
 
-## Loading, disabled, and error states
+### Banner preset
 
-Use `loading` while application upload or processing is pending. `error` belongs to form validation; rejected files emit the structured `invalid` event.
+Banner fills the available inline width while preserving its preset height.
 
-:::example components/image-upload/StatesExample
+:::example components/image-upload/BannerPresetExample
+:::
+
+### Vertical preset
+
+Vertical provides a tall fixed frame for portrait artwork and covers.
+
+:::example components/image-upload/VerticalPresetExample
+:::
+
+## Loading
+
+Use `loading` while application upload or processing is pending. The centered spinner is the only visual loading indicator; `loadingLabel` supplies its accessible status name.
+
+:::example components/image-upload/LoadingExample
+:::
+
+## Disabled
+
+Disabled upload surfaces remain visible but cannot open the file dialog or accept drops.
+
+:::example components/image-upload/DisabledExample
+:::
+
+## Error
+
+Use `error` for application or form validation. Files rejected by `accept` or `maxSize` also emit the structured `invalid` event.
+
+:::example components/image-upload/ErrorExample
 :::
 
 ## Events
@@ -83,13 +115,13 @@ Use `loading` while application upload or processing is pending. `error` belongs
 
 ## Accessibility
 
-- Use a task-specific label and visible format and size hint.
+- Use a task-specific label. Accepted formats and maximum size remain visible below the image surface.
 - Provide custom action labels when the active locale does not fit the context.
-- Loading, browse, and remove controls remain announced and keyboard accessible.
+- Loading, browse, and remove controls remain announced and keyboard accessible. Loading text is visually omitted because the spinner already communicates the pending state.
 
 ## Responsive behavior
 
-Banner uses fluid width; avatar, square, and vertical presets use fixed geometry unless overridden.
+Banner uses fluid width; avatar, square, and vertical presets use fixed geometry unless overridden. Compact surfaces omit internal copy while retaining their accessible label and visible restrictions.
 
 ## Performance
 

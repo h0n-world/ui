@@ -10,6 +10,38 @@ import H0Select from '../src/components/Select/H0Select.vue'
 import H0Switch from '../src/components/Switch/H0Switch.vue'
 import H0Textarea from '../src/components/Textarea/H0Textarea.vue'
 
+describe('form control variants', () => {
+    it.each([
+        { component: H0Checkbox, root: '.h-checkbox', className: 'h-checkbox', props: {} },
+        { component: H0Radio, root: '.h-radio', className: 'h-radio', props: { value: 'one' } },
+        { component: H0Select, root: '.h-select', className: 'h-select', props: { options: [] } },
+        { component: H0Textarea, root: '.h-textarea', className: 'h-textarea', props: {} },
+    ])('uses surface by default and supports secondary for $className', async ({ component, root, className, props }) => {
+        const wrapper = mount(component as never, { props })
+
+        expect(wrapper.get(root).classes()).toContain(`${className}--surface`)
+
+        await wrapper.setProps({ variant: 'secondary' })
+
+        expect(wrapper.get(root).classes()).toContain(`${className}--secondary`)
+        expect(wrapper.get(root).classes()).not.toContain(`${className}--surface`)
+    })
+})
+
+describe('checkbox sizes', () => {
+    it('uses medium by default and supports small and large sizes', async () => {
+        const wrapper = mount(H0Checkbox)
+
+        expect(wrapper.get('.h-checkbox').classes()).toContain('h-checkbox--md')
+
+        await wrapper.setProps({ size: 'sm' })
+        expect(wrapper.get('.h-checkbox').classes()).toContain('h-checkbox--sm')
+
+        await wrapper.setProps({ size: 'lg' })
+        expect(wrapper.get('.h-checkbox').classes()).toContain('h-checkbox--lg')
+    })
+})
+
 describe('form control messages', () => {
     it('keeps an external Input error visible for a non-empty required value', () => {
         const wrapper = mount(H0Input, {

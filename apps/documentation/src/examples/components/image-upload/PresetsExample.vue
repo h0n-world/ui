@@ -1,22 +1,63 @@
 <script setup lang="ts">
-import { H0ImageUpload } from '@h0nio/ui'
-
-const preview = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><defs><linearGradient id="g"><stop stop-color="#665cff"/><stop offset="1" stop-color="#20b486"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><circle cx="320" cy="150" r="72" fill="white" opacity=".28"/></svg>')
+import { H0ImageUpload } from '@h0nio/ui';
 </script>
 
 <template>
-    <div class="presets">
-        <H0ImageUpload :src="preview" preset="avatar" label="Avatar" />
-        <H0ImageUpload :src="preview" preset="square" label="Square cover" />
-        <H0ImageUpload :src="preview" preset="banner" label="Banner" />
+    <div class="preset-example">
+        <article class="preset-example__item">
+            <div class="preset-example__meta">
+                <strong>Avatar</strong>
+                <span>Profile photos and account identities.</span>
+            </div>
+            <H0ImageUpload preset="avatar" label="Upload avatar" />
+        </article>
+
+        <article class="preset-example__item">
+            <div class="preset-example__meta">
+                <strong>Square</strong>
+                <span>Cover art, products, and gallery tiles.</span>
+            </div>
+            <H0ImageUpload preset="square" label="Upload square cover" />
+        </article>
+
+        <article class="preset-example__item">
+            <div class="preset-example__meta">
+                <strong>Custom</strong>
+                <span>Explicit dimensions and radius.</span>
+            </div>
+            <H0ImageUpload
+                preset="custom"
+                :width="180"
+                :height="120"
+                radius="16px"
+                label="Upload custom image"
+            />
+        </article>
     </div>
 </template>
 
 <style scoped>
-.presets {
-    display: flex;
-    flex-wrap: wrap;
+.preset-example {
     align-items: start;
+    display: grid;
     gap: var(--h0n-ui-spacing-xl);
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    width: 100%;
+}
+
+.preset-example__item,
+.preset-example__meta {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+}
+
+.preset-example__item {
+    gap: var(--h0n-ui-spacing-lg);
+    min-width: 0;
+}
+
+.preset-example__meta span {
+    color: var(--h0n-ui-color-muted);
 }
 </style>

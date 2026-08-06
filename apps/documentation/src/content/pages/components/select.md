@@ -32,7 +32,21 @@ Set `multiple` for an array model. `maxSelected` disables unselected options aft
 
 By default a single select closes after selection and a multiple select remains open. `closeOnSelect` overrides that behavior.
 
-## Sizes and states
+## Variants
+
+`surface` is the default neutral container. Use `secondary` when the select needs stronger separation from the surrounding surface.
+
+:::example components/select/VariantsExample
+:::
+
+## Sizes
+
+Use `sm` in dense forms, `md` for most selection controls, and `lg` when the control needs more prominence.
+
+:::example components/select/SizesExample
+:::
+
+## States
 
 Loading and disabled states prevent opening. Use `error` for field validation, `emptyText` for a successfully loaded empty collection, and `loading` while options are pending.
 
@@ -74,6 +88,11 @@ The popup teleports to `body` by default. Use `teleportTo` for another overlay r
 :::component-api type H0SelectSize
 :::
 
+### H0SelectVariant
+
+:::component-api type H0SelectVariant
+:::
+
 ### H0SelectOption
 
 :::component-api type H0SelectOption
@@ -107,4 +126,4 @@ Keep option arrays stable and virtualize large fixed-height collections.
 
 ## Styling
 
-Use size, validation, attribute forwarding, and option slots; floating geometry and internal list selectors are implementation details.
+Use variant, size, validation, attribute forwarding, and option slots; floating geometry and internal list selectors are implementation details.

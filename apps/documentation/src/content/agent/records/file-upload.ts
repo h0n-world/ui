@@ -3,13 +3,13 @@ import { fieldProps, focusBlurEvents, standardFormGuidance } from './forms-share
 
 export const fileUploadAgentRecord = {
     schemaVersion: 1, component: 'H0FileUpload', status: 'migrated', summary: 'Accessible file picker and drop zone with validation, upload queue state, progress, retry, cancellation, and optional reordering.',
-    imports: { components: ['H0FileUpload'], types: ['H0FileUploadEmits', 'H0FileUploadProps', 'H0FileUploadValidationError', 'H0UploadAdapter', 'H0UploadAdapterContext', 'H0UploadItem', 'H0UploadStatus'], styles: ['@h0nio/ui/style.css'] },
+    imports: { components: ['H0FileUpload'], types: ['H0FileUploadEmits', 'H0FileUploadProps', 'H0FileUploadValidationError', 'H0FileUploadVariant', 'H0UploadAdapter', 'H0UploadAdapterContext', 'H0UploadItem', 'H0UploadStatus'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [
         { name: 'modelValue', type: 'File[]', default: 'undefined', description: 'Controlled selected files.' }, { name: 'defaultValue', type: 'File[]', default: '[]', description: 'Initial files.' },
         { name: 'accept', type: 'string', default: "''", description: 'Native file accept filter.' }, { name: 'multiple', type: 'boolean', default: 'false', description: 'Allows multiple files.' },
         { name: 'maxFiles', type: 'number', default: 'undefined', description: 'Maximum file count.' }, { name: 'maxSize', type: 'number', default: 'undefined', description: 'Maximum bytes per file.' },
         { name: 'validator', type: '(file: File, files: readonly File[]) => string | null | undefined | Promise<string | null | undefined>', default: 'undefined', description: 'Custom validation callback.' }, { name: 'upload', type: 'H0UploadAdapter<Result>', default: 'undefined', description: 'Async upload adapter.' },
-        { name: 'autoUpload', type: 'boolean', default: 'false', description: 'Starts uploads after selection.' }, { name: 'concurrency', type: 'number', default: '3', description: 'Maximum simultaneous uploads.' }, { name: 'reorderable', type: 'boolean', default: 'false', description: 'Enables queue reordering.' },
+        { name: 'autoUpload', type: 'boolean', default: 'false', description: 'Starts uploads after selection.' }, { name: 'concurrency', type: 'number', default: '3', description: 'Maximum simultaneous uploads.' }, { name: 'reorderable', type: 'boolean', default: 'false', description: 'Enables queue reordering.' }, { name: 'variant', type: 'H0FileUploadVariant', default: "'surface'", description: 'Drop-area background treatment.' },
         ...fieldProps,
     ], events: [
         { name: 'update:modelValue', type: 'File[]', description: 'Requests file value update.' }, { name: 'change', type: 'File[]', description: 'Reports the complete file list.' }, { name: 'add', type: 'File[]', description: 'Reports accepted files.' },
@@ -25,6 +25,7 @@ export const fileUploadAgentRecord = {
         { name: 'remove', type: '(target: File | string) => void', description: 'Removes an item by its file or generated ID.' }, { name: 'clear', type: '() => void', description: 'Clears all items.' },
         { name: 'reorder', type: '(from: number, to: number) => void', description: 'Moves an item.' }, { name: 'queue', type: 'H0UploadItem<Result>[]', description: 'Reactive upload queue.' },
     ], types: [
+        { name: 'H0FileUploadVariant', fields: [{ name: 'H0FileUploadVariant', type: "'secondary' | 'surface'", description: 'Supported drop-area surface treatments.' }] },
         { name: 'H0FileUploadValidationError', fields: [
             { name: 'code', type: "'accept' | 'size' | 'count' | 'custom'", description: 'Validation category.' }, { name: 'file', type: 'File | undefined', description: 'Rejected file, when available.' }, { name: 'message', type: 'string', description: 'Human-readable reason.' },
         ] },
@@ -44,5 +45,5 @@ export const fileUploadAgentRecord = {
         ] },
     ] },
     useWhen: ['Users select or upload one or more files with visible validation and progress.'], avoidWhen: ['Only one image preview is needed; use H0ImageUpload.'], ...standardFormGuidance,
-    examples: [{ key: 'components/file-upload/BasicExample', purpose: 'Validated multi-file selection.' }, { key: 'components/file-upload/ValidationExample', purpose: 'Built-in and custom rejection feedback.' }, { key: 'components/file-upload/QueueExample', purpose: 'Manual upload adapter, progress, and queue controls.' }], relatedComponents: ['H0Form', 'H0ImageUpload'],
+    examples: [{ key: 'components/file-upload/BasicExample', purpose: 'Validated multi-file selection.' }, { key: 'components/file-upload/VariantsExample', purpose: 'Surface and secondary drop-area treatments.' }, { key: 'components/file-upload/ValidationExample', purpose: 'Built-in and custom rejection feedback.' }, { key: 'components/file-upload/QueueExample', purpose: 'Manual upload adapter, progress, and queue controls.' }], relatedComponents: ['H0Form', 'H0ImageUpload'],
 } satisfies ComponentAgentRecordV1

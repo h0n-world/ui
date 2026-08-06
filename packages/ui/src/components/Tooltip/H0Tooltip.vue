@@ -31,7 +31,7 @@ function set(open: boolean, delay = 0) {
 const open = () => set(true, props.openDelay)
 const close = () => set(false, props.closeDelay)
 function escape(event: KeyboardEvent) { if (event.key === 'Escape') set(false) }
-const reference = computed(() => trigger.value)
+const reference = computed(() => (trigger.value?.firstElementChild as HTMLElement | null) ?? trigger.value)
 const { floatingStyles } = useFloatingSurface({ open: state.value, reference, floating, placement: () => props.placement })
 const triggerAttrs = () => ({ 'aria-describedby': state.value.value ? tooltipId.value : undefined, onFocus: open, onBlur: close, onPointerenter: open, onPointerleave: close, onKeydown: escape })
 onBeforeUnmount(() => clearTimeout(timer))

@@ -1,4 +1,8 @@
+import type { H0Size } from '../../types'
+
 export type H0InputOTPLength = 4 | 6
+
+export type H0InputOTPSize = H0Size
 
 export type H0InputOTPVariant = 'secondary' | 'surface'
 

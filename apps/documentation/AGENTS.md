@@ -12,7 +12,7 @@ These instructions apply to `apps/documentation` in addition to the repository-l
 - Markdown discovery/rendering: `src/content/content.ts`
 - Typed component records: `src/content/agent/records`
 - Record schema and validation: `src/content/agent/schema.ts`
-- Generated outputs: `public/llms.txt`, `public/agent-data/components.v1.json`, `public/agents/AGENTS.md`
+- Generated outputs: `public/llms.txt`, `public/agent-data/components.v1.json`, `public/agents/AGENTS.md`, `public/agents/install-prompt.md`
 
 Do not hand-edit generated outputs.
 
@@ -52,7 +52,7 @@ pnpm --filter @h0n/ui-documentation agents:check
 pnpm --filter @h0n/ui-documentation agents:test
 ```
 
-Review the generated diff for `public/llms.txt`, `public/agent-data/components.v1.json`, and `public/agents/AGENTS.md`. A version-only library change may produce only a mechanical version update.
+Review the generated diff for `public/llms.txt`, `public/agent-data/components.v1.json`, `public/agents/AGENTS.md`, and `public/agents/install-prompt.md`. A version-only library change may produce only a mechanical version update.
 
 MCP Server and distributable Agent Skills remain planned. Do not describe them as available until their runtime and distribution contracts exist.
 

@@ -12,6 +12,7 @@ import { componentAgentRecords } from '../src/content/agent/records/index.ts'
 import { getManifestMetadata, validateComponentAgentRecords } from '../src/content/agent/schema.ts'
 
 const documentationRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const packageVersion = (JSON.parse(readFileSync(resolve(documentationRoot, '../../packages/ui/package.json'), 'utf8')) as { version: string }).version
 const buttonRecord = componentAgentRecords.find((record) => record.component === 'H0Button')!
 const buttonGroupRecord = componentAgentRecords.find((record) => record.component === 'H0ButtonGroup')!
 const accordionRecord = componentAgentRecords.find((record) => record.component === 'H0Accordion')!
@@ -154,27 +155,43 @@ test('record validation reports duplicates and invalid relationships', () => {
     assert.doesNotThrow(() => validateComponentAgentRecords(componentAgentRecords, context))
     assert.throws(() => validateComponentAgentRecords([buttonRecord, buttonRecord], context), /Duplicate component record/)
     assert.throws(
-        () => validateComponentAgentRecords([{ ...buttonRecord, relatedComponents: ['H0Missing'] }], { ...context, pagePaths: ['/components/button'] }),
+        () => validateComponentAgentRecords(componentAgentRecords.filter((record) => record.component !== 'H0ButtonGroup'), context),
+        /Manifest component "H0ButtonGroup" has no typed agent record/,
+    )
+    assert.throws(
+        () => validateComponentAgentRecords(componentAgentRecords.map((record) => record.component === 'H0Button' ? { ...record, relatedComponents: ['H0Missing'] } : record), context),
         /unknown related component/,
+    )
+    assert.throws(
+        () => validateComponentAgentRecords(componentAgentRecords.map((record) => record.component === 'H0Button' ? { ...record, useWhen: [] } : record), context),
+        /H0Button is missing useWhen guidance/,
     )
 })
 
 test('generation is deterministic and committed snapshots are current', () => {
-    const first = renderAgentArtifacts(componentAgentRecords, h0ComponentManifest, '1.0.0')
-    const second = renderAgentArtifacts(componentAgentRecords, h0ComponentManifest, '1.0.0')
+    const first = renderAgentArtifacts(componentAgentRecords, h0ComponentManifest, packageVersion)
+    const second = renderAgentArtifacts(componentAgentRecords, h0ComponentManifest, packageVersion)
     assert.deepEqual(first, second)
 
     const llms = first.find((artifact) => artifact.path === 'llms.txt')!.content
     const agents = first.find((artifact) => artifact.path === 'agents/AGENTS.md')!.content
-    assert.match(llms, /^# H0N UI 1\.0\.0$/m)
+    const installPrompt = first.find((artifact) => artifact.path === 'agents/install-prompt.md')!.content
+    assert.equal(first.length, 4)
+    assert.match(llms, new RegExp(`^# H0N UI ${packageVersion.replaceAll('.', '\\.')}$`, 'm'))
     assert.match(llms, new RegExp(`^## Supported components \\(${componentAgentRecords.length}\\)$`, 'm'))
     assert.doesNotMatch(llms, /Migrated components/)
     assert.match(llms, /^### (Actions|Forms|Navigation|Overlays|Feedback|Data|Layout|Content)$/m)
     assert.match(llms, /Paths in this file are relative to the H0N UI documentation origin/)
+    assert.match(llms, /AI installation prompt/)
     assert.match(agents, /installed `@h0nio\/ui` package version and TypeScript declarations/)
     assert.match(agents, /Preserve `modelValue` \/ `update:modelValue`/)
     assert.match(agents, /Use `defaultValue` only for uncontrolled initialization/)
     assert.match(agents, /Do not add or reference `@h0n\/icon`/)
+    assert.match(agents, /Initial installation/)
+    assert.match(installPrompt, new RegExp(`@h0nio\/ui@${packageVersion.replaceAll('.', '\\.')}`))
+    assert.match(installPrompt, /Vue 3\.5 or newer/)
+    assert.match(installPrompt, /@h0nio\/ui\/style\.css/)
+    assert.match(installPrompt, /Do not claim completion when typecheck or build fails/)
 
     for (const artifact of first) {
         assert.equal(readFileSync(join(documentationRoot, 'public', artifact.path), 'utf8'), artifact.content)

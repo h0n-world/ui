@@ -21,5 +21,5 @@ export const containerAgentRecord = {
         ] },
     ] },
     useWhen: ['Page content needs a consistent maximum width and responsive gutters.'], avoidWhen: ['A local wrapper needs spacing but no page-width constraint.'], ...standardLayoutGuidance,
-    examples: [{ key: 'components/layout/BasicExample', purpose: 'Responsive spacing and semantic layout composition.' }, { key: 'components/layout/ContainerSizesExample', purpose: 'All maximum-width presets.' }, { key: 'components/layout/ContainerResponsiveExample', purpose: 'Semantic root and responsive gutters.' }], relatedComponents: ['H0Stack', 'H0Grid'],
+    examples: [{ key: 'components/layout/BasicExample', purpose: 'Bounded page-section composition.' }, { key: 'components/layout/ContainerSizesExample', purpose: 'All maximum-width presets.' }, { key: 'components/layout/ContainerResponsiveExample', purpose: 'Semantic root and responsive gutters.' }], relatedComponents: ['H0Stack', 'H0Grid'],
 } satisfies ComponentAgentRecordV1

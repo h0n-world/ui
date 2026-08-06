@@ -6,7 +6,13 @@ const colors: H0StepperColor[] = ['accent', 'success', 'warning', 'danger', 'inv
 </script>
 
 <template>
-    <H0Stack gap="xl">
-        <H0Stepper v-for="color in colors" :key="color" :items="steps" :step="2" :color="color" size="sm" :aria-label="`${color} progress`" />
+    <H0Stack class="stepper-colors" gap="xl">
+        <H0Stepper v-for="color in colors" :key="color" :items="steps" :step="2" :color="color" :aria-label="`${color} progress`" />
     </H0Stack>
 </template>
+
+<style scoped>
+.stepper-colors {
+    width: 100%;
+}
+</style>

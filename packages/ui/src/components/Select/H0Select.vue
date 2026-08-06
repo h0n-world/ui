@@ -1,8 +1,9 @@
 <script setup lang="ts" generic="Value extends H0SelectValue = H0SelectValue">
 import { arrowDownIcon, checkIcon } from '../../icons'
 import { autoUpdate, computePosition, flip, offset, shift, size as floatingSize } from '@floating-ui/dom'
-import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useTemplateRef, watch } from 'vue'
+import { computed, inject, nextTick, onBeforeUnmount, ref, useAttrs, useTemplateRef, watch } from 'vue'
 import { useFormField } from '../_shared/useFormField'
+import { h0OverlayContextKey, toH0OverlayZIndex } from '../_shared/Overlay.context'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0List from '../List/H0List.vue'
 import H0ListItem from '../List/H0ListItem.vue'
@@ -11,7 +12,7 @@ import H0Description from '../Typography/H0Description.vue'
 import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
 import H0Label from '../Typography/H0Label.vue'
 import H0Typography from '../Typography/H0Typography.vue'
-import type { H0SelectOption, H0SelectSize, H0SelectValue } from './Select.types'
+import type { H0SelectOption, H0SelectSize, H0SelectValue, H0SelectVariant } from './Select.types'
 import { useSelectNavigation } from './useSelectNavigation'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import { useH0Locale } from '../../locale'
@@ -29,6 +30,7 @@ const props = withDefaults(
         multiple?: boolean
         maxSelected?: number
         size?: H0SelectSize
+        variant?: H0SelectVariant
         label?: string
         placeholder?: string
         disabled?: boolean
@@ -56,6 +58,7 @@ const props = withDefaults(
         multiple: false,
         maxSelected: undefined,
         size: 'md',
+        variant: 'surface',
         label: '',
         placeholder: '',
         disabled: false,
@@ -88,6 +91,21 @@ const emit = defineEmits<{
 }>()
 const attrs = useAttrs()
 const mergedRootAttrs = computed(() => ({ ...attrs, ...props.rootAttrs }))
+const overlayContext = inject(h0OverlayContextKey, null)
+const selectOverlayStyle = computed(() => {
+    if (!overlayContext || props.teleportDisabled) {
+        return undefined
+    }
+
+    return { zIndex: toH0OverlayZIndex(overlayContext.layer.value, overlayContext.offset.value + 1) }
+})
+const contextualPopoverStyle = computed(() => {
+    if (!overlayContext || props.teleportDisabled) {
+        return undefined
+    }
+
+    return { zIndex: toH0OverlayZIndex(overlayContext.layer.value, overlayContext.offset.value + 2) }
+})
 
 const rootRef = useTemplateRef<HTMLElement>('rootRef')
 const triggerRef = useTemplateRef<HTMLButtonElement>('triggerRef')
@@ -312,7 +330,7 @@ watch(activeIndex, (index) => {
 </script>
 
 <template>
-    <div ref="rootRef" v-bind="mergedRootAttrs" data-h0n-component="select" class="h-select" :class="[`h-select--${props.size}`, isOpen && 'h-select--open', (isOpen || isPopoverLeaving) && 'h-select--elevated', visibleError && 'h-select--error', resolvedDisabled && 'h-select--disabled', loading && 'h-select--loading']">
+    <div ref="rootRef" v-bind="mergedRootAttrs" data-h0n-component="select" class="h-select" :class="[`h-select--${props.size}`, `h-select--${props.variant}`, isOpen && 'h-select--open', (isOpen || isPopoverLeaving) && 'h-select--elevated', visibleError && 'h-select--error', resolvedDisabled && 'h-select--disabled', loading && 'h-select--loading']">
         <H0Label v-if="!fieldContext && (resolvedLabel || $slots.label)" class="h-select__label" :html-for="selectId" :required="resolvedRequired">
             <slot name="label">{{ resolvedLabel }}</slot>
         </H0Label>
@@ -358,7 +376,7 @@ watch(activeIndex, (index) => {
 
         <Teleport :to="teleportTo" :disabled="teleportDisabled">
             <Transition name="h-select-overlay">
-                <button v-if="isOpen" data-h0n-component="select-overlay" class="h-select__overlay" type="button" :aria-label="locale.common.close" @click="closeSelect"></button>
+                <button v-if="isOpen" data-h0n-component="select-overlay" class="h-select__overlay" type="button" :aria-label="locale.common.close" :style="selectOverlayStyle" @click="closeSelect"></button>
             </Transition>
 
             <Transition name="h-select-popover" @after-leave="finishPopoverLeave" @leave-cancelled="finishPopoverLeave">
@@ -371,7 +389,7 @@ watch(activeIndex, (index) => {
                     role="listbox"
                     :aria-label="resolvedListAriaLabel"
                     :aria-multiselectable="multiple || undefined"
-                    :style="popoverStyle"
+                    :style="[popoverStyle, contextualPopoverStyle]"
                     @scroll="scrollTop = ($event.currentTarget as HTMLElement).scrollTop"
                 >
                     <H0List v-if="options.length" :divided="false">
@@ -425,16 +443,24 @@ watch(activeIndex, (index) => {
 </template>
 
 <style scoped lang="scss">
+@use '../../styles/mixins' as mixins;
+
 .h-select {
-    display: grid;
-    font-family: var(--h0n-ui-font-family);
-    gap: 8px;
-    min-width: 0;
+    @include mixins.h0n-input-root;
+
     position: relative;
+
+    &--surface {
+        @include mixins.h0n-input-variant('surface');
+    }
+
+    &--secondary {
+        @include mixins.h0n-input-variant('secondary');
+    }
 
     &__trigger {
         align-items: center;
-        background: var(--h0n-ui-color-surface);
+        background: var(--h0n-input-control-background);
         border: 1px solid transparent;
         border-radius: var(--h0n-ui-radius-lg);
         color: var(--h0n-ui-color-text);
@@ -442,9 +468,7 @@ watch(activeIndex, (index) => {
         display: flex;
         font: inherit;
         gap: 10px;
-        min-height: var(--h0n-ui-control-height-md);
         min-width: 0;
-        padding: 0 12px;
         text-align: left;
         transition: background-color var(--h0n-ui-duration-fast) ease;
         width: 100%;
@@ -580,12 +604,15 @@ watch(activeIndex, (index) => {
     }
 
     &--sm &__trigger {
-        min-height: var(--h0n-ui-control-height-sm);
-        padding-inline: 11px;
+        @include mixins.h0n-input-control-size('sm');
+    }
+
+    &--md &__trigger {
+        @include mixins.h0n-input-control-size('md');
     }
 
     &--lg &__trigger {
-        min-height: var(--h0n-ui-control-height-lg);
+        @include mixins.h0n-input-control-size('lg');
     }
 
     &--error &__trigger {

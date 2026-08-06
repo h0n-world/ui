@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { shallowRef, toRef, type ComponentPublicInstance } from 'vue'
+import { computed, inject, provide, ref, shallowRef, toRef, watch, type ComponentPublicInstance } from 'vue'
 import { useOverlay } from './useOverlay'
 import type { H0OverlayBackdrop, H0OverlayLayer } from './Overlay.types'
+import { h0OverlayContextKey, toH0OverlayZIndex } from './Overlay.context'
 
 defineOptions({
     name: 'H0OverlayRoot'
@@ -38,6 +39,31 @@ const emit = defineEmits<{
     requestClose: []
 }>()
 
+const parentOverlay = inject(h0OverlayContextKey, null)
+const resolvedLayer = computed<H0OverlayLayer>(() => (props.layer === 'critical' || parentOverlay?.layer.value === 'critical' ? 'critical' : 'overlay'))
+const layerOffset = computed(() => {
+    if (!parentOverlay || parentOverlay.layer.value !== resolvedLayer.value) {
+        return 0
+    }
+
+    return parentOverlay.offset.value + 3
+})
+const overlayStyle = computed(() => ({ zIndex: toH0OverlayZIndex(resolvedLayer.value, layerOffset.value) }))
+const scrollLockActive = ref(props.modelValue)
+const shouldLockDocumentScroll = computed(() => scrollLockActive.value && props.lockScroll)
+
+watch(
+    () => props.modelValue,
+    (isOpen) => {
+        if (isOpen) scrollLockActive.value = true
+    }
+)
+
+provide(h0OverlayContextKey, {
+    layer: resolvedLayer,
+    offset: layerOffset
+})
+
 const panel = shallowRef<HTMLElement | null>(null)
 
 function setPanelRef(element: Element | ComponentPublicInstance | null) {
@@ -52,11 +78,15 @@ function handleBackdropPointerDown() {
     }
 }
 
+function finishOverlayLeave() {
+    scrollLockActive.value = false
+}
+
 useOverlay({
     isOpen: toRef(props, 'modelValue'),
     closeOnEsc: toRef(props, 'closeOnEsc'),
     lockClass: props.lockClass,
-    lockScroll: toRef(props, 'lockScroll'),
+    scrollLockActive: shouldLockDocumentScroll,
     initialFocus: toRef(props, 'initialFocus'),
     returnFocus: toRef(props, 'returnFocus'),
     onClose: () => emit('requestClose'),
@@ -66,8 +96,8 @@ useOverlay({
 
 <template>
     <Teleport :to="teleportTo" :disabled="teleportDisabled">
-        <Transition name="h-overlay">
-            <div v-if="modelValue" data-h0n-component="overlay-root" class="h-overlay" :class="[`h-overlay--backdrop-${backdrop}`, `h-overlay--layer-${layer}`]">
+        <Transition name="h-overlay" @after-leave="finishOverlayLeave">
+            <div v-if="modelValue" data-h0n-component="overlay-root" class="h-overlay" :class="[`h-overlay--backdrop-${backdrop}`, `h-overlay--layer-${resolvedLayer}`]" :style="overlayStyle">
                 <div class="h-overlay__backdrop" aria-hidden="true" @pointerdown.self="handleBackdropPointerDown" />
                 <slot :panel-ref="setPanelRef" />
             </div>

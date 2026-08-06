@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { closeIcon, errorIcon, infoIcon, successIcon, warningIcon } from '../../icons'
-import type { H0IconDefinition } from '../Icon'
 import { computed } from 'vue'
+import { closeIcon, errorIcon, infoIcon, successIcon, warningIcon } from '../../icons'
+import { useH0Locale } from '../../locale'
+import type { H0IconDefinition } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
-import { useH0Locale } from '../../locale'
 import type { H0ToastTone } from './Toast.types'
 
 defineOptions({
@@ -60,7 +60,7 @@ const resolvedIcon = computed<H0IconDefinition>(() => {
 
 <template>
     <div data-h0n-component="toast" class="h-toast" :class="`h-toast--${tone}`" role="status" aria-live="polite">
-        <H0Icon class="h-toast__icon" :icon="resolvedIcon" :size="16" :stroke-width="2.2" aria-hidden="true" />
+        <H0Icon class="h-toast__icon" :icon="resolvedIcon" :size="16" :stroke-width="1.4" aria-hidden="true" />
 
         <div class="h-toast__content">
             <H0Typography v-if="title || $slots.title" as="strong" class="h-toast__title" variant="body-sm" :weight="600" color="inherit">

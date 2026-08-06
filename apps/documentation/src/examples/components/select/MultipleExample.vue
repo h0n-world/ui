@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { H0Select, type H0SelectOption } from '@h0nio/ui'
-import { ref } from 'vue'
+import { H0Select, type H0SelectOption } from '@h0nio/ui';
+import { ref } from 'vue';
 
 const values = ref<string[]>(['design'])
 const options: H0SelectOption<string>[] = [

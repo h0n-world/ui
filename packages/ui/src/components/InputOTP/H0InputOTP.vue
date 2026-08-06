@@ -4,7 +4,7 @@ import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
 import H0Label from '../Typography/H0Label.vue'
 import H0Description from '../Typography/H0Description.vue'
 import { useFormField } from '../_shared/useFormField'
-import type { H0InputOTPLength, H0InputOTPValidation, H0InputOTPValidator, H0InputOTPVariant } from './InputOTP.types'
+import type { H0InputOTPLength, H0InputOTPSize, H0InputOTPValidation, H0InputOTPValidator, H0InputOTPVariant } from './InputOTP.types'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import { useH0Locale } from '../../locale'
 
@@ -16,6 +16,7 @@ const props = withDefaults(
     defineProps<{
         modelValue?: string
         length?: H0InputOTPLength
+        size?: H0InputOTPSize
         variant?: H0InputOTPVariant
         validation?: H0InputOTPValidation
         validator?: H0InputOTPValidator
@@ -32,6 +33,7 @@ const props = withDefaults(
     }>(),
     {
         length: 6,
+        size: 'md',
         variant: 'secondary',
         validation: 'numeric',
         validator: undefined,
@@ -250,7 +252,7 @@ defineExpose({
 </script>
 
 <template>
-    <div :id="controlId" data-h0n-component="input-otp" class="h-input-otp" :class="[`h-input-otp--${variant}`, formError && 'h-input-otp--error', resolvedDisabled && 'h-input-otp--disabled']">
+    <div :id="controlId" data-h0n-component="input-otp" class="h-input-otp" :class="[`h-input-otp--${size}`, `h-input-otp--${variant}`, formError && 'h-input-otp--error', resolvedDisabled && 'h-input-otp--disabled']">
         <H0Label v-if="!fieldContext && (resolvedLabel || $slots.label)" as="span" class="h-input-otp__label" :required="resolvedRequired">
             <slot name="label">{{ resolvedLabel }}</slot>
         </H0Label>
@@ -301,6 +303,8 @@ defineExpose({
 </template>
 
 <style scoped lang="scss">
+@use '../../styles/mixins' as mixins;
+
 .h-input-otp {
     --h-input-otp-cell-background: var(--h0n-ui-color-secondary);
 
@@ -316,7 +320,6 @@ defineExpose({
         color: var(--h0n-ui-color-text);
         font-size: var(--h0n-ui-typography-h4-size);
         font-weight: var(--h0n-ui-font-weight-medium);
-        height: 48px;
         overflow: hidden;
         position: relative;
         transition:
@@ -372,13 +375,34 @@ defineExpose({
         inset: 0;
         justify-content: center;
         line-height: 1;
-        padding-bottom: 2px;
+        padding-top: 2px;
         pointer-events: none;
         position: absolute;
     }
 
     &--surface {
         --h-input-otp-cell-background: var(--h0n-ui-color-surface);
+    }
+
+    &--sm &__cell-shell {
+        @include mixins.h0n-input-control-size('sm');
+
+        padding-inline: 0;
+        width: 36px;
+    }
+
+    &--md &__cell-shell {
+        @include mixins.h0n-input-control-size('md');
+
+        padding-inline: 0;
+        width: 42px;
+    }
+
+    &--lg &__cell-shell {
+        @include mixins.h0n-input-control-size('lg');
+
+        padding-inline: 0;
+        width: 48px;
     }
 
     &--error &__cell-shell {

@@ -22,11 +22,18 @@ order: 196
 
 `step` is one-based and clamped to the available items. Use the active step as the application source of truth.
 
-## Colors and sizes
+## Colors
 
-Color communicates workflow status and must be supported by labels or surrounding feedback. Size changes markers and typography without changing progress semantics.
+Color communicates workflow status and must be supported by labels or surrounding feedback.
 
-:::example components/stepper/VariantsExample
+:::example components/stepper/ColorsExample
+:::
+
+## Sizes
+
+Use `sm`, `md`, or `lg` to change marker and typography scale without changing progress semantics. The Stepper continues to use the available container width at every size.
+
+:::example components/stepper/SizesExample
 :::
 
 ## Vertical orientation and icons

@@ -23,6 +23,13 @@ Use a standalone `H0Radio` only in custom compositions. For a normal mutually ex
 :::example components/radio/BasicExample
 :::
 
+## Surface variants
+
+Use `surface` by default for neutral surfaces and `secondary` when the standalone radio needs stronger separation from its background. This prop is separate from the `list` and `cards` layout variants of `H0RadioGroup`.
+
+:::example components/radio/VariantsExample
+:::
+
 ## List layout
 
 List groups work well for concise options. Horizontal orientation changes visual layout while preserving the native radio relationship.
@@ -62,6 +69,11 @@ For standalone `H0Radio`, ordinary fallthrough attributes target the component r
 ## Types
 
 `H0RadioProps` and `H0RadioEmits` describe the standalone control. `H0RadioGroupProps` and `H0RadioGroupEmits` describe the grouped control.
+
+### H0RadioVariant
+
+:::component-api type H0RadioVariant
+:::
 
 ### H0RadioValue
 
@@ -132,4 +144,4 @@ Use stable option arrays and reserve radio groups for moderate choice sets.
 
 ## Styling
 
-Use list/cards variant and public validation props; native radio behavior remains authoritative.
+Use the standalone surface variant, group list/cards variant, and public validation props; native radio behavior remains authoritative.

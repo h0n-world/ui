@@ -4,7 +4,7 @@ description: Discover H0N UI documentation and versioned component data from a c
 path: /docs/agents/llms-txt
 group: Getting started
 section: UI for Agents
-order: 50
+order: 51
 ---
 
 # llms.txt
@@ -15,6 +15,7 @@ The file is generated from the package version, public component manifest, and t
 
 ## Available resources
 
+- [`/agents/install-prompt.md`](/agents/install-prompt.md) is a versioned copy-paste task for installing and configuring H0N UI in an existing Vue project.
 - [`/llms.txt`](/llms.txt) is the compact discovery layer: use it to establish scope, find a component, and locate the authoritative detail.
 - [`/agent-data/components.v1.json`](/agent-data/components.v1.json) is the versioned machine contract for exact imports, props, events, slots, exposed APIs, public types, examples, accessibility, styling, responsive behavior, and selection guidance.
 - [`/agents/AGENTS.md`](/agents/AGENTS.md) is a reusable implementation-policy template for projects consuming `@h0nio/ui`.
@@ -22,7 +23,7 @@ The file is generated from the package version, public component manifest, and t
 
 ## Recommended agent flow
 
-1. Confirm that the installed `@h0nio/ui` version matches the resource version.
+1. If the library is not installed, follow the [AI installation prompt](/docs/agents/install-prompt). Otherwise confirm that the installed `@h0nio/ui` version matches the resource version.
 2. Use `llms.txt` to select the component by semantics rather than appearance.
 3. Read that component's JSON record and the linked documentation page.
 4. Verify uncertain details against the installed TypeScript declarations.
@@ -31,11 +32,11 @@ The file is generated from the package version, public component manifest, and t
 
 ## Path resolution
 
-Links beginning with `/` are relative to the H0N UI documentation origin. They are not routes in the consuming application. A copied agent instruction file should record the documentation origin explicitly so tools can resolve `/llms.txt`, `/agent-data/components.v1.json`, and component pages correctly.
+Links beginning with `/` are relative to the H0N UI documentation origin. They are not routes in the consuming application. A copied agent instruction file should record the documentation origin explicitly so tools can resolve `/agents/install-prompt.md`, `/llms.txt`, `/agent-data/components.v1.json`, and component pages correctly.
 
 ## Current scope
 
-Catalog schema `v1` covers the complete supported `@h0nio/ui` `1.0.0` manifest. The schema version describes the JSON shape and is independent from the library version.
+Catalog schema `v1` covers the complete supported `@h0nio/ui` `1.1.0` manifest. The schema version describes the JSON shape and is independent from the library version.
 
 > [!INFO] Generated and checked
 > The public files are generated artifacts. Repository validation fails when their committed content no longer matches the typed sources.

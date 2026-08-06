@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useId } from 'vue'
-import type { H0ListGap } from './List.types'
+import { useId } from 'vue';
+import type { H0ListGap } from './List.types';
 
 defineOptions({
     name: 'H0List'
@@ -60,7 +60,7 @@ const labelId = `h-list-label-${useId()}`
         font-weight: var(--h0n-ui-font-weight-semibold);
         letter-spacing: 0.06em;
         line-height: 1.4;
-        margin: 10px;
+        margin: 16px 16px 10px;
         text-transform: uppercase;
     }
 

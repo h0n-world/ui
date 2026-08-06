@@ -9,7 +9,6 @@ const options: H0SelectOption<string>[] = [
 
 <template>
     <div class="stack">
-        <H0Select :options="options" label="Small" size="sm" />
         <H0Select :options="options" label="Loading" loading />
         <H0Select :options="options" label="Disabled" disabled />
         <H0Select :options="options" label="Invalid status" error="Select a status." required />

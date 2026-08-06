@@ -1,3 +1,37 @@
-<script setup lang="ts">import { computed } from 'vue';import type { H0ContainerProps } from './Layout.types';import { responsiveStyles,resolveSpace } from './responsive';defineOptions({name:'H0Container'});const props=withDefaults(defineProps<H0ContainerProps>(),{as:'div',size:'lg',gutter:'lg',centered:true});const styles=computed(()=>responsiveStyles('container-gutter',props.gutter,resolveSpace))</script>
-<template><component :is="as" data-h0n-component="container" class="h-container" :class="[`h-container--${size}`,centered&&'h-container--centered']" :style="styles"><slot /></component></template>
-<style scoped lang="scss">@use './responsive' as r;.h-container{box-sizing:border-box;width:100%;@include r.responsive-property(padding-inline,container-gutter,0)}.h-container--centered{margin-inline:auto}.h-container--sm{max-width:640px}.h-container--md{max-width:768px}.h-container--lg{max-width:1024px}.h-container--xl{max-width:1280px}.h-container--full{max-width:none}</style>
+<script setup lang="ts">
+import { computed } from 'vue';
+import type { H0ContainerProps } from './Layout.types';
+import { resolveSpace, responsiveStyles } from './responsive';
+defineOptions({ name: 'H0Container' })
+const props = withDefaults(defineProps<H0ContainerProps>(), { as: 'div', size: 'lg', gutter: 'lg', centered: true })
+const styles = computed(() => responsiveStyles('container-gutter', props.gutter, resolveSpace))
+</script>
+<template>
+    <component :is="as" data-h0n-component="container" class="h-container" :class="[`h-container--${size}`, centered && 'h-container--centered']" :style="styles"><slot /></component>
+</template>
+<style scoped lang="scss">
+@use './responsive' as r;
+.h-container {
+    box-sizing: border-box;
+    width: 100%;
+    @include r.responsive-property(padding-inline, container-gutter, 0);
+}
+.h-container--centered {
+    margin-inline: auto;
+}
+.h-container--sm {
+    max-width: 640px;
+}
+.h-container--md {
+    max-width: 768px;
+}
+.h-container--lg {
+    max-width: 1024px;
+}
+.h-container--xl {
+    max-width: 1280px;
+}
+.h-container--full {
+    max-width: none;
+}
+</style>

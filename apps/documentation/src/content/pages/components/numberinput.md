@@ -30,6 +30,13 @@ NumberInput inherits the `surface` and `secondary` field treatments from H0Input
 :::example components/number-input/VariantsExample
 :::
 
+## Sizes
+
+NumberInput supports the shared `sm`, `md`, and `lg` field sizes. `md` is used by default.
+
+:::example components/number-input/SizesExample
+:::
+
 ## Localized and custom formatting
 
 Use `locale` and `formatOptions` for standard `Intl.NumberFormat` output. Provide stable `parse` and `format` functions only for domain-specific text.

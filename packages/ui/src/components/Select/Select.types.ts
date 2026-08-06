@@ -1,10 +1,11 @@
 import type { H0IconDefinition } from '../Icon'
-import type { H0InputSize } from '../Input'
+import type { H0InputSize, H0InputVariant } from '../Input'
 import type { H0AttributeRoutingProps } from '../../types'
 
 export type H0SelectValue = string | number
 
 export type H0SelectSize = H0InputSize
+export type H0SelectVariant = H0InputVariant
 
 export type H0SelectOption<Value extends H0SelectValue = H0SelectValue> = {
     label: string
@@ -21,6 +22,7 @@ export type H0SelectProps<Value extends H0SelectValue = H0SelectValue> = {
     multiple?: boolean
     maxSelected?: number
     size?: H0SelectSize
+    variant?: H0SelectVariant
     label?: string
     placeholder?: string
     disabled?: boolean

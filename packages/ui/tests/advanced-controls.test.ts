@@ -63,6 +63,17 @@ describe('advanced form control contracts', () => {
         wrapper.unmount()
     })
 
+    it('uses the surface FileUpload variant by default and supports secondary', async () => {
+        const wrapper = mount(H0FileUpload)
+
+        expect(wrapper.classes()).toContain('h-file-upload--surface')
+
+        await wrapper.setProps({ variant: 'secondary' })
+
+        expect(wrapper.classes()).toContain('h-file-upload--secondary')
+        expect(wrapper.classes()).not.toContain('h-file-upload--surface')
+    })
+
     it('renders FileUpload actions with H0Button and starts the reactive queue', async () => {
         const file = new File(['release'], 'release.txt', { type: 'text/plain' })
         const upload = vi.fn(async (_file: File, { onProgress }: { onProgress: (progress: number) => void }) => {

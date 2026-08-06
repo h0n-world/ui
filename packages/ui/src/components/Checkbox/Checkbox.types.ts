@@ -1,3 +1,7 @@
+import type { H0Size } from '../../types'
+
+export type H0CheckboxSize = H0Size
+export type H0CheckboxVariant = 'secondary' | 'surface'
 export type H0CheckboxOption = {
     label: string
     value: string

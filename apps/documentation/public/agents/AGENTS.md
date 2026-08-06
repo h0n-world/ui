@@ -1,6 +1,6 @@
 # H0N UI Consumer Agent Instructions
 
-These instructions apply to projects consuming `@h0nio/ui` 1.0.0. Merge them with the consuming repository's own instructions; repository-specific architecture and commands take precedence.
+These instructions apply to projects consuming `@h0nio/ui` 1.1.0. Merge them with the consuming repository's own instructions; repository-specific architecture and commands take precedence.
 
 ## Contract authority
 
@@ -12,6 +12,14 @@ Use sources in this order:
 4. Human documentation pages and executable examples explain composition and intent.
 
 The leading-slash resource paths above are relative to the H0N UI documentation site, not the consuming application. When copying this template, record that documentation origin in the local project instructions.
+
+## Initial installation
+
+- For a fresh integration, start from **/agents/install-prompt.md** on the H0N UI documentation origin.
+- Preserve the repository's existing package manager and lockfile; require Vue 3.5 or newer.
+- Install the intended **@h0nio/ui** version, import **@h0nio/ui/style.css** exactly once, and register the plugin on the existing Vue app instance.
+- Do not replace an existing router, store, plugin chain, stylesheet pipeline, theme service, locale service, or toast configuration.
+- Use minimal plugin defaults unless the project defines explicit appearance or service requirements.
 
 ## Before editing UI
 

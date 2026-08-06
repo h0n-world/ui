@@ -2,7 +2,7 @@
 
 Last verified: 2026-07-28
 
-Stable library baseline: `@h0nio/ui` `1.0.0`
+Current library version: `@h0nio/ui` `1.1.0`
 
 H0N UI is a pnpm workspace centered on a self-contained Vue 3 component library and a source-linked documentation application.
 
@@ -45,7 +45,7 @@ h0n-ui/
 
 ## Runtime and Toolchain
 
-- pnpm workspaces, pinned through `packageManager` to pnpm `11.15.1`
+- pnpm workspaces, pinned through `packageManager` to pnpm `11.17.0`
 - Vue `3.5`
 - TypeScript `5.9` with strict base configuration
 - Vite `8`
@@ -223,12 +223,14 @@ The generator combines records, manifest metadata, pages, examples, and the `@h0
 - `public/llms.txt`
 - `public/agent-data/components.v1.json`
 - `public/agents/AGENTS.md`
+- `public/agents/install-prompt.md`
 
 The resources have distinct roles:
 
 - `llms.txt` is the versioned discovery and routing layer. It describes package boundaries, the recommended agent workflow, and every supported component grouped by manifest category.
 - `components.v1.json` is the exact machine-readable component contract and guidance layer.
 - `agents/AGENTS.md` is a reusable policy template for repositories consuming `@h0nio/ui`.
+- `agents/install-prompt.md` is a versioned copy-paste workflow for installing, configuring, and validating H0N UI in an existing Vue project.
 
 Consumer agents resolve leading-slash links against the H0N UI documentation origin, not the consuming application. They treat the installed package version and TypeScript declarations as the executable contract, then use the matching catalog, compact index, and human documentation in that order. These files are derived artifacts and deterministic tests reject stale committed output. MCP server and distributable Agent Skills remain planned and are not part of the current runtime.
 

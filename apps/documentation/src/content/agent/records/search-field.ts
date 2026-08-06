@@ -15,5 +15,5 @@ export const searchFieldAgentRecord = {
         { name: 'H0SearchFieldVariant', fields: [{ name: 'H0SearchFieldVariant', type: "'secondary' | 'surface'", description: 'Supported search-field surface treatments.' }] },
     ] },
     useWhen: ['Users filter or search content with a compact query field.'], avoidWhen: ['A fixed option selection is required; use H0Select.'], ...standardFormGuidance,
-    examples: [{ key: 'components/search-field/BasicExample', purpose: 'Clearable controlled search.' }, { key: 'components/search-field/VariantsExample', purpose: 'Surface variants and interaction states.' }, { key: 'components/search-field/ApiExample', purpose: 'Input events and imperative helpers.' }], relatedComponents: ['H0Select', 'H0Input'],
+    examples: [{ key: 'components/search-field/BasicExample', purpose: 'Clearable controlled search.' }, { key: 'components/search-field/VariantsExample', purpose: 'Surface variants.' }, { key: 'components/search-field/SizesExample', purpose: 'Small, medium, and large search fields.' }, { key: 'components/search-field/StatesExample', purpose: 'Read-only, disabled, and invalid states.' }, { key: 'components/search-field/ApiExample', purpose: 'Input events and imperative helpers.' }], relatedComponents: ['H0Select', 'H0Input'],
 } satisfies ComponentAgentRecordV1

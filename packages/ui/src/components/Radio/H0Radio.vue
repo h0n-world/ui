@@ -2,7 +2,7 @@
 import { computed, ref, useAttrs, useId, useTemplateRef } from 'vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
-import type { H0RadioValidator, H0RadioValue } from './Radio.types'
+import type { H0RadioValidator, H0RadioValue, H0RadioVariant } from './Radio.types'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import { useH0Locale } from '../../locale'
 
@@ -15,6 +15,7 @@ const props = withDefaults(
     defineProps<{
         modelValue?: H0RadioValue | null
         value: H0RadioValue
+        variant?: H0RadioVariant
         label?: string
         description?: string
         disabled?: boolean
@@ -31,6 +32,7 @@ const props = withDefaults(
     }>(),
     {
         defaultValue: null,
+        variant: 'surface',
         label: '',
         description: '',
         disabled: false,
@@ -102,7 +104,7 @@ defineExpose({
 </script>
 
 <template>
-    <label v-bind="mergedRootAttrs" data-h0n-component="radio" class="h-radio" :class="[checked && 'h-radio--checked', disabled && 'h-radio--disabled', visibleError && 'h-radio--error']">
+    <label v-bind="mergedRootAttrs" data-h0n-component="radio" class="h-radio" :class="[`h-radio--${variant}`, checked && 'h-radio--checked', disabled && 'h-radio--disabled', visibleError && 'h-radio--error']">
         <input
             v-bind="props.controlAttrs"
             :id="controlId"
@@ -136,6 +138,8 @@ defineExpose({
 
 <style scoped lang="scss">
 .h-radio {
+    --h0n-radio-indicator-background: var(--h0n-ui-color-surface);
+
     align-items: flex-start;
     color: var(--h0n-ui-color-text);
     cursor: pointer;
@@ -159,7 +163,7 @@ defineExpose({
 
     &__indicator {
         align-items: center;
-        background: var(--h0n-ui-color-secondary);
+        background: var(--h0n-radio-indicator-background);
         border: 1px solid transparent;
         border-radius: var(--h0n-ui-radius-round);
         box-sizing: border-box;
@@ -173,6 +177,14 @@ defineExpose({
             border-color var(--h0n-ui-duration-fast) ease,
             box-shadow var(--h0n-ui-duration-fast) ease;
         width: 18px;
+    }
+
+    &--surface {
+        --h0n-radio-indicator-background: var(--h0n-ui-color-surface);
+    }
+
+    &--secondary {
+        --h0n-radio-indicator-background: var(--h0n-ui-color-secondary);
     }
 
     &__dot {

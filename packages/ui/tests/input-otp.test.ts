@@ -3,6 +3,18 @@ import { describe, expect, it, vi } from 'vitest'
 import H0InputOTP from '../src/components/InputOTP/H0InputOTP.vue'
 
 describe('H0InputOTP', () => {
+    it('uses medium by default and supports small and large sizes', async () => {
+        const wrapper = mount(H0InputOTP)
+
+        expect(wrapper.get('.h-input-otp').classes()).toContain('h-input-otp--md')
+
+        await wrapper.setProps({ size: 'sm' })
+        expect(wrapper.get('.h-input-otp').classes()).toContain('h-input-otp--sm')
+
+        await wrapper.setProps({ size: 'lg' })
+        expect(wrapper.get('.h-input-otp').classes()).toContain('h-input-otp--lg')
+    })
+
     it('redirects focus to the first available cell', async () => {
         const wrapper = mount(H0InputOTP, {
             attachTo: document.body,

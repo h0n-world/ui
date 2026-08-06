@@ -9,5 +9,5 @@ export const stackAgentRecord = {
         { name: 'align', type: 'H0ResponsiveValue<H0LayoutAlign>', default: "'stretch'", description: 'Responsive cross-axis alignment.' }, { name: 'justify', type: 'H0ResponsiveValue<H0LayoutJustify>', default: "'start'", description: 'Responsive main-axis distribution.' }, { name: 'wrap', type: 'H0ResponsiveValue<boolean>', default: 'false', description: 'Responsive flex wrapping.' },
     ], events: [], slots: polymorphicSlot, exposed: [], types: [] },
     useWhen: ['Sibling elements form a vertical sequence with consistent spacing.'], avoidWhen: ['Children should flow horizontally; use H0Inline.'], ...standardLayoutGuidance,
-    examples: [{ key: 'components/layout/BasicExample', purpose: 'Responsive spacing and semantic layout composition.' }], relatedComponents: ['H0Inline', 'H0Grid'],
+    examples: [{ key: 'components/layout/BasicExample', purpose: 'Nested page-section composition.' }, { key: 'components/layout/StackExample', purpose: 'Responsive vertical rhythm between repeated sections.' }], relatedComponents: ['H0Inline', 'H0Grid'],
 } satisfies ComponentAgentRecordV1

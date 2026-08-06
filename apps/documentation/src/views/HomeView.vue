@@ -1,10 +1,50 @@
 <script setup lang="ts">
+import type { H0SelectOption, H0TabItem } from '@h0nio/ui'
+import {
+    H0Alert,
+    H0Avatar,
+    H0Badge,
+    H0Button,
+    H0Card,
+    H0Checkbox,
+    H0Container,
+    H0Divider,
+    H0Grid,
+    H0Icon,
+    H0Inline,
+    H0Input,
+    H0Select,
+    H0Stack,
+    H0Switch,
+    H0Tabs,
+    H0Typography,
+} from '@h0nio/ui'
 import { arrowRightIcon, checkIcon, searchIcon, settingsIcon } from '@h0nio/ui/icons'
-import { H0Badge, H0Button, H0Card, H0Icon, H0Typography } from '@h0nio/ui'
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import IconH0N from '@/components/icons/IconH0N.vue'
 import SystemHeader from '@/components/system/SystemHeader.vue'
+import { siteConfig } from '@/content/site'
+
+const demoTabs: H0TabItem<string>[] = [
+    { value: 'profile', label: 'Profile' },
+    { value: 'appearance', label: 'Appearance' },
+    { value: 'notifications', label: 'Notifications' },
+]
+
+const teamOptions: H0SelectOption<string>[] = [
+    { value: 'design', label: 'Design' },
+    { value: 'engineering', label: 'Engineering' },
+    { value: 'product', label: 'Product' },
+]
+
+const activeDemoTab = ref('profile')
+const workspaceName = ref('H0N Studio')
+const selectedTeam = ref<string | null>('design')
+const weeklyDigest = ref(true)
+const productUpdates = ref(true)
+const interfaceTips = ref(false)
 </script>
 
 <template>
@@ -12,269 +52,387 @@ import SystemHeader from '@/components/system/SystemHeader.vue'
         <SystemHeader />
 
         <main>
-            <section class="hero-section">
-                <div class="hero-section__glow"></div>
-                <H0Badge class="hero-section__badge" tone="primary" dot
-                    >Documentation template · v0.1</H0Badge
-                >
+            <H0Container as="section" size="full" class="hero-section">
+                <div class="hero-section__glow" aria-hidden="true" />
+                <H0Stack class="hero-section__content" align="center" gap="lg">
+                    <H0Badge tone="primary" dot>H0N UI · {{ siteConfig.version }}</H0Badge>
 
-                <h1>Give your knowledge<br /><span>a place to breathe.</span></h1>
-                <p>
-                    A universal, Markdown-first documentation foundation — structured for readers,
-                    comfortable for writers, and beautifully composed with H0N UI.
-                </p>
+                    <H0Typography variant="h1" align="center" class="hero-section__title">
+                        Build interfaces that<br /><span>already feel complete.</span>
+                    </H0Typography>
 
-                <div class="hero-section__actions">
-                    <H0Button :as="RouterLink" to="/docs/introduction" tone="primary" size="lg"
-                        >Start reading</H0Button
+                    <H0Typography
+                        variant="body"
+                        color="muted"
+                        align="center"
+                        class="hero-section__description"
                     >
-                    <H0Button :as="RouterLink" to="/docs/quick-start" variant="outline" size="lg"
-                        >Build your docs</H0Button
-                    >
-                </div>
+                        A self-contained Vue 3 component library with accessible interaction
+                        patterns, a coherent visual system, and the building blocks for production
+                        interfaces.
+                    </H0Typography>
 
-                <div class="hero-section__meta">
-                    <span><H0Icon :icon="checkIcon" :size="14" /> Markdown native</span>
-                    <span><H0Icon :icon="checkIcon" :size="14" /> Responsive layouts</span>
-                    <span><H0Icon :icon="checkIcon" :size="14" /> Theme ready</span>
-                </div>
-            </section>
+                    <H0Inline gap="sm" justify="center">
+                        <H0Button :as="RouterLink" to="/docs/quick-start" tone="primary" size="lg">
+                            Start building
+                        </H0Button>
+                        <H0Button :as="RouterLink" to="/components/all" variant="outline" size="lg">
+                            Browse components
+                        </H0Button>
+                    </H0Inline>
 
-            <section class="product-preview" aria-label="Documentation layout preview">
-                <div class="preview-window">
-                    <header class="preview-window__header">
-                        <IconH0N :size="26" />
-                        <div class="preview-window__tabs">
-                            <span class="is-active">Guides</span><span>Components</span
-                            ><span>Releases</span>
-                        </div>
-                        <div class="preview-window__search">
-                            <H0Icon :icon="searchIcon" :size="13" /> Search
-                        </div>
-                    </header>
-                    <div class="preview-window__body">
-                        <aside class="preview-nav">
-                            <small>Overview</small>
-                            <span class="is-active">Introduction</span>
-                            <span>Quick start</span>
-                            <span>Design principles</span>
-                            <small>Foundations</small>
-                            <span>Colors</span>
-                            <span>Typography</span>
-                            <span>Animation</span>
-                        </aside>
-                        <article class="preview-article">
-                            <span class="preview-kicker">Getting started</span>
-                            <h2>Documentation that gets out of the way.</h2>
-                            <p>
-                                Keep readers oriented with a predictable structure and make every
-                                page easy to scan.
-                            </p>
-                            <div class="preview-callout">
-                                <H0Icon :icon="settingsIcon" :size="18" />
-                                <span
-                                    ><strong>Built to adapt</strong>Change navigation, theme, and
-                                    content without rebuilding the shell.</span
+                    <H0Inline class="hero-section__meta" gap="lg" justify="center">
+                        <H0Inline as="span" gap="xs" :wrap="false">
+                            <H0Icon :icon="checkIcon" :size="15" /> Accessible by design
+                        </H0Inline>
+                        <H0Inline as="span" gap="xs" :wrap="false">
+                            <H0Icon :icon="checkIcon" :size="15" /> Fully typed
+                        </H0Inline>
+                        <H0Inline as="span" gap="xs" :wrap="false">
+                            <H0Icon :icon="checkIcon" :size="15" /> Theme ready
+                        </H0Inline>
+                    </H0Inline>
+                </H0Stack>
+            </H0Container>
+
+            <H0Container
+                as="section"
+                size="xl"
+                class="showcase-section"
+                aria-labelledby="showcase-title"
+            >
+                <H0Stack gap="xl">
+                    <H0Stack class="section-heading" gap="sm">
+                        <H0Typography as="span" variant="body-xs" color="primary" :weight="700"
+                            >BUILT WITH H0N UI</H0Typography
+                        >
+                        <H0Typography id="showcase-title" variant="h2"
+                            >Real components. One coherent interface.</H0Typography
+                        >
+                        <H0Typography color="muted">
+                            This workspace panel is composed from the same public components
+                            available to every H0N UI application.
+                        </H0Typography>
+                    </H0Stack>
+
+                    <H0Card class="workspace-card" padding>
+                        <template #header>
+                            <H0Inline gap="sm" :wrap="false">
+                                <H0Avatar name="H0N Studio" fallback="H0" color="blue" :size="42" />
+                                <H0Stack gap="xs">
+                                    <H0Typography as="strong" variant="body" :weight="600"
+                                        >Workspace settings</H0Typography
+                                    >
+                                    <H0Typography variant="body-xs" color="muted"
+                                        >Manage the details your team shares.</H0Typography
+                                    >
+                                </H0Stack>
+                            </H0Inline>
+                            <H0Badge tone="success" dot>Saved</H0Badge>
+                        </template>
+
+                        <H0Tabs
+                            v-model="activeDemoTab"
+                            :items="demoTabs"
+                            mount-mode="active"
+                            aria-label="Workspace settings sections"
+                        >
+                            <template #panel="{ item }">
+                                <H0Stack
+                                    v-if="item.value === 'profile'"
+                                    class="workspace-panel"
+                                    gap="lg"
                                 >
-                            </div>
-                            <div class="preview-code">
-                                <span>01</span><code>title: Introduction</code><span>02</span
-                                ><code>path: /docs/introduction</code><span>03</span
-                                ><code>group: Getting started</code>
-                            </div>
-                        </article>
-                        <aside class="preview-outline">
-                            <small>On this page</small>
-                            <span class="is-active">Why this template?</span>
-                            <span>Project anatomy</span>
-                            <span>What comes next</span>
-                        </aside>
-                    </div>
-                </div>
-            </section>
+                                    <H0Grid
+                                        class="workspace-form-grid"
+                                        columns="repeat(2, minmax(0, 1fr))"
+                                        gap="md"
+                                    >
+                                        <H0Input
+                                            v-model="workspaceName"
+                                            variant="secondary"
+                                            label="Workspace name"
+                                            hint="Visible to everyone in your organization."
+                                        />
+                                        <H0Select
+                                            v-model="selectedTeam"
+                                            variant="secondary"
+                                            label="Default team"
+                                            :options="teamOptions"
+                                            hint="New projects start in this team."
+                                        />
+                                    </H0Grid>
 
-            <section class="principles-section">
-                <div class="section-heading">
-                    <span>Purposefully composed</span>
-                    <h2>Everything a documentation site needs.<br />Nothing it doesn’t.</h2>
-                    <p>
-                        The template handles the repetitive decisions so your team can focus on
-                        explaining the product.
-                    </p>
-                </div>
+                                    <H0Divider />
 
-                <div class="feature-grid">
-                    <H0Card variant="outline" padding>
-                        <div class="feature-card feature-card--wide">
-                            <div>
-                                <span class="feature-card__index">01 / Content</span>
-                                <H0Typography variant="h3"
-                                    >Markdown stays the source of truth.</H0Typography
+                                    <H0Inline class="setting-row" justify="between" :wrap="false">
+                                        <H0Stack gap="xs">
+                                            <H0Typography
+                                                as="strong"
+                                                variant="body-sm"
+                                                :weight="600"
+                                                >Weekly workspace digest</H0Typography
+                                            >
+                                            <H0Typography variant="body-xs" color="muted"
+                                                >Receive a concise summary every
+                                                Monday.</H0Typography
+                                            >
+                                        </H0Stack>
+                                        <H0Switch
+                                            v-model="weeklyDigest"
+                                            :control-attrs="{
+                                                'aria-label': 'Weekly workspace digest',
+                                            }"
+                                        />
+                                    </H0Inline>
+
+                                    <H0Alert
+                                        tone="success"
+                                        variant="secondary"
+                                        title="Everything is connected"
+                                        text="Inputs, selection, feedback, layout, and navigation all share the same tokens and interaction language."
+                                    />
+                                </H0Stack>
+
+                                <H0Stack
+                                    v-else-if="item.value === 'appearance'"
+                                    class="workspace-panel"
+                                    gap="lg"
                                 >
-                                <p>
-                                    Front matter generates navigation, routes, search, and page
-                                    context from one portable file.
-                                </p>
-                            </div>
-                            <div class="mini-editor">
-                                <div><i></i><i></i><i></i><span>introduction.md</span></div>
-                                <pre><em>---</em>
-title: <b>Introduction</b>
-group: <b>Getting started</b>
-order: <b>10</b>
-<em>---</em>
+                                    <H0Typography color="muted"
+                                        >Compose product settings without recreating control states
+                                        or spacing rules.</H0Typography
+                                    >
+                                    <H0Inline gap="sm">
+                                        <H0Badge tone="primary">Primary</H0Badge>
+                                        <H0Badge tone="success">Success</H0Badge>
+                                        <H0Badge tone="warning">Warning</H0Badge>
+                                        <H0Badge tone="danger">Danger</H0Badge>
+                                    </H0Inline>
+                                    <H0Checkbox
+                                        v-model="interfaceTips"
+                                        variant="secondary"
+                                        label="Show interface guidance"
+                                    />
+                                </H0Stack>
 
-<strong># Start with clarity</strong></pre>
-                            </div>
-                        </div>
-                    </H0Card>
+                                <H0Stack v-else class="workspace-panel" gap="lg">
+                                    <H0Switch
+                                        v-model="productUpdates"
+                                        label="Product updates"
+                                        hint="Announcements about new components and improvements."
+                                    />
+                                    <H0Switch
+                                        v-model="weeklyDigest"
+                                        label="Weekly digest"
+                                        hint="A summary of activity across your workspace."
+                                    />
+                                </H0Stack>
+                            </template>
+                        </H0Tabs>
 
-                    <H0Card variant="outline" padding>
-                        <div class="feature-card">
-                            <span class="feature-card__index">02 / Navigation</span>
-                            <H0Typography variant="h3">Context, at every level.</H0Typography>
-                            <p>
-                                Primary sections, local chapters, and page anchors create an
-                                effortless reading map.
-                            </p>
-                            <div class="feature-path">
-                                <span>Getting started</span><H0Icon :icon="arrowRightIcon" /><span
-                                    >Overview</span
-                                ><H0Icon :icon="arrowRightIcon" /><strong>Introduction</strong>
-                            </div>
-                        </div>
+                        <template #footer>
+                            <H0Typography variant="body-xs" color="muted"
+                                >Built from 11 public H0N UI components</H0Typography
+                            >
+                            <H0Inline gap="sm">
+                                <H0Button size="sm" variant="ghost">Cancel</H0Button>
+                                <H0Button size="sm" tone="primary">Save changes</H0Button>
+                            </H0Inline>
+                        </template>
                     </H0Card>
+                </H0Stack>
+            </H0Container>
 
-                    <H0Card variant="outline" padding>
-                        <div class="feature-card">
-                            <span class="feature-card__index">03 / System</span>
-                            <H0Typography variant="h3">H0N UI all the way down.</H0Typography>
-                            <p>
-                                Components, icons, colors, motion, spacing, and radii speak the same
-                                design language.
-                            </p>
-                            <div class="token-row"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                        </div>
+            <H0Container
+                as="section"
+                size="xl"
+                class="principles-section"
+                aria-labelledby="principles-title"
+            >
+                <H0Stack gap="xl">
+                    <H0Stack class="section-heading" gap="sm">
+                        <H0Typography as="span" variant="body-xs" color="primary" :weight="700"
+                            >A COMPLETE FOUNDATION</H0Typography
+                        >
+                        <H0Typography id="principles-title" variant="h2"
+                            >Spend time on the product, not the primitives.</H0Typography
+                        >
+                        <H0Typography color="muted"
+                            >H0N UI keeps common decisions consistent while leaving product
+                            composition in your hands.</H0Typography
+                        >
+                    </H0Stack>
+
+                    <H0Grid class="feature-grid" columns="repeat(3, minmax(0, 1fr))" gap="md">
+                        <H0Card padding>
+                            <H0Stack class="feature-card" gap="md">
+                                <span class="feature-card__icon"
+                                    ><H0Icon :icon="checkIcon" :size="22"
+                                /></span>
+                                <H0Typography variant="h3">Accessible contracts</H0Typography>
+                                <H0Typography color="muted"
+                                    >Keyboard behavior, focus states, labels, validation, and
+                                    overlay semantics are built into the components.</H0Typography
+                                >
+                            </H0Stack>
+                        </H0Card>
+
+                        <H0Card padding>
+                            <H0Stack class="feature-card" gap="md">
+                                <span class="feature-card__icon"
+                                    ><H0Icon :icon="settingsIcon" :size="22"
+                                /></span>
+                                <H0Typography variant="h3">One design language</H0Typography>
+                                <H0Typography color="muted"
+                                    >Typography, spacing, color, motion, density, and radius
+                                    settings stay synchronized across the library.</H0Typography
+                                >
+                            </H0Stack>
+                        </H0Card>
+
+                        <H0Card padding>
+                            <H0Stack class="feature-card" gap="md">
+                                <span class="feature-card__icon"
+                                    ><H0Icon :icon="searchIcon" :size="22"
+                                /></span>
+                                <H0Typography variant="h3">Documentation you can run</H0Typography>
+                                <H0Typography color="muted"
+                                    >Every example uses workspace source, so the documentation
+                                    doubles as a live integration surface.</H0Typography
+                                >
+                            </H0Stack>
+                        </H0Card>
+                    </H0Grid>
+
+                    <H0Card class="install-card" variant="outline">
+                        <H0Inline class="install-card__content" justify="between">
+                            <H0Stack gap="xs">
+                                <H0Typography variant="body-sm" :weight="600"
+                                    >Start with one package</H0Typography
+                                >
+                                <H0Typography variant="body-xs" color="muted"
+                                    >Vue 3.5+, TypeScript declarations, styles, icons, and
+                                    composables included.</H0Typography
+                                >
+                            </H0Stack>
+                            <H0Inline class="install-command" gap="sm" :wrap="false">
+                                <H0Typography as="code" variant="code"
+                                    >pnpm add @h0nio/ui</H0Typography
+                                >
+                                <H0Button
+                                    :as="RouterLink"
+                                    to="/docs/quick-start"
+                                    size="sm"
+                                    variant="soft"
+                                >
+                                    Quick start <H0Icon :icon="arrowRightIcon" :size="16" />
+                                </H0Button>
+                            </H0Inline>
+                        </H0Inline>
                     </H0Card>
-                </div>
-            </section>
+                </H0Stack>
+            </H0Container>
 
             <section class="cta-section">
-                <span>Ready to write?</span>
-                <h2>Start with a page.<br />Grow into a library.</h2>
-                <p>The structure is already here. Make it unmistakably yours.</p>
-                <H0Button :as="RouterLink" to="/docs/quick-start" tone="primary" size="lg"
-                    >Open the quick start</H0Button
-                >
+                <H0Container size="md">
+                    <H0Stack align="center" gap="lg">
+                        <H0Badge tone="primary">READY WHEN YOU ARE</H0Badge>
+                        <H0Typography variant="h2" align="center" class="cta-section__title"
+                            >Build the next screen with components that already agree.</H0Typography
+                        >
+                        <H0Typography color="muted" align="center"
+                            >Explore the catalog, copy a live example, and keep your application
+                            focused on its own product decisions.</H0Typography
+                        >
+                        <H0Button :as="RouterLink" to="/components/all" tone="primary" size="lg">
+                            Explore all components
+                        </H0Button>
+                    </H0Stack>
+                </H0Container>
             </section>
         </main>
 
-        <footer class="home-footer">
-            <RouterLink to="/" aria-label="H0N Docs home">
-                <IconH0N :size="26" />
-            </RouterLink>
-            <span>Designed for documentation that lasts.</span>
-            <span>Vue 3 · Markdown · H0N UI</span>
-        </footer>
+        <H0Container as="footer" size="xl" class="home-footer">
+            <H0Inline justify="between">
+                <RouterLink to="/" aria-label="H0N UI home"><IconH0N :size="26" /></RouterLink>
+                <H0Typography variant="body-xs" color="muted"
+                    >Built with Vue 3 · TypeScript · H0N UI</H0Typography
+                >
+                <H0Typography variant="body-xs" color="muted">{{
+                    siteConfig.version
+                }}</H0Typography>
+            </H0Inline>
+        </H0Container>
     </div>
 </template>
 
 <style scoped lang="scss">
 .home-page {
     color: var(--h0n-ui-color-text);
+    overflow-x: clip;
 }
 
 .hero-section {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    max-width: 1100px;
-    padding: 112px 24px 74px;
-    // position: relative;
+    padding-block: clamp(5rem, 11vw, 9rem) clamp(4.5rem, 9vw, 7rem);
+    position: relative;
     text-align: center;
 
     &::before {
-        content: '';
-        opacity: 0.72;
         background-image: radial-gradient(
             circle,
-            color-mix(in srgb, var(--h0n-text) 14%, transparent) 0.8px,
+            color-mix(in srgb, var(--h0n-ui-color-text) 14%, transparent) 0.8px,
             transparent 0.9px
         );
         background-size: 8px 8px;
-        position: absolute;
+        content: '';
         inset: 0;
-        -webkit-mask-image: linear-gradient(var(--h0n-background) 0% 66%, #0000 98%);
-        mask-image: linear-gradient(var(--h0n-background) 0% 66%, #0000 98%);
+        mask-image: linear-gradient(#000 0% 64%, transparent 96%);
+        opacity: 0.58;
+        pointer-events: none;
+        position: absolute;
     }
 
     &__glow {
         background: radial-gradient(
             circle,
-            #4e6aa338,
-            color-mix(in srgb, var(--h0n-accent) 7%, transparent) 43%,
-            transparent 72%
+            color-mix(in srgb, var(--h0n-ui-color-primary) 22%, transparent),
+            transparent 68%
         );
-        filter: blur(10px);
-        border-radius: 50%;
-        width: min(1100px, 100vw);
-        height: 760px;
-        position: absolute;
-        top: -280px;
+        filter: blur(18px);
+        height: 42rem;
         left: 50%;
-        transform: translate(-50%);
+        pointer-events: none;
+        position: absolute;
+        top: -18rem;
+        transform: translateX(-50%);
+        width: 100%;
     }
 
-    &__badge {
+    &__content {
+        margin-inline: auto;
+        max-width: 66rem;
         position: relative;
     }
 
-    h1 {
-        font-size: clamp(3rem, 7.5vw, 6.4rem);
-        line-height: 0.94;
-        font-weight: 700;
-        margin: 32px 0 24px;
-        max-width: 1040px;
-        position: relative;
+    &__title {
+        font-size: clamp(3.2rem, 8vw, 6.8rem);
+        letter-spacing: -0.065em;
+        line-height: 0.95;
 
         span {
             color: var(--h0n-ui-color-muted);
         }
     }
 
-    > p {
-        color: var(--h0n-ui-color-muted);
-        font-size: clamp(1rem, 1.6vw, 1.25rem);
-        line-height: 1.7;
-        margin: 0;
-        max-width: 740px;
-        position: relative;
-    }
-
-    &__actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 34px;
-        position: relative;
+    &__description {
+        font-size: clamp(1rem, 1.7vw, 1.25rem);
+        max-width: 47rem;
     }
 
     &__meta {
         color: var(--h0n-ui-color-muted);
-        display: flex;
-        flex-wrap: wrap;
-        font-size: 0.72rem;
-        gap: 22px;
-        justify-content: center;
-        margin-top: 26px;
-
-        span {
-            align-items: center;
-            display: inline-flex;
-            gap: 5px;
-        }
+        font-size: var(--h0n-ui-typography-body-xs-size);
 
         svg {
             color: var(--h0n-ui-color-primary);
@@ -282,462 +440,119 @@ order: <b>10</b>
     }
 }
 
-.product-preview {
-    margin: 0 auto;
-    max-width: 1320px;
-    padding: 0 28px 110px;
-    position: relative;
-}
-
-.preview-window {
-    background: var(--h0n-ui-color-surface);
-    border-radius: var(--h0n-ui-radius-xl);
-    box-shadow: var(--h0n-ui-shadow-lg);
-    overflow: hidden;
-
-    &__header {
-        align-items: center;
-        border-bottom: 1px solid var(--h0n-ui-color-border);
-        display: grid;
-        gap: 26px;
-        grid-template-columns: auto 1fr auto;
-        min-height: 58px;
-        padding: 0 20px;
-    }
-
-    &__tabs {
-        display: flex;
-        font-size: 0.69rem;
-        gap: 22px;
-
-        span {
-            color: var(--h0n-ui-color-muted);
-        }
-
-        .is-active {
-            color: var(--h0n-ui-color-text);
-        }
-    }
-
-    &__search {
-        align-items: center;
-        background: var(--h0n-ui-color-secondary);
-        border-radius: 7px;
-        color: var(--h0n-ui-color-muted);
-        display: flex;
-        font-size: 0.65rem;
-        gap: 6px;
-        padding: 8px 54px 8px 10px;
-    }
-
-    &__body {
-        display: grid;
-        grid-template-columns: 190px minmax(0, 1fr) 190px;
-        min-height: 550px;
-    }
-}
-
-.preview-nav,
-.preview-outline {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.67rem;
-    gap: 4px;
-    padding: 28px 20px;
-
-    small {
-        color: var(--h0n-ui-color-muted);
-        font-size: 0.59rem;
-        letter-spacing: 0.08em;
-        margin: 16px 8px 6px;
-        text-transform: uppercase;
-    }
-
-    span {
-        border-radius: 7px;
-        color: var(--h0n-ui-color-muted);
-        padding: 8px;
-    }
-
-    .is-active {
-        background: var(--h0n-ui-color-surface);
-        color: var(--h0n-ui-color-text);
-    }
-}
-
-.preview-nav {
-    border-inline-end: 1px solid var(--h0n-ui-color-border);
-}
-
-.preview-outline {
-    border-inline-start: 1px solid var(--h0n-ui-color-border);
-
-    .is-active {
-        background: transparent;
-        border-inline-start: 1px solid var(--h0n-ui-color-primary);
-        border-radius: 0;
-    }
-}
-
-.preview-article {
-    padding: 64px clamp(30px, 7vw, 92px);
-
-    .preview-kicker {
-        color: var(--h0n-ui-color-primary);
-        font-size: 0.65rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-    }
-
-    h2 {
-        font-size: clamp(1.8rem, 3.6vw, 3rem);
-        letter-spacing: -0.045em;
-        line-height: 1.08;
-        margin: 13px 0 15px;
-        max-width: 590px;
-    }
-
-    > p {
-        color: var(--h0n-ui-color-muted);
-        font-size: 0.85rem;
-        line-height: 1.7;
-        max-width: 540px;
-    }
-}
-
-.preview-callout {
-    align-items: flex-start;
-    background: var(--h0n-ui-color-surface);
-    border-radius: var(--h0n-ui-radius-xl);
-    display: flex;
-    font-size: 0.7rem;
-    gap: 12px;
-    margin-top: 28px;
-    padding: 16px;
-
-    svg {
-        color: var(--h0n-ui-color-primary);
-    }
-
-    span {
-        color: var(--h0n-ui-color-muted);
-        display: grid;
-        gap: 4px;
-    }
-
-    strong {
-        color: var(--h0n-ui-color-text);
-    }
-}
-
-.preview-code {
-    background: var(--h0n-ui-color-secondary);
-    border-radius: var(--h0n-ui-radius-lg);
-    display: grid;
-    font-size: 0.68rem;
-    gap: 8px 13px;
-    grid-template-columns: auto 1fr;
-    margin-top: 14px;
-    padding: 18px;
-
-    span {
-        color: var(--h0n-ui-color-muted);
-    }
-
-    code {
-        color: var(--h0n-ui-color-text);
-    }
-}
-
+.showcase-section,
 .principles-section {
-    margin: 0 auto;
-    max-width: 1240px;
-    padding: 20px 28px 120px;
+    padding-bottom: clamp(5rem, 10vw, 8rem);
 }
 
 .section-heading {
-    display: grid;
-    gap: 16px;
-    margin-bottom: 44px;
-    max-width: 760px;
+    max-width: 46rem;
 
-    > span {
-        color: var(--h0n-ui-color-primary);
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.09em;
-        text-transform: uppercase;
-    }
-
-    h2 {
-        font-size: clamp(2.2rem, 4.8vw, 4.2rem);
-        letter-spacing: -0.055em;
-        line-height: 1.03;
-        margin: 0;
-    }
-
-    p {
-        color: var(--h0n-ui-color-muted);
-        line-height: 1.7;
-        margin: 0;
-        max-width: 580px;
+    > :first-child {
+        letter-spacing: 0.1em;
     }
 }
 
-.feature-grid {
-    display: grid;
-    gap: 14px;
-    grid-template-columns: 1fr 1fr;
+.workspace-panel {
+    padding-top: 1.5rem;
+}
 
-    > :first-child {
-        grid-column: 1 / -1;
-    }
-
-    :deep(.h-card__content) {
-        height: 100%;
-        padding: clamp(24px, 4vw, 46px);
-    }
+.setting-row {
+    gap: var(--h0n-ui-spacing-lg);
 }
 
 .feature-card {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    height: 100%;
-
-    &--wide {
+    &__icon {
         align-items: center;
-        display: grid;
-        gap: 50px;
-        grid-template-columns: minmax(0, 0.9fr) minmax(380px, 1.1fr);
-
-        > div:first-child {
-            display: grid;
-            gap: 16px;
-        }
-    }
-
-    &__index {
+        background: color-mix(in srgb, var(--h0n-ui-color-primary) 14%, transparent);
+        border-radius: var(--h0n-ui-radius-lg);
         color: var(--h0n-ui-color-primary);
-        font-size: 0.66rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-    }
-
-    p {
-        color: var(--h0n-ui-color-muted);
-        line-height: 1.7;
-        margin: 0;
-        max-width: 540px;
+        display: inline-flex;
+        height: 3rem;
+        justify-content: center;
+        width: 3rem;
     }
 }
 
-.mini-editor {
-    background: var(--h0n-ui-color-surface);
-    border-radius: var(--h0n-ui-radius-xl);
-    box-shadow: var(--h0n-ui-shadow);
-    overflow: hidden;
-
-    > div {
-        align-items: center;
-        border-bottom: 1px solid var(--h0n-ui-color-border);
-        color: var(--h0n-ui-color-muted);
-        display: flex;
-        font-size: 0.68rem;
-        gap: 6px;
-        padding: 11px 13px;
-
-        i {
-            background: var(--h0n-ui-color-border);
-            border-radius: 50%;
-            height: 7px;
-            width: 7px;
-        }
-
-        span {
-            margin-inline-start: 6px;
-        }
-    }
-
-    pre {
-        color: var(--h0n-ui-color-muted);
-        font:
-            0.75rem/1.8 'SFMono-Regular',
-            Consolas,
-            monospace;
-        margin: 0;
-        padding: 18px 20px 22px;
-    }
-
-    b,
-    strong {
-        color: var(--h0n-ui-color-text);
-    }
-
-    em {
-        color: var(--h0n-ui-color-primary);
-        font-style: normal;
-    }
+.install-card__content {
+    padding: 1.25rem;
 }
 
-.feature-path {
-    align-items: center;
-    background: var(--h0n-ui-color-surface);
+.install-command {
+    background: var(--h0n-ui-color-secondary);
     border-radius: var(--h0n-ui-radius-lg);
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 0.72rem;
-    gap: 8px;
-    margin-top: auto;
-    padding: 14px;
-
-    span,
-    svg {
-        color: var(--h0n-ui-color-muted);
-    }
-}
-
-.token-row {
-    display: flex;
-    gap: 9px;
-    margin-top: auto;
-
-    i {
-        background: var(--h0n-ui-color-primary);
-        border-radius: 50%;
-        height: 34px;
-        width: 34px;
-
-        &:nth-child(2) {
-            background: var(--h0n-ui-color-success);
-        }
-        &:nth-child(3) {
-            background: var(--h0n-ui-color-warning);
-        }
-        &:nth-child(4) {
-            background: var(--h0n-ui-color-danger);
-        }
-        &:nth-child(5) {
-            background: var(--h0n-ui-color-secondary);
-        }
-        &:nth-child(6) {
-            background: var(--h0n-ui-color-text);
-        }
-    }
+    padding: var(--h0n-ui-spacing-xs);
+    padding-inline-start: var(--h0n-ui-spacing-md);
 }
 
 .cta-section {
-    align-items: center;
     border-block: 1px solid var(--h0n-ui-color-border);
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    padding: 108px 24px;
-    text-align: center;
+    padding-block: clamp(5rem, 11vw, 8rem);
 
-    > span {
-        color: var(--h0n-ui-color-primary);
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.09em;
-        text-transform: uppercase;
-    }
-
-    h2 {
-        font-size: clamp(2.5rem, 6vw, 5.2rem);
-        letter-spacing: -0.06em;
-        line-height: 0.98;
-        margin: 20px 0;
-    }
-
-    p {
-        color: var(--h0n-ui-color-muted);
-        margin: 0 0 28px;
+    &__title {
+        font-size: clamp(2.5rem, 5.5vw, 4.8rem);
+        letter-spacing: -0.055em;
+        line-height: 1.02;
     }
 }
 
 .home-footer {
-    align-items: center;
-    color: var(--h0n-ui-color-muted);
-    display: grid;
-    font-size: var(--h0n-ui-typography-body-sm-size);
-    gap: 20px;
-    grid-template-columns: 1fr auto 1fr;
-    margin: 0 auto;
-    max-width: 1320px;
-    padding: 28px;
+    padding-block: 1.75rem;
 
-    > :last-child {
-        text-align: right;
+    a {
+        color: inherit;
     }
 }
 
-@media (max-width: 900px) {
-    .preview-window__body {
-        grid-template-columns: 150px 1fr;
-    }
-
-    .preview-outline {
-        display: none;
-    }
-
-    .feature-card--wide {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 680px) {
-    .hero-section {
-        padding-top: 80px;
-    }
-
-    .product-preview {
-        padding-inline: 14px;
-    }
-
-    .preview-window__header {
-        grid-template-columns: 1fr auto;
-    }
-
-    .preview-window__tabs,
-    .preview-nav {
-        display: none;
-    }
-
-    .preview-window__body {
-        display: block;
-        min-height: 0;
-    }
-
-    .preview-article {
-        padding: 42px 24px;
-    }
-
+@media (max-width: 860px) {
+    .workspace-form-grid,
     .feature-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr) !important;
     }
 
-    .feature-grid > :first-child {
-        grid-column: auto;
+    .install-card__content {
+        align-items: stretch;
+        flex-direction: column;
     }
 
-    .mini-editor {
-        max-width: calc(100vw - 90px);
+    .install-command {
+        justify-content: space-between;
     }
+}
 
-    .home-footer {
-        grid-template-columns: 1fr;
-        text-align: center;
+@media (max-width: 600px) {
+    .hero-section {
+        padding-top: 4.5rem;
 
-        > * {
-            justify-self: center;
+        &__title {
+            font-size: clamp(2.8rem, 14vw, 4.2rem);
         }
+    }
 
-        > :last-child {
-            text-align: center;
+    .hero-section__meta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .workspace-card {
+        :deep(.h-card__footer) {
+            align-items: flex-start;
+            flex-direction: column;
         }
+    }
+
+    .setting-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .install-command {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .home-footer > :deep(.h-inline) {
+        flex-direction: column;
     }
 }
 </style>

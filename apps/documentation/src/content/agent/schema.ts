@@ -72,6 +72,15 @@ function assertUnique(values: readonly string[], label: string) {
     }
 }
 
+function validateGuidance(record: ComponentAgentRecordV1, values: readonly string[], section: string) {
+    if (values.length === 0) throw new Error(`[agents] ${record.component} is missing ${section} guidance.`)
+    assertUnique(values, `${record.component} ${section} guidance`)
+
+    for (const value of values) {
+        if (!value.trim()) throw new Error(`[agents] ${record.component} has empty ${section} guidance.`)
+    }
+}
+
 function validateApiEntries(record: ComponentAgentRecordV1, entries: readonly ComponentApiEntry[], section: string) {
     assertUnique(
         entries.map((entry) => entry.name),
@@ -108,13 +117,34 @@ export function validateComponentAgentRecords(records: readonly ComponentAgentRe
     )
 
     const manifestNames = new Set(context.manifest.map((entry) => entry.name))
+    const recordNames = new Set(records.map((record) => record.component))
     const recordsByPath = new Map<string, ComponentAgentRecordV1[]>()
     const exampleKeys = new Set(context.exampleKeys)
 
+    for (const entry of context.manifest) {
+        if (!recordNames.has(entry.name)) throw new Error(`[agents] Manifest component "${entry.name}" has no typed agent record.`)
+    }
+
     for (const record of records) {
         if (record.schemaVersion !== 1) throw new Error(`[agents] ${record.component} uses an unsupported schema version.`)
+        if (record.status !== 'migrated') throw new Error(`[agents] ${record.component} uses an unsupported agent record status.`)
         if (!record.summary.trim()) throw new Error(`[agents] ${record.component} is missing a summary.`)
         if (!record.imports.components.includes(record.component)) throw new Error(`[agents] ${record.component} must list itself in imports.components.`)
+
+        for (const [section, imports] of Object.entries(record.imports)) {
+            assertUnique(imports, `${record.component} ${section} import`)
+            for (const importedName of imports) {
+                if (!importedName.trim()) throw new Error(`[agents] ${record.component} has an empty ${section} import.`)
+            }
+        }
+        if (record.imports.styles.length === 0) throw new Error(`[agents] ${record.component} must declare its stylesheet import.`)
+
+        validateGuidance(record, record.useWhen, 'useWhen')
+        validateGuidance(record, record.avoidWhen, 'avoidWhen')
+        validateGuidance(record, record.accessibility, 'accessibility')
+        validateGuidance(record, record.styling, 'styling')
+        validateGuidance(record, record.responsive, 'responsive')
+        validateGuidance(record, record.performance, 'performance')
 
         const metadata = getManifestMetadata(record, context.manifest)
         if (!context.pagePaths.includes(metadata.docsPath)) throw new Error(`[agents] Documentation route "${metadata.docsPath}" for ${record.component} does not exist.`)

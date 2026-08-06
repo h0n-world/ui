@@ -1,5 +1,8 @@
 <script setup lang="ts" generic="Row extends H0TableRow = H0TableRow">
 import { computed, ref, watch } from 'vue'
+import { useH0ControllableState } from '../../composables/useH0ControllableState'
+import { defaultH0DataTableLocale } from '../../locale'
+import { useH0LocaleSection } from '../_shared/useLocaleSection'
 import H0Checkbox from '../Checkbox/H0Checkbox.vue'
 import H0Pagination from '../Pagination/H0Pagination.vue'
 import H0Radio from '../Radio/H0Radio.vue'
@@ -18,9 +21,6 @@ import type {
     H0DataTableSelectionMode,
     H0DataTableSort
 } from './DataTable.types'
-import { useH0ControllableState } from '../../composables/useH0ControllableState'
-import { useH0LocaleSection } from '../_shared/useLocaleSection'
-import { defaultH0DataTableLocale } from '../../locale'
 
 defineOptions({ name: 'H0DataTable' })
 
@@ -150,7 +150,9 @@ const filteredRows = computed(() => {
             const rowValue = column.filterValue?.(row) ?? column.value?.(row) ?? row[column.key]
 
             return column.filter?.type === 'text'
-                ? String(rowValue ?? '').toLocaleLowerCase().includes(String(filterValue).toLocaleLowerCase())
+                ? String(rowValue ?? '')
+                      .toLocaleLowerCase()
+                      .includes(String(filterValue).toLocaleLowerCase())
                 : rowValue === filterValue
         })
     )
@@ -174,7 +176,15 @@ const sortedRows = computed(() => {
         .sort((left, right) => {
             const leftValue = resolveSortValue(left.row, column)
             const rightValue = resolveSortValue(right.row, column)
-            const compared = column.compare ? column.compare(left.row, right.row) * direction : leftValue == null || rightValue == null ? (leftValue == null && rightValue == null ? 0 : leftValue == null ? 1 : -1) : compareValues(leftValue, rightValue) * direction
+            const compared = column.compare
+                ? column.compare(left.row, right.row) * direction
+                : leftValue == null || rightValue == null
+                  ? leftValue == null && rightValue == null
+                      ? 0
+                      : leftValue == null
+                        ? 1
+                        : -1
+                  : compareValues(leftValue, rightValue) * direction
             return compared === 0 ? left.index - right.index : compared
         })
         .map(({ row }) => row)
@@ -214,7 +224,7 @@ function compareValues(left: unknown, right: unknown) {
 }
 
 function setSelectFilter(column: H0DataTableColumn<Row>, value: H0SelectValue | H0SelectValue[] | null) {
-    setFilter(column.key, Array.isArray(value) ? value[0] ?? null : value)
+    setFilter(column.key, Array.isArray(value) ? (value[0] ?? null) : value)
 }
 
 function setSort(column: H0DataTableColumn<Row>) {
@@ -222,7 +232,8 @@ function setSort(column: H0DataTableColumn<Row>) {
         return
     }
 
-    const nextSort: H0DataTableSort = currentSort.value?.key !== column.key ? { key: column.key, direction: 'asc' } : currentSort.value.direction === 'asc' ? { key: column.key, direction: 'desc' } : null
+    const nextSort: H0DataTableSort =
+        currentSort.value?.key !== column.key ? { key: column.key, direction: 'asc' } : currentSort.value.direction === 'asc' ? { key: column.key, direction: 'desc' } : null
     sortState.setValue(nextSort)
     pageState.setValue(1)
 }
@@ -299,7 +310,6 @@ watch(
     },
     { immediate: true }
 )
-
 </script>
 
 <template>
@@ -332,6 +342,7 @@ watch(
             <template #cell-__selection="{ row, rowIndex }">
                 <H0Radio
                     v-if="selectionMode === 'single'"
+                    variant="secondary"
                     :model-value="currentSelection[0] ?? null"
                     :value="getRowKey(row, virtualStart + rowIndex)"
                     :disabled="!isRowSelectable(row)"
@@ -342,6 +353,7 @@ watch(
                 <H0Checkbox
                     v-else
                     class="h-data-table__selection-control"
+                    variant="secondary"
                     :model-value="selectedKeys.has(getRowKey(row, virtualStart + rowIndex))"
                     :disabled="!isRowSelectable(row)"
                     :label="dataTableLocale.selectRow(virtualStart + rowIndex)"
@@ -353,7 +365,8 @@ watch(
             <template v-for="column in columns" :key="column.key" #[`header-${column.key}`]>
                 <div class="h-data-table__header">
                     <button v-if="column.sortable" class="h-data-table__sort" type="button" :aria-label="dataTableLocale.sort(column.label)" @click="setSort(column)">
-                        <span>{{ column.label }}</span><span aria-hidden="true">{{ currentSort?.key === column.key ? (currentSort.direction === 'asc' ? '↑' : '↓') : '↕' }}</span>
+                        <span>{{ column.label }}</span
+                        ><span aria-hidden="true">{{ currentSort?.key === column.key ? (currentSort.direction === 'asc' ? '↑' : '↓') : '↕' }}</span>
                     </button>
                     <span v-else>{{ column.label }}</span>
 
@@ -381,23 +394,35 @@ watch(
             </template>
 
             <template v-for="column in columns" :key="`cell-${column.key}`" #[`cell-${column.key}`]="slotProps">
-                <div class="h-data-table__cell-content"><slot :name="`cell-${column.key}`" v-bind="slotProps">{{ slotProps.value }}</slot></div>
+                <div class="h-data-table__cell-content">
+                    <slot :name="`cell-${column.key}`" v-bind="slotProps">{{ slotProps.value }}</slot>
+                </div>
             </template>
 
             <template #before-rows="{ columnCount }">
-                <tr v-if="topSpacerHeight" aria-hidden="true"><td class="h-data-table__spacer" :colspan="columnCount" :style="{ height: `${topSpacerHeight}px` }" /></tr>
+                <tr v-if="topSpacerHeight" aria-hidden="true">
+                    <td class="h-data-table__spacer" :colspan="columnCount" :style="{ height: `${topSpacerHeight}px` }" />
+                </tr>
             </template>
 
             <template #after-rows="{ columnCount }">
-                <tr v-if="bottomSpacerHeight" aria-hidden="true"><td class="h-data-table__spacer" :colspan="columnCount" :style="{ height: `${bottomSpacerHeight}px` }" /></tr>
+                <tr v-if="bottomSpacerHeight" aria-hidden="true">
+                    <td class="h-data-table__spacer" :colspan="columnCount" :style="{ height: `${bottomSpacerHeight}px` }" />
+                </tr>
                 <tr v-if="paginationMode === 'infinite' && loading && rows.length">
-                    <td class="h-data-table__append" :colspan="columnCount"><span role="status">{{ resolvedLoadingText }}</span></td>
+                    <td class="h-data-table__append" :colspan="columnCount">
+                        <span role="status">{{ resolvedLoadingText }}</span>
+                    </td>
                 </tr>
             </template>
 
             <template #empty>
-                <slot v-if="error" name="error" :error="error"><div class="h-data-table__empty-error" role="alert">{{ error }}</div></slot>
-                <slot v-else name="empty"><span>{{ resolvedEmptyText }}</span></slot>
+                <slot v-if="error" name="error" :error="error"
+                    ><div class="h-data-table__empty-error" role="alert">{{ error }}</div></slot
+                >
+                <slot v-else name="empty"
+                    ><span>{{ resolvedEmptyText }}</span></slot
+                >
             </template>
         </H0Table>
 

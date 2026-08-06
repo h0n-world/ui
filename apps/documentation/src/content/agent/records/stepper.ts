@@ -17,5 +17,5 @@ export const stepperAgentRecord = {
     ] },
     useWhen: ['A workflow has a known ordered sequence and users need progress context.'], avoidWhen: ['The control itself must navigate between panels; use H0Tabs or application buttons.'], ...standardNavigationGuidance,
     responsive: ['Horizontal steppers scroll when their readable minimum exceeds the container.', 'Use vertical orientation for long labels or narrow persistent layouts.'],
-    examples: [{ key: 'components/stepper/BasicExample', purpose: 'Four-step workspace setup progress.' }, { key: 'components/stepper/VariantsExample', purpose: 'Semantic colors and small size.' }, { key: 'components/stepper/VerticalExample', purpose: 'Vertical layout with descriptions and icons.' }], relatedComponents: ['H0Tabs'],
+    examples: [{ key: 'components/stepper/BasicExample', purpose: 'Four-step workspace setup progress.' }, { key: 'components/stepper/ColorsExample', purpose: 'All semantic progress treatments at full width.' }, { key: 'components/stepper/SizesExample', purpose: 'Small, medium, and large marker and typography scales.' }, { key: 'components/stepper/VerticalExample', purpose: 'Vertical layout with descriptions and icons.' }], relatedComponents: ['H0Tabs'],
 } satisfies ComponentAgentRecordV1

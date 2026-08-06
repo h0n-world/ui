@@ -4,7 +4,7 @@ description: Planned reusable skills for building interfaces with H0N UI.
 path: /docs/agents/skills
 group: Getting started
 section: UI for Agents
-order: 52
+order: 53
 ---
 
 # Agent Skills

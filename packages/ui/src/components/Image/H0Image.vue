@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, onBeforeUnmount, ref, watch, type ImgHTMLAttributes } from 'vue'
+import { errorIcon } from '../../icons'
+import H0Icon from '../Icon/H0Icon.vue'
 import H0Skeleton from '../Skeleton/H0Skeleton.vue'
 import type { H0ImageFit, H0ImageLoading, H0ImageStatus } from './Image.types'
 
@@ -221,7 +223,7 @@ onBeforeUnmount(stopObserver)
 
         <slot v-if="hasFallback" name="fallback" :status="status">
             <div class="h-image__fallback" role="img" :aria-label="alt || 'Image is not available'">
-                <span class="h-image__fallback-icon" aria-hidden="true"></span>
+                <H0Icon class="h-image__fallback-icon" :icon="errorIcon" :size="32" :stroke-width="1.6" aria-hidden="true" />
             </div>
         </slot>
     </figure>
@@ -286,35 +288,7 @@ onBeforeUnmount(stopObserver)
     }
 
     &__fallback-icon {
-        border: 2px solid currentColor;
-        border-radius: var(--h0n-ui-radius-sm);
-        height: 28px;
         opacity: 0.72;
-        position: relative;
-        width: 34px;
-    }
-
-    &__fallback-icon::before {
-        border: solid currentColor;
-        border-width: 2px 2px 0 0;
-        bottom: 6px;
-        content: '';
-        height: 12px;
-        left: 7px;
-        position: absolute;
-        transform: rotate(-45deg);
-        width: 12px;
-    }
-
-    &__fallback-icon::after {
-        background: currentColor;
-        border-radius: 50%;
-        content: '';
-        height: 5px;
-        position: absolute;
-        right: 7px;
-        top: 7px;
-        width: 5px;
     }
 }
 

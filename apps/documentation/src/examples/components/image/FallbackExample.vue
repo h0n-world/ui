@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { H0Image } from '@h0nio/ui'
+import { H0Icon, H0Image } from '@h0nio/ui'
+import { errorIcon } from '@h0nio/ui/icons'
 </script>
 
 <template>
@@ -11,8 +12,14 @@ import { H0Image } from '@h0nio/ui'
         <div>
             <strong>Custom fallback</strong>
             <H0Image src="/missing-custom-image.png" alt="Unavailable project preview" :lazy="false">
-                <template #fallback="{ status }">
-                    <div class="fallback" role="img" aria-label="Project preview unavailable">Project preview unavailable <small>{{ status }}</small></div>
+                <template #fallback>
+                    <div class="fallback" role="img" aria-label="Project preview unavailable">
+                        <span class="fallback__icon" aria-hidden="true">
+                            <H0Icon :icon="errorIcon" :size="24" :stroke-width="1.7" />
+                        </span>
+                        <strong>Preview unavailable</strong>
+                        <small>The project image could not be loaded.</small>
+                    </div>
                 </template>
             </H0Image>
         </div>
@@ -34,16 +41,36 @@ import { H0Image } from '@h0nio/ui'
 
 .fallback {
     align-items: center;
+    align-content: center;
     background: var(--h0n-ui-color-secondary);
     color: var(--h0n-ui-color-muted);
     display: grid;
+    gap: var(--h0n-ui-spacing-xs);
     height: 100%;
     justify-items: center;
     min-height: 12rem;
+    padding: var(--h0n-ui-spacing-lg);
+    text-align: center;
     width: 100%;
 }
 
-.fallback small {
+.fallback__icon {
+    align-items: center;
+    background: color-mix(in srgb, var(--h0n-ui-color-danger) 14%, transparent);
+    border-radius: 50%;
     color: var(--h0n-ui-color-danger);
+    display: inline-flex;
+    height: 3rem;
+    justify-content: center;
+    margin-bottom: var(--h0n-ui-spacing-xs);
+    width: 3rem;
+}
+
+.fallback strong {
+    color: var(--h0n-ui-color-text);
+}
+
+.fallback small {
+    max-width: 16rem;
 }
 </style>

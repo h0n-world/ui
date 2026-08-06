@@ -4,7 +4,7 @@ description: Planned MCP integration for discovering H0N UI components and docum
 path: /docs/agents/mcp-server
 group: Getting started
 section: UI for Agents
-order: 51
+order: 52
 ---
 
 # MCP Server

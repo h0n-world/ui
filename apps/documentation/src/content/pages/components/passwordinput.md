@@ -30,6 +30,13 @@ PasswordInput inherits the `surface` and `secondary` field treatments from H0Inp
 :::example components/password-input/VariantsExample
 :::
 
+## Sizes
+
+PasswordInput supports the shared `sm`, `md`, and `lg` field sizes. `md` is used by default.
+
+:::example components/password-input/SizesExample
+:::
+
 ## Controlled visibility
 
 Use `v-model:visible` when surrounding UI needs to know or control whether the password is revealed. Otherwise `defaultVisible` initializes internal state.

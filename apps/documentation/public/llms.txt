@@ -1,4 +1,4 @@
-# H0N UI 1.0.0
+# H0N UI 1.1.0
 
 > Self-contained Vue 3.5+ component library with accessible interaction patterns, public design tokens, app-scoped runtime services, and typed APIs.
 
@@ -8,6 +8,7 @@
 - Register the default plugin once and import `@h0nio/ui/style.css`.
 - Use the small system icon set from `@h0nio/ui/icons`, or pass a compatible `H0IconDefinition`/documented custom icon slot.
 - See [Quick Start](/docs/quick-start) for the current plugin and style setup.
+- For a new or existing project, give an AI coding agent the versioned [installation prompt](/agents/install-prompt.md).
 
 ## Start here
 
@@ -21,6 +22,7 @@
 
 - [Component catalog schema v1](/agent-data/components.v1.json): exact imports, props, events, slots, exposed APIs, public types, examples, accessibility, styling, responsive, performance, use-when, and avoid-when guidance.
 - [Consumer AGENTS.md template](/agents/AGENTS.md): reusable implementation rules for projects consuming H0N UI.
+- [AI installation prompt](/agents/install-prompt.md): copy-paste workflow for inspecting, installing, configuring, and validating H0N UI in a consumer project.
 - [llms.txt guide](/docs/agents/llms-txt)
 
 Paths in this file are relative to the H0N UI documentation origin. They are not routes in the consuming application.
@@ -59,7 +61,7 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 
 ### Forms
 
-- [H0Checkbox](/components/checkbox): Controlled or uncontrolled native boolean checkbox with indeterminate, validation, and Form integration.
+- [H0Checkbox](/components/checkbox): Controlled or uncontrolled native boolean checkbox with surface variants, indeterminate, validation, sizing, and Form integration.
 - [H0CheckboxGroup](/components/checkbox#h0checkboxgroup): Labeled multi-choice checkbox set backed by an array of string option values.
 - [H0Field](/components/field): Form layout primitive that connects a label, control, hint, and validation error through accessible attributes.
 - [H0FileUpload](/components/fileupload): Accessible file picker and drop zone with validation, upload queue state, progress, retry, cancellation, and optional reordering.
@@ -69,7 +71,7 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 - [H0InputOTP](/components/inputotp): Segmented one-time-code input with paste distribution, validation, completion events, and accessible grouped semantics.
 - [H0NumberInput](/components/numberinput): Localized numeric input with parsing, formatting, precision, bounds, step controls, and controlled null state.
 - [H0PasswordInput](/components/passwordinput): Password field with controlled visibility, optional strength feedback, autocomplete guidance, and H0N validation messaging.
-- [H0Radio](/components/radio): Standalone native radio control with label, description, validation, and programmatic focus.
+- [H0Radio](/components/radio): Standalone native radio control with surface variants, label, description, validation, and programmatic focus.
 - [H0RadioGroup](/components/radio#h0radiogroup): Single-choice fieldset generated from options with responsive layout, validation, and custom option rendering.
 - [H0SearchField](/components/searchfield): Compact native search control with clear action, controlled value, icon customization, and imperative focus helpers.
 - [H0Select](/components/select): Accessible single or multiple option picker with custom rendering, virtualization, loading state, and teleported listbox.
@@ -143,4 +145,4 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 - [H0Message](/components/message): Compact supporting or status text with an optional tone-specific decorative icon.
 - [H0Typography](/components/typography): Semantic text primitive with H0N type variants, alignment, color, weight, and truncation.
 
-Every component in this index has a synchronized public export, manifest entry, documentation route, and validated typed record. MCP and distributable Agent Skills are not published yet.
+Every component in this index has a synchronized public export, manifest entry, documentation route, and validated typed record. The installation prompt and consumer instructions are available now; MCP and distributable Agent Skills are not published yet.

@@ -15,7 +15,7 @@ function walk(directory: string): string[] {
     return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => entry.isDirectory() ? walk(join(directory, entry.name)) : [join(directory, entry.name)])
 }
 
-describe('1.0 public contract freeze', () => {
+describe('1.x public contract freeze', () => {
     it('matches the reviewed root and component API snapshots', () => {
         const publicFamilies = [...new Set(h0ComponentManifest.map((entry) => entry.family))].sort()
         const componentContracts = publicFamilies

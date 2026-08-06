@@ -23,6 +23,13 @@ Without an upload adapter, `v-model` exposes accepted `File[]` values for applic
 :::example components/file-upload/BasicExample
 :::
 
+## Variants
+
+`surface` is the default neutral drop area. Use `secondary` when the upload control needs stronger separation from the surrounding surface.
+
+:::example components/file-upload/VariantsExample
+:::
+
 ## Validation
 
 Validation runs accept, size, count, then the synchronous or asynchronous `validator`. The `invalid` event reports one structured reason at a time.
@@ -40,6 +47,11 @@ Provide an `H0UploadAdapter` to enable progress, retry, cancellation, and queue 
 ## Types
 
 `H0FileUploadProps<Result>` and `H0FileUploadEmits<Result>` preserve the result type returned by the upload adapter.
+
+### H0FileUploadVariant
+
+:::component-api type H0FileUploadVariant
+:::
 
 ### H0FileUploadValidationError
 
@@ -102,4 +114,4 @@ Limit file count and concurrency, abort transfers on removal, and avoid reading 
 
 ## Styling
 
-Use slots and public tokens; hidden input, queue, and drag-state selectors are implementation details.
+Use variants, slots, and public tokens; hidden input, queue, and drag-state selectors are implementation details.

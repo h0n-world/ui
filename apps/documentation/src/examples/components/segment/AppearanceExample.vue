@@ -12,6 +12,5 @@ const variants: H0SegmentVariant[] = ['default', 'secondary', 'outline', 'ghost'
 <template>
     <H0Stack gap="lg" align="start">
         <H0Segment v-for="variant in variants" :key="variant" :items="items" default-value="list" :variant="variant" :aria-label="`${variant} view`" />
-        <H0Segment :items="items" default-value="board" size="lg" aria-label="Large view selector" />
     </H0Stack>
 </template>

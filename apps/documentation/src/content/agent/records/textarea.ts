@@ -6,12 +6,13 @@ export const textareaAgentRecord = {
     component: 'H0Textarea',
     status: 'migrated',
     summary: 'Multiline text control with automatic height, optional manual resizing, character count, and shared H0N form feedback.',
-    imports: { components: ['H0Textarea'], types: ['H0TextareaEmits', 'H0TextareaInputMode', 'H0TextareaProps', 'H0TextareaSize'], styles: ['@h0nio/ui/style.css'] },
+    imports: { components: ['H0Textarea'], types: ['H0TextareaEmits', 'H0TextareaInputMode', 'H0TextareaProps', 'H0TextareaSize', 'H0TextareaVariant'], styles: ['@h0nio/ui/style.css'] },
     api: {
         props: [
             { name: 'modelValue', type: 'string', default: 'undefined', description: 'Controlled text.' },
             { name: 'defaultValue', type: 'string', default: "''", description: 'Initial uncontrolled text.' },
             { name: 'size', type: 'H0TextareaSize', default: "'md'", description: 'Control size.' },
+            { name: 'variant', type: 'H0TextareaVariant', default: "'surface'", description: 'Control background treatment.' },
             { name: 'placeholder', type: 'string', default: "''", description: 'Empty control copy.' },
             { name: 'readonly', type: 'boolean', default: 'false', description: 'Prevents editing while preserving focus.' },
             { name: 'autocomplete', type: 'string', default: "''", description: 'Native autocomplete hint.' },
@@ -36,6 +37,7 @@ export const textareaAgentRecord = {
         types: [
             { name: 'H0TextareaInputMode', fields: [{ name: 'H0TextareaInputMode', type: "'decimal' | 'email' | 'none' | 'numeric' | 'search' | 'tel' | 'text' | 'url'", description: 'Supported native virtual-keyboard hints.' }] },
             { name: 'H0TextareaSize', fields: [{ name: 'H0TextareaSize', type: "'sm' | 'md' | 'lg'", description: 'Supported control sizes.' }] },
+            { name: 'H0TextareaVariant', fields: [{ name: 'H0TextareaVariant', type: "'secondary' | 'surface'", description: 'Supported control surface treatments.' }] },
         ],
     },
     useWhen: ['A form accepts free-form multiline text.'],
@@ -43,6 +45,7 @@ export const textareaAgentRecord = {
     ...standardFormGuidance,
     examples: [
         { key: 'components/textarea/BasicExample', purpose: 'Auto-resizing message with character count.' },
+        { key: 'components/textarea/VariantsExample', purpose: 'Surface and secondary control treatments.' },
         { key: 'components/textarea/SizesExample', purpose: 'Small, medium, and large controls.' },
         { key: 'components/textarea/ResizeExample', purpose: 'Automatic and manual resizing.' },
         { key: 'components/textarea/StatesExample', purpose: 'Read-only, disabled, invalid, and spellcheck states.' },

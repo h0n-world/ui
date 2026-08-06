@@ -25,21 +25,28 @@ Provide meaningful `alt` text and an aspect ratio or explicit dimensions to prev
 
 ## Sizing and fit
 
-Numbers become pixels; strings accept CSS sizes. `fit` and `objectPosition` control the native image inside its wrapper.
+Numbers become pixels; strings accept CSS sizes. `fit` and `objectPosition` control the native image inside its wrapper. The example uses a deliberately small, panoramic source so scaling, cropping, and stretching remain visible. `scale-down` selects whichever result is smaller between `none` and `contain`, so it can intentionally match one of them.
 
 :::example components/image/SizingExample
 :::
 
-## Fallback and status
+## Fallback
 
-The `fallback` and `skeleton` slots receive the current `H0ImageStatus`. The lifecycle progresses through `idle → loading → loaded | error`; changing `src` starts observation and loading again. `load`, `error`, and `status-change` support application telemetry and state.
+An empty or failed source displays the default error icon. Use the `fallback` slot when the unavailable state needs contextual text or a different visual. The slot receives the current `H0ImageStatus`.
 
 :::example components/image/FallbackExample
 :::
 
+## Loading state
+
+While an image is waiting for lazy intersection or actively loading, `H0Image` displays `H0Skeleton` by default. Disable it with `skeleton="false"`, override the preference with `showSkeleton`, or replace it through the `skeleton` slot.
+
+:::example components/image/LoadingExample
+:::
+
 ## Lifecycle events
 
-Use `status-change` for the component lifecycle and `load` or `error` when the corresponding native image event matters.
+Use `status-change` for the component lifecycle and `load` or `error` when the corresponding native image event matters. The lifecycle progresses through `idle → loading → loaded | error`; changing `src` starts observation and loading again.
 
 :::example components/image/LifecycleExample
 :::

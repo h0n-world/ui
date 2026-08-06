@@ -7,7 +7,7 @@ import H0Label from '../Typography/H0Label.vue'
 import H0Typography from '../Typography/H0Typography.vue'
 import { useFormField } from '../_shared/useFormField'
 import { toH0CssSize } from '../_shared/utils'
-import type { H0TextareaInputMode, H0TextareaSize } from './Textarea.types'
+import type { H0TextareaInputMode, H0TextareaSize, H0TextareaVariant } from './Textarea.types'
 
 defineOptions({
     name: 'H0Textarea',
@@ -18,6 +18,7 @@ const props = withDefaults(
     defineProps<{
         modelValue?: string
         size?: H0TextareaSize
+        variant?: H0TextareaVariant
         label?: string
         placeholder?: string
         disabled?: boolean
@@ -41,6 +42,7 @@ const props = withDefaults(
     }>(),
     {
         size: 'md',
+        variant: 'surface',
         label: '',
         placeholder: '',
         disabled: false,
@@ -141,7 +143,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <label v-bind="mergedRootAttrs" data-h0n-component="textarea" class="h-textarea" :class="[`h-textarea--${size}`, visibleError && 'h-textarea--error', resolvedDisabled && 'h-textarea--disabled', resize && 'h-textarea--resizable']">
+    <label v-bind="mergedRootAttrs" data-h0n-component="textarea" class="h-textarea" :class="[`h-textarea--${size}`, `h-textarea--${variant}`, visibleError && 'h-textarea--error', resolvedDisabled && 'h-textarea--disabled', resize && 'h-textarea--resizable']">
         <H0Label v-if="!fieldContext && (resolvedLabel || $slots.label)" as="span" class="h-textarea__label" :required="resolvedRequired">
             <slot name="label">{{ resolvedLabel }}</slot>
         </H0Label>
@@ -183,14 +185,21 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+@use '../../styles/mixins' as mixins;
+
 .h-textarea {
-    display: grid;
-    font-family: var(--h0n-ui-font-family);
-    gap: 8px;
-    min-width: 0;
+    @include mixins.h0n-input-root;
+
+    &--surface {
+        @include mixins.h0n-input-variant('surface');
+    }
+
+    &--secondary {
+        @include mixins.h0n-input-variant('secondary');
+    }
 
     &__control {
-        background: var(--h0n-ui-color-surface);
+        background: var(--h0n-input-control-background);
         border: 1px solid transparent;
         border-radius: var(--h0n-ui-radius-lg);
         display: flex;
