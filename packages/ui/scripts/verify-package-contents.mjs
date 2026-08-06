@@ -1,6 +1,6 @@
+import { spawnSync } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
-import { spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -11,15 +11,13 @@ if (!pnpmCli) {
     throw new Error('Cannot verify the package archive outside a pnpm lifecycle: npm_execpath is missing.')
 }
 
-const pack = spawnSync(
-    process.execPath,
-    [pnpmCli, 'pack', '--dry-run', '--json'],
-    {
-        cwd: packageRoot,
-        encoding: 'utf8',
-        env: process.env
-    }
-)
+const isExecutable = /\.exe$/i.test(pnpmCli)
+
+const pack = spawnSync(isExecutable ? pnpmCli : process.execPath, isExecutable ? ['pack', '--dry-run', '--json'] : [pnpmCli, 'pack', '--dry-run', '--json'], {
+    cwd: packageRoot,
+    encoding: 'utf8',
+    env: process.env
+})
 
 if (pack.status !== 0) {
     throw new Error(`pnpm pack --dry-run failed:\n${pack.stderr || pack.stdout}`)
@@ -46,12 +44,7 @@ function collectExportTargets(value, targets) {
 const componentFamilies = readdirSync(resolve(packageRoot, 'src/components'), {
     withFileTypes: true
 })
-    .filter(
-        (entry) =>
-            entry.isDirectory() &&
-            !entry.name.startsWith('_') &&
-            existsSync(resolve(packageRoot, 'src/components', entry.name, 'index.ts'))
-    )
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith('_') && existsSync(resolve(packageRoot, 'src/components', entry.name, 'index.ts')))
     .map((entry) => entry.name)
     .sort()
 
@@ -65,11 +58,7 @@ const individualComposables = readdirSync(resolve(packageRoot, 'src/composables'
 const exportTargets = new Set()
 
 for (const [subpath, value] of Object.entries(packageJson.exports)) {
-    const replacements = subpath.startsWith('./components/')
-        ? componentFamilies
-        : subpath === './composables/*'
-          ? individualComposables
-          : [undefined]
+    const replacements = subpath.startsWith('./components/') ? componentFamilies : subpath === './composables/*' ? individualComposables : [undefined]
 
     for (const replacement of replacements) {
         const targets = new Set()
@@ -81,25 +70,12 @@ for (const [subpath, value] of Object.entries(packageJson.exports)) {
     }
 }
 
-const requiredFiles = new Set([
-    'LICENSE',
-    'README.md',
-    'package.json',
-    packageJson.main,
-    packageJson.module,
-    packageJson.types,
-    packageJson.style,
-    ...exportTargets
-].map((path) => path.replace(/^\.\//, '')))
+const requiredFiles = new Set(
+    ['LICENSE', 'README.md', 'package.json', packageJson.main, packageJson.module, packageJson.types, packageJson.style, ...exportTargets].map((path) => path.replace(/^\.\//, ''))
+)
 
 const missingFiles = [...requiredFiles].filter((path) => !publishedFiles.has(path))
-const unexpectedTopLevelFiles = [...publishedFiles].filter(
-    (path) =>
-        !path.startsWith('dist/') &&
-        path !== 'LICENSE' &&
-        path !== 'README.md' &&
-        path !== 'package.json'
-)
+const unexpectedTopLevelFiles = [...publishedFiles].filter((path) => !path.startsWith('dist/') && path !== 'LICENSE' && path !== 'README.md' && path !== 'package.json')
 const forbiddenFiles = [...publishedFiles].filter(
     (path) =>
         path.startsWith('src/') ||
@@ -112,20 +88,9 @@ const forbiddenFiles = [...publishedFiles].filter(
 )
 
 assert(result.name === packageJson.name, `Packed name is ${result.name}; expected ${packageJson.name}.`)
-assert(
-    result.version === packageJson.version,
-    `Packed version is ${result.version}; expected ${packageJson.version}.`
-)
+assert(result.version === packageJson.version, `Packed version is ${result.version}; expected ${packageJson.version}.`)
 assert(missingFiles.length === 0, `Published archive is missing: ${missingFiles.join(', ')}`)
-assert(
-    unexpectedTopLevelFiles.length === 0,
-    `Published archive contains unexpected top-level files: ${unexpectedTopLevelFiles.join(', ')}`
-)
-assert(
-    forbiddenFiles.length === 0,
-    `Published archive contains private source or test files: ${forbiddenFiles.join(', ')}`
-)
+assert(unexpectedTopLevelFiles.length === 0, `Published archive contains unexpected top-level files: ${unexpectedTopLevelFiles.join(', ')}`)
+assert(forbiddenFiles.length === 0, `Published archive contains private source or test files: ${forbiddenFiles.join(', ')}`)
 
-console.log(
-    `PASS ${result.filename}: ${publishedFiles.size} files, ${componentFamilies.length} component subpaths, ${individualComposables.length} individual composables`
-)
+console.log(`PASS ${result.filename}: ${publishedFiles.size} files, ${componentFamilies.length} component subpaths, ${individualComposables.length} individual composables`)
