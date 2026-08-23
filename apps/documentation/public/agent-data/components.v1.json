@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "library": {
     "name": "@h0nio/ui",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "components": [
     {
@@ -1997,6 +1997,274 @@
     },
     {
       "schemaVersion": 1,
+      "component": "H0CellColorPicker",
+      "status": "migrated",
+      "summary": "Custom HEX color picker with standard or minimal triggers, controlled state, and keyboard-operable saturation, brightness, and hue controls.",
+      "imports": {
+        "components": [
+          "H0CellColorPicker"
+        ],
+        "types": [
+          "H0CellColorPickerDisplay",
+          "H0CellColorPickerEmits",
+          "H0CellColorPickerProps",
+          "H0CellColorPickerSize",
+          "H0CellColorPickerSwatchPosition",
+          "H0CellColorPickerVariant"
+        ],
+        "styles": [
+          "@h0nio/ui/style.css"
+        ]
+      },
+      "api": {
+        "props": [
+          {
+            "name": "modelValue",
+            "type": "string",
+            "default": "undefined",
+            "description": "Controlled HEX color, normalized to #RRGGBB."
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "default": "'#3B82F6'",
+            "description": "Initial uncontrolled HEX color."
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "default": "'Color'",
+            "description": "Standard-trigger label and accessible-name fallback."
+          },
+          {
+            "name": "ariaLabel",
+            "type": "string",
+            "default": "''",
+            "description": "Accessible trigger name, especially useful for minimal display."
+          },
+          {
+            "name": "display",
+            "type": "H0CellColorPickerDisplay",
+            "default": "'standard'",
+            "description": "Standard labeled or minimal compact trigger."
+          },
+          {
+            "name": "swatchPosition",
+            "type": "H0CellColorPickerSwatchPosition",
+            "default": "'right'",
+            "description": "Places the swatch before or after the HEX code."
+          },
+          {
+            "name": "variant",
+            "type": "H0CellColorPickerVariant",
+            "default": "'surface'",
+            "description": "Trigger background treatment."
+          },
+          {
+            "name": "size",
+            "type": "H0CellColorPickerSize",
+            "default": "'md'",
+            "description": "Trigger size."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Prevents opening and color changes."
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "default": "''",
+            "description": "Trigger identifier."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "default": "''",
+            "description": "Hidden form field name."
+          },
+          {
+            "name": "teleportTo",
+            "type": "string | HTMLElement",
+            "default": "'body'",
+            "description": "Popup teleport target."
+          },
+          {
+            "name": "teleportDisabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Keeps the popup beside the trigger in the DOM."
+          },
+          {
+            "name": "rootAttrs",
+            "type": "Record<string, unknown>",
+            "default": "undefined",
+            "description": "Attributes for the root wrapper."
+          },
+          {
+            "name": "controlAttrs",
+            "type": "Record<string, unknown>",
+            "default": "undefined",
+            "description": "Native and ARIA attributes for the trigger button."
+          }
+        ],
+        "events": [
+          {
+            "name": "update:modelValue",
+            "type": "string",
+            "description": "Requests a normalized HEX value update."
+          },
+          {
+            "name": "change",
+            "type": "string",
+            "description": "Reports each committed picker or exposed-API change."
+          },
+          {
+            "name": "open",
+            "type": "—",
+            "description": "Reports popup opening."
+          },
+          {
+            "name": "close",
+            "type": "—",
+            "description": "Reports popup closing."
+          },
+          {
+            "name": "focus",
+            "type": "FocusEvent",
+            "description": "Reports control focus."
+          },
+          {
+            "name": "blur",
+            "type": "FocusEvent",
+            "description": "Reports control blur."
+          }
+        ],
+        "slots": [
+          {
+            "name": "label",
+            "type": "—",
+            "description": "Custom standard-trigger label."
+          }
+        ],
+        "exposed": [
+          {
+            "name": "open",
+            "type": "() => void",
+            "description": "Opens the picker when enabled."
+          },
+          {
+            "name": "close",
+            "type": "(options?: { restoreFocus?: boolean }) => void",
+            "description": "Closes the picker and optionally restores trigger focus."
+          },
+          {
+            "name": "focus",
+            "type": "() => void",
+            "description": "Focuses the trigger."
+          },
+          {
+            "name": "setValue",
+            "type": "(value: string) => void",
+            "description": "Normalizes and applies a HEX color."
+          }
+        ],
+        "types": [
+          {
+            "name": "H0CellColorPickerDisplay",
+            "fields": [
+              {
+                "name": "H0CellColorPickerDisplay",
+                "type": "'standard' | 'minimal'",
+                "description": "Supported trigger layouts."
+              }
+            ]
+          },
+          {
+            "name": "H0CellColorPickerSwatchPosition",
+            "fields": [
+              {
+                "name": "H0CellColorPickerSwatchPosition",
+                "type": "'left' | 'right'",
+                "description": "Swatch placement relative to the HEX code."
+              }
+            ]
+          },
+          {
+            "name": "H0CellColorPickerVariant",
+            "fields": [
+              {
+                "name": "H0CellColorPickerVariant",
+                "type": "'secondary' | 'surface' | 'ghost'",
+                "description": "Supported trigger backgrounds."
+              }
+            ]
+          }
+        ]
+      },
+      "useWhen": [
+        "A compact H0N-styled control should edit a single opaque color."
+      ],
+      "avoidWhen": [
+        "The value requires alpha, gradients, named colors, or a multi-stop palette editor."
+      ],
+      "accessibility": [
+        "Give minimal triggers a purpose-specific accessible name.",
+        "Use arrow keys in the saturation/brightness plane and hue strip; Shift changes by ten units.",
+        "Do not rely on the swatch alone because the HEX value remains visible."
+      ],
+      "styling": [
+        "Use the public variant, display, swatchPosition, and size props.",
+        "Treat popup geometry and internal HSV controls as implementation details."
+      ],
+      "responsive": [
+        "Allow the standard trigger to shrink with its container; the popup flips and shifts inside the viewport."
+      ],
+      "performance": [
+        "The picker performs local color conversion and positions only while open."
+      ],
+      "examples": [
+        {
+          "key": "components/cell-color-picker/BasicExample",
+          "purpose": "Controlled standard picker."
+        },
+        {
+          "key": "components/cell-color-picker/DisplaysExample",
+          "purpose": "Standard, minimal, and swatch-position layouts."
+        },
+        {
+          "key": "components/cell-color-picker/VariantsExample",
+          "purpose": "Surface, secondary, and ghost trigger treatments."
+        },
+        {
+          "key": "components/cell-color-picker/SizesExample",
+          "purpose": "Small, medium, and large trigger sizes."
+        },
+        {
+          "key": "components/cell-color-picker/DisabledExample",
+          "purpose": "Disabled standard and minimal triggers."
+        },
+        {
+          "key": "components/cell-color-picker/ControlledExample",
+          "purpose": "Programmatic controlled color changes."
+        }
+      ],
+      "relatedComponents": [
+        "H0Input",
+        "H0Button"
+      ],
+      "manifest": {
+        "family": "CellColorPicker",
+        "familyRole": "root",
+        "category": "forms",
+        "docsPath": "/components/cellcolorpicker",
+        "styleEntry": "components/CellColorPicker/style.css",
+        "localeSection": "colorPicker"
+      }
+    },
+    {
+      "schemaVersion": 1,
       "component": "H0Checkbox",
       "status": "migrated",
       "summary": "Controlled or uncontrolled native boolean checkbox with surface variants, indeterminate, validation, sizing, and Form integration.",
@@ -2533,6 +2801,440 @@
         "category": "content",
         "docsPath": "/components/chip",
         "styleEntry": "components/Chip/style.css"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "component": "H0Command",
+      "status": "migrated",
+      "summary": "Modal command menu with a configurable trigger, hotkey opening, searchable grouped items, and keyboard selection.",
+      "imports": {
+        "components": [
+          "H0Command"
+        ],
+        "types": [
+          "H0CommandBackdrop",
+          "H0CommandEmits",
+          "H0CommandItem",
+          "H0CommandProps",
+          "H0CommandSize",
+          "H0CommandVariant",
+          "H0CommandWindowSize"
+        ],
+        "styles": [
+          "@h0nio/ui/style.css"
+        ]
+      },
+      "api": {
+        "props": [
+          {
+            "name": "modelValue",
+            "type": "boolean",
+            "default": "undefined",
+            "description": "Controlled open state used by v-model."
+          },
+          {
+            "name": "defaultValue",
+            "type": "boolean",
+            "default": "false",
+            "description": "Initial uncontrolled open state."
+          },
+          {
+            "name": "query",
+            "type": "string",
+            "default": "undefined",
+            "description": "Controlled search query used by v-model:query."
+          },
+          {
+            "name": "defaultQuery",
+            "type": "string",
+            "default": "''",
+            "description": "Initial uncontrolled search query."
+          },
+          {
+            "name": "items",
+            "type": "readonly H0CommandItem[]",
+            "default": "[]",
+            "description": "Commands filtered and rendered in the list."
+          },
+          {
+            "name": "variant",
+            "type": "H0CommandVariant",
+            "default": "'surface'",
+            "description": "Built-in trigger appearance."
+          },
+          {
+            "name": "backdrop",
+            "type": "H0CommandBackdrop",
+            "default": "'opaque'",
+            "description": "Modal backdrop appearance."
+          },
+          {
+            "name": "size",
+            "type": "H0CommandSize",
+            "default": "'md'",
+            "description": "Built-in trigger size."
+          },
+          {
+            "name": "windowSize",
+            "type": "H0CommandWindowSize",
+            "default": "'md'",
+            "description": "Command window width and result-list height."
+          },
+          {
+            "name": "hotkey",
+            "type": "string",
+            "default": "''",
+            "description": "Global key combination such as 'mod+k', 'ctrl+shift+p', or '/'."
+          },
+          {
+            "name": "triggerLabel",
+            "type": "string",
+            "default": "''",
+            "description": "Built-in trigger text before locale fallback."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "''",
+            "description": "Search placeholder before locale fallback."
+          },
+          {
+            "name": "emptyText",
+            "type": "string",
+            "default": "''",
+            "description": "Empty-result text before locale fallback."
+          },
+          {
+            "name": "ariaLabel",
+            "type": "string",
+            "default": "''",
+            "description": "Command dialog accessible name before locale fallback."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables trigger and hotkey opening."
+          },
+          {
+            "name": "closeOnSelect",
+            "type": "boolean",
+            "default": "true",
+            "description": "Closes the window after selecting an enabled command."
+          },
+          {
+            "name": "closeOnBackdrop",
+            "type": "boolean",
+            "default": "true",
+            "description": "Allows backdrop dismissal."
+          },
+          {
+            "name": "closeOnEsc",
+            "type": "boolean",
+            "default": "true",
+            "description": "Allows Escape dismissal."
+          },
+          {
+            "name": "resetQueryOnClose",
+            "type": "boolean",
+            "default": "true",
+            "description": "Clears search text after the window closes."
+          },
+          {
+            "name": "showFooter",
+            "type": "boolean",
+            "default": "true",
+            "description": "Shows built-in keyboard hints when no custom footer is supplied."
+          },
+          {
+            "name": "teleportTo",
+            "type": "string | HTMLElement",
+            "default": "'body'",
+            "description": "Overlay teleport destination."
+          },
+          {
+            "name": "teleportDisabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders the overlay beside the trigger in the DOM."
+          },
+          {
+            "name": "returnFocus",
+            "type": "boolean | HTMLElement",
+            "default": "true",
+            "description": "Controls focus restoration after closing."
+          },
+          {
+            "name": "lockScroll",
+            "type": "boolean",
+            "default": "true",
+            "description": "Locks document scrolling while open."
+          },
+          {
+            "name": "rootAttrs",
+            "type": "Record<string, unknown>",
+            "default": "undefined",
+            "description": "Attributes for the root wrapper."
+          },
+          {
+            "name": "triggerAttrs",
+            "type": "Record<string, unknown>",
+            "default": "undefined",
+            "description": "Native and ARIA attributes for the built-in trigger."
+          }
+        ],
+        "events": [
+          {
+            "name": "update:modelValue",
+            "type": "boolean",
+            "description": "Requests controlled open-state changes."
+          },
+          {
+            "name": "update:query",
+            "type": "string",
+            "description": "Requests controlled query changes."
+          },
+          {
+            "name": "change",
+            "type": "boolean",
+            "description": "Reports committed open-state changes."
+          },
+          {
+            "name": "open",
+            "type": "—",
+            "description": "Reports the component opening."
+          },
+          {
+            "name": "close",
+            "type": "—",
+            "description": "Reports any close path."
+          },
+          {
+            "name": "search",
+            "type": "string",
+            "description": "Reports user or exposed-API query changes."
+          },
+          {
+            "name": "select",
+            "type": "H0CommandItem",
+            "description": "Reports selection of an enabled command."
+          }
+        ],
+        "slots": [
+          {
+            "name": "trigger",
+            "type": "{ open; close; toggle; isOpen; disabled }",
+            "description": "Replaces the built-in trigger and receives state callbacks."
+          },
+          {
+            "name": "header",
+            "type": "{ query: string; close: () => void }",
+            "description": "Content placed above the search field."
+          },
+          {
+            "name": "group-label",
+            "type": "{ group: string }",
+            "description": "Custom group label."
+          },
+          {
+            "name": "item",
+            "type": "{ item: H0CommandItem; active: boolean; query: string }",
+            "description": "Replaces the complete command item content."
+          },
+          {
+            "name": "item-start",
+            "type": "{ item: H0CommandItem; active: boolean }",
+            "description": "Custom leading item visual."
+          },
+          {
+            "name": "item-end",
+            "type": "{ item: H0CommandItem; active: boolean }",
+            "description": "Custom trailing item content."
+          },
+          {
+            "name": "empty",
+            "type": "{ query: string }",
+            "description": "Empty search result."
+          },
+          {
+            "name": "footer",
+            "type": "{ activeItem?: H0CommandItem; close: () => void }",
+            "description": "Replaces built-in keyboard hints."
+          }
+        ],
+        "exposed": [
+          {
+            "name": "open",
+            "type": "() => void",
+            "description": "Opens the command window when enabled."
+          },
+          {
+            "name": "close",
+            "type": "() => void",
+            "description": "Closes the command window."
+          },
+          {
+            "name": "toggle",
+            "type": "() => void",
+            "description": "Toggles the command window."
+          },
+          {
+            "name": "focus",
+            "type": "() => void",
+            "description": "Focuses the built-in trigger."
+          },
+          {
+            "name": "setQuery",
+            "type": "(value: string) => void",
+            "description": "Sets the query and emits search."
+          }
+        ],
+        "types": [
+          {
+            "name": "H0CommandItem",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string | number",
+                "description": "Stable command value."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "Visible command label."
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "description": "Optional supporting copy."
+              },
+              {
+                "name": "group",
+                "type": "string",
+                "description": "Optional group heading."
+              },
+              {
+                "name": "keywords",
+                "type": "readonly string[]",
+                "description": "Additional searchable terms."
+              },
+              {
+                "name": "icon",
+                "type": "H0IconDefinition",
+                "description": "Optional structural H0N icon."
+              },
+              {
+                "name": "shortcut",
+                "type": "string",
+                "description": "Optional displayed command shortcut."
+              },
+              {
+                "name": "disabled",
+                "type": "boolean",
+                "description": "Prevents navigation and selection."
+              }
+            ]
+          },
+          {
+            "name": "H0CommandVariant",
+            "fields": [
+              {
+                "name": "H0CommandVariant",
+                "type": "'surface' | 'secondary' | 'ghost' | 'outline'",
+                "description": "Built-in trigger appearances."
+              }
+            ]
+          },
+          {
+            "name": "H0CommandBackdrop",
+            "fields": [
+              {
+                "name": "H0CommandBackdrop",
+                "type": "'opaque' | 'blur' | 'transparent'",
+                "description": "Shared modal backdrop appearances."
+              }
+            ]
+          },
+          {
+            "name": "H0CommandSize",
+            "fields": [
+              {
+                "name": "H0CommandSize",
+                "type": "'sm' | 'md' | 'lg'",
+                "description": "Built-in trigger sizes."
+              }
+            ]
+          },
+          {
+            "name": "H0CommandWindowSize",
+            "fields": [
+              {
+                "name": "H0CommandWindowSize",
+                "type": "'sm' | 'md' | 'lg'",
+                "description": "Command window sizes."
+              }
+            ]
+          }
+        ]
+      },
+      "useWhen": [
+        "Users need fast keyboard access to application actions or navigation.",
+        "A searchable grouped action list should open in a modal surface."
+      ],
+      "avoidWhen": [
+        "A standard select field represents form data.",
+        "Only one immediate button action is available."
+      ],
+      "accessibility": [
+        "Keep labels concise and provide a specific ariaLabel when needed.",
+        "Disabled items are skipped by Arrow, Home, End, and Enter navigation.",
+        "Preserve the built-in combobox/listbox relationship when customizing item content."
+      ],
+      "styling": [
+        "Use variant and size for the trigger, windowSize for the panel, and backdrop for the interaction layer.",
+        "Treat internal search and result selectors as implementation details."
+      ],
+      "responsive": [
+        "All window sizes retain viewport insets and a separately scrolling result region."
+      ],
+      "performance": [
+        "Filtering is synchronous; supply a reduced externally filtered collection for very large datasets."
+      ],
+      "examples": [
+        {
+          "key": "components/command/BasicExample",
+          "purpose": "Grouped commands, icons, selection, and a mod+k hotkey."
+        },
+        {
+          "key": "components/command/VariantsExample",
+          "purpose": "Surface, secondary, ghost, and outline triggers."
+        },
+        {
+          "key": "components/command/TriggerSizesExample",
+          "purpose": "Small, medium, and large trigger controls."
+        },
+        {
+          "key": "components/command/WindowSizesExample",
+          "purpose": "Independent small, medium, and large command windows."
+        },
+        {
+          "key": "components/command/BackdropsExample",
+          "purpose": "Opaque, blurred, and transparent overlay backdrops."
+        }
+      ],
+      "relatedComponents": [
+        "H0Modal",
+        "H0SearchField",
+        "H0List"
+      ],
+      "manifest": {
+        "family": "Command",
+        "familyRole": "root",
+        "category": "overlays",
+        "docsPath": "/components/command",
+        "styleEntry": "components/Command/style.css",
+        "localeSection": "command"
       }
     },
     {
@@ -9688,6 +10390,12 @@
             "description": "Keeps popup local."
           },
           {
+            "name": "lockScroll",
+            "type": "boolean",
+            "default": "true",
+            "description": "Locks document scrolling while the option overlay is open."
+          },
+          {
             "name": "rootAttrs",
             "type": "Record<string, unknown>",
             "default": "undefined",
@@ -13360,7 +14068,7 @@
       "schemaVersion": 1,
       "component": "H0Typography",
       "status": "migrated",
-      "summary": "Semantic text primitive with H0N type variants, alignment, color, weight, and truncation.",
+      "summary": "Semantic text primitive with H0N type variants, alignment, color, weight, line-height overrides, and truncation.",
       "imports": {
         "components": [
           "H0Typography"
@@ -13369,6 +14077,7 @@
           "H0TypographyAlign",
           "H0TypographyColor",
           "H0TypographyElement",
+          "H0TypographyLineHeight",
           "H0TypographyProps",
           "H0TypographyVariant",
           "H0TypographyWeight"
@@ -13420,6 +14129,12 @@
             "type": "H0TypographyWeight",
             "default": "Variant weight",
             "description": "Overrides the visual font weight."
+          },
+          {
+            "name": "lineHeight",
+            "type": "H0TypographyLineHeight",
+            "default": "Variant line height",
+            "description": "Overrides line height with a unitless number or CSS string."
           }
         ],
         "events": [],
@@ -13459,6 +14174,16 @@
                 "name": "H0TypographyWeight",
                 "type": "400 | 500 | 600 | 700",
                 "description": "Supported numeric font weights."
+              }
+            ]
+          },
+          {
+            "name": "H0TypographyLineHeight",
+            "fields": [
+              {
+                "name": "H0TypographyLineHeight",
+                "type": "number | string",
+                "description": "Unitless numeric or explicit CSS line-height value."
               }
             ]
           },
@@ -13522,6 +14247,10 @@
         {
           "key": "components/typography/SemanticsExample",
           "purpose": "Element override, alignment, inherited and semantic color, weight, and truncation."
+        },
+        {
+          "key": "components/typography/LineHeightExample",
+          "purpose": "Unitless and explicit CSS line-height overrides."
         }
       ],
       "relatedComponents": [

@@ -529,11 +529,6 @@ const interfaceTips = ref(false)
         }
     }
 
-    .hero-section__meta {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
     .workspace-card {
         :deep(.h-card__footer) {
             align-items: flex-start;
@@ -543,11 +538,6 @@ const interfaceTips = ref(false)
 
     .setting-row {
         align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .install-command {
-        align-items: stretch;
         flex-direction: column;
     }
 

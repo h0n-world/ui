@@ -503,7 +503,7 @@ watch(
     }
 
     &__text {
-        line-height: 1.35;
+        text-align: center;
     }
 
     &__details {

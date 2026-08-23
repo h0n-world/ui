@@ -4,6 +4,8 @@ export type H0TypographyElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' 
 
 export type H0TypographyWeight = 400 | 500 | 600 | 700
 
+export type H0TypographyLineHeight = number | string
+
 export type H0LabelElement = 'label' | 'legend' | 'span'
 
 export type H0DescriptionElement = 'p' | 'span' | 'div'

@@ -20,7 +20,7 @@ export type DocumentationPage = {
     order: number
     path: string
     section: string
-    template: 'article' | 'color-catalog' | 'component-catalog'
+    template: 'article' | 'color-catalog' | 'component-catalog' | 'icon-catalog'
     title: string
 }
 
@@ -385,7 +385,9 @@ const pageRecords = Object.entries(sourceFiles).map(([file, source]) => {
         path: String(attributes.path ?? '/docs'),
         section: String(attributes.section ?? 'Overview'),
         template:
-            attributes.template === 'component-catalog' || attributes.template === 'color-catalog'
+            attributes.template === 'component-catalog' ||
+            attributes.template === 'color-catalog' ||
+            attributes.template === 'icon-catalog'
                 ? attributes.template
                 : 'article',
         title: String(attributes.title ?? 'Untitled'),
@@ -427,11 +429,16 @@ export const documentationGroups = [...new Set(documentationPages.map((page) => 
 
 export function getDocumentationSections(group: string): DocumentationSection[] {
     const pages = documentationPages.filter((page) => page.group === group)
+    const primarySection = group === 'Components' ? 'Explore' : undefined
 
-    return [...new Set(pages.map((page) => page.section))].map((title) => ({
+    const sections = [...new Set(pages.map((page) => page.section))].map((title) => ({
         title,
         items: pages.filter((page) => page.section === title),
     }))
+
+    return primarySection
+        ? sections.sort((first, second) => Number(second.title === primarySection) - Number(first.title === primarySection))
+        : sections
 }
 
 export function renderDocumentationPage(path: string): RenderedDocumentationPage | undefined {

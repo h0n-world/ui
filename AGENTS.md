@@ -1,12 +1,13 @@
 # H0N UI Codex Instructions
 
-H0N UI is a pnpm workspace for a self-contained Vue 3 component library and a source-linked documentation application. The current library version is `@h0nio/ui` `1.1.0`.
+H0N UI is a pnpm workspace for a self-contained Vue 3 component library, a framework-agnostic icon library, and a source-linked documentation application. The current UI library version is `@h0nio/ui` `1.2.0`.
 
 ## Current Scope
 
 The maintained core of the workspace is:
 
 - `packages/ui`: publishable Vue component library `@h0nio/ui`.
+- `packages/icons`: private-in-development icon library `@h0nio/icons`.
 - `apps/documentation`: Vite documentation and visual-validation application.
 
 Treat `apps/templates` as incubating and out of scope unless the user explicitly includes it. Do not use its current state to infer conventions for the core library.
@@ -22,6 +23,8 @@ Treat `apps/templates` as incubating and out of scope unless the user explicitly
 - `packages/ui/src/components/<Family>`: component family implementation and barrel.
 - `packages/ui/src/composables`: supported public composables.
 - `packages/ui/src/icons/index.ts`: small tree-shakeable system icon set exposed through `@h0nio/ui/icons`.
+- `packages/icons/src`: generated framework-agnostic icon definitions, catalog, and rendering runtime exposed through `@h0nio/icons`.
+- `packages/icons/scripts`: icon import, generation, validation, and SVG copy scripts.
 - `apps/documentation/src/content/pages`: Markdown documentation pages.
 - `apps/documentation/src/examples`: executable Vue examples.
 - `apps/documentation/src/content/agent/records`: typed component metadata used to generate agent-facing artifacts.
@@ -36,6 +39,9 @@ Use pnpm. `package.json` declares `pnpm@11.17.0`, `pnpm-lock.yaml` is the only l
 Package-specific checks:
 
 ```bash
+pnpm --filter @h0nio/icons generate
+pnpm --filter @h0nio/icons check
+pnpm --filter @h0nio/icons build
 pnpm --filter @h0nio/ui typecheck
 pnpm --filter @h0nio/ui test
 pnpm --filter @h0nio/ui build
@@ -48,6 +54,8 @@ Root orchestration scripts compose the maintained packages and documentation app
 
 ```bash
 pnpm run dev
+pnpm run generate
+pnpm run check
 pnpm run typecheck
 pnpm run test
 pnpm run build
@@ -122,7 +130,7 @@ Runtime appearance attributes are:
 
 ## Documentation Rules
 
-The documentation app aliases `@h0nio/ui` and `@h0nio/ui/icons` to UI workspace source, so it validates workspace source rather than built registry packages.
+The documentation app aliases `@h0nio/icons`, `@h0nio/ui`, and `@h0nio/ui/icons` to workspace source, so it validates workspace source rather than built registry packages.
 
 - Keep page slugs synchronized with `h0ComponentManifest`.
 - Keep prose and page structure in Markdown.
@@ -132,6 +140,6 @@ The documentation app aliases `@h0nio/ui` and `@h0nio/ui/icons` to UI workspace 
 
 ## Versioning and Git Hygiene
 
-- `@h0nio/ui` is currently at `1.1.0`. Patch releases fix behavior, minor releases add compatible API, and breaking supported API changes require a major release.
+- `@h0nio/ui` is currently at `1.2.0`. Patch releases fix behavior, minor releases add compatible API, and breaking supported API changes require a major release.
 - Do not add historical migration notes during ordinary development. Record durable architecture in `ARCHITECTURE.md`; add a migration guide only for an actual released breaking change.
 - Preserve user changes, keep edits scoped, and avoid unrelated formatting or lockfile churn.

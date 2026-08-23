@@ -1,13 +1,13 @@
-# Install and configure H0N UI 1.1.0
+# Install and configure H0N UI 1.2.0
 
-You are working in an existing Vue project. Install and configure **@h0nio/ui@1.1.0** without replacing the project's architecture or introducing a second package manager.
+You are working in an existing Vue project. Install and configure **@h0nio/ui@1.2.0** without replacing the project's architecture or introducing a second package manager.
 
 ## Your task
 
 1. Read the repository's **AGENTS.md**, contribution instructions, and package scripts before editing.
 2. Inspect the existing package-manager lockfile, Vue version, application bootstrap, router/store/plugin chain, stylesheet entry, SSR framework (if any), and current theme, locale, and toast setup.
 3. Require Vue 3.5 or newer. If the project is incompatible, explain the conflict and stop instead of forcing a framework upgrade.
-4. Use the package manager already selected by the repository. Install exactly **@h0nio/ui@1.1.0**; do not create another lockfile and do not install **@h0n/icon**.
+4. Use the package manager already selected by the repository. Install exactly **@h0nio/ui@1.2.0**; do not create another lockfile and do not install **@h0n/icon**.
 5. For the standard integration, import the default **H0Nui** plugin from **@h0nio/ui**, import **@h0nio/ui/style.css** exactly once, and add **app.use(H0Nui)** to the existing Vue application chain. Do not create a second app instance or discard existing plugins.
 6. Preserve existing product decisions. Add plugin options for theme, animation, density, radius, typography, locale, or toast only when they are already defined by the project or explicitly requested. Otherwise keep the minimal default registration.
 7. Use selective imports only when the project explicitly requires them. Import components from **@h0nio/ui/components/Family** and load either the global stylesheet once or the matching **@h0nio/ui/components/Family/style.css**.

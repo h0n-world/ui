@@ -17,6 +17,14 @@ describe('typography primitives', () => {
         expect(emphasizedBody.classes()).toContain('h-typography--weight-500')
     })
 
+    it('overrides variant line height with numeric and CSS values', () => {
+        const numeric = mount(H0Typography, { props: { lineHeight: 1.4, text: 'Numeric line height' } })
+        const explicit = mount(H0Typography, { props: { lineHeight: '24px', text: 'Explicit line height' } })
+
+        expect(numeric.attributes('style')).toContain('line-height: 1.4')
+        expect(explicit.attributes('style')).toContain('line-height: 24px')
+    })
+
     it('renders label, legend and inline semantics without leaking for', () => {
         const label = mount(H0Label, { props: { htmlFor: 'email', text: 'Email' } })
         const legend = mount(H0Label, { props: { as: 'legend', htmlFor: 'ignored', text: 'Options' } })

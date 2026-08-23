@@ -1,0 +1,159 @@
+import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { basename, dirname, relative, resolve } from 'node:path';
+
+const packageRoot = resolve(import.meta.dirname, '..');
+const workspaceRoot = resolve(packageRoot, '../..');
+const sourceDir = resolve(workspaceRoot, 'example');
+const svgDir = resolve(packageRoot, 'src/svg');
+const metadataPath = resolve(packageRoot, 'src/metadata.json');
+
+const categoryByDirectory = {
+  Arrows: 'actions',
+  'Arrows Action': 'actions',
+  Astronomy: 'astronomy',
+  'Building, Infrastructure': 'infrastructure',
+  'Business, Statistic': 'analytics',
+  Call: 'communication',
+  'Design, Tools': 'design',
+  'Electronic, Devices': 'devices',
+  'Essentional, UI': 'interface',
+  'Faces, Emotions, Stickers': 'social',
+  Files: 'data',
+  Folders: 'data',
+  'Food, Kitchen': 'food',
+  Hands: 'social',
+  'Home, Furniture': 'home',
+  Like: 'social',
+  List: 'productivity',
+  'Map & Location': 'maps',
+  Medicine: 'medical',
+  'Messages, Conversation': 'communication',
+  Money: 'finance',
+  'Nature, Travel': 'travel',
+  'Network, IT, Programming': 'development',
+  Notes: 'productivity',
+  Notifications: 'notifications',
+  School: 'education',
+  Search: 'interface',
+  Security: 'security',
+  'Settings, Fine Tuning': 'settings',
+  'Shopping, Ecommerce': 'commerce',
+  Sports: 'sports',
+  Stickers: 'design',
+  'Text Formatting': 'text-editing',
+  Time: 'time',
+  'Transport, Parts, Service': 'transport',
+  Users: 'users',
+  'Video, Audio, Sound': 'media',
+  Weather: 'weather',
+};
+
+const slugify = (value) =>
+  value
+    .normalize('NFKD')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+async function collectSvgFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) files.push(...(await collectSvgFiles(path)));
+    else if (entry.isFile() && entry.name.toLowerCase().endsWith('.svg')) files.push(path);
+  }
+  return files.sort();
+}
+
+const sourceFiles = await collectSvgFiles(sourceDir);
+const metadata = JSON.parse(await readFile(metadataPath, 'utf8'));
+const sourceItems = sourceFiles.map((sourcePath) => {
+  const sourceName = basename(sourcePath, '.svg');
+  const baseName = slugify(sourceName);
+  const directory = basename(dirname(sourcePath));
+  const category = categoryByDirectory[directory];
+  if (!category) throw new Error(`${relative(sourceDir, sourcePath)}: unmapped source directory.`);
+  return { sourcePath, sourceName, baseName, category };
+});
+
+const duplicateBaseNames = new Set(
+  sourceItems
+    .map(({ baseName }) => baseName)
+    .filter((name, index, names) => names.indexOf(name) !== index),
+);
+
+const imports = [];
+const skipped = [];
+for (const item of sourceItems) {
+  const directName = `${item.baseName}-duotone`;
+  const existingNames = [directName, item.baseName];
+  const existingEquivalent = existingNames.find((name) => {
+    const entry = metadata.icons[name];
+    if (entry?.style !== 'duotone') return false;
+    return !duplicateBaseNames.has(item.baseName) || entry.categories.includes(item.category);
+  });
+
+  if (existingEquivalent) {
+    skipped.push(`${relative(sourceDir, item.sourcePath)} -> ${existingEquivalent}`);
+    continue;
+  }
+
+  const name = duplicateBaseNames.has(item.baseName)
+    ? `${item.category}-${item.baseName}-duotone`
+    : directName;
+  const existingTarget = metadata.icons[name];
+  if (existingTarget) {
+    if (existingTarget.style !== 'duotone') {
+      throw new Error(`${name}: target name already belongs to style ${existingTarget.style}.`);
+    }
+    skipped.push(`${relative(sourceDir, item.sourcePath)} -> ${name}`);
+    continue;
+  }
+
+  imports.push({ ...item, name });
+}
+
+const duplicateTargets = imports
+  .map(({ name }) => name)
+  .filter((name, index, names) => names.indexOf(name) !== index);
+if (duplicateTargets.length > 0) {
+  throw new Error(`Duplicate target names: ${[...new Set(duplicateTargets)].join(', ')}.`);
+}
+
+for (const category of new Set(Object.values(categoryByDirectory))) {
+  if (!metadata.categories.includes(category)) metadata.categories.push(category);
+}
+metadata.categories.sort();
+
+for (const item of imports) {
+  let svg = await readFile(item.sourcePath, 'utf8');
+  const root = svg.match(/^\s*<svg\b([^>]*)>/i);
+  if (!root || !/\bviewBox="[^"]+"/i.test(root[1])) {
+    throw new Error(`${relative(sourceDir, item.sourcePath)}: SVG must have a viewBox.`);
+  }
+
+  const normalizedRoot = root[0].replace(/\s+(?:width|height)="[^"]*"/gi, '');
+  svg = svg
+    .replace(root[0], normalizedRoot)
+    .replace(/(fill|stroke)="(?!none|currentColor)[^"]+"/gi, '$1="currentColor"')
+    .replace(/opacity="(?:0\.5|\.5)"/g, 'opacity="0.32"')
+    .trim();
+
+  await writeFile(resolve(svgDir, `${item.name}.svg`), `${svg}\n`);
+  metadata.icons[item.name] = {
+    style: 'duotone',
+    categories: [item.category],
+    tags: [...new Set(slugify(item.sourceName).split('-'))],
+  };
+}
+
+metadata.icons = Object.fromEntries(
+  Object.entries(metadata.icons).sort(([left], [right]) => left.localeCompare(right)),
+);
+await writeFile(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);
+
+console.log(`Found ${sourceItems.length} raw duotone SVG icons.`);
+console.log(`Added ${imports.length} missing duotone icons.`);
+console.log(`Skipped ${skipped.length} existing duotone icons without modifying them.`);
+console.log(`Disambiguated ${duplicateBaseNames.size} duplicate base-name groups.`);

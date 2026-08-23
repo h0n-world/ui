@@ -1,0 +1,4 @@
+import type { IconDefinition } from '../types.js';
+
+export const LoginStrokeIcon = {"name":"login-stroke","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M21.25 12A9.25 9.25 0 0 0 12 2.75v-1.5c5.937 0 10.75 4.813 10.75 10.75S17.937 22.75 12 22.75a.75.75 0 0 1 0-1.5A9.25 9.25 0 0 0 21.25 12M7.47 5.47a.75.75 0 0 1 1.06 0l6 6a.75.75 0 0 1 0 1.06l-6 6a.75.75 0 0 1-1.06-1.06l4.72-4.72H2a.75.75 0 0 1 0-1.5h10.19L7.47 6.53a.75.75 0 0 1 0-1.06\" clip-rule=\"evenodd\"/>"} as const satisfies IconDefinition;
+export default LoginStrokeIcon;

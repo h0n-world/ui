@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { H0TypographyAlign, H0TypographyColor, H0TypographyElement, H0TypographyVariant, H0TypographyWeight } from './Typography.types'
+import type { H0TypographyAlign, H0TypographyColor, H0TypographyElement, H0TypographyLineHeight, H0TypographyVariant, H0TypographyWeight } from './Typography.types'
 
 defineOptions({
     name: 'H0Typography'
@@ -15,6 +15,7 @@ const props = withDefaults(
         truncate?: boolean
         text?: string | number
         weight?: H0TypographyWeight
+        lineHeight?: H0TypographyLineHeight
     }>(),
     {
         variant: 'body',
@@ -39,6 +40,7 @@ const defaultElementByVariant: Record<H0TypographyVariant, H0TypographyElement> 
 
 const tag = computed(() => props.as ?? defaultElementByVariant[props.variant])
 const weightClass = computed(() => (props.weight ? `h-typography--weight-${props.weight}` : undefined))
+const typographyStyle = computed(() => ({ lineHeight: props.lineHeight === undefined ? undefined : String(props.lineHeight) }))
 </script>
 
 <template>
@@ -47,6 +49,7 @@ const weightClass = computed(() => (props.weight ? `h-typography--weight-${props
         data-h0n-component="typography"
         class="h-typography"
         :class="[`h-typography--${variant}`, `h-typography--align-${align}`, `h-typography--color-${color}`, weightClass, { 'h-typography--truncate': truncate }]"
+        :style="typographyStyle"
     >
         <template v-if="text !== undefined">{{ text }}</template>
         <slot v-else />

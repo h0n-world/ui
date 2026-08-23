@@ -1,10 +1,7 @@
 import { nextTick, onBeforeUnmount, toValue, watch, type MaybeRefOrGetter, type Ref, type WatchSource } from 'vue'
+import { useH0DocumentScrollLock } from './useDocumentScrollLock'
 
 type H0DocumentOverlayState = {
-    locks: Map<string, number>
-    scrollLockSnapshot?: {
-        paddingInlineEnd: string
-    }
     stack: symbol[]
 }
 
@@ -15,39 +12,11 @@ function getDocumentState(document: Document) {
     let state = documentStates.get(document)
 
     if (!state) {
-        state = { locks: new Map(), stack: [] }
+        state = { stack: [] }
         documentStates.set(document, state)
     }
 
     return state
-}
-
-function getScrollLockCount(state: H0DocumentOverlayState) {
-    return Array.from(state.locks.values()).reduce((total, count) => total + count, 0)
-}
-
-function applyScrollbarCompensation(ownerDocument: Document, state: H0DocumentOverlayState) {
-    const view = ownerDocument.defaultView
-    const viewport = ownerDocument.documentElement
-
-    if (!view || viewport.clientWidth <= 0) return
-
-    const scrollbarWidth = Math.max(0, view.innerWidth - viewport.clientWidth)
-    if (!scrollbarWidth) return
-
-    const body = ownerDocument.body
-    const currentPadding = Number.parseFloat(view.getComputedStyle(body).paddingInlineEnd) || 0
-    state.scrollLockSnapshot = {
-        paddingInlineEnd: body.style.paddingInlineEnd
-    }
-    body.style.paddingInlineEnd = `${currentPadding + scrollbarWidth}px`
-}
-
-function restoreScrollbarCompensation(ownerDocument: Document, state: H0DocumentOverlayState) {
-    if (!state.scrollLockSnapshot) return
-
-    ownerDocument.body.style.paddingInlineEnd = state.scrollLockSnapshot.paddingInlineEnd
-    state.scrollLockSnapshot = undefined
 }
 
 function isFocusable(element: HTMLElement) {
@@ -73,7 +42,6 @@ export type H0OverlayOptions = {
 
 export function useOverlay(options: H0OverlayOptions) {
     const overlayId = Symbol('h0-overlay')
-    let lockedDocument: Document | undefined
     let isKeydownBound = false
     let previouslyFocusedElement: HTMLElement | null = null
 
@@ -101,29 +69,6 @@ export function useOverlay(options: H0OverlayOptions) {
         const stack = getDocumentState(ownerDocument).stack
         const index = stack.indexOf(overlayId)
         if (index >= 0) stack.splice(index, 1)
-    }
-
-    function setScrollLock(isLocked: boolean) {
-        const ownerDocument = lockedDocument ?? getDocument()
-        if (!ownerDocument) return
-        const shouldLock = isLocked && (options.lockScroll === undefined || Boolean(toValue(options.lockScroll)))
-        const state = getDocumentState(ownerDocument)
-        const currentCount = state.locks.get(options.lockClass) ?? 0
-
-        if (shouldLock && !lockedDocument) {
-            const isFirstLock = getScrollLockCount(state) === 0
-            lockedDocument = ownerDocument
-            state.locks.set(options.lockClass, currentCount + 1)
-            if (isFirstLock) applyScrollbarCompensation(ownerDocument, state)
-        } else if (!shouldLock && lockedDocument) {
-            const nextCount = Math.max(currentCount - 1, 0)
-            if (nextCount) state.locks.set(options.lockClass, nextCount)
-            else state.locks.delete(options.lockClass)
-            lockedDocument = undefined
-            if (getScrollLockCount(state) === 0) restoreScrollbarCompensation(ownerDocument, state)
-        }
-
-        ownerDocument.body.classList.toggle(options.lockClass, (state.locks.get(options.lockClass) ?? 0) > 0)
     }
 
     function getFocusableElements() {
@@ -206,12 +151,15 @@ export function useOverlay(options: H0OverlayOptions) {
         { immediate: true }
     )
 
-    watch(options.scrollLockActive ?? options.isOpen, setScrollLock, { immediate: true })
+    useH0DocumentScrollLock(options.scrollLockActive ?? options.isOpen, {
+        enabled: options.lockScroll,
+        lockClass: options.lockClass,
+        ownerDocument: getDocument
+    })
 
     onBeforeUnmount(() => {
         const wasTop = isTopOverlay()
         removeFromStack()
-        setScrollLock(false)
         setKeydownListener(false)
         if (wasTop) restoreFocus()
     })

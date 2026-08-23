@@ -26,6 +26,8 @@ export type H0Locale = {
     passwordInput: { capsLock: string; hide: string; reveal: string; strength: readonly [string, string, string, string, string] }
     fileUpload: { add: string; cancel: string; clear: string; drop: string; invalid: string; remove: string; retry: string; start: string }
     toolbar: { label: string }
+    colorPicker: { dialog: string; hue: string; label: string; saturation: string }
+    command: { empty: string; label: string; navigate: string; open: string; placeholder: string; results: string; select: string }
 }
 
 export type H0LocaleConfig = { [Section in keyof H0Locale]?: Partial<H0Locale[Section]> }
@@ -52,6 +54,8 @@ export const defaultH0NumberInputLocale: H0Locale['numberInput'] = { decrement: 
 export const defaultH0PasswordInputLocale: H0Locale['passwordInput'] = { capsLock: 'Caps Lock is on', hide: 'Hide password', reveal: 'Show password', strength: ['Very weak', 'Weak', 'Fair', 'Strong', 'Very strong'] }
 export const defaultH0FileUploadLocale: H0Locale['fileUpload'] = { add: 'Add files', cancel: 'Cancel upload', clear: 'Clear files', drop: 'Drop files here or choose files', invalid: 'File is not accepted', remove: 'Remove file', retry: 'Retry upload', start: 'Upload files' }
 export const defaultH0ToolbarLocale: H0Locale['toolbar'] = { label: 'Toolbar' }
+export const defaultH0ColorPickerLocale: H0Locale['colorPicker'] = { dialog: 'Color picker', hue: 'Hue', label: 'Choose color', saturation: 'Saturation and brightness' }
+export const defaultH0CommandLocale: H0Locale['command'] = { empty: 'No commands found', label: 'Command menu', navigate: 'Navigate', open: 'Open command menu', placeholder: 'Type a command or search...', results: 'Command results', select: 'Select' }
 
 export const defaultH0Locale: H0Locale = {
     common: { clear: 'Clear', close: 'Close', empty: 'No results', loading: 'Loading' },
@@ -80,6 +84,8 @@ export const defaultH0Locale: H0Locale = {
     passwordInput: defaultH0PasswordInputLocale,
     fileUpload: defaultH0FileUploadLocale,
     toolbar: defaultH0ToolbarLocale,
+    colorPicker: defaultH0ColorPickerLocale,
+    command: defaultH0CommandLocale,
 }
 
 function mergeH0Locale(config: H0LocaleConfig = {}, base: H0Locale = defaultH0Locale): H0Locale {

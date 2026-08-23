@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { checkIcon, moreHorizontalIcon } from '@h0nio/ui/icons'
 import { H0Button, H0Drawer, H0Icon } from '@h0nio/ui'
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 import MarkdownContent from '@/components/MarkdownContent.vue'
 import AllComponentsCatalog from '@/components/documentation/AllComponentsCatalog.vue'
 import ColorTokenCatalog from '@/components/documentation/ColorTokenCatalog.vue'
+import IconCatalogSkeleton from '@/components/documentation/IconCatalogSkeleton.vue'
 import RelatedComponentsCatalog from '@/components/documentation/RelatedComponentsCatalog.vue'
 import SystemSidebar from '@/components/system/SystemSidebar.vue'
 import SystemHeader from '@/components/system/SystemHeader.vue'
@@ -19,6 +20,8 @@ import {
 defineOptions({
     name: 'SystemLayout',
 })
+
+const IconCatalog = defineAsyncComponent(() => import('@/components/documentation/IconCatalog.vue'))
 
 const route = useRoute()
 const menuOpen = ref(false)
@@ -62,7 +65,7 @@ function observeHeadings() {
     const visibleHeadingIds = new Set<string>()
     const headings = [
         ...document.querySelectorAll<HTMLElement>(
-            '.markdown-content h2, .markdown-content h3, .component-category h2, .color-token-category h2, .related-components h2',
+            '.markdown-content h2, .markdown-content h3, .component-category h2, .color-token-category h2, .icon-catalog h2, .related-components h2',
         ),
     ].filter((heading) => !heading.closest('.documentation-preview'))
     const renderedItems = new Map(page.value?.toc.map((item) => [item.id, item]))
@@ -166,6 +169,12 @@ onBeforeUnmount(() => {
                     />
                     <AllComponentsCatalog v-if="page.template === 'component-catalog'" />
                     <ColorTokenCatalog v-if="page.template === 'color-catalog'" />
+                    <Suspense v-if="page.template === 'icon-catalog'">
+                        <IconCatalog @ready="observeHeadings" />
+                        <template #fallback>
+                            <IconCatalogSkeleton />
+                        </template>
+                    </Suspense>
                     <RelatedComponentsCatalog :items="page.relatedComponents" />
 
                     <nav class="article-pagination" aria-label="Previous and next pages">

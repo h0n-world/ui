@@ -8,7 +8,9 @@ import { buttonAgentRecord } from './button.ts'
 import { buttonGroupAgentRecord } from './button-group.ts'
 import { cardAgentRecord } from './card.ts'
 import { carouselAgentRecord } from './carousel.ts'
+import { cellColorPickerAgentRecord } from './cell-color-picker.ts'
 import { chipAgentRecord } from './chip.ts'
+import { commandAgentRecord } from './command.ts'
 import { checkboxAgentRecord } from './checkbox.ts'
 import { checkboxGroupAgentRecord } from './checkbox-group.ts'
 import { containerAgentRecord } from './container.ts'
@@ -81,7 +83,9 @@ export const componentAgentRecords = [
     buttonGroupAgentRecord,
     cardAgentRecord,
     carouselAgentRecord,
+    cellColorPickerAgentRecord,
     chipAgentRecord,
+    commandAgentRecord,
     checkboxAgentRecord,
     checkboxGroupAgentRecord,
     containerAgentRecord,

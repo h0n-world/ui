@@ -1,3 +1,4 @@
+import '@h0nio/ui/style.css'
 import './assets/scss/global.scss'
 
 import H0Nui from '@h0nio/ui'

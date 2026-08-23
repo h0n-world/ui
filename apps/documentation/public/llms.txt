@@ -1,4 +1,4 @@
-# H0N UI 1.1.0
+# H0N UI 1.2.0
 
 > Self-contained Vue 3.5+ component library with accessible interaction patterns, public design tokens, app-scoped runtime services, and typed APIs.
 
@@ -48,7 +48,7 @@ Paths in this file are relative to the H0N UI documentation origin. They are not
 
 Do not import `src`, `_shared`, generated chunks, private selectors, or component-local CSS variables.
 
-## Supported components (71)
+## Supported components (73)
 
 ### Actions
 
@@ -61,6 +61,7 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 
 ### Forms
 
+- [H0CellColorPicker](/components/cellcolorpicker): Custom HEX color picker with standard or minimal triggers, controlled state, and keyboard-operable saturation, brightness, and hue controls.
 - [H0Checkbox](/components/checkbox): Controlled or uncontrolled native boolean checkbox with surface variants, indeterminate, validation, sizing, and Form integration.
 - [H0CheckboxGroup](/components/checkbox#h0checkboxgroup): Labeled multi-choice checkbox set backed by an array of string option values.
 - [H0Field](/components/field): Form layout primitive that connects a label, control, hint, and validation error through accessible attributes.
@@ -96,6 +97,7 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 ### Overlays
 
 - [H0AlertDialog](/components/alertdialog): Blocking alert dialog for explicit confirmation or cancellation of a consequential action.
+- [H0Command](/components/command): Modal command menu with a configurable trigger, hotkey opening, searchable grouped items, and keyboard selection.
 - [H0Drawer](/components/drawer): Modal edge panel for navigation, filters, and supporting workflows.
 - [H0Modal](/components/modal): Blocking dialog surface for a self-contained task or workflow.
 - [H0Sheet](/components/sheet): Compact inset modal surface positioned near a viewport edge.
@@ -143,6 +145,6 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 - [H0List](/components/list): Grouped collection wrapper with optional accessible label, spacing, and item separators.
 - [H0ListItem](/components/list#h0listitem): Interactive or static polymorphic row with structured text, start/end slots, state, and sizing.
 - [H0Message](/components/message): Compact supporting or status text with an optional tone-specific decorative icon.
-- [H0Typography](/components/typography): Semantic text primitive with H0N type variants, alignment, color, weight, and truncation.
+- [H0Typography](/components/typography): Semantic text primitive with H0N type variants, alignment, color, weight, line-height overrides, and truncation.
 
 Every component in this index has a synchronized public export, manifest entry, documentation route, and validated typed record. The installation prompt and consumer instructions are available now; MCP and distributable Agent Skills are not published yet.

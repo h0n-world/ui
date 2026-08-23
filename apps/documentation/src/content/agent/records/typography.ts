@@ -1,20 +1,22 @@
 import type { ComponentAgentRecordV1 } from '../schema.ts'
 
 export const typographyAgentRecord = {
-    schemaVersion: 1, component: 'H0Typography', status: 'migrated', summary: 'Semantic text primitive with H0N type variants, alignment, color, weight, and truncation.',
-    imports: { components: ['H0Typography'], types: ['H0TypographyAlign', 'H0TypographyColor', 'H0TypographyElement', 'H0TypographyProps', 'H0TypographyVariant', 'H0TypographyWeight'], styles: ['@h0nio/ui/style.css'] },
+    schemaVersion: 1, component: 'H0Typography', status: 'migrated', summary: 'Semantic text primitive with H0N type variants, alignment, color, weight, line-height overrides, and truncation.',
+    imports: { components: ['H0Typography'], types: ['H0TypographyAlign', 'H0TypographyColor', 'H0TypographyElement', 'H0TypographyLineHeight', 'H0TypographyProps', 'H0TypographyVariant', 'H0TypographyWeight'], styles: ['@h0nio/ui/style.css'] },
     api: {
         props: [
             { name: 'variant', type: 'H0TypographyVariant', default: "'body'", description: 'Visual type scale and default semantic element.' }, { name: 'as', type: 'H0TypographyElement', default: 'Element derived from variant', description: 'Overrides rendered HTML without changing appearance.' },
             { name: 'align', type: 'H0TypographyAlign', default: "'left'", description: 'Text alignment.' }, { name: 'color', type: 'H0TypographyColor', default: "'default'", description: 'Semantic text color.' },
             { name: 'truncate', type: 'boolean', default: 'false', description: 'Applies single-line ellipsis truncation.' }, { name: 'text', type: 'string | number', default: 'undefined', description: 'Replaces the default slot whenever it is defined, including as an empty string or zero.' },
             { name: 'weight', type: 'H0TypographyWeight', default: 'Variant weight', description: 'Overrides the visual font weight.' },
+            { name: 'lineHeight', type: 'H0TypographyLineHeight', default: 'Variant line height', description: 'Overrides line height with a unitless number or CSS string.' },
         ],
         events: [], slots: [{ name: 'default', type: '—', description: 'Text or inline content used when text is undefined.' }], exposed: [],
         types: [
             { name: 'H0TypographyVariant', fields: [{ name: 'H0TypographyVariant', type: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body' | 'body-sm' | 'body-xs' | 'code'", description: 'Supported visual variants.' }] },
             { name: 'H0TypographyElement', fields: [{ name: 'H0TypographyElement', type: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div' | 'label' | 'small' | 'strong' | 'em' | 'code'", description: 'Supported semantic elements.' }] },
             { name: 'H0TypographyWeight', fields: [{ name: 'H0TypographyWeight', type: '400 | 500 | 600 | 700', description: 'Supported numeric font weights.' }] },
+            { name: 'H0TypographyLineHeight', fields: [{ name: 'H0TypographyLineHeight', type: 'number | string', description: 'Unitless numeric or explicit CSS line-height value.' }] },
             { name: 'H0TypographyAlign', fields: [{ name: 'H0TypographyAlign', type: "'left' | 'center' | 'right'", description: 'Supported text alignments.' }] },
             { name: 'H0TypographyColor', fields: [{ name: 'H0TypographyColor', type: "'default' | 'muted' | 'secondary' | 'primary' | 'inherit'", description: 'Supported semantic text colors; inherit uses the parent color.' }] },
         ],
@@ -26,6 +28,7 @@ export const typographyAgentRecord = {
         { key: 'components/typography/SpecimensExample', purpose: 'Complete public type scale.' },
         { key: 'components/typography/ElementMappingExample', purpose: 'Default semantic element selected by every visual variant.' },
         { key: 'components/typography/SemanticsExample', purpose: 'Element override, alignment, inherited and semantic color, weight, and truncation.' },
+        { key: 'components/typography/LineHeightExample', purpose: 'Unitless and explicit CSS line-height overrides.' },
     ],
     relatedComponents: ['H0Description', 'H0ErrorMessage', 'H0Label', 'H0Message'],
 } satisfies ComponentAgentRecordV1

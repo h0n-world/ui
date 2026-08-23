@@ -1,0 +1,4 @@
+import type { IconDefinition } from '../types.js';
+
+export const NotificationUnreadLinesDuotoneIcon = {"name":"notification-unread-lines-duotone","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" d=\"M22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12\" opacity=\".32\"/><path fill=\"currentColor\" d=\"M7 16.75a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zm0-3.5a.75.75 0 0 0 0 1.5h9a.75.75 0 0 0 0-1.5zM22 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0\"/>"} as const satisfies IconDefinition;
+export default NotificationUnreadLinesDuotoneIcon;

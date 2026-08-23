@@ -35,6 +35,13 @@ Each visual variant selects a semantic element when `as` is omitted: `h1` throug
 :::example components/typography/SemanticsExample
 :::
 
+## Line height
+
+Use `lineHeight` to override the default line height of the selected variant. Numbers are unitless CSS values, while strings accept units, keywords, and CSS variables.
+
+:::example components/typography/LineHeightExample
+:::
+
 ## Props
 
 :::component-api props
@@ -59,6 +66,11 @@ When `text` is defined, including as an empty string or `0`, it replaces the def
 ### H0TypographyWeight
 
 :::component-api type H0TypographyWeight
+:::
+
+### H0TypographyLineHeight
+
+:::component-api type H0TypographyLineHeight
 :::
 
 ### H0TypographyAlign

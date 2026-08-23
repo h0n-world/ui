@@ -1,6 +1,6 @@
 # H0N UI Consumer Agent Instructions
 
-These instructions apply to projects consuming `@h0nio/ui` 1.1.0. Merge them with the consuming repository's own instructions; repository-specific architecture and commands take precedence.
+These instructions apply to projects consuming `@h0nio/ui` 1.2.0. Merge them with the consuming repository's own instructions; repository-specific architecture and commands take precedence.
 
 ## Contract authority
 

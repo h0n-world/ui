@@ -11,6 +11,22 @@ order: 200
 
 Track meaningful changes here. Keep entries focused on what users gain. Add a dedicated migration guide only when a released breaking change requires one.
 
+## Version 1.2.0
+
+This minor release adds a custom color-selection control to the supported `@h0nio/ui` API without introducing breaking changes.
+
+### Added
+
+- Added `H0CellColorPicker` with controlled and uncontrolled HEX values, `standard` and `minimal` trigger layouts, configurable swatch placement, `surface`, `secondary`, and `ghost` variants, and `sm`, `md`, and `lg` sizes.
+- Added `H0Command` with configurable trigger variants and sizes, modal window sizes and backdrops, hotkey opening, searchable grouped commands, and keyboard navigation.
+- Added a custom saturation and brightness plane with a hue slider, pointer and touch interaction, keyboard controls, accessible slider semantics, and localized labels.
+- Added form submission through the `name` prop, disabled behavior, popup teleport and positioning options, and the public `open`, `close`, `focus`, and `setValue` methods.
+- Added the `lineHeight` prop to `H0Typography` for unitless numeric and explicit CSS line-height overrides.
+
+### Fixed and improved
+
+- Prevented document scrolling behind Command, Select, Modal, Sheet, Drawer, and AlertDialog overlays without replacing the body positioning, preserving sticky page regions, nested-overlay locks, scrollbar compensation, and the original page position. Command search focus no longer requests a second scrollable focus transition when opening the system keyboard.
+
 ## Version 1.1.0
 
 This minor release expands form-control consistency, improves overlay behavior, and refreshes component examples without introducing breaking API changes.

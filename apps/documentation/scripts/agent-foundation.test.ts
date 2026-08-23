@@ -144,7 +144,7 @@ test('record validation reports duplicates and invalid relationships', () => {
     const context = {
         manifest: h0ComponentManifest,
         pagePaths: [
-            '/components/accordion', '/components/alert', '/components/avatar', '/components/badge', '/components/button', '/components/buttongroup', '/components/card', '/components/carousel', '/components/chip',
+            '/components/accordion', '/components/alert', '/components/avatar', '/components/badge', '/components/button', '/components/buttongroup', '/components/card', '/components/carousel', '/components/cellcolorpicker', '/components/chip', '/components/command',
             '/components/checkbox', '/components/datatable', '/components/description', '/components/emptystate', '/components/errormessage', '/components/field', '/components/fileupload', '/components/form', '/components/icon', '/components/image', '/components/imageupload', '/components/infinitescroll', '/components/input', '/components/inputotp', '/components/label', '/components/list',
             '/components/grid', '/components/layout', '/components/message', '/components/numberinput', '/components/passwordinput', '/components/radio', '/components/ripple', '/components/scrollarea', '/components/searchfield', '/components/select', '/components/skeleton', '/components/spinner', '/components/switch', '/components/table', '/components/textarea', '/components/toast', '/components/toolbar', '/components/typography',
             '/components/breadcrumbs', '/components/link', '/components/pagination', '/components/segment', '/components/sidenav', '/components/stepper', '/components/tabs',

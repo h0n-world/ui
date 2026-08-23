@@ -3,6 +3,7 @@ import { arrowDownIcon, checkIcon } from '../../icons'
 import { autoUpdate, computePosition, flip, offset, shift, size as floatingSize } from '@floating-ui/dom'
 import { computed, inject, nextTick, onBeforeUnmount, ref, useAttrs, useTemplateRef, watch } from 'vue'
 import { useFormField } from '../_shared/useFormField'
+import { useH0DocumentScrollLock } from '../_shared/useDocumentScrollLock'
 import { h0OverlayContextKey, toH0OverlayZIndex } from '../_shared/Overlay.context'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0List from '../List/H0List.vue'
@@ -50,6 +51,7 @@ const props = withDefaults(
         scrollHeight?: number | string
         teleportTo?: string | HTMLElement
         teleportDisabled?: boolean
+        lockScroll?: boolean
         rootAttrs?: Record<string, unknown>
         controlAttrs?: Record<string, unknown>
     }>(),
@@ -77,7 +79,8 @@ const props = withDefaults(
         overscan: 5,
         scrollHeight: 320,
         teleportTo: 'body',
-        teleportDisabled: false
+        teleportDisabled: false,
+        lockScroll: true
     }
 )
 
@@ -310,6 +313,12 @@ watch(isOpen, async (open) => {
         document.addEventListener('pointerdown', handleDocumentPointerDown)
         document.addEventListener('keydown', handleDocumentKeydown)
     }
+})
+
+const selectScrollLockActive = computed(() => isOpen.value || isPopoverLeaving.value)
+useH0DocumentScrollLock(selectScrollLockActive, {
+    enabled: () => props.lockScroll,
+    ownerDocument: () => rootRef.value?.ownerDocument ?? (typeof document === 'undefined' ? undefined : document)
 })
 
 function finishPopoverLeave() {

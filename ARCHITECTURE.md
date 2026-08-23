@@ -1,16 +1,20 @@
 # H0N UI Architecture
 
-Last verified: 2026-07-28
+Last verified: 2026-08-23
 
-Current library version: `@h0nio/ui` `1.1.0`
+Current library version: `@h0nio/ui` `1.2.0`
 
-H0N UI is a pnpm workspace centered on a self-contained Vue 3 component library and a source-linked documentation application.
+H0N UI is a pnpm workspace centered on a self-contained Vue 3 component library, a framework-agnostic icon library, and a source-linked documentation application.
 
 ## Maintained Workspace
 
 ```text
 h0n-ui/
   packages/
+    icons/                      # @h0nio/icons: private-in-development icon package
+      scripts/                  # Import, generation, validation, and SVG copy tools
+      src/                      # Generated definitions, catalog, metadata, and runtime
+      svg/                      # Generated package SVG subpaths
     ui/                         # @h0nio/ui: supported Vue component library
       contracts/                # Reviewed public API and CSS-token snapshot
       scripts/                  # Build fixtures, style typings, size verification
@@ -55,13 +59,14 @@ h0n-ui/
 - Vue Router and Markdown It in the documentation app
 - Documentation scripts require Node `>=22.12.0`
 
-Root scripts explicitly compose `@h0nio/ui` and `@h0n/ui-documentation`. Package filters remain useful for proportional checks.
+Root scripts explicitly compose `@h0nio/icons`, `@h0nio/ui`, and `@h0n/ui-documentation`. Package filters remain useful for proportional checks.
 
 ## Package Relationships
 
 ```mermaid
 flowchart LR
     UI["@h0nio/ui"] --> Docs["apps/documentation"]
+    IconLibrary["@h0nio/icons"] --> Docs
     SystemIcons["@h0nio/ui/icons"] --> UI
     SystemIcons --> Docs
     Markdown["Markdown pages"] --> Docs
@@ -72,7 +77,9 @@ flowchart LR
     Generator --> Public["llms.txt / components.v1.json / agents/AGENTS.md"]
 ```
 
-`@h0nio/ui` owns the structural `H0IconDefinition` type, the `H0Icon` renderer, and a deliberately small system set exposed through `@h0nio/ui/icons`. Components use that set for internal controls and must not require an external icon package. Public icon props accept compatible structural definitions from any source; components that accept arbitrary visual content expose a named slot where appropriate. The documentation app aliases both UI entries to workspace source and is therefore an integration surface, not a consumer of registry artifacts.
+`@h0nio/ui` owns the structural `H0IconDefinition` type, the `H0Icon` renderer, and a deliberately small system set exposed through `@h0nio/ui/icons`. Components use that set for internal controls and must not require `@h0nio/icons`. Public icon props accept compatible structural definitions from any source; components that accept arbitrary visual content expose a named slot where appropriate.
+
+`@h0nio/icons` is the larger framework-agnostic icon catalog. It remains private while its API and collection are being developed. The documentation app aliases the icons package and both UI entries to workspace source and is therefore an integration surface, not a consumer of registry artifacts.
 
 ## Library Entry and Plugin
 
@@ -202,7 +209,7 @@ Package exports support:
 
 Repository-level contribution, security, and release policies live in `CONTRIBUTING.md`, `SECURITY.md`, and `RELEASING.md`. GitHub issue and pull-request templates route public reports through those policies. Registry publication remains a maintainer action until npm trusted publishing is explicitly configured; the quality workflow does not publish packages.
 
-The `@h0nio/ui/icons` ES entry keeps the small system definitions tree-shakeable without creating a second publishable package.
+The `@h0nio/ui/icons` ES entry keeps the small internal system definitions tree-shakeable and independent from the larger `@h0nio/icons` package.
 
 ## Documentation Architecture
 

@@ -36,7 +36,7 @@ Links beginning with `/` are relative to the H0N UI documentation origin. They a
 
 ## Current scope
 
-Catalog schema `v1` covers the complete supported `@h0nio/ui` `1.1.0` manifest. The schema version describes the JSON shape and is independent from the library version.
+Catalog schema `v1` covers the complete supported `@h0nio/ui` `1.2.0` manifest. The schema version describes the JSON shape and is independent from the library version.
 
 > [!INFO] Generated and checked
 > The public files are generated artifacts. Repository validation fails when their committed content no longer matches the typed sources.

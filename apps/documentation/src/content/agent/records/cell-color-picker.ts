@@ -1,0 +1,67 @@
+import type { ComponentAgentRecordV1 } from '../schema.ts'
+import { focusBlurEvents } from './forms-shared.ts'
+
+export const cellColorPickerAgentRecord = {
+    schemaVersion: 1,
+    component: 'H0CellColorPicker',
+    status: 'migrated',
+    summary: 'Custom HEX color picker with standard or minimal triggers, controlled state, and keyboard-operable saturation, brightness, and hue controls.',
+    imports: {
+        components: ['H0CellColorPicker'],
+        types: ['H0CellColorPickerDisplay', 'H0CellColorPickerEmits', 'H0CellColorPickerProps', 'H0CellColorPickerSize', 'H0CellColorPickerSwatchPosition', 'H0CellColorPickerVariant'],
+        styles: ['@h0nio/ui/style.css'],
+    },
+    api: {
+        props: [
+            { name: 'modelValue', type: 'string', default: 'undefined', description: 'Controlled HEX color, normalized to #RRGGBB.' },
+            { name: 'defaultValue', type: 'string', default: "'#3B82F6'", description: 'Initial uncontrolled HEX color.' },
+            { name: 'label', type: 'string', default: "'Color'", description: 'Standard-trigger label and accessible-name fallback.' },
+            { name: 'ariaLabel', type: 'string', default: "''", description: 'Accessible trigger name, especially useful for minimal display.' },
+            { name: 'display', type: 'H0CellColorPickerDisplay', default: "'standard'", description: 'Standard labeled or minimal compact trigger.' },
+            { name: 'swatchPosition', type: 'H0CellColorPickerSwatchPosition', default: "'right'", description: 'Places the swatch before or after the HEX code.' },
+            { name: 'variant', type: 'H0CellColorPickerVariant', default: "'surface'", description: 'Trigger background treatment.' },
+            { name: 'size', type: 'H0CellColorPickerSize', default: "'md'", description: 'Trigger size.' },
+            { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents opening and color changes.' },
+            { name: 'id', type: 'string', default: "''", description: 'Trigger identifier.' },
+            { name: 'name', type: 'string', default: "''", description: 'Hidden form field name.' },
+            { name: 'teleportTo', type: 'string | HTMLElement', default: "'body'", description: 'Popup teleport target.' },
+            { name: 'teleportDisabled', type: 'boolean', default: 'false', description: 'Keeps the popup beside the trigger in the DOM.' },
+            { name: 'rootAttrs', type: 'Record<string, unknown>', default: 'undefined', description: 'Attributes for the root wrapper.' },
+            { name: 'controlAttrs', type: 'Record<string, unknown>', default: 'undefined', description: 'Native and ARIA attributes for the trigger button.' },
+        ],
+        events: [
+            { name: 'update:modelValue', type: 'string', description: 'Requests a normalized HEX value update.' },
+            { name: 'change', type: 'string', description: 'Reports each committed picker or exposed-API change.' },
+            { name: 'open', type: '—', description: 'Reports popup opening.' },
+            { name: 'close', type: '—', description: 'Reports popup closing.' },
+            ...focusBlurEvents,
+        ],
+        slots: [{ name: 'label', type: '—', description: 'Custom standard-trigger label.' }],
+        exposed: [
+            { name: 'open', type: '() => void', description: 'Opens the picker when enabled.' },
+            { name: 'close', type: '(options?: { restoreFocus?: boolean }) => void', description: 'Closes the picker and optionally restores trigger focus.' },
+            { name: 'focus', type: '() => void', description: 'Focuses the trigger.' },
+            { name: 'setValue', type: '(value: string) => void', description: 'Normalizes and applies a HEX color.' },
+        ],
+        types: [
+            { name: 'H0CellColorPickerDisplay', fields: [{ name: 'H0CellColorPickerDisplay', type: "'standard' | 'minimal'", description: 'Supported trigger layouts.' }] },
+            { name: 'H0CellColorPickerSwatchPosition', fields: [{ name: 'H0CellColorPickerSwatchPosition', type: "'left' | 'right'", description: 'Swatch placement relative to the HEX code.' }] },
+            { name: 'H0CellColorPickerVariant', fields: [{ name: 'H0CellColorPickerVariant', type: "'secondary' | 'surface' | 'ghost'", description: 'Supported trigger backgrounds.' }] },
+        ],
+    },
+    useWhen: ['A compact H0N-styled control should edit a single opaque color.'],
+    avoidWhen: ['The value requires alpha, gradients, named colors, or a multi-stop palette editor.'],
+    accessibility: ['Give minimal triggers a purpose-specific accessible name.', 'Use arrow keys in the saturation/brightness plane and hue strip; Shift changes by ten units.', 'Do not rely on the swatch alone because the HEX value remains visible.'],
+    styling: ['Use the public variant, display, swatchPosition, and size props.', 'Treat popup geometry and internal HSV controls as implementation details.'],
+    responsive: ['Allow the standard trigger to shrink with its container; the popup flips and shifts inside the viewport.'],
+    performance: ['The picker performs local color conversion and positions only while open.'],
+    examples: [
+        { key: 'components/cell-color-picker/BasicExample', purpose: 'Controlled standard picker.' },
+        { key: 'components/cell-color-picker/DisplaysExample', purpose: 'Standard, minimal, and swatch-position layouts.' },
+        { key: 'components/cell-color-picker/VariantsExample', purpose: 'Surface, secondary, and ghost trigger treatments.' },
+        { key: 'components/cell-color-picker/SizesExample', purpose: 'Small, medium, and large trigger sizes.' },
+        { key: 'components/cell-color-picker/DisabledExample', purpose: 'Disabled standard and minimal triggers.' },
+        { key: 'components/cell-color-picker/ControlledExample', purpose: 'Programmatic controlled color changes.' },
+    ],
+    relatedComponents: ['H0Input', 'H0Button'],
+} satisfies ComponentAgentRecordV1

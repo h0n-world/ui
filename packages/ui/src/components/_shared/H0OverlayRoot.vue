@@ -106,8 +106,13 @@ useOverlay({
 </template>
 
 <style lang="scss">
-.h-overlay-lock-scroll {
+html.h-overlay-lock-scroll {
+    overscroll-behavior: none;
     overflow: hidden;
+}
+
+body.h-overlay-lock-scroll {
+    overscroll-behavior: none;
 }
 </style>
 
@@ -144,8 +149,8 @@ useOverlay({
 
 .h-overlay--backdrop-blur .h-overlay__backdrop {
     background: var(--h0n-ui-color-backdrop-soft);
-    backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
 }
 
 .h-overlay--backdrop-transparent .h-overlay__backdrop {
@@ -165,8 +170,8 @@ useOverlay({
 .h-overlay--backdrop-blur.h-overlay-enter-from .h-overlay__backdrop,
 .h-overlay--backdrop-blur.h-overlay-leave-to .h-overlay__backdrop {
     background: transparent;
-    backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
 }
 
 .h-overlay--backdrop-opaque.h-overlay-enter-from .h-overlay__backdrop,

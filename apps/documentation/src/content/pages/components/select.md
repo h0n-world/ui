@@ -62,7 +62,7 @@ Enable `virtual` for large fixed-height lists. Keep `optionHeight` equal to the 
 
 ## Attribute forwarding and teleportation
 
-The popup teleports to `body` by default. Use `teleportTo` for another overlay root or `teleportDisabled` when local DOM ownership is required. Ordinary fallthrough attributes target the wrapper, explicit `rootAttrs` override or extend them, and `controlAttrs` target the combobox trigger.
+The popup teleports to `body` by default. Use `teleportTo` for another overlay root or `teleportDisabled` when local DOM ownership is required. While open, `lockScroll` prevents the underlying document from moving on desktop and touch devices; disable it only when page scrolling is intentionally part of the surrounding interaction. Ordinary fallthrough attributes target the wrapper, explicit `rootAttrs` override or extend them, and `controlAttrs` target the combobox trigger.
 
 ## Events
 

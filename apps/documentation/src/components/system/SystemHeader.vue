@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { searchIcon, settingsIcon, type H0IconDefinition } from '@h0nio/ui/icons'
-import { H0Button, H0Icon, useH0Theme } from '@h0nio/ui'
-import { computed, ref } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
-
-import SearchPalette from '@/components/SearchPalette.vue'
+import { H0Button, H0Command, useH0Theme, type H0CommandItem } from '@h0nio/ui'
+import { settingsIcon, type H0IconDefinition } from '@h0nio/ui/icons'
+import { computed, onMounted, onUnmounted, useTemplateRef } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 
 import IconH0N from '../icons/IconH0N.vue'
 
+import { documentationPages } from '@/content/content'
 import { siteConfig } from '@/content/site'
 
 defineOptions({
@@ -18,8 +17,15 @@ const props = defineProps<{ minimal?: boolean }>()
 const emit = defineEmits<{ menu: [] }>()
 
 const route = useRoute()
+const router = useRouter()
 const theme = useH0Theme()
-const searchOpen = ref(false)
+const commandRef = useTemplateRef<{ open: () => void }>('commandRef')
+const searchItems: H0CommandItem[] = documentationPages.map((page) => ({
+    value: page.path,
+    label: page.title,
+    description: page.description,
+    group: page.group,
+}))
 const themeLabel = computed(() =>
     theme.resolvedTheme.value === 'dark' ? 'Light theme' : 'Dark theme',
 )
@@ -35,6 +41,24 @@ const navigationIcon = {
 function isActive(group: string) {
     return route.meta.documentationGroup === group
 }
+
+async function navigate(item: H0CommandItem) {
+    await router.push(String(item.value))
+}
+
+function handleSearchShortcut(event: KeyboardEvent) {
+    const target = event.target
+    const isTyping =
+        target instanceof Element &&
+        target.matches('input, textarea, select, [contenteditable="true"]')
+    if (event.key !== '/' || isTyping) return
+
+    event.preventDefault()
+    commandRef.value?.open()
+}
+
+onMounted(() => window.addEventListener('keydown', handleSearchShortcut))
+onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
 </script>
 
 <template>
@@ -48,16 +72,22 @@ function isActive(group: string) {
             </RouterLink>
 
             <div class="site-header__actions">
-                <button
+                <H0Command
+                    ref="commandRef"
                     class="header-search"
-                    type="button"
+                    :items="searchItems"
+                    variant="surface"
+                    backdrop="blur"
+                    size="sm"
+                    window-size="lg"
+                    hotkey="mod+k"
+                    trigger-label="Search documentation"
+                    placeholder="Search documentation…"
+                    empty-text="No documentation pages found."
                     aria-label="Search documentation"
-                    @click="searchOpen = true"
-                >
-                    <H0Icon :icon="searchIcon" :size="16" />
-                    <span>Search documentation</span>
-                    <kbd>Ctrl K</kbd>
-                </button>
+                    :trigger-attrs="{ 'aria-label': 'Search documentation' }"
+                    @select="navigate"
+                />
 
                 <H0Button
                     class="theme-button"
@@ -96,8 +126,6 @@ function isActive(group: string) {
             </nav>
         </div>
     </header>
-
-    <SearchPalette v-model:open="searchOpen" />
 </template>
 
 <style scoped lang="scss">
@@ -207,38 +235,20 @@ function isActive(group: string) {
 }
 
 .header-search {
-    align-items: center;
-    background: var(--h0n-ui-color-surface);
-    border: 1px solid var(--h0n-ui-color-border);
-    border-radius: var(--h0n-ui-radius-lg);
-    color: var(--h0n-ui-color-muted);
-    cursor: pointer;
-    display: flex;
-    font: inherit;
-    font-size: 0.75rem;
-    gap: 8px;
-    height: 38px;
-    min-width: 220px;
-    padding: 0 8px 0 11px;
-
-    span {
-        flex: 1;
-        text-align: left;
+    :deep(.h-command__trigger) {
+        color: var(--h0n-ui-color-muted);
+        min-width: 220px;
     }
 
-    &:hover {
+    :deep(.h-command__trigger > span) {
+        flex: 1;
+        text-align: start;
+    }
+
+    :deep(.h-command__trigger:hover) {
         background: var(--h0n-ui-color-surface-hover);
         color: var(--h0n-ui-color-text);
     }
-}
-
-kbd {
-    background: var(--h0n-ui-color-secondary);
-    border: 1px solid var(--h0n-ui-color-border);
-    border-radius: 6px;
-    color: var(--h0n-ui-color-muted);
-    font: 500 0.62rem/1 var(--h0n-ui-font-family);
-    padding: 5px 6px;
 }
 
 .menu-button {
@@ -267,11 +277,14 @@ kbd {
     }
 
     .header-search {
-        min-width: 38px;
-        width: 38px;
+        :deep(.h-command__trigger) {
+            min-width: 38px;
+            padding-inline: 10px;
+            width: 38px;
+        }
 
-        span,
-        kbd {
+        :deep(.h-command__trigger > span),
+        :deep(.h-command__shortcut) {
             display: none;
         }
     }

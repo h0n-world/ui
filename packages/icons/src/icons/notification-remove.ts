@@ -1,0 +1,4 @@
+import type { IconDefinition } from '../types.js';
+
+export const NotificationRemoveIcon = {"name":"notification-remove","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M15.47 1.47a.75.75 0 0 1 1.06 0L19 3.94l2.47-2.47a.75.75 0 1 1 1.06 1.06L20.06 5l2.47 2.47a.75.75 0 1 1-1.06 1.06L19 6.06l-2.47 2.47a.75.75 0 0 1-1.06-1.06L17.94 5l-2.47-2.47a.75.75 0 0 1 0-1.06\" clip-rule=\"evenodd\"/><path fill=\"currentColor\" d=\"M13.75 2.003Q12.934 2 12 2C7.286 2 4.929 2 3.464 3.464 2 4.93 2 7.286 2 12s0 7.071 1.464 8.535C4.93 22 7.286 22 12 22s7.071 0 8.535-1.465C22 19.072 22 16.714 22 12q0-.934-.003-1.75c-.575 0-1.15-.22-1.588-.659L19 8.182l-1.409 1.409a2.25 2.25 0 1 1-3.182-3.182L15.818 5l-1.409-1.409a2.24 2.24 0 0 1-.659-1.588\"/>"} as const satisfies IconDefinition;
+export default NotificationRemoveIcon;

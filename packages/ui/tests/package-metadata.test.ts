@@ -32,7 +32,7 @@ describe('@h0nio/ui package metadata', () => {
     it('declares its public npm identity and MIT license', () => {
         expect(packageJson).toMatchObject({
             name: '@h0nio/ui',
-            version: '1.1.0',
+            version: '1.2.0',
             license: 'MIT',
             author: {
                 name: 'h0n-world',

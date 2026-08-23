@@ -41,6 +41,7 @@ export type H0SelectProps<Value extends H0SelectValue = H0SelectValue> = {
     scrollHeight?: number | string
     teleportTo?: string | HTMLElement
     teleportDisabled?: boolean
+    lockScroll?: boolean
 } & H0AttributeRoutingProps
 
 export type H0SelectEmits<Value extends H0SelectValue = H0SelectValue> = {

@@ -6,6 +6,7 @@ import H0Drawer from '../src/components/Drawer/H0Drawer.vue'
 import H0Sheet from '../src/components/Sheet/H0Sheet.vue'
 import H0Select from '../src/components/Select/H0Select.vue'
 import H0AlertDialog from '../src/components/Alert/H0AlertDialog.vue'
+import H0Command from '../src/components/Command/H0Command.vue'
 
 vi.mock('@floating-ui/dom', async (importOriginal) => {
     const floatingUi = await importOriginal<typeof import('@floating-ui/dom')>()
@@ -18,9 +19,13 @@ vi.mock('@floating-ui/dom', async (importOriginal) => {
 
 afterEach(() => {
     vi.useRealTimers()
+    vi.restoreAllMocks()
+    vi.unstubAllGlobals()
     document.body.innerHTML = ''
     document.body.className = ''
     document.body.removeAttribute('style')
+    document.documentElement.className = ''
+    document.documentElement.removeAttribute('style')
 })
 
 describe('overlay focus management', () => {
@@ -148,6 +153,126 @@ describe('overlay focus management', () => {
         topOverlay.unmount()
         expect(document.body.classList.contains('h-overlay-lock-scroll')).toBe(false)
         expect(document.body.style.paddingInlineEnd).toBe('12px')
+    })
+
+    it.each([
+        ['Modal', H0Modal],
+        ['Sheet', H0Sheet],
+        ['Drawer', H0Drawer],
+        ['AlertDialog', H0AlertDialog],
+        ['Command', H0Command]
+    ] as const)('locks document overflow without shifting the desktop layout for %s', async (_name, component) => {
+        const wrapper = mount(component, {
+            attachTo: document.body,
+            props: { modelValue: true, teleportDisabled: true }
+        })
+
+        await nextTick()
+        expect(document.documentElement.classList.contains('h-overlay-lock-scroll')).toBe(true)
+        expect(document.body.classList.contains('h-overlay-lock-scroll')).toBe(true)
+        expect(document.documentElement.style.overflow).toBe('hidden')
+        expect(document.documentElement.style.overscrollBehavior).toBe('none')
+        expect(document.body.style.position).toBe('')
+        expect(document.body.style.overflow).toBe('')
+        expect(document.body.style.top).toBe('')
+        expect(document.body.style.width).toBe('')
+
+        wrapper.unmount()
+        expect(document.documentElement.classList.contains('h-overlay-lock-scroll')).toBe(false)
+        expect(document.body.classList.contains('h-overlay-lock-scroll')).toBe(false)
+        expect(document.body.style.position).toBe('')
+    })
+
+    it('guards the original desktop scroll position from focus-driven scrolling', async () => {
+        let scrollX = 12
+        let scrollY = 360
+        vi.spyOn(window, 'scrollX', 'get').mockImplementation(() => scrollX)
+        vi.spyOn(window, 'scrollY', 'get').mockImplementation(() => scrollY)
+        const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation((x, y) => {
+            scrollX = Number(x)
+            scrollY = Number(y)
+        })
+
+        const wrapper = mount(H0Command, {
+            attachTo: document.body,
+            props: { modelValue: true }
+        })
+
+        await nextTick()
+        scrollX = 0
+        scrollY = 40
+        window.dispatchEvent(new Event('scroll'))
+        expect(scrollTo).toHaveBeenLastCalledWith(12, 360)
+
+        wrapper.unmount()
+        expect(scrollTo).toHaveBeenCalledWith(12, 360)
+    })
+
+    it('preserves sticky body layout and guards the saved scroll position on touch devices', async () => {
+        let scrollX = 16
+        let scrollY = 240
+        vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true })))
+        vi.spyOn(window, 'scrollX', 'get').mockImplementation(() => scrollX)
+        vi.spyOn(window, 'scrollY', 'get').mockImplementation(() => scrollY)
+        const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation((x, y) => {
+            scrollX = Number(x)
+            scrollY = Number(y)
+        })
+        document.documentElement.style.overflow = 'clip'
+        document.body.style.position = 'relative'
+        document.body.style.height = '90%'
+        document.body.style.top = '3px'
+
+        const wrapper = mount(H0Modal, {
+            attachTo: document.body,
+            props: { modelValue: true }
+        })
+
+        await nextTick()
+        expect(document.body.style.position).toBe('relative')
+        expect(document.body.style.top).toBe('3px')
+        expect(document.body.style.left).toBe('')
+        expect(document.body.style.height).toBe('90%')
+        expect(document.body.style.width).toBe('')
+        expect(document.body.style.overflow).toBe('')
+
+        scrollX = 4
+        scrollY = 80
+        window.dispatchEvent(new Event('scroll'))
+        expect(scrollTo).toHaveBeenLastCalledWith(16, 240)
+
+        wrapper.unmount()
+        expect(document.documentElement.style.overflow).toBe('clip')
+        expect(document.body.style.position).toBe('relative')
+        expect(document.body.style.height).toBe('90%')
+        expect(document.body.style.top).toBe('3px')
+        expect(scrollTo).toHaveBeenCalledWith(16, 240)
+    })
+
+    it('locks document scrolling while Select is open and supports opting out', async () => {
+        const wrapper = mount(H0Select, {
+            attachTo: document.body,
+            props: { options: [{ label: 'One', value: 'one' }] }
+        })
+
+        await wrapper.get('.h-select__trigger').trigger('click')
+        await nextTick()
+        expect(document.body.classList.contains('h-overlay-lock-scroll')).toBe(true)
+        expect(document.body.style.position).toBe('')
+        expect(document.documentElement.style.overflow).toBe('hidden')
+        expect(document.body.style.overflow).toBe('')
+
+        wrapper.unmount()
+        expect(document.body.classList.contains('h-overlay-lock-scroll')).toBe(false)
+
+        const unlockedWrapper = mount(H0Select, {
+            attachTo: document.body,
+            props: { lockScroll: false, options: [{ label: 'One', value: 'one' }] }
+        })
+        await unlockedWrapper.get('.h-select__trigger').trigger('click')
+        await nextTick()
+        expect(document.body.classList.contains('h-overlay-lock-scroll')).toBe(false)
+        unlockedWrapper.unmount()
     })
 
     it('keeps scrollbar compensation throughout the leave transition', async () => {
