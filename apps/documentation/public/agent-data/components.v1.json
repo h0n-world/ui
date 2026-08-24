@@ -4198,6 +4198,12 @@
             "description": "Visible header title and preferred accessible name."
           },
           {
+            "name": "subtitle",
+            "type": "string",
+            "default": "''",
+            "description": "Supporting text displayed above the standard header title."
+          },
+          {
             "name": "closeOnBackdrop",
             "type": "boolean",
             "default": "true",
@@ -4278,7 +4284,7 @@
           {
             "name": "header",
             "type": "—",
-            "description": "Replaces the title and built-in close-button header."
+            "description": "Replaces the built-in title and subtitle content; the close button remains available."
           },
           {
             "name": "footer",
@@ -8118,6 +8124,12 @@
             "description": "Visible header title and preferred accessible name."
           },
           {
+            "name": "subtitle",
+            "type": "string",
+            "default": "''",
+            "description": "Supporting text displayed above the standard header title."
+          },
+          {
             "name": "closeOnBackdrop",
             "type": "boolean",
             "default": "true",
@@ -8198,7 +8210,7 @@
           {
             "name": "header",
             "type": "—",
-            "description": "Replaces the title and built-in close-button header."
+            "description": "Replaces the built-in title and subtitle content; the close button remains available."
           },
           {
             "name": "footer",
@@ -10637,6 +10649,18 @@
             "description": "Backdrop appearance: 'opaque', 'blur', or 'transparent'."
           },
           {
+            "name": "title",
+            "type": "string",
+            "default": "''",
+            "description": "Visible header title and preferred accessible name."
+          },
+          {
+            "name": "subtitle",
+            "type": "string",
+            "default": "''",
+            "description": "Supporting text displayed above the standard header title."
+          },
+          {
             "name": "closeOnBackdrop",
             "type": "boolean",
             "default": "true",
@@ -10652,7 +10676,13 @@
             "name": "ariaLabel",
             "type": "string",
             "default": "''",
-            "description": "Accessible dialog name before locale fallback."
+            "description": "Accessible name used when title is empty before locale fallback."
+          },
+          {
+            "name": "closeAriaLabel",
+            "type": "string",
+            "default": "''",
+            "description": "Accessible label for the standard header close button."
           },
           {
             "name": "teleportTo",
@@ -10706,7 +10736,17 @@
           {
             "name": "default",
             "type": "—",
-            "description": "All visible sheet content and actions."
+            "description": "Scrollable sheet content between the optional standard header and footer."
+          },
+          {
+            "name": "header",
+            "type": "—",
+            "description": "Replaces the built-in title and subtitle content; the close button remains available."
+          },
+          {
+            "name": "footer",
+            "type": "{ close: () => void }",
+            "description": "Footer actions with a close callback."
           }
         ],
         "exposed": [],
@@ -10742,8 +10782,8 @@
         "A centered form needs H0Modal."
       ],
       "accessibility": [
-        "Provide a meaningful ariaLabel.",
-        "Include a visible completion or close action.",
+        "Provide a visible title or meaningful ariaLabel.",
+        "Keep a visible completion or close action.",
         "Do not imply that the decorative handle is draggable."
       ],
       "styling": [
@@ -14068,7 +14108,7 @@
       "schemaVersion": 1,
       "component": "H0Typography",
       "status": "migrated",
-      "summary": "Semantic text primitive with H0N type variants, alignment, color, weight, line-height overrides, and truncation.",
+      "summary": "Semantic text primitive with H0N type variants, alignment, color, weight, line-height, letter-spacing, text-transform overrides, and truncation.",
       "imports": {
         "components": [
           "H0Typography"
@@ -14077,8 +14117,10 @@
           "H0TypographyAlign",
           "H0TypographyColor",
           "H0TypographyElement",
+          "H0TypographyLetterSpacing",
           "H0TypographyLineHeight",
           "H0TypographyProps",
+          "H0TypographyTextTransform",
           "H0TypographyVariant",
           "H0TypographyWeight"
         ],
@@ -14135,6 +14177,18 @@
             "type": "H0TypographyLineHeight",
             "default": "Variant line height",
             "description": "Overrides line height with a unitless number or CSS string."
+          },
+          {
+            "name": "letterSpacing",
+            "type": "H0TypographyLetterSpacing",
+            "default": "Variant letter spacing",
+            "description": "Overrides letter spacing; numbers are measured in pixels and strings accept CSS values."
+          },
+          {
+            "name": "textTransform",
+            "type": "H0TypographyTextTransform",
+            "default": "Inherited",
+            "description": "Controls capitalization without changing the source text."
           }
         ],
         "events": [],
@@ -14184,6 +14238,26 @@
                 "name": "H0TypographyLineHeight",
                 "type": "number | string",
                 "description": "Unitless numeric or explicit CSS line-height value."
+              }
+            ]
+          },
+          {
+            "name": "H0TypographyLetterSpacing",
+            "fields": [
+              {
+                "name": "H0TypographyLetterSpacing",
+                "type": "number | string",
+                "description": "Pixel-based numeric or explicit CSS letter-spacing value."
+              }
+            ]
+          },
+          {
+            "name": "H0TypographyTextTransform",
+            "fields": [
+              {
+                "name": "H0TypographyTextTransform",
+                "type": "'none' | 'capitalize' | 'uppercase' | 'lowercase'",
+                "description": "Supported text transformations."
               }
             ]
           },
@@ -14251,6 +14325,10 @@
         {
           "key": "components/typography/LineHeightExample",
           "purpose": "Unitless and explicit CSS line-height overrides."
+        },
+        {
+          "key": "components/typography/FormattingExample",
+          "purpose": "Letter-spacing and text-transform overrides."
         }
       ],
       "relatedComponents": [

@@ -25,6 +25,15 @@ describe('typography primitives', () => {
         expect(explicit.attributes('style')).toContain('line-height: 24px')
     })
 
+    it('overrides letter spacing and text transformation', () => {
+        const numeric = mount(H0Typography, { props: { letterSpacing: 2, text: 'Numeric spacing' } })
+        const explicit = mount(H0Typography, { props: { letterSpacing: '0.08em', text: 'CSS spacing', textTransform: 'uppercase' } })
+
+        expect(numeric.attributes('style')).toContain('letter-spacing: 2px')
+        expect(explicit.attributes('style')).toContain('letter-spacing: 0.08em')
+        expect(explicit.attributes('style')).toContain('text-transform: uppercase')
+    })
+
     it('renders label, legend and inline semantics without leaking for', () => {
         const label = mount(H0Label, { props: { htmlFor: 'email', text: 'Email' } })
         const legend = mount(H0Label, { props: { as: 'legend', htmlFor: 'ignored', text: 'Options' } })

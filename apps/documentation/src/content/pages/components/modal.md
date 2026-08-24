@@ -18,7 +18,7 @@ order: 203
 
 ## Usage
 
-Use a visible `title` for most task dialogs and place completion actions in the footer slot.
+Use a visible `title` for most task dialogs, add `subtitle` when the task needs supporting context, and place completion actions in the footer slot.
 
 :::example components/modal/BasicExample
 :::
@@ -82,6 +82,7 @@ Choose `opaque` for strong visual separation, `blur` to retain softened page con
 
 - The panel uses `role="dialog"` and `aria-modal="true"`.
 - Provide a specific visible title or `ariaLabel`.
+- Treat `subtitle` as supporting content; it does not replace the dialog's accessible name.
 - Keep a clear close or cancel action available when automatic dismissal is disabled.
 - Use `initialFocus` only when the default panel focus is not appropriate.
 

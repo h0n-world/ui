@@ -13,7 +13,7 @@ export type H0Locale = {
     imageUpload: { label: string; remove: string; invalidType: string; maxSize: (size: number) => string }
     inputOtp: { character: (index: number) => string; invalid: string; label: string }
     radio: { required: string }
-    overlay: { alertDialog: string; cancel: string; closeAlertDialog: string; closeDrawer: string; closeModal: string; confirm: string; confirmAction: string; drawer: string; modal: string; sheet: string }
+    overlay: { alertDialog: string; cancel: string; closeAlertDialog: string; closeDrawer: string; closeModal: string; closeSheet: string; confirm: string; confirmAction: string; drawer: string; modal: string; sheet: string }
     carousel: { controls: string; goTo: (index: number) => string; label: string; next: string; previous: string; slide: (index: number, total: number) => string }
     toast: { close: string }
     link: { external: string }
@@ -70,7 +70,7 @@ export const defaultH0Locale: H0Locale = {
     inputOtp: { character: (index) => `Code character ${index}`, invalid: 'Invalid verification code', label: 'One-time password' },
     radio: { required: 'Select an option.' },
     overlay: {
-        alertDialog: 'Alert dialog', cancel: 'Cancel', closeAlertDialog: 'Close alert dialog', closeDrawer: 'Close drawer', closeModal: 'Close modal', confirm: 'Confirm', confirmAction: 'Confirm action', drawer: 'Drawer', modal: 'Modal', sheet: 'Sheet'
+        alertDialog: 'Alert dialog', cancel: 'Cancel', closeAlertDialog: 'Close alert dialog', closeDrawer: 'Close drawer', closeModal: 'Close modal', closeSheet: 'Close sheet', confirm: 'Confirm', confirmAction: 'Confirm action', drawer: 'Drawer', modal: 'Modal', sheet: 'Sheet'
     },
     carousel: { controls: 'Carousel controls', goTo: (index) => `Go to slide ${index + 1}`, label: 'Carousel', next: 'Next slide', previous: 'Previous slide', slide: (index, total) => `Slide ${index + 1} of ${total}` },
     toast: { close: 'Close notification' },

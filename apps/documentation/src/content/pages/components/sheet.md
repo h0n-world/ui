@@ -9,7 +9,7 @@ order: 205
 
 # Sheet
 
-`H0Sheet` presents a compact modal surface near a viewport edge. Unlike Drawer, it has an inset floating treatment and leaves content structure entirely to the default slot.
+`H0Sheet` presents a compact modal surface near a viewport edge. Unlike Drawer, it has an inset floating treatment suited to short workflows and quick actions.
 
 ## Import
 
@@ -18,14 +18,14 @@ order: 205
 
 ## Usage
 
-Bind `v-model`, choose a `side`, and provide an accessible name for the sheet workflow.
+Bind `v-model`, choose a `side`, and use `title` with an optional `subtitle` for the standard header. The header includes a built-in close action, while the footer slot receives `close` for workflow actions. Use `ariaLabel` when no visible title is provided.
 
 :::example components/sheet/BasicExample
 :::
 
 ## Compact workflows
 
-The default slot owns the complete content structure, including heading and dismissal controls. Keep the workflow short and reuse existing controls rather than recreating form elements inside the surface.
+The default slot owns the workflow content between the optional standard header and footer. Use the `header` slot when the built-in title and subtitle layout is not sufficient; the close button remains available. Put completion actions in the `footer` slot so Sheet follows the same composition model as Modal and Drawer.
 
 :::example components/sheet/PreferencesExample
 :::
@@ -80,8 +80,9 @@ Choose `opaque` for strong visual separation, `blur` to retain softened page con
 
 ## Accessibility
 
-- The panel uses modal dialog semantics and requires a meaningful `ariaLabel` when the localized fallback is too generic.
-- Include a visible close or completion control in slot content.
+- The panel uses modal dialog semantics and takes its accessible name from `title`, then `ariaLabel`, then the localized fallback.
+- `subtitle` provides supporting context but does not replace a meaningful accessible name.
+- The standard header includes a localized close button; keep a visible completion action in the workflow when one is required.
 - The visual handle is not draggable and is hidden from assistive technology.
 - Focus returns to the invoking control by default.
 

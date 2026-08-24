@@ -42,6 +42,13 @@ Use `lineHeight` to override the default line height of the selected variant. Nu
 :::example components/typography/LineHeightExample
 :::
 
+## Letter spacing and text transform
+
+Use `letterSpacing` to override the tracking of the selected variant. Numeric values are interpreted as pixels; strings accept CSS lengths, keywords, and variables. Use `textTransform` to change capitalization visually without modifying the source text.
+
+:::example components/typography/FormattingExample
+:::
+
 ## Props
 
 :::component-api props
@@ -71,6 +78,16 @@ When `text` is defined, including as an empty string or `0`, it replaces the def
 ### H0TypographyLineHeight
 
 :::component-api type H0TypographyLineHeight
+:::
+
+### H0TypographyLetterSpacing
+
+:::component-api type H0TypographyLetterSpacing
+:::
+
+### H0TypographyTextTransform
+
+:::component-api type H0TypographyTextTransform
 :::
 
 ### H0TypographyAlign

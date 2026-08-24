@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { closeIcon } from '../../icons'
 import { computed } from 'vue'
-import H0Button from '../Button/H0Button.vue'
-import H0Typography from '../Typography/H0Typography.vue'
-import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
-import type { H0ModalBackdrop, H0ModalSide } from './Modal.types'
-import { useH0OverlayModel } from '../_shared/useOverlayModel'
 import { useH0Locale } from '../../locale'
+import H0OverlayContent from '../_shared/H0OverlayContent.vue'
+import H0OverlayFooter from '../_shared/H0OverlayFooter.vue'
+import H0OverlayHeader from '../_shared/H0OverlayHeader.vue'
+import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
+import { useH0OverlayModel } from '../_shared/useOverlayModel'
+import type { H0ModalBackdrop, H0ModalSide } from './Modal.types'
 
 defineOptions({
     name: 'H0Modal'
@@ -19,6 +19,7 @@ const props = withDefaults(
         side?: H0ModalSide
         backdrop?: H0ModalBackdrop
         title?: string
+        subtitle?: string
         closeOnBackdrop?: boolean
         closeOnEsc?: boolean
         ariaLabel?: string
@@ -34,6 +35,7 @@ const props = withDefaults(
         side: 'center',
         backdrop: 'opaque',
         title: '',
+        subtitle: '',
         closeOnBackdrop: true,
         closeOnEsc: true,
         defaultValue: false,
@@ -55,26 +57,40 @@ const emit = defineEmits<{
 const modalClasses = computed(() => [`h-modal--${props.side}`])
 const { locale } = useH0Locale()
 const { close, currentValue } = useH0OverlayModel(props, emit)
-
 </script>
 
 <template>
-    <H0OverlayRoot :model-value="currentValue" :backdrop="backdrop" :close-on-backdrop="closeOnBackdrop" :close-on-esc="closeOnEsc" :teleport-to="teleportTo" :teleport-disabled="teleportDisabled" :initial-focus="initialFocus" :return-focus="returnFocus" :lock-scroll="lockScroll" @request-close="close">
+    <H0OverlayRoot
+        :model-value="currentValue"
+        :backdrop="backdrop"
+        :close-on-backdrop="closeOnBackdrop"
+        :close-on-esc="closeOnEsc"
+        :teleport-to="teleportTo"
+        :teleport-disabled="teleportDisabled"
+        :initial-focus="initialFocus"
+        :return-focus="returnFocus"
+        :lock-scroll="lockScroll"
+        @request-close="close"
+    >
         <template #default="{ panelRef }">
             <div data-h0n-component="modal" class="h-modal" :class="modalClasses">
                 <section :ref="panelRef" class="h-modal__panel" role="dialog" aria-modal="true" :aria-label="title || ariaLabel || locale.overlay.modal" tabindex="-1">
-                    <header v-if="title || $slots.header" class="h-modal__header">
-                        <slot name="header">
-                            <H0Typography as="h2" variant="h5">{{ title }}</H0Typography>
-                        </slot>
-                        <H0Button size="sm" variant="soft" :icon="closeIcon" button-type="onlyIcon" :aria-label="closeAriaLabel || locale.overlay.closeModal" @click="close" />
-                    </header>
-                    <div class="h-modal__content">
+                    <H0OverlayHeader
+                        v-if="title || subtitle || $slots.header"
+                        :title="title"
+                        :subtitle="subtitle"
+                        :close-aria-label="closeAriaLabel || locale.overlay.closeModal"
+                        :custom-content="Boolean($slots.header)"
+                        @close="close"
+                    >
+                        <slot name="header" />
+                    </H0OverlayHeader>
+                    <H0OverlayContent>
                         <slot />
-                    </div>
-                    <footer v-if="$slots.footer" class="h-modal__footer">
+                    </H0OverlayContent>
+                    <H0OverlayFooter v-if="$slots.footer">
                         <slot name="footer" :close="close" />
-                    </footer>
+                    </H0OverlayFooter>
                 </section>
             </div>
         </template>
@@ -89,12 +105,14 @@ const { close, currentValue } = useH0OverlayModel(props, emit)
 }
 
 .h-modal__panel {
+    --h-overlay-footer-gap: 12px;
+
     background: var(--h0n-ui-color-surface);
     border-radius: var(--h0n-ui-radius-xl);
     box-shadow: var(--h0n-ui-shadow);
     color: var(--h0n-ui-color-text);
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    display: flex;
+    flex-direction: column;
     max-height: calc(100dvh - 32px);
     overflow: hidden;
     pointer-events: auto;
@@ -151,25 +169,6 @@ const { close, currentValue } = useH0OverlayModel(props, emit)
 .h-modal--bottom .h-modal__panel {
     border-radius: var(--h0n-ui-radius-xxl) var(--h0n-ui-radius-xxl) 0 0;
     bottom: 0;
-}
-
-.h-modal__header,
-.h-modal__footer {
-    align-items: center;
-    display: flex;
-    gap: 12px;
-    justify-content: space-between;
-    padding: 10px 15px;
-}
-
-
-.h-modal__content {
-    overflow: auto;
-    padding: 0 16px 16px 16px;
-}
-
-.h-modal__footer {
-    justify-content: flex-end;
 }
 
 :global(.h-overlay-enter-active .h-modal__panel),

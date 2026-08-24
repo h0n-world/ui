@@ -145,6 +145,6 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 - [H0List](/components/list): Grouped collection wrapper with optional accessible label, spacing, and item separators.
 - [H0ListItem](/components/list#h0listitem): Interactive or static polymorphic row with structured text, start/end slots, state, and sizing.
 - [H0Message](/components/message): Compact supporting or status text with an optional tone-specific decorative icon.
-- [H0Typography](/components/typography): Semantic text primitive with H0N type variants, alignment, color, weight, line-height overrides, and truncation.
+- [H0Typography](/components/typography): Semantic text primitive with H0N type variants, alignment, color, weight, line-height, letter-spacing, text-transform overrides, and truncation.
 
 Every component in this index has a synchronized public export, manifest entry, documentation route, and validated typed record. The installation prompt and consumer instructions are available now; MCP and distributable Agent Skills are not published yet.

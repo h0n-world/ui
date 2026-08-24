@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { H0TypographyAlign, H0TypographyColor, H0TypographyElement, H0TypographyLineHeight, H0TypographyVariant, H0TypographyWeight } from './Typography.types'
+import type { H0TypographyAlign, H0TypographyColor, H0TypographyElement, H0TypographyLetterSpacing, H0TypographyLineHeight, H0TypographyTextTransform, H0TypographyVariant, H0TypographyWeight } from './Typography.types'
 
 defineOptions({
     name: 'H0Typography'
@@ -16,6 +16,8 @@ const props = withDefaults(
         text?: string | number
         weight?: H0TypographyWeight
         lineHeight?: H0TypographyLineHeight
+        letterSpacing?: H0TypographyLetterSpacing
+        textTransform?: H0TypographyTextTransform
     }>(),
     {
         variant: 'body',
@@ -40,7 +42,15 @@ const defaultElementByVariant: Record<H0TypographyVariant, H0TypographyElement> 
 
 const tag = computed(() => props.as ?? defaultElementByVariant[props.variant])
 const weightClass = computed(() => (props.weight ? `h-typography--weight-${props.weight}` : undefined))
-const typographyStyle = computed(() => ({ lineHeight: props.lineHeight === undefined ? undefined : String(props.lineHeight) }))
+const typographyStyle = computed(() => ({
+    lineHeight: props.lineHeight === undefined ? undefined : String(props.lineHeight),
+    letterSpacing: props.letterSpacing === undefined
+        ? undefined
+        : typeof props.letterSpacing === 'number'
+            ? `${props.letterSpacing}px`
+            : props.letterSpacing,
+    textTransform: props.textTransform
+}))
 </script>
 
 <template>

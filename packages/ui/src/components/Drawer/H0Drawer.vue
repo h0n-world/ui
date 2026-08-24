@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { closeIcon } from '../../icons'
 import { computed } from 'vue'
-import H0Button from '../Button/H0Button.vue'
-import H0Typography from '../Typography/H0Typography.vue'
-import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
-import type { H0DrawerBackdrop, H0DrawerSide } from './Drawer.types'
-import { useH0OverlayModel } from '../_shared/useOverlayModel'
 import { useH0Locale } from '../../locale'
+import H0OverlayContent from '../_shared/H0OverlayContent.vue'
+import H0OverlayFooter from '../_shared/H0OverlayFooter.vue'
+import H0OverlayHeader from '../_shared/H0OverlayHeader.vue'
+import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
+import { useH0OverlayModel } from '../_shared/useOverlayModel'
+import type { H0DrawerBackdrop, H0DrawerSide } from './Drawer.types'
 
 defineOptions({
     name: 'H0Drawer'
@@ -19,6 +19,7 @@ const props = withDefaults(
         side?: H0DrawerSide
         backdrop?: H0DrawerBackdrop
         title?: string
+        subtitle?: string
         closeOnBackdrop?: boolean
         closeOnEsc?: boolean
         ariaLabel?: string
@@ -34,6 +35,7 @@ const props = withDefaults(
         side: 'right',
         backdrop: 'opaque',
         title: '',
+        subtitle: '',
         closeOnBackdrop: true,
         closeOnEsc: true,
         defaultValue: false,
@@ -55,26 +57,41 @@ const emit = defineEmits<{
 const drawerClasses = computed(() => [`h-drawer--${props.side}`])
 const { locale } = useH0Locale()
 const { close, currentValue } = useH0OverlayModel(props, emit)
-
 </script>
 
 <template>
-    <H0OverlayRoot :model-value="currentValue" :backdrop="backdrop" :close-on-backdrop="closeOnBackdrop" :close-on-esc="closeOnEsc" :teleport-to="teleportTo" :teleport-disabled="teleportDisabled" :initial-focus="initialFocus" :return-focus="returnFocus" :lock-scroll="lockScroll" @request-close="close">
+    <H0OverlayRoot
+        :model-value="currentValue"
+        :backdrop="backdrop"
+        :close-on-backdrop="closeOnBackdrop"
+        :close-on-esc="closeOnEsc"
+        :teleport-to="teleportTo"
+        :teleport-disabled="teleportDisabled"
+        :initial-focus="initialFocus"
+        :return-focus="returnFocus"
+        :lock-scroll="lockScroll"
+        @request-close="close"
+    >
         <template #default="{ panelRef }">
             <div data-h0n-component="drawer" class="h-drawer" :class="drawerClasses">
                 <aside :ref="panelRef" class="h-drawer__panel" role="dialog" aria-modal="true" :aria-label="title || ariaLabel || locale.overlay.drawer" tabindex="-1">
-                    <header v-if="title || $slots.header" class="h-drawer__header">
-                        <slot name="header">
-                            <H0Typography as="h2" variant="h5">{{ title }}</H0Typography>
-                        </slot>
-                        <H0Button size="sm" variant="soft" :icon="closeIcon" button-type="onlyIcon" :aria-label="closeAriaLabel || locale.overlay.closeDrawer" @click="close" />
-                    </header>
-                    <div class="h-drawer__content">
+                    <H0OverlayHeader
+                        v-if="title || subtitle || $slots.header"
+                        :title="title"
+                        :subtitle="subtitle"
+                        :close-aria-label="closeAriaLabel || locale.overlay.closeDrawer"
+                        :custom-content="Boolean($slots.header)"
+                        border
+                        @close="close"
+                    >
+                        <slot name="header" />
+                    </H0OverlayHeader>
+                    <H0OverlayContent>
                         <slot />
-                    </div>
-                    <footer v-if="$slots.footer" class="h-drawer__footer">
+                    </H0OverlayContent>
+                    <H0OverlayFooter v-if="$slots.footer" border>
                         <slot name="footer" :close="close" />
-                    </footer>
+                    </H0OverlayFooter>
                 </aside>
             </div>
         </template>
@@ -89,11 +106,13 @@ const { close, currentValue } = useH0OverlayModel(props, emit)
 }
 
 .h-drawer__panel {
+    --h-overlay-footer-gap: 12px;
+
     background: var(--h0n-ui-color-surface);
     box-shadow: var(--h0n-ui-shadow);
     color: var(--h0n-ui-color-text);
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     overflow: hidden;
     pointer-events: auto;
@@ -122,7 +141,8 @@ const { close, currentValue } = useH0OverlayModel(props, emit)
 .h-drawer--bottom .h-drawer__panel {
     height: auto;
     left: 0;
-    max-height: min(420px, calc(100dvh - 24px));
+    min-height: 200px;
+    max-height: calc(100dvh - 100px);
     max-width: 100vw;
     right: 0;
     width: 100%;
@@ -136,29 +156,6 @@ const { close, currentValue } = useH0OverlayModel(props, emit)
 .h-drawer--bottom .h-drawer__panel {
     border-radius: var(--h0n-ui-radius-xxl) var(--h0n-ui-radius-xxl) 0 0;
     bottom: 0;
-}
-
-.h-drawer__header,
-.h-drawer__footer {
-    align-items: center;
-    display: flex;
-    gap: 12px;
-    justify-content: space-between;
-    padding: 16px;
-}
-
-.h-drawer__header {
-    border-bottom: 1px solid var(--h0n-ui-color-border);
-}
-
-.h-drawer__content {
-    overflow: auto;
-    padding: 16px;
-}
-
-.h-drawer__footer {
-    border-top: 1px solid var(--h0n-ui-color-border);
-    justify-content: flex-end;
 }
 
 :global(.h-overlay-enter-active .h-drawer__panel),

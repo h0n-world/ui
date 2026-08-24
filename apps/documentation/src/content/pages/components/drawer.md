@@ -18,7 +18,7 @@ order: 201
 
 ## Usage
 
-Bind `v-model`, choose an edge with `side`, and provide a title or specific `ariaLabel`.
+Bind `v-model`, choose an edge with `side`, and provide a `title` with an optional supporting `subtitle`. Use a specific `ariaLabel` when the drawer has no visible title.
 
 :::example components/drawer/BasicExample
 :::
@@ -82,6 +82,7 @@ Choose `opaque` for strong visual separation, `blur` to retain softened page con
 
 - The panel uses modal dialog semantics and traps focus while open.
 - Provide a visible `title` or an equivalent `ariaLabel`.
+- Treat `subtitle` as supporting content rather than the drawer's accessible name.
 - Ensure the footer contains an obvious completion or dismissal action when backdrop and Escape dismissal are disabled.
 - Focus returns to the invoking control by default.
 

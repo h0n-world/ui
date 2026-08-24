@@ -7,7 +7,7 @@ const open = ref(false)
 
 <template>
     <H0Button @click="open = true">Edit profile</H0Button>
-    <H0Modal v-model="open" title="Edit profile">
+    <H0Modal v-model="open" title="Edit profile" subtitle="Update the information visible to your workspace.">
         <p>Update the account details in your profile form.</p>
         <template #footer="{ close }">
             <H0Button variant="soft" @click="close">Cancel</H0Button>

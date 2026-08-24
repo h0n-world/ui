@@ -12,7 +12,9 @@ export type {
     H0TypographyAlign,
     H0TypographyColor,
     H0TypographyElement,
+    H0TypographyLetterSpacing,
     H0TypographyLineHeight,
+    H0TypographyTextTransform,
     H0TypographyVariant,
     H0TypographyWeight
 } from './Typography.types'

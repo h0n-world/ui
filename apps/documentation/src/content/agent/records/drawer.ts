@@ -13,6 +13,7 @@ export const drawerAgentRecord = {
             { name: 'side', type: 'H0DrawerSide', default: "'right'", description: "Entering viewport edge: 'top', 'right', 'bottom', or 'left'." },
             { name: 'backdrop', type: 'H0DrawerBackdrop', default: "'opaque'", description: "Backdrop appearance: 'opaque', 'blur', or 'transparent'." },
             { name: 'title', type: 'string', default: "''", description: 'Visible header title and preferred accessible name.' },
+            { name: 'subtitle', type: 'string', default: "''", description: 'Supporting text displayed above the standard header title.' },
             { name: 'closeOnBackdrop', type: 'boolean', default: 'true', description: 'Closes after a backdrop click.' },
             { name: 'closeOnEsc', type: 'boolean', default: 'true', description: 'Closes when Escape is pressed.' },
             { name: 'ariaLabel', type: 'string', default: "''", description: 'Accessible name used when title is empty before locale fallback.' },
@@ -30,7 +31,7 @@ export const drawerAgentRecord = {
         ],
         slots: [
             { name: 'default', type: '—', description: 'Scrollable drawer content.' },
-            { name: 'header', type: '—', description: 'Replaces the title and built-in close-button header.' },
+            { name: 'header', type: '—', description: 'Replaces the built-in title and subtitle content; the close button remains available.' },
             { name: 'footer', type: '{ close: () => void }', description: 'Footer actions with a close callback.' },
         ],
         exposed: [],

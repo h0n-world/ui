@@ -13,7 +13,7 @@ Track meaningful changes here. Keep entries focused on what users gain. Add a de
 
 ## Version 1.2.0
 
-This minor release adds a custom color-selection control to the supported `@h0nio/ui` API without introducing breaking changes.
+This minor release adds Command and color-selection components, expands typography and overlay APIs, and improves shared overlay behavior without introducing breaking changes.
 
 ### Added
 
@@ -22,10 +22,14 @@ This minor release adds a custom color-selection control to the supported `@h0ni
 - Added a custom saturation and brightness plane with a hue slider, pointer and touch interaction, keyboard controls, accessible slider semantics, and localized labels.
 - Added form submission through the `name` prop, disabled behavior, popup teleport and positioning options, and the public `open`, `close`, `focus`, and `setValue` methods.
 - Added the `lineHeight` prop to `H0Typography` for unitless numeric and explicit CSS line-height overrides.
+- Added `letterSpacing` and `textTransform` props to `H0Typography`, including pixel-based numeric tracking and explicit CSS values.
+- Added standard `subtitle` support to Modal, Drawer, and Sheet headers.
+- Added a standard close control and `footer` slot to Sheet, aligning its built-in overlay API with Modal and Drawer.
 
 ### Fixed and improved
 
 - Prevented document scrolling behind Command, Select, Modal, Sheet, Drawer, and AlertDialog overlays without replacing the body positioning, preserving sticky page regions, nested-overlay locks, scrollbar compensation, and the original page position. Command search focus no longer requests a second scrollable focus transition when opening the system keyboard.
+- Unified Modal, Drawer, and Sheet around shared header, content, and footer layouts with consistent 16px spacing, predictable bordered sections, and correct content padding when optional regions are omitted.
 
 ## Version 1.1.0
 

@@ -30,6 +30,101 @@ afterEach(() => {
 
 describe('overlay focus management', () => {
     it.each([
+        ['Modal', H0Modal],
+        ['Drawer', H0Drawer],
+        ['Sheet', H0Sheet]
+    ] as const)('%s keeps content in the shared padded region without header or footer', async (_name, component) => {
+        const wrapper = mount(component, {
+            props: { modelValue: true, teleportDisabled: true },
+            slots: { default: '<span class="content-marker">Content</span>' }
+        })
+
+        await nextTick()
+
+        expect(wrapper.get('.h-overlay-content').get('.content-marker').text()).toBe('Content')
+        expect(wrapper.find('.h-overlay-header').exists()).toBe(false)
+        expect(wrapper.find('.h-overlay-footer').exists()).toBe(false)
+        wrapper.unmount()
+    })
+
+    it.each([
+        ['Modal', H0Modal, 'h-modal'],
+        ['Drawer', H0Drawer, 'h-drawer'],
+        ['Sheet', H0Sheet, 'h-sheet']
+    ] as const)('%s renders a standard title and subtitle header', async (_name, component, className) => {
+        const wrapper = mount(component, {
+            props: {
+                modelValue: true,
+                teleportDisabled: true,
+                title: 'Account settings',
+                subtitle: 'Manage access and notifications.'
+            }
+        })
+
+        await nextTick()
+
+        expect(wrapper.get(`.${className}__panel`).attributes('aria-label')).toBe('Account settings')
+        expect(wrapper.get('.h-overlay-header__heading').text()).toContain('Account settings')
+        expect(wrapper.get('.h-overlay-header__heading').text()).toContain('Manage access and notifications.')
+
+        wrapper.unmount()
+    })
+
+    it('provides a built-in Sheet close action with the standard header', async () => {
+        const wrapper = mount(H0Sheet, {
+            props: { modelValue: true, teleportDisabled: true, title: 'Quick actions' }
+        })
+
+        await nextTick()
+        await wrapper.get('[aria-label="Close sheet"]').trigger('click')
+
+        expect(wrapper.emitted('close')).toHaveLength(1)
+        wrapper.unmount()
+    })
+
+    it.each([
+        ['Modal', H0Modal],
+        ['Drawer', H0Drawer],
+        ['Sheet', H0Sheet]
+    ] as const)('%s exposes close through the shared footer slot', async (_name, component) => {
+        const wrapper = mount(component, {
+            props: { modelValue: true, teleportDisabled: true },
+            slots: {
+                footer: ({ close }: { close: () => void }) => h('button', { class: 'footer-close', onClick: close }, 'Done')
+            }
+        })
+
+        await nextTick()
+        expect(wrapper.find('.h-overlay-footer').exists()).toBe(true)
+        await wrapper.get('.footer-close').trigger('click')
+
+        expect(wrapper.emitted('close')).toHaveLength(1)
+        wrapper.unmount()
+    })
+
+    it('uses the shared footer layout for AlertDialog actions', async () => {
+        const wrapper = mount(H0AlertDialog, {
+            props: { modelValue: true, teleportDisabled: true }
+        })
+
+        await nextTick()
+        expect(wrapper.find('.h-overlay-footer').exists()).toBe(true)
+        wrapper.unmount()
+    })
+
+    it('uses bordered shared sections for Drawer', async () => {
+        const wrapper = mount(H0Drawer, {
+            props: { modelValue: true, teleportDisabled: true, title: 'Navigation' },
+            slots: { footer: '<button type="button">Done</button>' }
+        })
+
+        await nextTick()
+        expect(wrapper.get('.h-overlay-header').classes()).toContain('h-overlay-header--border')
+        expect(wrapper.get('.h-overlay-footer').classes()).toContain('h-overlay-footer--border')
+        wrapper.unmount()
+    })
+
+    it.each([
         [H0Sheet, 'h-sheet'],
         [H0Drawer, 'h-drawer']
     ] as const)('%s supports all four viewport sides', async (component, className) => {

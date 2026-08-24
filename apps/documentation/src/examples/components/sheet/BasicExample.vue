@@ -7,11 +7,12 @@ const open = ref(false)
 
 <template>
     <H0Button @click="open = true">Open quick actions</H0Button>
-    <H0Sheet v-model="open" side="bottom" aria-label="Quick actions">
+    <H0Sheet v-model="open" side="bottom" title="Quick actions" subtitle="Choose what to do with the selected item.">
         <H0Stack gap="md">
-            <strong>Quick actions</strong>
-            <span>Choose an action, then dismiss the sheet with Escape or the backdrop.</span>
-            <H0Button @click="open = false">Done</H0Button>
+            <span>Choose an action, then dismiss the sheet with Escape, the backdrop, or the header close button.</span>
         </H0Stack>
+        <template #footer="{ close }">
+            <H0Button @click="close">Done</H0Button>
+        </template>
     </H0Sheet>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { searchIcon } from '../../icons'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useAttrs, useId, useTemplateRef, watch } from 'vue'
 import { useH0ControllableState } from '../../composables'
+import { searchIcon } from '../../icons'
 import { useH0Locale } from '../../locale'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
@@ -176,7 +176,11 @@ function normalizeHotkeyKey(value: string) {
 }
 
 function matchesHotkey(event: KeyboardEvent, hotkey: string) {
-    const parts = hotkey.toLocaleLowerCase().split('+').map((part) => part.trim()).filter(Boolean)
+    const parts = hotkey
+        .toLocaleLowerCase()
+        .split('+')
+        .map((part) => part.trim())
+        .filter(Boolean)
     const key = normalizeHotkeyKey(parts.at(-1) ?? '')
     if (!key || event.key.toLocaleLowerCase() !== key) return false
     const usesMod = parts.includes('mod')
@@ -198,13 +202,17 @@ function handleGlobalKeydown(event: KeyboardEvent) {
     toggle()
 }
 
-watch(currentValue, (isOpen, wasOpen) => {
-    if (isOpen) {
-        setActiveIndex(firstEnabledIndex(), true)
-    } else if (wasOpen && props.resetQueryOnClose) {
-        setQuery('')
-    }
-}, { immediate: true })
+watch(
+    currentValue,
+    (isOpen, wasOpen) => {
+        if (isOpen) {
+            setActiveIndex(firstEnabledIndex(), true)
+        } else if (wasOpen && props.resetQueryOnClose) {
+            setQuery('')
+        }
+    },
+    { immediate: true }
+)
 
 watch(filteredItems, () => {
     setActiveIndex(firstEnabledIndex(), true)
@@ -250,14 +258,7 @@ defineExpose({ close, focus, open, setQuery, toggle })
         >
             <template #default="{ panelRef }">
                 <div class="h-command__positioner">
-                    <section
-                        :ref="panelRef"
-                        class="h-command__panel"
-                        :class="`h-command__panel--${windowSize}`"
-                        role="dialog"
-                        aria-modal="true"
-                        :aria-label="resolvedAriaLabel"
-                    >
+                    <section :ref="panelRef" class="h-command__panel" :class="`h-command__panel--${windowSize}`" role="dialog" aria-modal="true" :aria-label="resolvedAriaLabel">
                         <header v-if="$slots.header" class="h-command__header">
                             <slot name="header" :query="currentQuery" :close="close" />
                         </header>
@@ -414,7 +415,6 @@ defineExpose({ close, focus, open, setQuery, toggle })
 
     &__panel {
         background: var(--h0n-ui-color-surface);
-        border: 1px solid var(--h0n-ui-color-border);
         border-radius: var(--h0n-ui-radius-xxl);
         box-shadow: var(--h0n-ui-shadow-lg);
         color: var(--h0n-ui-color-text);

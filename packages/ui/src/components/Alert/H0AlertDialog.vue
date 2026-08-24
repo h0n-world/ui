@@ -6,6 +6,7 @@ import H0Button from '../Button/H0Button.vue'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
+import H0OverlayFooter from '../_shared/H0OverlayFooter.vue'
 import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
 import { useH0Locale } from '../../locale'
 import type { H0AlertDialogBackdrop, H0AlertDialogTone } from './Alert.types'
@@ -116,12 +117,12 @@ function confirm() {
                         </H0Description>
                     </div>
 
-                    <footer class="h-alert-dialog__actions">
+                    <H0OverlayFooter>
                         <slot name="actions" :cancel="cancel" :confirm="confirm" :close="close">
                             <H0Button variant="soft" size="sm" @click="cancel">{{ cancelText || locale.overlay.cancel }}</H0Button>
                             <H0Button :tone="confirmTone" size="sm" @click="confirm">{{ confirmText || locale.overlay.confirm }}</H0Button>
                         </slot>
-                    </footer>
+                    </H0OverlayFooter>
                 </section>
             </div>
         </template>
@@ -154,6 +155,8 @@ function confirm() {
 }
 
 .h-alert-dialog__panel {
+    --h-overlay-footer-gap: 8px;
+
     background: var(--h0n-ui-color-surface);
     border-radius: var(--h0n-ui-radius-xl);
     box-shadow: var(--h0n-ui-shadow-lg);
@@ -198,14 +201,6 @@ function confirm() {
 
 .h-alert-dialog__text {
     color: var(--h0n-ui-color-muted);
-}
-
-.h-alert-dialog__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: flex-end;
-    padding-top: 6px;
 }
 
 :global(.h-overlay-enter-active .h-alert-dialog__panel),

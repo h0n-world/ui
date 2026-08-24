@@ -6,6 +6,10 @@ export type H0TypographyWeight = 400 | 500 | 600 | 700
 
 export type H0TypographyLineHeight = number | string
 
+export type H0TypographyLetterSpacing = number | string
+
+export type H0TypographyTextTransform = 'none' | 'capitalize' | 'uppercase' | 'lowercase'
+
 export type H0LabelElement = 'label' | 'legend' | 'span'
 
 export type H0DescriptionElement = 'p' | 'span' | 'div'
