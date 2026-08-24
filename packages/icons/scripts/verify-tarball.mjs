@@ -9,6 +9,7 @@ const packageRoot = resolve(import.meta.dirname, '..')
 const packageJson = JSON.parse(await readFile(resolve(packageRoot, 'package.json'), 'utf8'))
 const packageManager = process.env.npm_execpath
 if (!packageManager) throw new Error('npm_execpath is required to verify the packed package.')
+const packageManagerRunsThroughNode = /\.(?:c?js|mjs)$/i.test(packageManager)
 
 const temporaryRoot = await mkdtemp(join(tmpdir(), 'h0nio-icons-consumer-'))
 const archiveName = `${packageJson.name.slice(1).replace('/', '-')}-${packageJson.version}.tgz`
@@ -16,7 +17,10 @@ const archivePath = resolve(temporaryRoot, archiveName)
 const consumerRoot = resolve(temporaryRoot, 'consumer')
 
 function runPackageManager(args, cwd, stdio = 'inherit') {
-    execFileSync(process.execPath, [packageManager, ...args], {
+    const command = packageManagerRunsThroughNode ? process.execPath : packageManager
+    const commandArguments = packageManagerRunsThroughNode ? [packageManager, ...args] : args
+
+    execFileSync(command, commandArguments, {
         cwd,
         stdio,
         maxBuffer: 8 * 1024 * 1024
