@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { checkIcon } from '../../icons'
-import H0Icon from '../Icon/H0Icon.vue'
+import unreadIcon from '@h0nio/icons/unread-stroke'
 import { useTemplateRef } from 'vue'
-import H0Label from '../Typography/H0Label.vue'
+import { useH0ControllableState } from '../../composables/useH0ControllableState'
+import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
+import H0Label from '../Typography/H0Label.vue'
 import { useFormField } from '../_shared/useFormField'
 import type { H0CheckboxOption } from './Checkbox.types'
-import { useH0ControllableState } from '../../composables/useH0ControllableState'
 
 defineOptions({
     name: 'H0CheckboxGroup'
@@ -88,7 +88,15 @@ function toggle(value: string, disabled?: boolean) {
 </script>
 
 <template>
-    <fieldset :id="controlId" data-h0n-component="checkbox-group" class="h-checkbox-group" :class="visibleError && 'h-checkbox-group--error'" :disabled="disabled" :aria-invalid="Boolean(visibleError)" :aria-describedby="hasMessage ? messageId : undefined">
+    <fieldset
+        :id="controlId"
+        data-h0n-component="checkbox-group"
+        class="h-checkbox-group"
+        :class="visibleError && 'h-checkbox-group--error'"
+        :disabled="disabled"
+        :aria-invalid="Boolean(visibleError)"
+        :aria-describedby="hasMessage ? messageId : undefined"
+    >
         <H0Label v-if="label || $slots.label" as="legend" class="h-checkbox-group__legend" :required="required">
             <slot name="label">{{ label }}</slot>
         </H0Label>
@@ -106,7 +114,7 @@ function toggle(value: string, disabled?: boolean) {
                 @focus="emit('focus', $event)"
             />
             <span class="h-checkbox-group__box" aria-hidden="true">
-                <H0Icon class="h-checkbox-group__mark" :icon="checkIcon" :size="14" :stroke-width="3" />
+                <H0Icon class="h-checkbox-group__mark" :icon="unreadIcon" :size="26" />
             </span>
             <span class="h-checkbox-group__label">{{ option.label }}</span>
         </label>

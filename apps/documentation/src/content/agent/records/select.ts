@@ -3,7 +3,7 @@ import { focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
 
 export const selectAgentRecord = {
     schemaVersion: 1, component: 'H0Select', status: 'migrated', summary: 'Accessible single or multiple option picker with custom rendering, virtualization, loading state, and teleported listbox.',
-    imports: { components: ['H0Select'], types: ['H0SelectEmits', 'H0SelectOption', 'H0SelectProps', 'H0SelectSize', 'H0SelectValue', 'H0SelectVariant'], styles: ['@h0nio/ui/style.css'] },
+    imports: { components: ['H0Select'], types: ['H0IconSource', 'H0SelectEmits', 'H0SelectOption', 'H0SelectProps', 'H0SelectSize', 'H0SelectValue', 'H0SelectVariant'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [
         { name: 'modelValue', type: 'H0SelectValue | H0SelectValue[] | null', default: 'undefined', description: 'Controlled selection.' }, { name: 'defaultValue', type: 'H0SelectValue | H0SelectValue[] | null', default: 'null', description: 'Initial selection.' }, { name: 'options', type: 'H0SelectOption[]', default: '[]', description: 'Available options.' },
         { name: 'multiple', type: 'boolean', default: 'false', description: 'Allows several values.' }, { name: 'maxSelected', type: 'number', default: 'undefined', description: 'Maximum selected values.' }, { name: 'size', type: 'H0SelectSize', default: "'md'", description: 'Control size.' }, { name: 'variant', type: 'H0SelectVariant', default: "'surface'", description: 'Trigger background treatment.' },
@@ -20,7 +20,7 @@ export const selectAgentRecord = {
         { name: 'H0SelectSize', fields: [{ name: 'H0SelectSize', type: "'sm' | 'md' | 'lg'", description: 'Supported trigger sizes.' }] },
         { name: 'H0SelectVariant', fields: [{ name: 'H0SelectVariant', type: "'secondary' | 'surface'", description: 'Supported trigger surface treatments.' }] },
         { name: 'H0SelectOption', fields: [
-            { name: 'label', type: 'string', description: 'Visible option label.' }, { name: 'value', type: 'Value', description: 'Option value preserving the generic Value type.' }, { name: 'description', type: 'string | undefined', description: 'Supporting copy.' }, { name: 'icon', type: 'H0IconDefinition | undefined', description: 'Optional icon.' }, { name: 'disabled', type: 'boolean | undefined', description: 'Disables selection.' },
+            { name: 'label', type: 'string', description: 'Visible option label.' }, { name: 'value', type: 'Value', description: 'Option value preserving the generic Value type.' }, { name: 'description', type: 'string | undefined', description: 'Supporting copy.' }, { name: 'icon', type: 'H0IconSource | undefined', description: 'Optional legacy node or @h0nio/icons body definition.' }, { name: 'disabled', type: 'boolean | undefined', description: 'Disables selection.' },
         ] },
     ] },
     useWhen: ['Users choose from a known option list without free-text creation.'], avoidWhen: ['Free-text creation or remote filtering is central.'], ...standardFormGuidance,

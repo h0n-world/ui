@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import successIcon from '@h0nio/icons/check-circle-stroke'
+import closeIcon from '@h0nio/icons/close'
+import errorIcon from '@h0nio/icons/danger-circle-stroke'
+import warningIcon from '@h0nio/icons/danger-triangle-stroke'
+import infoIcon from '@h0nio/icons/info-circle-stroke'
 import { computed } from 'vue'
-import { closeIcon, errorIcon, infoIcon, successIcon, warningIcon } from '../../icons'
 import { useH0Locale } from '../../locale'
-import type { H0IconDefinition } from '../Icon'
+import type { H0IconSource } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
@@ -18,7 +22,7 @@ const props = withDefaults(
         title?: string
         description?: string
         text?: string
-        icon?: H0IconDefinition
+        icon?: H0IconSource
         closable?: boolean
     }>(),
     {
@@ -37,7 +41,7 @@ const emit = defineEmits<{
 const { locale } = useH0Locale()
 
 const resolvedDescription = computed(() => props.description || props.text)
-const resolvedIcon = computed<H0IconDefinition>(() => {
+const resolvedIcon = computed<H0IconSource>(() => {
     if (props.icon) {
         return props.icon
     }
@@ -60,7 +64,7 @@ const resolvedIcon = computed<H0IconDefinition>(() => {
 
 <template>
     <div data-h0n-component="toast" class="h-toast" :class="`h-toast--${tone}`" role="status" aria-live="polite">
-        <H0Icon class="h-toast__icon" :icon="resolvedIcon" :size="16" :stroke-width="1.4" aria-hidden="true" />
+        <H0Icon class="h-toast__icon" :icon="resolvedIcon" :size="16" aria-hidden="true" />
 
         <div class="h-toast__content">
             <H0Typography v-if="title || $slots.title" as="strong" class="h-toast__title" variant="body-sm" :weight="600" color="inherit">
@@ -72,7 +76,7 @@ const resolvedIcon = computed<H0IconDefinition>(() => {
         </div>
 
         <button v-if="closable" class="h-toast__close" type="button" :aria-label="locale.toast.close" @click.stop="emit('close')">
-            <H0Icon :icon="closeIcon" :size="16" :stroke-width="1.4" />
+            <H0Icon :icon="closeIcon" :size="16" />
         </button>
     </div>
 </template>

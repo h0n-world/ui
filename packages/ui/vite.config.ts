@@ -135,7 +135,7 @@ export default defineConfig(({ mode }) => {
                       formats: ['es']
                   },
             rollupOptions: {
-                external: isUmdBuild ? ['vue'] : ['vue', '@floating-ui/dom'],
+                external: isUmdBuild ? ['vue'] : ['vue', '@floating-ui/dom', /^@h0nio\/icons(?:\/.*)?$/],
                 output: isUmdBuild
                     ? {
                           exports: 'named',

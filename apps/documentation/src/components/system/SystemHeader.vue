@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { H0Button, H0Command, useH0Theme, type H0CommandItem } from '@h0nio/ui'
-import { settingsIcon, type H0IconDefinition } from '@h0nio/ui/icons'
 import { computed, onMounted, onUnmounted, useTemplateRef } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 
@@ -8,6 +7,10 @@ import IconH0N from '../icons/IconH0N.vue'
 
 import { documentationPages } from '@/content/content'
 import { siteConfig } from '@/content/site'
+
+import sidebarIcon from '@h0nio/icons/sidebar-minimalistic-stroke'
+import sunIcon from '@h0nio/icons/sun-2'
+import sunDarkIcon from '@h0nio/icons/sun-2-stroke'
 
 defineOptions({
     name: 'SystemHeader',
@@ -30,13 +33,6 @@ const themeLabel = computed(() =>
     theme.resolvedTheme.value === 'dark' ? 'Light theme' : 'Dark theme',
 )
 const showMenu = computed(() => !props.minimal && route.meta.documentationGroup !== undefined)
-const navigationIcon = {
-    name: 'sidebar-navigation',
-    nodes: [
-        ['path', { d: 'M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z' }],
-        ['line', { x1: 9, y1: 3, x2: 9, y2: 21 }],
-    ],
-} as const satisfies H0IconDefinition
 
 function isActive(group: string) {
     return route.meta.documentationGroup === group
@@ -91,14 +87,13 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
 
                 <H0Button
                     class="theme-button"
-                    size="sm"
                     variant="ghost"
-                    :icon="settingsIcon"
-                    button-type="withIcon"
+                    :icon="theme.resolvedTheme.value === 'dark' ? sunDarkIcon : sunIcon"
                     :aria-label="themeLabel"
+                    button-type="withIcon"
                     @click="theme.toggleTheme()"
                 >
-                    <span>{{ theme.resolvedTheme.value === 'dark' ? 'Light' : 'Dark' }}</span>
+                    <span> {{ theme.resolvedTheme.value === 'dark' ? 'Light' : 'Dark' }}</span>
                 </H0Button>
 
                 <H0Button
@@ -107,7 +102,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
                     size="sm"
                     variant="ghost"
                     button-type="onlyIcon"
-                    :icon="navigationIcon"
+                    :icon="sidebarIcon"
                     aria-label="Open navigation"
                     @click="emit('menu')"
                 />
@@ -280,7 +275,6 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
         :deep(.h-command__trigger) {
             min-width: 38px;
             padding-inline: 10px;
-            width: 38px;
         }
 
         :deep(.h-command__trigger > span),

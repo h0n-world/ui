@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { moreHorizontalIcon, settingsIcon, trashIcon } from '@h0nio/ui/icons'
+import moreHorizontalIcon from '@h0nio/icons/menu-dots-stroke'
+import settingsIcon from '@h0nio/icons/settings-stroke'
+import trashIcon from '@h0nio/icons/trash-bin-trash-stroke'
 import { H0Button } from '@h0nio/ui'
 </script>
 

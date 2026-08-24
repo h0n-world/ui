@@ -1,4 +1,4 @@
-import type { H0IconDefinition } from '../Icon/Icon.types'
+import type { H0IconSource } from '../Icon/Icon.types'
 import type { H0OverlayBackdrop } from '../_shared/Overlay.types'
 import type { H0CollectionValue, H0Size } from '../../types'
 
@@ -13,7 +13,7 @@ export type H0CommandItem<Value extends H0CollectionValue = H0CollectionValue> =
     description?: string
     group?: string
     keywords?: readonly string[]
-    icon?: H0IconDefinition
+    icon?: H0IconSource
     shortcut?: string
     disabled?: boolean
 }

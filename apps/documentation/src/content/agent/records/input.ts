@@ -6,7 +6,7 @@ export const inputAgentRecord = {
     component: 'H0Input',
     status: 'migrated',
     summary: 'General-purpose single-line input with adornments, clear action, native attributes, and shared H0N field feedback.',
-    imports: { components: ['H0Input'], types: ['H0AttributeRoutingProps', 'H0InputEmits', 'H0InputInputMode', 'H0InputProps', 'H0InputSize', 'H0InputVariant'], styles: ['@h0nio/ui/style.css'] },
+    imports: { components: ['H0Input'], types: ['H0AttributeRoutingProps', 'H0IconSource', 'H0InputEmits', 'H0InputInputMode', 'H0InputProps', 'H0InputSize', 'H0InputVariant'], styles: ['@h0nio/ui/style.css'] },
     api: {
         props: [
             { name: 'modelValue', type: 'string', default: 'undefined', description: 'Controlled input value.' },
@@ -18,8 +18,8 @@ export const inputAgentRecord = {
             { name: 'placeholder', type: 'string', default: "''", description: 'Empty input copy.' },
             { name: 'prefix', type: 'string', default: "''", description: 'Text before the value.' },
             { name: 'suffix', type: 'string', default: "''", description: 'Text after the value.' },
-            { name: 'prefixIcon', type: 'H0IconDefinition', default: 'undefined', description: 'Leading icon.' },
-            { name: 'suffixIcon', type: 'H0IconDefinition', default: 'undefined', description: 'Trailing icon.' },
+            { name: 'prefixIcon', type: 'H0IconSource', default: 'undefined', description: 'Leading legacy node or @h0nio/icons body definition.' },
+            { name: 'suffixIcon', type: 'H0IconSource', default: 'undefined', description: 'Trailing legacy node or @h0nio/icons body definition.' },
             { name: 'readonly', type: 'boolean', default: 'false', description: 'Prevents editing while preserving focus.' },
             { name: 'clearable', type: 'boolean', default: 'false', description: 'Shows a clear action for an editable non-empty value.' },
             { name: 'autocomplete', type: 'string', default: "''", description: 'Native autocomplete hint.' },

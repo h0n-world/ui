@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { searchIcon, settingsIcon, type H0IconDefinition } from '@h0n/ui/icons'
 import { H0Button, H0Icon, useH0Theme } from '@h0n/ui'
+import { searchIcon, settingsIcon, type H0IconDefinition } from '@h0n/ui/icons'
 import { computed, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
@@ -54,7 +54,7 @@ function isActive(group: string) {
                     aria-label="Search documentation"
                     @click="searchOpen = true"
                 >
-                    <H0Icon :icon="searchIcon" :size="16" />
+                    <H0Icon :icon="searchIcon" :size="20" />
                     <span>Search documentation</span>
                     <kbd>Ctrl K</kbd>
                 </button>

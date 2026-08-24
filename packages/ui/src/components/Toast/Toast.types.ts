@@ -1,4 +1,4 @@
-import type { H0IconDefinition } from '../Icon'
+import type { H0IconSource } from '../Icon'
 import type { UnwrapNestedRefs } from 'vue'
 
 export type H0ToastTone = 'default' | 'info' | 'success' | 'warning' | 'danger'
@@ -12,7 +12,7 @@ export type H0ToastId = string
 export type H0ToastInput = {
     title?: string
     description?: string
-    icon?: H0IconDefinition
+    icon?: H0IconSource
     duration: number
     tone?: H0ToastTone
     placement?: H0ToastPlacement

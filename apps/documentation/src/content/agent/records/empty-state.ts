@@ -2,11 +2,11 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 
 export const emptyStateAgentRecord = {
     schemaVersion: 1, component: 'H0EmptyState', status: 'migrated', summary: 'Centered empty-content explanation with visual, description, actions, and inline, surface, or page layout.',
-    imports: { components: ['H0EmptyState'], types: ['H0EmptyStateProps', 'H0EmptyStateVariant'], styles: ['@h0nio/ui/style.css'] },
+    imports: { components: ['H0EmptyState'], types: ['H0EmptyStateProps', 'H0EmptyStateVariant', 'H0IconSource'], styles: ['@h0nio/ui/style.css'] },
     api: {
         props: [
             { name: 'title', type: 'string', default: 'Localized empty-state title', description: 'Primary explanation.' }, { name: 'description', type: 'string', default: "''", description: 'Supporting explanation.' },
-            { name: 'icon', type: 'H0IconDefinition', default: 'undefined', description: 'Imported icon shown when no image or visual slot exists.' }, { name: 'image', type: 'string', default: "''", description: 'Image URL for the visual.' }, { name: 'imageAlt', type: 'string', default: "''", description: 'Alternative text for the image.' },
+            { name: 'icon', type: 'H0IconSource', default: 'undefined', description: 'Imported legacy node or @h0nio/icons body definition shown when no image or visual slot exists.' }, { name: 'image', type: 'string', default: "''", description: 'Image URL for the visual.' }, { name: 'imageAlt', type: 'string', default: "''", description: 'Alternative text for the image.' },
             { name: 'primaryAction', type: 'string', default: "''", description: 'Primary action label.' }, { name: 'secondaryAction', type: 'string', default: "''", description: 'Secondary action label.' }, { name: 'variant', type: 'H0EmptyStateVariant', default: "'inline'", description: 'Container and page-height treatment.' },
         ],
         events: [{ name: 'primaryAction', type: '—', description: 'Reports primary action activation.' }, { name: 'secondaryAction', type: '—', description: 'Reports secondary action activation.' }],

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { minusIcon, plusIcon } from '../../icons'
+import plusIcon from '@h0nio/icons/add-stroke'
+import minusIcon from '@h0nio/icons/minus-stroke'
 import { computed, ref, useAttrs, watch } from 'vue'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import { defaultH0NumberInputLocale, useH0Locale } from '../../locale'
@@ -243,7 +244,7 @@ function wheel(event: WheelEvent) {
                 :disabled="resolvedDisabled || readonly || (min != null && state.value.value != null && state.value.value <= min)"
                 @click="step(-1)"
             >
-                <H0Icon :icon="minusIcon" :size="14" :stroke-width="2.2" />
+                <H0Icon :icon="minusIcon" :size="14" />
             </button>
             <input
                 v-bind="props.controlAttrs"
@@ -282,7 +283,7 @@ function wheel(event: WheelEvent) {
                 :disabled="resolvedDisabled || readonly || (max != null && state.value.value != null && state.value.value >= max)"
                 @click="step(1)"
             >
-                <H0Icon :icon="plusIcon" :size="14" :stroke-width="2.2" />
+                <H0Icon :icon="plusIcon" :size="14" />
             </button>
         </div>
         <H0ErrorMessage v-if="!fieldContext && visibleError" :id="messageId">{{ visibleError }}</H0ErrorMessage>

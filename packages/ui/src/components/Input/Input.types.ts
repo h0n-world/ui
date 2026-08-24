@@ -1,4 +1,4 @@
-import type { H0IconDefinition } from '../Icon'
+import type { H0IconSource } from '../Icon'
 import type { H0Size } from '../../types'
 
 export type H0InputInputMode = 'decimal' | 'email' | 'none' | 'numeric' | 'search' | 'tel' | 'text' | 'url'
@@ -16,8 +16,8 @@ export type H0InputProps = {
     placeholder?: string
     prefix?: string
     suffix?: string
-    prefixIcon?: H0IconDefinition
-    suffixIcon?: H0IconDefinition
+    prefixIcon?: H0IconSource
+    suffixIcon?: H0IconSource
     disabled?: boolean
     readonly?: boolean
     required?: boolean

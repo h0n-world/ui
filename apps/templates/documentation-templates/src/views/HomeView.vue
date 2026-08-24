@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { arrowRightIcon, checkIcon, searchIcon, settingsIcon } from '@h0n/ui/icons'
 import { H0Badge, H0Button, H0Card, H0Icon, H0Typography } from '@h0n/ui'
+import { arrowRightIcon, checkIcon, searchIcon, settingsIcon } from '@h0n/ui/icons'
 import { RouterLink } from 'vue-router'
 
 import IconH0N from '@/components/icons/IconH0N.vue'
@@ -49,7 +49,7 @@ import SystemHeader from '@/components/system/SystemHeader.vue'
                             ><span>Releases</span>
                         </div>
                         <div class="preview-window__search">
-                            <H0Icon :icon="searchIcon" :size="13" /> Search
+                            <H0Icon :icon="searchIcon" :size="20" /> Search
                         </div>
                     </header>
                     <div class="preview-window__body">

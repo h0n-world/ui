@@ -1,0 +1,13 @@
+THIRD-PARTY LICENSES
+
+H0N UI includes selected icon assets from @h0nio/icons in its standalone UMD build.
+
+The icon artwork is based on the Solar Icons Set by 480 Design and is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+Solar Icons Set by 480 Design:
+https://www.figma.com/community/file/1166831539721848736
+
+CC BY 4.0:
+https://creativecommons.org/licenses/by/4.0/
+
+The assets have been renamed, optimized, converted into TypeScript definitions, and repackaged by H0N World for @h0nio/icons. The H0N UI source code remains licensed under the MIT License.

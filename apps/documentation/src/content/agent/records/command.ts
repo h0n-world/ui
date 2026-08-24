@@ -7,7 +7,7 @@ export const commandAgentRecord = {
     summary: 'Modal command menu with a configurable trigger, hotkey opening, searchable grouped items, and keyboard selection.',
     imports: {
         components: ['H0Command'],
-        types: ['H0CommandBackdrop', 'H0CommandEmits', 'H0CommandItem', 'H0CommandProps', 'H0CommandSize', 'H0CommandVariant', 'H0CommandWindowSize'],
+        types: ['H0CommandBackdrop', 'H0CommandEmits', 'H0CommandItem', 'H0CommandProps', 'H0CommandSize', 'H0CommandVariant', 'H0CommandWindowSize', 'H0IconSource'],
         styles: ['@h0nio/ui/style.css'],
     },
     api: {
@@ -74,7 +74,7 @@ export const commandAgentRecord = {
                     { name: 'description', type: 'string', description: 'Optional supporting copy.' },
                     { name: 'group', type: 'string', description: 'Optional group heading.' },
                     { name: 'keywords', type: 'readonly string[]', description: 'Additional searchable terms.' },
-                    { name: 'icon', type: 'H0IconDefinition', description: 'Optional structural H0N icon.' },
+                    { name: 'icon', type: 'H0IconSource', description: 'Optional legacy node or @h0nio/icons body definition.' },
                     { name: 'shortcut', type: 'string', description: 'Optional displayed command shortcut.' },
                     { name: 'disabled', type: 'boolean', description: 'Prevents navigation and selection.' },
                 ],

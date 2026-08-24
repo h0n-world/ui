@@ -30,7 +30,24 @@ pnpm add @h0nio/ui
 npm install @h0nio/ui
 ```
 
-H0N UI has no required external icon package. A small system icon set is available from `@h0nio/ui/icons`, and components expose documented icon or visual slots where custom artwork is supported.
+H0N UI installs `@h0nio/icons` as a runtime dependency for its internal controls, so no second installation is needed to use UI components. Applications that import icon definitions directly should declare `@h0nio/icons` themselves:
+
+```bash
+pnpm add @h0nio/icons
+```
+
+```vue
+<script setup lang="ts">
+import searchIcon from '@h0nio/icons/search'
+import { H0Icon } from '@h0nio/ui'
+</script>
+
+<template>
+    <H0Icon :icon="searchIcon" />
+</template>
+```
+
+Prefer individual icon subpaths for tree shaking. `@h0nio/ui/icons` remains available as a compatibility facade for the previous small system set.
 
 ## Register the plugin
 
@@ -127,4 +144,4 @@ Development is organized as a pnpm workspace containing the publishable library 
 
 ## License
 
-[MIT](https://github.com/h0n-world/ui/blob/main/packages/ui/LICENSE)
+[MIT](https://github.com/h0n-world/ui/blob/main/packages/ui/LICENSE). Solar Icons artwork used by internal controls is credited in [`LICENSE-THIRD-PARTY`](https://github.com/h0n-world/ui/blob/main/packages/ui/LICENSE-THIRD-PARTY).

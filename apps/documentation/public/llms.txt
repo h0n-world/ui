@@ -4,9 +4,9 @@
 
 ## Scope and installation
 
-- Install only `@h0nio/ui`; there is no required H0N icon package.
+- Install `@h0nio/ui` for components; its internal icon dependency is installed automatically.
 - Register the default plugin once and import `@h0nio/ui/style.css`.
-- Use the small system icon set from `@h0nio/ui/icons`, or pass a compatible `H0IconDefinition`/documented custom icon slot.
+- When application code imports icons, install `@h0nio/icons` directly and use individual `@h0nio/icons/<name>` subpaths. `@h0nio/ui/icons` is a compatibility facade.
 - See [Quick Start](/docs/quick-start) for the current plugin and style setup.
 - For a new or existing project, give an AI coding agent the versioned [installation prompt](/agents/install-prompt.md).
 
@@ -42,7 +42,8 @@ Paths in this file are relative to the H0N UI documentation origin. They are not
 - Selective components: `@h0nio/ui/components/<Family>`
 - Global styles: `@h0nio/ui/style.css`
 - Matching selective styles: `@h0nio/ui/components/<Family>/style.css`
-- System icons: `@h0nio/ui/icons`
+- Icon definitions: individual `@h0nio/icons/<name>` subpaths (direct application dependency)
+- Compatibility icon aliases: `@h0nio/ui/icons`
 - Public composables: `@h0nio/ui/composables` or documented individual composable subpaths
 - Runtime services and metadata: `@h0nio/ui/theme`, `@h0nio/ui/locale`, and `@h0nio/ui/manifest`
 
@@ -139,7 +140,7 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 - [H0Chip](/components/chip): Selectable and optionally removable token with separate primary and remove actions.
 - [H0Description](/components/description): Muted regular-weight supporting text preset for fields, cards, and metadata.
 - [H0ErrorMessage](/components/errormessage): Danger-colored text preset for persistent validation and action errors.
-- [H0Icon](/components/icon): SVG renderer for lightweight structural icon definitions with no external icon dependency.
+- [H0Icon](/components/icon): SVG renderer for legacy node definitions and trusted tree-shakeable body definitions from @h0nio/icons.
 - [H0Image](/components/image): Responsive image with intersection-based lazy loading, skeleton state, sizing, and fallback content.
 - [H0Label](/components/label): Consistent form label preset supporting label, legend, and span semantics.
 - [H0List](/components/list): Grouped collection wrapper with optional accessible label, spacing, and item separators.

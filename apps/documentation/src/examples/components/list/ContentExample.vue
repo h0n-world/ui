@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { infoIcon, warningIcon } from '@h0nio/ui/icons'
+import infoIcon from '@h0nio/icons/info-circle-stroke'
+import warningIcon from '@h0nio/icons/danger-triangle-stroke'
 import { H0Card, H0Icon, H0List, H0ListItem } from '@h0nio/ui'
 </script>
 

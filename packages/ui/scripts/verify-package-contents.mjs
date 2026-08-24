@@ -71,11 +71,13 @@ for (const [subpath, value] of Object.entries(packageJson.exports)) {
 }
 
 const requiredFiles = new Set(
-    ['LICENSE', 'README.md', 'package.json', packageJson.main, packageJson.module, packageJson.types, packageJson.style, ...exportTargets].map((path) => path.replace(/^\.\//, ''))
+    ['LICENSE', 'LICENSE-THIRD-PARTY', 'README.md', 'package.json', packageJson.main, packageJson.module, packageJson.types, packageJson.style, ...exportTargets].map((path) => path.replace(/^\.\//, ''))
 )
 
 const missingFiles = [...requiredFiles].filter((path) => !publishedFiles.has(path))
-const unexpectedTopLevelFiles = [...publishedFiles].filter((path) => !path.startsWith('dist/') && path !== 'LICENSE' && path !== 'README.md' && path !== 'package.json')
+const unexpectedTopLevelFiles = [...publishedFiles].filter(
+    (path) => !path.startsWith('dist/') && path !== 'LICENSE' && path !== 'LICENSE-THIRD-PARTY' && path !== 'README.md' && path !== 'package.json'
+)
 const forbiddenFiles = [...publishedFiles].filter(
     (path) =>
         path.startsWith('src/') ||

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { settingsIcon, userIcon, warningIcon } from '@h0nio/ui/icons'
+import settingsIcon from '@h0nio/icons/settings-stroke'
+import userIcon from '@h0nio/icons/user-stroke'
+import warningIcon from '@h0nio/icons/danger-triangle-stroke'
 import { H0Segment, type H0SegmentItem } from '@h0nio/ui'
 import { ref } from 'vue'
 

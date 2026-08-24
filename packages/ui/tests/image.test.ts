@@ -9,7 +9,7 @@ describe('H0Image presentation', () => {
 
         expect(fallback.attributes('role')).toBe('img')
         expect(fallback.attributes('aria-label')).toBe('Unavailable preview')
-        expect(fallback.get('[data-h0n-component="icon"]').attributes('data-icon')).toBe('error')
+        expect(fallback.get('[data-h0n-component="icon"]').attributes('data-icon')).toBe('danger-circle-stroke')
     })
 
     it('shows the default skeleton while an eager image is loading', () => {

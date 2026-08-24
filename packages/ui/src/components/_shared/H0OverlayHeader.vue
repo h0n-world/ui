@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { closeIcon } from '../../icons';
+import closeIcon from '@h0nio/icons/close';
 import H0Button from '../Button/H0Button.vue';
 import H0Typography from '../Typography/H0Typography.vue';
 

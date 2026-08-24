@@ -25,11 +25,13 @@ This minor release adds Command and color-selection components, expands typograp
 - Added `letterSpacing` and `textTransform` props to `H0Typography`, including pixel-based numeric tracking and explicit CSS values.
 - Added standard `subtitle` support to Modal, Drawer, and Sheet headers.
 - Added a standard close control and `footer` slot to Sheet, aligning its built-in overlay API with Modal and Drawer.
+- Added direct support for tree-shakeable definitions from `@h0nio/icons` across `H0Icon` and every component icon prop, while retaining legacy node definitions and the `@h0nio/ui/icons` compatibility facade.
 
 ### Fixed and improved
 
 - Prevented document scrolling behind Command, Select, Modal, Sheet, Drawer, and AlertDialog overlays without replacing the body positioning, preserving sticky page regions, nested-overlay locks, scrollbar compensation, and the original page position. Command search focus no longer requests a second scrollable focus transition when opening the system keyboard.
 - Unified Modal, Drawer, and Sheet around shared header, content, and footer layouts with consistent 16px spacing, predictable bordered sections, and correct content padding when optional regions are omitted.
+- Replaced duplicated UI system SVG definitions with individual `@h0nio/icons` subpath imports. Body-based SVG definitions preserve their authored solid, stroke, and duotone geometry and receive deterministic per-instance IDs for SSR-safe definitions and clip paths.
 
 ## Version 1.1.0
 

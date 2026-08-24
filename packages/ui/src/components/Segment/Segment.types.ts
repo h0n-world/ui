@@ -1,4 +1,4 @@
-import type { H0IconDefinition } from '../Icon'
+import type { H0IconSource } from '../Icon'
 import type { H0Size } from '../../types'
 
 export type H0SegmentValue = string
@@ -10,7 +10,7 @@ export type H0SegmentVariant = 'default' | 'secondary' | 'outline' | 'ghost'
 export type H0SegmentItem = {
     label: string
     value: H0SegmentValue
-    icon?: H0IconDefinition
+    icon?: H0IconSource
     disabled?: boolean
 }
 import type H0SegmentComponent from './H0Segment.vue'

@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { closeIcon, errorIcon, infoIcon, successIcon, warningIcon } from '../../icons'
-import type { H0IconDefinition } from '../Icon'
+import successIcon from '@h0nio/icons/check-circle-stroke'
+import closeIcon from '@h0nio/icons/close'
+import errorIcon from '@h0nio/icons/danger-circle-stroke'
+import warningIcon from '@h0nio/icons/danger-triangle-stroke'
+import infoIcon from '@h0nio/icons/info-circle-stroke'
 import { computed } from 'vue'
+import { useH0Locale } from '../../locale'
 import H0Button from '../Button/H0Button.vue'
+import type { H0IconSource } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
 import H0OverlayFooter from '../_shared/H0OverlayFooter.vue'
 import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
-import { useH0Locale } from '../../locale'
-import type { H0AlertDialogBackdrop, H0AlertDialogTone } from './Alert.types'
 import { useH0OverlayModel } from '../_shared/useOverlayModel'
+import type { H0AlertDialogBackdrop, H0AlertDialogTone } from './Alert.types'
 
 defineOptions({
     name: 'H0AlertDialog'
@@ -63,7 +67,7 @@ const emit = defineEmits<{
 }>()
 const { locale } = useH0Locale()
 
-const resolvedIcon = computed<H0IconDefinition>(() => {
+const resolvedIcon = computed<H0IconSource>(() => {
     if (props.tone === 'success') {
         return successIcon
     }
@@ -92,11 +96,22 @@ function confirm() {
     emit('confirm')
     close()
 }
-
 </script>
 
 <template>
-    <H0OverlayRoot :model-value="currentValue" :backdrop="backdrop" :close-on-backdrop="false" :close-on-esc="closeOnEsc" :teleport-to="teleportTo" :teleport-disabled="teleportDisabled" :initial-focus="initialFocus" :return-focus="returnFocus" :lock-scroll="lockScroll" layer="critical" @request-close="close">
+    <H0OverlayRoot
+        :model-value="currentValue"
+        :backdrop="backdrop"
+        :close-on-backdrop="false"
+        :close-on-esc="closeOnEsc"
+        :teleport-to="teleportTo"
+        :teleport-disabled="teleportDisabled"
+        :initial-focus="initialFocus"
+        :return-focus="returnFocus"
+        :lock-scroll="lockScroll"
+        layer="critical"
+        @request-close="close"
+    >
         <template #default="{ panelRef }">
             <div data-h0n-component="alert-dialog" class="h-alert-dialog" :class="dialogClasses">
                 <section :ref="panelRef" class="h-alert-dialog__panel" role="alertdialog" aria-modal="true" :aria-label="title || ariaLabel || locale.overlay.alertDialog" tabindex="-1">
@@ -105,7 +120,7 @@ function confirm() {
                     </div>
 
                     <div class="h-alert-dialog__icon" aria-hidden="true">
-                        <H0Icon :icon="resolvedIcon" :size="20" :stroke-width="2.2" />
+                        <H0Icon :icon="resolvedIcon" :size="20" />
                     </div>
 
                     <div class="h-alert-dialog__body">

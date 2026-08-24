@@ -2,7 +2,7 @@
 import { computed, useAttrs, useSlots, useTemplateRef, type Component } from 'vue'
 import H0Interactive from '../_shared/H0Interactive.vue'
 import H0Icon from '../Icon/H0Icon.vue'
-import type { H0IconDefinition } from '../Icon/Icon.types'
+import type { H0IconSource } from '../Icon/Icon.types'
 import H0Ripple from '../Ripple/H0Ripple.vue'
 import H0Spinner from '../Spinner/H0Spinner.vue'
 import type { H0ButtonSize, H0ButtonTone, H0ButtonTypeVariant, H0ButtonVariant } from './Button.types'
@@ -18,7 +18,7 @@ const props = withDefaults(
         variant?: H0ButtonVariant
         size?: H0ButtonSize
         buttonType?: H0ButtonTypeVariant
-        icon?: H0IconDefinition
+        icon?: H0IconSource
         iconTitle?: string
         type?: 'button' | 'submit' | 'reset'
         disabled?: boolean
@@ -119,7 +119,7 @@ function handlePointerDown(event: PointerEvent) {
             </template>
             <template v-else>
                 <slot v-if="shouldShowIcon" name="icon">
-                    <H0Icon v-if="icon" class="h-button__icon" :icon="icon" :size="16" :title="iconTitle" :stroke-width="1.4" />
+                    <H0Icon v-if="icon" class="h-button__icon" :icon="icon" :size="18" :title="iconTitle" />
                 </slot>
                 <slot v-if="!isOnlyIcon" />
             </template>

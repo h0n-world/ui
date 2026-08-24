@@ -1,4 +1,4 @@
-import type { H0IconDefinition } from '../Icon'
+import type { H0IconSource } from '../Icon'
 import type { H0InputSize, H0InputVariant } from '../Input'
 import type { H0AttributeRoutingProps } from '../../types'
 
@@ -11,7 +11,7 @@ export type H0SelectOption<Value extends H0SelectValue = H0SelectValue> = {
     label: string
     value: Value
     description?: string
-    icon?: H0IconDefinition
+    icon?: H0IconSource
     disabled?: boolean
 }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { searchIcon } from '@h0nio/ui/icons'
+import searchIcon from '@h0nio/icons/search'
 import { H0Input } from '@h0nio/ui'
 </script>
 

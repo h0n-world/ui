@@ -7,7 +7,7 @@ export const buttonAgentRecord = {
     summary: 'Base action control for forms, toolbars, dialogs, command surfaces, and link-like actions.',
     imports: {
         components: ['H0Button'],
-        types: ['H0ButtonProps', 'H0ButtonSize', 'H0ButtonTone', 'H0ButtonTypeVariant', 'H0ButtonVariant'],
+        types: ['H0ButtonProps', 'H0ButtonSize', 'H0ButtonTone', 'H0ButtonTypeVariant', 'H0ButtonVariant', 'H0IconSource'],
         styles: ['@h0nio/ui/style.css'],
     },
     api: {
@@ -16,7 +16,7 @@ export const buttonAgentRecord = {
             { name: 'variant', type: 'H0ButtonVariant', default: "'solid'", description: 'Visual emphasis of the button.' },
             { name: 'size', type: 'H0ButtonSize', default: "'md'", description: 'Controls height, horizontal padding, font size, and icon-only dimensions.' },
             { name: 'buttonType', type: 'H0ButtonTypeVariant', default: "'default'", description: 'Selects text-only, icon-with-text, or icon-only content.' },
-            { name: 'icon', type: 'H0IconDefinition', default: 'undefined', description: 'Structural icon definition from any source. The optional built-in system set is exported from @h0nio/ui/icons.' },
+            { name: 'icon', type: 'H0IconSource', default: 'undefined', description: 'Legacy node definition or body definition imported from an individual @h0nio/icons subpath.' },
             { name: 'iconTitle', type: 'string', default: "''", description: 'Optional accessible SVG title. It does not replace ariaLabel on icon-only controls.' },
             { name: 'type', type: "'button' | 'submit' | 'reset'", default: "'button'", description: 'Native button type when the root is a button element.' },
             { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents pointer and keyboard activation.' },

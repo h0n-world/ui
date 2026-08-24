@@ -66,9 +66,9 @@ export function renderLlmsTxt(records: readonly ComponentAgentRecordV1[], manife
 
 ## Scope and installation
 
-- Install only \`@h0nio/ui\`; there is no required H0N icon package.
+- Install \`@h0nio/ui\` for components; its internal icon dependency is installed automatically.
 - Register the default plugin once and import \`@h0nio/ui/style.css\`.
-- Use the small system icon set from \`@h0nio/ui/icons\`, or pass a compatible \`H0IconDefinition\`/documented custom icon slot.
+- When application code imports icons, install \`@h0nio/icons\` directly and use individual \`@h0nio/icons/<name>\` subpaths. \`@h0nio/ui/icons\` is a compatibility facade.
 - See [Quick Start](/docs/quick-start) for the current plugin and style setup.
 - For a new or existing project, give an AI coding agent the versioned [installation prompt](/agents/install-prompt.md).
 
@@ -104,7 +104,8 @@ Paths in this file are relative to the H0N UI documentation origin. They are not
 - Selective components: \`@h0nio/ui/components/<Family>\`
 - Global styles: \`@h0nio/ui/style.css\`
 - Matching selective styles: \`@h0nio/ui/components/<Family>/style.css\`
-- System icons: \`@h0nio/ui/icons\`
+- Icon definitions: individual \`@h0nio/icons/<name>\` subpaths (direct application dependency)
+- Compatibility icon aliases: \`@h0nio/ui/icons\`
 - Public composables: \`@h0nio/ui/composables\` or documented individual composable subpaths
 - Runtime services and metadata: \`@h0nio/ui/theme\`, \`@h0nio/ui/locale\`, and \`@h0nio/ui/manifest\`
 
@@ -132,7 +133,7 @@ You are working in an existing Vue project. Install and configure **@h0nio/ui@${
 5. For the standard integration, import the default **H0Nui** plugin from **@h0nio/ui**, import **@h0nio/ui/style.css** exactly once, and add **app.use(H0Nui)** to the existing Vue application chain. Do not create a second app instance or discard existing plugins.
 6. Preserve existing product decisions. Add plugin options for theme, animation, density, radius, typography, locale, or toast only when they are already defined by the project or explicitly requested. Otherwise keep the minimal default registration.
 7. Use selective imports only when the project explicitly requires them. Import components from **@h0nio/ui/components/Family** and load either the global stylesheet once or the matching **@h0nio/ui/components/Family/style.css**.
-8. Use system icons from **@h0nio/ui/icons**. Never import package **src**, **_shared**, Vue implementation files, generated chunks, or undeclared deep paths.
+8. If application code needs icons, install **@h0nio/icons** directly and import individual **@h0nio/icons/<name>** subpaths. Treat **@h0nio/ui/icons** as compatibility-only. Never import package **src**, **_shared**, Vue implementation files, generated chunks, or undeclared deep paths.
 9. Do not modify product UI merely to add a demo unless requested. If a smoke example is requested, use public components and remove any temporary test surface that should not ship.
 10. Run the repository's real typecheck and production build, plus relevant tests. Verify that the package version is correct, the stylesheet is loaded once, the existing plugin chain remains intact, and no unrelated lockfile or formatting churn was introduced.
 
@@ -222,7 +223,8 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 - Use \`@h0nio/ui\` for root components, public helpers, and types.
 - Import \`@h0nio/ui/style.css\` exactly once when using the root package.
 - For selective imports, use \`@h0nio/ui/components/<Family>\` and either the global stylesheet or the matching \`@h0nio/ui/components/<Family>/style.css\`.
-- Import the small built-in icon set from \`@h0nio/ui/icons\`. Do not add or reference \`@h0n/icon\`.
+- Install \`@h0nio/icons\` when application code imports icon definitions, then use individual \`@h0nio/icons/<name>\` subpaths. Do not import \`@h0nio/icons/all\` or its catalog in product runtime code.
+- Use \`@h0nio/ui/icons\` only when maintaining code written against the compatibility aliases. Do not add or reference \`@h0n/icon\`.
 - Use documented composable, theme, locale, and manifest subpaths only.
 - Never import package \`src\`, \`_shared\`, generated chunks, Vue implementation files, or undeclared deep paths.
 - Prefer props and public \`--h0n-ui-*\` variables. Component-local variables and internal class names are not API.
@@ -247,8 +249,9 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 
 ## Icons
 
-- \`H0IconDefinition\` is a structural type owned by \`@h0nio/ui\`; applications may define compatible icons locally.
-- Use \`@h0nio/ui/icons\` only for the small common system set.
+- \`H0IconSource\` accepts legacy node-based \`H0IconDefinition\` values and trusted body definitions from \`@h0nio/icons\`.
+- Never build a body definition from user input, network HTML, or another untrusted source.
+- Legacy stroke props do not override the authored geometry of body definitions.
 - Prefer a documented icon or visual slot when passing an existing Vue icon component or inline SVG.
 - Icon-only controls require an accessible name on the control; an SVG title alone is insufficient.
 

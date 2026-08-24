@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { checkIcon, moreHorizontalIcon } from '@h0nio/ui/icons'
+import checkIcon from '@h0nio/icons/check-circle-stroke'
+import moreHorizontalIcon from '@h0nio/icons/menu-dots-stroke'
 import { H0Button, H0Drawer, H0Icon } from '@h0nio/ui'
 import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
@@ -9,8 +10,8 @@ import AllComponentsCatalog from '@/components/documentation/AllComponentsCatalo
 import ColorTokenCatalog from '@/components/documentation/ColorTokenCatalog.vue'
 import IconCatalogSkeleton from '@/components/documentation/IconCatalogSkeleton.vue'
 import RelatedComponentsCatalog from '@/components/documentation/RelatedComponentsCatalog.vue'
-import SystemSidebar from '@/components/system/SystemSidebar.vue'
 import SystemHeader from '@/components/system/SystemHeader.vue'
+import SystemSidebar from '@/components/system/SystemSidebar.vue'
 import {
     documentationPages,
     renderDocumentationPage,
@@ -159,6 +160,7 @@ onBeforeUnmount(() => {
                     </div>
 
                     <h1 class="article-title">{{ page.title }}</h1>
+
                     <p class="article-description">{{ page.description }}</p>
                     <MarkdownContent
                         :alerts="page.alerts"

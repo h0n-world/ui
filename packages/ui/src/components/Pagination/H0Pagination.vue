@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { arrowLeftIcon, arrowRightIcon } from '../../icons'
+import arrowLeftIcon from '@h0nio/icons/alt-arrow-left-stroke'
+import arrowRightIcon from '@h0nio/icons/alt-arrow-right-stroke'
 import { computed } from 'vue'
-import { useH0LocaleSection } from '../_shared/useLocaleSection'
 import { defaultH0PaginationLocale } from '../../locale'
+import { useH0LocaleSection } from '../_shared/useLocaleSection'
 import H0Button from '../Button/H0Button.vue'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
@@ -130,7 +131,7 @@ function setPage(page: number) {
 
         <div class="h-pagination__nav">
             <H0Button size="sm" variant="ghost" :disabled="!canGoPrevious" @click="setPage(currentPage - 1)">
-                <H0Icon class="h-pagination__control-icon" :icon="arrowLeftIcon" :size="16" :stroke-width="1.4" />
+                <H0Icon class="h-pagination__control-icon" :icon="arrowLeftIcon" :size="16" />
                 <span>{{ pagination.previous }}</span>
             </H0Button>
             <div class="h-pagination__items">
@@ -154,7 +155,7 @@ function setPage(page: number) {
 
             <H0Button size="sm" variant="ghost" :disabled="!canGoNext" @click="setPage(currentPage + 1)">
                 <span>{{ pagination.next }}</span>
-                <H0Icon class="h-pagination__control-icon" :icon="arrowRightIcon" :size="16" :stroke-width="1.4" />
+                <H0Icon class="h-pagination__control-icon" :icon="arrowRightIcon" :size="16" />
             </H0Button>
         </div>
     </nav>

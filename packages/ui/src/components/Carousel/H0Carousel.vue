@@ -1,45 +1,43 @@
 <script setup lang="ts" generic="Item extends H0CarouselItem = H0CarouselItem">
-import { arrowLeftIcon, arrowRightIcon } from '../../icons'
+import arrowLeftIcon from '@h0nio/icons/alt-arrow-left-stroke'
+import arrowRightIcon from '@h0nio/icons/alt-arrow-right-stroke'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import H0Icon from '../Icon/H0Icon.vue'
-import H0Typography from '../Typography/H0Typography.vue'
-import type { H0CarouselEmits, H0CarouselItem, H0CarouselProps } from './Carousel.types'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import { useH0Locale } from '../../locale'
 import { toH0CssSize } from '../_shared/utils'
+import H0Icon from '../Icon/H0Icon.vue'
+import H0Typography from '../Typography/H0Typography.vue'
+import type { H0CarouselEmits, H0CarouselItem, H0CarouselProps } from './Carousel.types'
 
 defineOptions({
     name: 'H0Carousel'
 })
 
-const props = withDefaults(
-    defineProps<H0CarouselProps<Item>>(),
-    {
-        items: () => [],
-        defaultValue: 0,
-        width: undefined,
-        height: undefined,
-        fullWidth: true,
-        fullHeight: false,
-        slideWidth: '100%',
-        gap: 12,
-        showPagination: false,
-        paginationVariant: 'dots',
-        showControls: true,
-        controlsPosition: 'inside',
-        showCounter: false,
-        draggable: true,
-        keyboard: true,
-        effect: 'elastic',
-        loop: false,
-        autoplay: false,
-        autoplayInterval: 5000,
-        pauseOnHover: true,
-        pauseOnFocus: true,
-        ariaLabel: '',
-        hideInactiveSlidesFromAccessibility: true
-    }
-)
+const props = withDefaults(defineProps<H0CarouselProps<Item>>(), {
+    items: () => [],
+    defaultValue: 0,
+    width: undefined,
+    height: undefined,
+    fullWidth: true,
+    fullHeight: false,
+    slideWidth: '100%',
+    gap: 12,
+    showPagination: false,
+    paginationVariant: 'dots',
+    showControls: true,
+    controlsPosition: 'inside',
+    showCounter: false,
+    draggable: true,
+    keyboard: true,
+    effect: 'elastic',
+    loop: false,
+    autoplay: false,
+    autoplayInterval: 5000,
+    pauseOnHover: true,
+    pauseOnFocus: true,
+    ariaLabel: '',
+    hideInactiveSlidesFromAccessibility: true
+})
 
 const emit = defineEmits<H0CarouselEmits>()
 
@@ -238,9 +236,12 @@ function scheduleAutoplay() {
         return
     }
 
-    autoplayTimeout = window.setTimeout(() => {
-        next()
-    }, Number.isFinite(props.autoplayInterval) ? Math.max(props.autoplayInterval, 250) : 5000)
+    autoplayTimeout = window.setTimeout(
+        () => {
+            next()
+        },
+        Number.isFinite(props.autoplayInterval) ? Math.max(props.autoplayInterval, 250) : 5000
+    )
 }
 
 function play() {
@@ -300,7 +301,6 @@ onUnmounted(() => {
     window.removeEventListener('resize', updateBaseOffset)
     resizeObserver?.disconnect()
     clearAutoplayTimer()
-
 })
 
 defineExpose({
@@ -314,7 +314,8 @@ defineExpose({
 
 <template>
     <section
-        data-h0n-component="carousel" class="h-carousel"
+        data-h0n-component="carousel"
+        class="h-carousel"
         :class="`h-carousel--controls-${controlsPosition}`"
         :style="rootStyle"
         role="region"
@@ -336,12 +337,7 @@ defineExpose({
             @pointerup="handlePointerEnd"
             @pointercancel="handlePointerEnd"
         >
-            <div
-                ref="track"
-                class="h-carousel__track"
-                :class="[isDragging && effect === 'elastic' && 'h-carousel__track--dragging']"
-                :style="trackStyle"
-            >
+            <div ref="track" class="h-carousel__track" :class="[isDragging && effect === 'elastic' && 'h-carousel__track--dragging']" :style="trackStyle">
                 <article
                     v-for="(item, index) in items"
                     :key="index"
@@ -367,7 +363,7 @@ defineExpose({
                 @click.stop="previous"
             >
                 <slot name="previous-control">
-                    <H0Icon :icon="arrowLeftIcon" :size="18" :stroke-width="1.4" />
+                    <H0Icon :icon="arrowLeftIcon" :size="18" />
                 </slot>
             </button>
             <button
@@ -380,7 +376,7 @@ defineExpose({
                 @click.stop="next"
             >
                 <slot name="next-control">
-                    <H0Icon :icon="arrowRightIcon" :size="18" :stroke-width="1.4" />
+                    <H0Icon :icon="arrowRightIcon" :size="18" />
                 </slot>
             </button>
         </div>
@@ -388,12 +384,12 @@ defineExpose({
         <div v-if="showControls && controlsPosition === 'outside' && hasMultipleSlides" class="h-carousel__outside-controls" role="group" :aria-label="locale.carousel.controls">
             <button class="h-carousel__control h-carousel__control--outside" type="button" :aria-label="locale.carousel.previous" :disabled="!canGoPrevious" @click="previous">
                 <slot name="previous-control">
-                    <H0Icon :icon="arrowLeftIcon" :size="18" :stroke-width="1.4" />
+                    <H0Icon :icon="arrowLeftIcon" :size="18" />
                 </slot>
             </button>
             <button class="h-carousel__control h-carousel__control--outside" type="button" :aria-label="locale.carousel.next" :disabled="!canGoNext" @click="next">
                 <slot name="next-control">
-                    <H0Icon :icon="arrowRightIcon" :size="18" :stroke-width="1.4" />
+                    <H0Icon :icon="arrowRightIcon" :size="18" />
                 </slot>
             </button>
         </div>

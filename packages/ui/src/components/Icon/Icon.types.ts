@@ -11,6 +11,14 @@ export interface H0IconDefinition {
     readonly viewBox?: string
 }
 
+export interface H0IconBodyDefinition {
+    readonly name: string
+    readonly body: string
+    readonly viewBox: string
+}
+
+export type H0IconSource = H0IconDefinition | H0IconBodyDefinition
+
 export type H0IconStrokeLinecap = 'butt' | 'round' | 'square'
 export type H0IconStrokeLinejoin = 'bevel' | 'miter' | 'round'
 import type H0IconComponent from './H0Icon.vue'

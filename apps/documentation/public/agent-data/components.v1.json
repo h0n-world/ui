@@ -992,7 +992,8 @@
           "H0ButtonSize",
           "H0ButtonTone",
           "H0ButtonTypeVariant",
-          "H0ButtonVariant"
+          "H0ButtonVariant",
+          "H0IconSource"
         ],
         "styles": [
           "@h0nio/ui/style.css"
@@ -1026,9 +1027,9 @@
           },
           {
             "name": "icon",
-            "type": "H0IconDefinition",
+            "type": "H0IconSource",
             "default": "undefined",
-            "description": "Structural icon definition from any source. The optional built-in system set is exported from @h0nio/ui/icons."
+            "description": "Legacy node definition or body definition imported from an individual @h0nio/icons subpath."
           },
           {
             "name": "iconTitle",
@@ -2819,7 +2820,8 @@
           "H0CommandProps",
           "H0CommandSize",
           "H0CommandVariant",
-          "H0CommandWindowSize"
+          "H0CommandWindowSize",
+          "H0IconSource"
         ],
         "styles": [
           "@h0nio/ui/style.css"
@@ -3121,8 +3123,8 @@
               },
               {
                 "name": "icon",
-                "type": "H0IconDefinition",
-                "description": "Optional structural H0N icon."
+                "type": "H0IconSource",
+                "description": "Optional legacy node or @h0nio/icons body definition."
               },
               {
                 "name": "shortcut",
@@ -4382,7 +4384,8 @@
         ],
         "types": [
           "H0EmptyStateProps",
-          "H0EmptyStateVariant"
+          "H0EmptyStateVariant",
+          "H0IconSource"
         ],
         "styles": [
           "@h0nio/ui/style.css"
@@ -4404,9 +4407,9 @@
           },
           {
             "name": "icon",
-            "type": "H0IconDefinition",
+            "type": "H0IconSource",
             "default": "undefined",
-            "description": "Imported icon shown when no image or visual slot exists."
+            "description": "Imported legacy node or @h0nio/icons body definition shown when no image or visual slot exists."
           },
           {
             "name": "image",
@@ -5671,15 +5674,17 @@
       "schemaVersion": 1,
       "component": "H0Icon",
       "status": "migrated",
-      "summary": "SVG renderer for lightweight structural icon definitions with no external icon dependency.",
+      "summary": "SVG renderer for legacy node definitions and trusted tree-shakeable body definitions from @h0nio/icons.",
       "imports": {
         "components": [
           "H0Icon"
         ],
         "types": [
+          "H0IconBodyDefinition",
           "H0IconDefinition",
           "H0IconNode",
           "H0IconProps",
+          "H0IconSource",
           "H0IconStrokeLinecap",
           "H0IconStrokeLinejoin"
         ],
@@ -5691,8 +5696,8 @@
         "props": [
           {
             "name": "icon",
-            "type": "H0IconDefinition",
-            "description": "Structural icon definition declared locally, adapted from another source, or imported from @h0nio/ui/icons."
+            "type": "H0IconSource",
+            "description": "Legacy node definition or trusted body definition imported from an individual @h0nio/icons subpath."
           },
           {
             "name": "size",
@@ -5704,7 +5709,7 @@
             "name": "strokeWidth",
             "type": "number | string",
             "default": "2",
-            "description": "SVG stroke width."
+            "description": "SVG stroke width for legacy node definitions; body definitions preserve authored geometry."
           },
           {
             "name": "title",
@@ -5716,19 +5721,49 @@
             "name": "strokeLinecap",
             "type": "H0IconStrokeLinecap",
             "default": "'round'",
-            "description": "SVG line cap style."
+            "description": "SVG line cap style for legacy node definitions."
           },
           {
             "name": "strokeLinejoin",
             "type": "H0IconStrokeLinejoin",
             "default": "'round'",
-            "description": "SVG line join style."
+            "description": "SVG line join style for legacy node definitions."
           }
         ],
         "events": [],
         "slots": [],
         "exposed": [],
         "types": [
+          {
+            "name": "H0IconSource",
+            "fields": [
+              {
+                "name": "H0IconSource",
+                "type": "H0IconDefinition | H0IconBodyDefinition",
+                "description": "Union accepted by H0Icon and public component icon props."
+              }
+            ]
+          },
+          {
+            "name": "H0IconBodyDefinition",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Stable icon name exposed as data-icon."
+              },
+              {
+                "name": "body",
+                "type": "string",
+                "description": "Trusted SVG body markup from a reviewed definition source."
+              },
+              {
+                "name": "viewBox",
+                "type": "string",
+                "description": "SVG coordinate system authored by the icon package."
+              }
+            ]
+          },
           {
             "name": "H0IconDefinition",
             "fields": [
@@ -5796,25 +5831,33 @@
       ],
       "styling": [
         "Icons inherit currentColor.",
-        "Use public sizing and stroke props.",
-        "Custom definitions are stroke-based, fill-none SVGs."
+        "Use size for both formats and stroke props only for node-based compatibility definitions.",
+        "Body definitions preserve their authored solid, stroke, and duotone geometry."
       ],
       "responsive": [
         "Choose size relative to nearby text or controls."
       ],
       "performance": [
-        "Import individual system definitions from @h0nio/ui/icons.",
-        "Keep larger product icon catalogs outside the UI package.",
-        "Use H0Spinner rather than expecting loadingIcon to animate."
+        "Import individual definitions from @h0nio/icons/<name>.",
+        "Do not import @h0nio/icons/all or catalog in product runtime code.",
+        "Treat @h0nio/ui/icons as a compatibility facade, not the primary icon catalog."
       ],
       "examples": [
         {
           "key": "components/icon/GalleryExample",
-          "purpose": "Small tree-shakeable system icon set bundled with @h0nio/ui."
+          "purpose": "Tree-shakeable solid, stroke, and duotone definitions imported from individual @h0nio/icons subpaths."
+        },
+        {
+          "key": "components/icon/SizeExample",
+          "purpose": "Numeric pixel sizes and unchanged CSS size values using settings-minimalistic-stroke."
         },
         {
           "key": "components/icon/StrokeExample",
-          "purpose": "Numeric and CSS sizes, stroke settings, and inherited colors."
+          "purpose": "Authored stroke-style geometry from the settings-minimalistic-stroke definition."
+        },
+        {
+          "key": "components/icon/ColorExample",
+          "purpose": "Inherited currentColor with default and semantic colors."
         },
         {
           "key": "components/icon/AccessibilityExample",
@@ -6704,6 +6747,7 @@
         ],
         "types": [
           "H0AttributeRoutingProps",
+          "H0IconSource",
           "H0InputEmits",
           "H0InputInputMode",
           "H0InputProps",
@@ -6772,15 +6816,15 @@
           },
           {
             "name": "prefixIcon",
-            "type": "H0IconDefinition",
+            "type": "H0IconSource",
             "default": "undefined",
-            "description": "Leading icon."
+            "description": "Leading legacy node or @h0nio/icons body definition."
           },
           {
             "name": "suffixIcon",
-            "type": "H0IconDefinition",
+            "type": "H0IconSource",
             "default": "undefined",
-            "description": "Trailing icon."
+            "description": "Trailing legacy node or @h0nio/icons body definition."
           },
           {
             "name": "readonly",
@@ -10040,6 +10084,7 @@
           "H0Segment"
         ],
         "types": [
+          "H0IconSource",
           "H0SegmentEmits",
           "H0SegmentItem",
           "H0SegmentProps",
@@ -10161,8 +10206,8 @@
               },
               {
                 "name": "icon",
-                "type": "H0IconDefinition | undefined",
-                "description": "Optional leading icon."
+                "type": "H0IconSource | undefined",
+                "description": "Optional leading legacy node or @h0nio/icons body definition."
               },
               {
                 "name": "disabled",
@@ -10238,6 +10283,7 @@
           "H0Select"
         ],
         "types": [
+          "H0IconSource",
           "H0SelectEmits",
           "H0SelectOption",
           "H0SelectProps",
@@ -10531,8 +10577,8 @@
               },
               {
                 "name": "icon",
-                "type": "H0IconDefinition | undefined",
-                "description": "Optional icon."
+                "type": "H0IconSource | undefined",
+                "description": "Optional legacy node or @h0nio/icons body definition."
               },
               {
                 "name": "disabled",
@@ -11575,6 +11621,7 @@
           "H0Stepper"
         ],
         "types": [
+          "H0IconSource",
           "H0StepperColor",
           "H0StepperItem",
           "H0StepperOrientation",
@@ -11672,8 +11719,8 @@
               },
               {
                 "name": "icon",
-                "type": "H0IconDefinition | undefined",
-                "description": "Marker icon before completion."
+                "type": "H0IconSource | undefined",
+                "description": "Legacy node or @h0nio/icons body definition used before completion."
               }
             ]
           }
@@ -13041,6 +13088,7 @@
           "useH0Toast"
         ],
         "types": [
+          "H0IconSource",
           "H0ToastCloseMode",
           "H0ToastConfig",
           "H0ToastEmits",
@@ -13085,9 +13133,9 @@
           },
           {
             "name": "icon",
-            "type": "H0IconDefinition",
+            "type": "H0IconSource",
             "default": "undefined",
-            "description": "Overrides the tone icon."
+            "description": "Legacy node or @h0nio/icons body definition overriding the tone icon."
           },
           {
             "name": "closable",
@@ -13144,9 +13192,9 @@
               },
               {
                 "name": "icon",
-                "type": "H0IconDefinition",
+                "type": "H0IconSource",
                 "default": "undefined",
-                "description": "Optional icon override."
+                "description": "Optional legacy node or @h0nio/icons body definition."
               },
               {
                 "name": "duration",

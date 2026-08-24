@@ -67,12 +67,13 @@ For applications that only use a small part of the library, components and runti
 
 ```ts
 import { H0Button } from '@h0nio/ui/components/Button'
-import { closeIcon } from '@h0nio/ui/icons'
+import searchIcon from '@h0nio/icons/search'
 import { useH0Theme } from '@h0nio/ui/theme'
 import '@h0nio/ui/style.css'
 ```
 
 The root entry imports the shared stylesheet automatically. When using component subpaths, import `@h0nio/ui/style.css` once in the application entry.
+Applications that import definitions from `@h0nio/icons` must list that package as a direct dependency. The legacy `@h0nio/ui/icons` subpath remains a tree-shakeable compatibility facade.
 
 ## Quality checks
 

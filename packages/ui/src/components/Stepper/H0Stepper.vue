@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import unreadIcon from '@h0nio/icons/unread-stroke'
 import { computed } from 'vue'
-import { checkIcon } from '../../icons'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
@@ -34,14 +34,14 @@ const labelVariant = computed(() => (props.size === 'lg' ? 'body' : props.size =
 const descriptionVariant = computed(() => (props.size === 'lg' ? 'body-sm' : 'body-xs'))
 const iconSize = computed(() => {
     if (props.size === 'sm') {
-        return 13
+        return 16
     }
 
     if (props.size === 'lg') {
-        return 20
+        return 24
     }
 
-    return 16
+    return 20
 })
 
 function getStepState(index: number) {
@@ -63,8 +63,8 @@ function getStepState(index: number) {
             <li v-for="(item, index) in items" :key="`${item.label ?? 'step'}-${index}`" class="h-stepper__item" :class="[`h-stepper__item--${getStepState(index)}`]">
                 <div class="h-stepper__marker-wrap" aria-hidden="true">
                     <span class="h-stepper__marker">
-                        <H0Icon v-if="item.icon" class="h-stepper__marker-content" :icon="item.icon" :size="iconSize" :stroke-width="1.4" />
-                        <H0Icon v-else-if="getStepState(index) === 'complete'" class="h-stepper__marker-content" :icon="checkIcon" :size="iconSize" :stroke-width="2.6" />
+                        <H0Icon v-if="item.icon" class="h-stepper__marker-content" :icon="item.icon" :size="iconSize" />
+                        <H0Icon v-else-if="getStepState(index) === 'complete'" class="h-stepper__marker-content" :icon="unreadIcon" :size="iconSize" />
                         <span v-else class="h-stepper__marker-content">{{ index + 1 }}</span>
                     </span>
                 </div>

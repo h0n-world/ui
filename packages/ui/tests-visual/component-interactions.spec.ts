@@ -32,5 +32,5 @@ test('Field inheritance remains accessible', async ({ page }) => {
 test('responsive layout components render in RTL', async ({ page }) => {
     await page.goto('/components/layout')
     await page.locator('html').evaluate((element) => { element.dir = 'rtl' })
-    await expect(page.locator('[data-h0n-component="inline"]')).toBeVisible()
+    await expect(page.locator('[data-h0n-component="inline"]').first()).toBeVisible()
 })

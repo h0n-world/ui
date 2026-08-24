@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { H0IconDefinition } from '../Icon'
+import eyeOffIcon from '@h0nio/icons/eye-closed-stroke'
+import eyeIcon from '@h0nio/icons/eye-stroke'
 import { computed, ref, useAttrs } from 'vue'
 import { useH0ControllableState } from '../../composables'
 import { defaultH0PasswordInputLocale, useH0Locale } from '../../locale'
@@ -12,23 +13,6 @@ import H0Label from '../Typography/H0Label.vue'
 import { useFormField } from '../_shared/useFormField'
 
 defineOptions({ name: 'H0PasswordInput', inheritAttrs: false })
-
-const eyeIcon = {
-    name: 'eye',
-    nodes: [
-        ['path', { d: 'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6' }],
-        ['circle', { cx: 12, cy: 12, r: 2.75 }]
-    ]
-} as const satisfies H0IconDefinition
-
-const eyeOffIcon = {
-    name: 'eye-off',
-    nodes: [
-        ['path', { d: 'M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6' }],
-        ['circle', { cx: 12, cy: 12, r: 2.75 }],
-        ['line', { x1: 3, y1: 3, x2: 21, y2: 21 }]
-    ]
-} as const satisfies H0IconDefinition
 
 const props = withDefaults(
     defineProps<{
@@ -168,8 +152,8 @@ function detectCaps(event: KeyboardEvent) {
                 @keydown="detectCaps"
                 @keyup="detectCaps"
                 @focus="emit('focus', $event)"
-                @blur="capsLock = false; emit('blur', $event)"
-            >
+                @blur="((capsLock = false), emit('blur', $event))"
+            />
             <button
                 class="h-password-input__toggle"
                 type="button"
@@ -178,7 +162,7 @@ function detectCaps(event: KeyboardEvent) {
                 :aria-pressed="visibilityState.value.value"
                 @click="toggle"
             >
-                <H0Icon :icon="visibilityState.value.value ? eyeOffIcon : eyeIcon" :size="18" :stroke-width="1.8" />
+                <H0Icon :icon="visibilityState.value.value ? eyeOffIcon : eyeIcon" :size="18" />
             </button>
         </span>
         <H0ErrorMessage v-if="!fieldContext && visibleError" :id="messageId">{{ visibleError }}</H0ErrorMessage>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { plusIcon } from '@h0nio/ui/icons'
+import plusIcon from '@h0nio/icons/add-circle-stroke'
 import { ref } from 'vue'
 import { H0EmptyState, H0Typography } from '@h0nio/ui'
 

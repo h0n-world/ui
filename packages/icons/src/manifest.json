@@ -188,6 +188,39 @@
         "reorder"
       ]
     },
+    "add": {
+      "style": "solid",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "add",
+        "plus",
+        "create"
+      ]
+    },
+    "add-duotone": {
+      "style": "duotone",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "add",
+        "plus",
+        "create"
+      ]
+    },
+    "add-stroke": {
+      "style": "stroke",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "add",
+        "plus",
+        "create"
+      ]
+    },
     "add-circle": {
       "style": "solid",
       "categories": [
@@ -7803,6 +7836,39 @@
       "tags": [
         "clock",
         "square"
+      ]
+    },
+    "close": {
+      "style": "solid",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "close",
+        "dismiss",
+        "x"
+      ]
+    },
+    "close-duotone": {
+      "style": "duotone",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "close",
+        "dismiss",
+        "x"
+      ]
+    },
+    "close-stroke": {
+      "style": "stroke",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "close",
+        "dismiss",
+        "x"
       ]
     },
     "close-circle": {
@@ -20436,6 +20502,39 @@
       ],
       "tags": [
         "minimize"
+      ]
+    },
+    "minus": {
+      "style": "solid",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "minus",
+        "remove",
+        "subtract"
+      ]
+    },
+    "minus-duotone": {
+      "style": "duotone",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "minus",
+        "remove",
+        "subtract"
+      ]
+    },
+    "minus-stroke": {
+      "style": "stroke",
+      "categories": [
+        "interface"
+      ],
+      "tags": [
+        "minus",
+        "remove",
+        "subtract"
       ]
     },
     "minus-circle": {

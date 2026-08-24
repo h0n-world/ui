@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import arrowRightIcon from '@h0nio/icons/alt-arrow-right-stroke'
+import checkIcon from '@h0nio/icons/check-circle-stroke'
+import searchIcon from '@h0nio/icons/search'
+import settingsIcon from '@h0nio/icons/settings-stroke'
 import type { H0SelectOption, H0TabItem } from '@h0nio/ui'
 import {
     H0Alert,
@@ -19,7 +23,6 @@ import {
     H0Tabs,
     H0Typography,
 } from '@h0nio/ui'
-import { arrowRightIcon, checkIcon, searchIcon, settingsIcon } from '@h0nio/ui/icons'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
@@ -83,13 +86,13 @@ const interfaceTips = ref(false)
 
                     <H0Inline class="hero-section__meta" gap="lg" justify="center">
                         <H0Inline as="span" gap="xs" :wrap="false">
-                            <H0Icon :icon="checkIcon" :size="15" /> Accessible by design
+                            <H0Icon :icon="checkIcon" :size="16" /> Accessible by design
                         </H0Inline>
                         <H0Inline as="span" gap="xs" :wrap="false">
-                            <H0Icon :icon="checkIcon" :size="15" /> Fully typed
+                            <H0Icon :icon="checkIcon" :size="16" /> Fully typed
                         </H0Inline>
                         <H0Inline as="span" gap="xs" :wrap="false">
-                            <H0Icon :icon="checkIcon" :size="15" /> Theme ready
+                            <H0Icon :icon="checkIcon" :size="16" /> Theme ready
                         </H0Inline>
                     </H0Inline>
                 </H0Stack>

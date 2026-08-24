@@ -19,12 +19,15 @@ import { ActionsReorderIcon } from './icons/actions-reorder.js';
 import { AddCircleDuotoneIcon } from './icons/add-circle-duotone.js';
 import { AddCircleStrokeIcon } from './icons/add-circle-stroke.js';
 import { AddCircleIcon } from './icons/add-circle.js';
+import { AddDuotoneIcon } from './icons/add-duotone.js';
 import { AddFolderDuotoneIcon } from './icons/add-folder-duotone.js';
 import { AddFolderStrokeIcon } from './icons/add-folder-stroke.js';
 import { AddFolderIcon } from './icons/add-folder.js';
 import { AddSquareDuotoneIcon } from './icons/add-square-duotone.js';
 import { AddSquareStrokeIcon } from './icons/add-square-stroke.js';
 import { AddSquareIcon } from './icons/add-square.js';
+import { AddStrokeIcon } from './icons/add-stroke.js';
+import { AddIcon } from './icons/add.js';
 import { AdhesivePlaster2DuotoneIcon } from './icons/adhesive-plaster-2-duotone.js';
 import { AdhesivePlaster2StrokeIcon } from './icons/adhesive-plaster-2-stroke.js';
 import { AdhesivePlaster2Icon } from './icons/adhesive-plaster-2.js';
@@ -773,9 +776,12 @@ import { ClockSquareIcon } from './icons/clock-square.js';
 import { CloseCircleDuotoneIcon } from './icons/close-circle-duotone.js';
 import { CloseCircleStrokeIcon } from './icons/close-circle-stroke.js';
 import { CloseCircleIcon } from './icons/close-circle.js';
+import { CloseDuotoneIcon } from './icons/close-duotone.js';
 import { CloseSquareDuotoneIcon } from './icons/close-square-duotone.js';
 import { CloseSquareStrokeIcon } from './icons/close-square-stroke.js';
 import { CloseSquareIcon } from './icons/close-square.js';
+import { CloseStrokeIcon } from './icons/close-stroke.js';
+import { CloseIcon } from './icons/close.js';
 import { Closet2DuotoneIcon } from './icons/closet-2-duotone.js';
 import { Closet2StrokeIcon } from './icons/closet-2-stroke.js';
 import { Closet2Icon } from './icons/closet-2.js';
@@ -2037,9 +2043,12 @@ import { MinimizeIcon } from './icons/minimize.js';
 import { MinusCircleDuotoneIcon } from './icons/minus-circle-duotone.js';
 import { MinusCircleStrokeIcon } from './icons/minus-circle-stroke.js';
 import { MinusCircleIcon } from './icons/minus-circle.js';
+import { MinusDuotoneIcon } from './icons/minus-duotone.js';
 import { MinusSquareDuotoneIcon } from './icons/minus-square-duotone.js';
 import { MinusSquareStrokeIcon } from './icons/minus-square-stroke.js';
 import { MinusSquareIcon } from './icons/minus-square.js';
+import { MinusStrokeIcon } from './icons/minus-stroke.js';
+import { MinusIcon } from './icons/minus.js';
 import { MirrorLeftDuotoneIcon } from './icons/mirror-left-duotone.js';
 import { MirrorLeftStrokeIcon } from './icons/mirror-left-stroke.js';
 import { MirrorLeftIcon } from './icons/mirror-left.js';
@@ -3780,12 +3789,15 @@ export { ActionsReorderIcon } from './icons/actions-reorder.js';
 export { AddCircleDuotoneIcon } from './icons/add-circle-duotone.js';
 export { AddCircleStrokeIcon } from './icons/add-circle-stroke.js';
 export { AddCircleIcon } from './icons/add-circle.js';
+export { AddDuotoneIcon } from './icons/add-duotone.js';
 export { AddFolderDuotoneIcon } from './icons/add-folder-duotone.js';
 export { AddFolderStrokeIcon } from './icons/add-folder-stroke.js';
 export { AddFolderIcon } from './icons/add-folder.js';
 export { AddSquareDuotoneIcon } from './icons/add-square-duotone.js';
 export { AddSquareStrokeIcon } from './icons/add-square-stroke.js';
 export { AddSquareIcon } from './icons/add-square.js';
+export { AddStrokeIcon } from './icons/add-stroke.js';
+export { AddIcon } from './icons/add.js';
 export { AdhesivePlaster2DuotoneIcon } from './icons/adhesive-plaster-2-duotone.js';
 export { AdhesivePlaster2StrokeIcon } from './icons/adhesive-plaster-2-stroke.js';
 export { AdhesivePlaster2Icon } from './icons/adhesive-plaster-2.js';
@@ -4534,9 +4546,12 @@ export { ClockSquareIcon } from './icons/clock-square.js';
 export { CloseCircleDuotoneIcon } from './icons/close-circle-duotone.js';
 export { CloseCircleStrokeIcon } from './icons/close-circle-stroke.js';
 export { CloseCircleIcon } from './icons/close-circle.js';
+export { CloseDuotoneIcon } from './icons/close-duotone.js';
 export { CloseSquareDuotoneIcon } from './icons/close-square-duotone.js';
 export { CloseSquareStrokeIcon } from './icons/close-square-stroke.js';
 export { CloseSquareIcon } from './icons/close-square.js';
+export { CloseStrokeIcon } from './icons/close-stroke.js';
+export { CloseIcon } from './icons/close.js';
 export { Closet2DuotoneIcon } from './icons/closet-2-duotone.js';
 export { Closet2StrokeIcon } from './icons/closet-2-stroke.js';
 export { Closet2Icon } from './icons/closet-2.js';
@@ -5798,9 +5813,12 @@ export { MinimizeIcon } from './icons/minimize.js';
 export { MinusCircleDuotoneIcon } from './icons/minus-circle-duotone.js';
 export { MinusCircleStrokeIcon } from './icons/minus-circle-stroke.js';
 export { MinusCircleIcon } from './icons/minus-circle.js';
+export { MinusDuotoneIcon } from './icons/minus-duotone.js';
 export { MinusSquareDuotoneIcon } from './icons/minus-square-duotone.js';
 export { MinusSquareStrokeIcon } from './icons/minus-square-stroke.js';
 export { MinusSquareIcon } from './icons/minus-square.js';
+export { MinusStrokeIcon } from './icons/minus-stroke.js';
+export { MinusIcon } from './icons/minus.js';
 export { MirrorLeftDuotoneIcon } from './icons/mirror-left-duotone.js';
 export { MirrorLeftStrokeIcon } from './icons/mirror-left-stroke.js';
 export { MirrorLeftIcon } from './icons/mirror-left.js';
@@ -7542,12 +7560,15 @@ export const icons: Record<IconName, IconDefinition> = {
   "add-circle-duotone": AddCircleDuotoneIcon,
   "add-circle-stroke": AddCircleStrokeIcon,
   "add-circle": AddCircleIcon,
+  "add-duotone": AddDuotoneIcon,
   "add-folder-duotone": AddFolderDuotoneIcon,
   "add-folder-stroke": AddFolderStrokeIcon,
   "add-folder": AddFolderIcon,
   "add-square-duotone": AddSquareDuotoneIcon,
   "add-square-stroke": AddSquareStrokeIcon,
   "add-square": AddSquareIcon,
+  "add-stroke": AddStrokeIcon,
+  "add": AddIcon,
   "adhesive-plaster-2-duotone": AdhesivePlaster2DuotoneIcon,
   "adhesive-plaster-2-stroke": AdhesivePlaster2StrokeIcon,
   "adhesive-plaster-2": AdhesivePlaster2Icon,
@@ -8296,9 +8317,12 @@ export const icons: Record<IconName, IconDefinition> = {
   "close-circle-duotone": CloseCircleDuotoneIcon,
   "close-circle-stroke": CloseCircleStrokeIcon,
   "close-circle": CloseCircleIcon,
+  "close-duotone": CloseDuotoneIcon,
   "close-square-duotone": CloseSquareDuotoneIcon,
   "close-square-stroke": CloseSquareStrokeIcon,
   "close-square": CloseSquareIcon,
+  "close-stroke": CloseStrokeIcon,
+  "close": CloseIcon,
   "closet-2-duotone": Closet2DuotoneIcon,
   "closet-2-stroke": Closet2StrokeIcon,
   "closet-2": Closet2Icon,
@@ -9560,9 +9584,12 @@ export const icons: Record<IconName, IconDefinition> = {
   "minus-circle-duotone": MinusCircleDuotoneIcon,
   "minus-circle-stroke": MinusCircleStrokeIcon,
   "minus-circle": MinusCircleIcon,
+  "minus-duotone": MinusDuotoneIcon,
   "minus-square-duotone": MinusSquareDuotoneIcon,
   "minus-square-stroke": MinusSquareStrokeIcon,
   "minus-square": MinusSquareIcon,
+  "minus-stroke": MinusStrokeIcon,
+  "minus": MinusIcon,
   "mirror-left-duotone": MirrorLeftDuotoneIcon,
   "mirror-left-stroke": MirrorLeftStrokeIcon,
   "mirror-left": MirrorLeftIcon,

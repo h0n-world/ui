@@ -3,8 +3,8 @@ import { expect, test } from '@playwright/test'
 test('icon catalog renders definitions across theme and size controls', async ({ page }) => {
     await page.goto('/icons/overview')
 
-    const cards = page.locator('.icon-card')
-    await expect(cards).toHaveCount(96)
+    const cards = page.getByRole('region', { name: 'All icons' }).getByRole('button', { name: /^Copy import for / })
+    await expect(cards).toHaveCount(96, { timeout: 15_000 })
 
     const firstIcon = cards.first().locator('svg')
     await expect(firstIcon).toHaveAttribute('width', '34')

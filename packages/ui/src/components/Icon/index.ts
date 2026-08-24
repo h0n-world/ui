@@ -1,11 +1,13 @@
 export { default as H0Icon } from './H0Icon.vue'
 export type {
     H0IconCircleNode,
+    H0IconBodyDefinition,
     H0IconDefinition,
     H0IconLineNode,
     H0IconNode,
     H0IconPathNode,
     H0IconPolylineNode,
+    H0IconSource,
     H0IconStrokeLinecap,
     H0IconStrokeLinejoin
 } from './Icon.types'

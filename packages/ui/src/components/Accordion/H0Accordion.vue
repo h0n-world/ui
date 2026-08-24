@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { arrowDownIcon } from '../../icons'
+import arrowDownIcon from '@h0nio/icons/alt-arrow-down-stroke'
 import { computed, ref, useId, watch } from 'vue'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
@@ -94,7 +94,7 @@ function getPanelId(index: number) {
                 @click="toggleItem(index, item.disabled)"
             >
                 <H0Typography as="span" variant="body" :weight="500">{{ item.title }}</H0Typography>
-                <H0Icon class="h-accordion__icon" :icon="arrowDownIcon" :size="18" :stroke-width="1.4" />
+                <H0Icon class="h-accordion__icon" :icon="arrowDownIcon" :size="18" />
             </button>
 
             <div

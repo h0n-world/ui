@@ -30,7 +30,8 @@
     "files": [
         "dist",
         "README.md",
-        "LICENSE"
+        "LICENSE",
+        "LICENSE-THIRD-PARTY"
     ],
     "main": "./dist/h0n-ui.umd.cjs",
     "module": "./dist/h0n-ui.js",
@@ -113,6 +114,7 @@
         "verify:package": "node scripts/verify-package-contents.mjs"
     },
     "dependencies": {
+        "@h0nio/icons": "workspace:^",
         "@floating-ui/dom": "^1.8.0"
     },
     "peerDependencies": {

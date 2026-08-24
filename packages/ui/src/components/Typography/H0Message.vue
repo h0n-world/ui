@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { errorIcon, infoIcon, successIcon, warningIcon } from '../../icons'
-import type { H0IconDefinition } from '../Icon'
+import successIcon from '@h0nio/icons/check-circle-stroke'
+import errorIcon from '@h0nio/icons/danger-circle-stroke'
+import warningIcon from '@h0nio/icons/danger-triangle-stroke'
+import infoIcon from '@h0nio/icons/info-circle-stroke'
 import { computed } from 'vue'
+import type { H0IconSource } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Typography from './H0Typography.vue'
 import type { H0MessageTone } from './Typography.types'
@@ -23,7 +26,7 @@ const props = withDefaults(
     }
 )
 
-const resolvedIcon = computed<H0IconDefinition>(() => {
+const resolvedIcon = computed<H0IconSource>(() => {
     if (props.tone === 'success') {
         return successIcon
     }
@@ -42,7 +45,7 @@ const resolvedIcon = computed<H0IconDefinition>(() => {
 
 <template>
     <H0Typography data-h0n-component="message" class="h-message" :class="`h-message--${tone}`" variant="body-sm" as="p">
-        <H0Icon v-if="icon" class="h-message__icon" :icon="resolvedIcon" :size="16" :stroke-width="1.4" />
+        <H0Icon v-if="icon" class="h-message__icon" :icon="resolvedIcon" :size="16" />
         <span>
             <slot>{{ text }}</slot>
         </span>

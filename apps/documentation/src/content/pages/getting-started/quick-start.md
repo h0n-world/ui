@@ -21,7 +21,13 @@ npm install @h0nio/ui
 pnpm add @h0nio/ui
 ```
 
-The application must use Vue `3.5` or newer. H0N UI has no required icon package: its controls include their own system icons, while the small optional system set is available from `@h0nio/ui/icons`.
+The application must use Vue `3.5` or newer. H0N UI installs its icon runtime dependency automatically for built-in controls. Install `@h0nio/icons` directly only when application code imports icon definitions:
+
+```bash
+pnpm add @h0nio/icons
+```
+
+Prefer individual imports such as `@h0nio/icons/search`. The older `@h0nio/ui/icons` entry remains available as a compatibility facade.
 
 ## Install with an AI agent
 

@@ -1,6 +1,6 @@
 {
     "name": "@h0nio/icons",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Framework-agnostic, tree-shakeable SVG icons for h0nio projects",
     "keywords": [
         "icons",

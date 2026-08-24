@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { closeIcon, errorIcon, infoIcon, loadingIcon, successIcon, warningIcon } from '../../icons'
-import type { H0IconDefinition } from '../Icon'
+import successIcon from '@h0nio/icons/check-circle-stroke'
+import closeIcon from '@h0nio/icons/close'
+import errorIcon from '@h0nio/icons/danger-circle-stroke'
+import warningIcon from '@h0nio/icons/danger-triangle-stroke'
+import infoIcon from '@h0nio/icons/info-circle-stroke'
+import loadingIcon from '@h0nio/icons/refresh-stroke'
 import { computed } from 'vue'
 import H0Button from '../Button/H0Button.vue'
+import type { H0IconSource } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
@@ -39,7 +44,7 @@ const emit = defineEmits<{
 }>()
 
 const isCompact = computed(() => !props.text && !props.actionText)
-const resolvedIcon = computed<H0IconDefinition>(() => {
+const resolvedIcon = computed<H0IconSource>(() => {
     if (props.tone === 'success') {
         return successIcon
     }
@@ -63,7 +68,7 @@ const resolvedIcon = computed<H0IconDefinition>(() => {
 <template>
     <div data-h0n-component="alert" class="h-alert" :class="[`h-alert--${loading ? 'loading' : tone}`, isCompact && 'h-alert--compact']" role="alert">
         <slot name="icon">
-            <H0Icon class="h-alert__icon" :icon="resolvedIcon" :size="20" :stroke-width="1.5" />
+            <H0Icon class="h-alert__icon" :icon="resolvedIcon" :size="20" />
         </slot>
 
         <div class="h-alert__content">
@@ -80,7 +85,7 @@ const resolvedIcon = computed<H0IconDefinition>(() => {
         </H0Button>
 
         <button v-if="closable" class="h-alert__close" type="button" :aria-label="closeAriaLabel" @click="emit('close')">
-            <H0Icon :icon="closeIcon" :size="20" :stroke-width="1.5" />
+            <H0Icon :icon="closeIcon" :size="18" />
         </button>
     </div>
 </template>

@@ -44,7 +44,7 @@ Use `md` in most product interfaces, `sm` in dense toolbars and tables, and `lg`
 
 ## Buttons with icons
 
-Set `buttonType="withIcon"` and either pass an `H0IconDefinition` through `icon` or provide arbitrary Vue/SVG content through the `icon` slot. Definitions from the small built-in set are available at `@h0nio/ui/icons`; no separate icon package is required. Keep visible text action-oriented.
+Set `buttonType="withIcon"` and either pass an `H0IconSource` through `icon` or provide arbitrary Vue/SVG content through the `icon` slot. Prefer individual definitions such as `@h0nio/icons/search`; applications importing them directly should install `@h0nio/icons`. Keep visible text action-oriented.
 
 :::example components/button/WithIconExample
 :::
@@ -99,7 +99,7 @@ Template attributes may use kebab case, for example `button-type`, `loading-text
 
 ## Types
 
-`H0ButtonProps` represents the complete prop object documented above. The `icon` prop accepts the structural [`H0IconDefinition`](/components/icon#h0icondefinition) type exported by `@h0nio/ui`. Use the `icon` slot when an icon is already implemented as a Vue component or SVG template.
+`H0ButtonProps` represents the complete prop object documented above. The `icon` prop accepts [`H0IconSource`](/components/icon#h0iconsource), covering legacy node definitions and body definitions from `@h0nio/icons`. Use the `icon` slot when an icon is already implemented as a Vue component or SVG template.
 
 ### H0ButtonTone
 

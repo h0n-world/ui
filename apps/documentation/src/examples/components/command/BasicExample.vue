@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { H0Command, type H0CommandItem } from '@h0nio/ui'
-import { plusIcon, settingsIcon, userIcon } from '@h0nio/ui/icons'
+import settingsIcon from '@h0nio/icons/settings-stroke'
+import userIcon from '@h0nio/icons/user-stroke'
+import plusIcon from '@h0nio/icons/add-circle-stroke'
 
 const selected = ref('No command selected')
 const items: H0CommandItem[] = [

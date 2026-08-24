@@ -53,11 +53,15 @@ describe('@h0nio/ui package metadata', () => {
         const license = readFileSync(resolve(packageRoot, 'LICENSE'), 'utf8')
         expect(license).toContain('MIT License')
         expect(license).toContain('Copyright (c) 2026 H0N World')
+        const thirdPartyLicense = readFileSync(resolve(packageRoot, 'LICENSE-THIRD-PARTY'), 'utf8')
+        expect(thirdPartyLicense).toContain('Solar Icons')
+        expect(thirdPartyLicense).toContain('480 Design')
+        expect(thirdPartyLicense).toContain('CC BY 4.0')
         expect(readFileSync(resolve(packageRoot, 'README.md'), 'utf8')).toContain('# H0N UI')
     })
 
     it('publishes only intentional artifacts and marks CSS as side-effectful', () => {
-        expect(packageJson.files).toEqual(['dist', 'README.md', 'LICENSE'])
+        expect(packageJson.files).toEqual(['dist', 'README.md', 'LICENSE', 'LICENSE-THIRD-PARTY'])
         expect(packageJson.sideEffects).toEqual(['**/*.css'])
         expect(packageJson.main).toBe('./dist/h0n-ui.umd.cjs')
         expect(packageJson.module).toBe('./dist/h0n-ui.js')
@@ -118,7 +122,7 @@ describe('@h0nio/ui package metadata', () => {
             },
             './package.json': './package.json'
         })
-        expect(packageJson.dependencies).toEqual({ '@floating-ui/dom': '^1.8.0' })
+        expect(packageJson.dependencies).toEqual({ '@floating-ui/dom': '^1.8.0', '@h0nio/icons': 'workspace:^' })
         expect(packageJson.peerDependencies).toEqual({ vue: '^3.5.0' })
     })
 

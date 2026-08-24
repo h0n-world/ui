@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { searchIcon } from '../../icons'
+import searchIcon from '@h0nio/icons/search'
 import { computed, useAttrs, useTemplateRef } from 'vue'
 import { useH0ControllableState } from '../../composables'
 import H0Icon from '../Icon/H0Icon.vue'
@@ -132,7 +132,7 @@ defineExpose({
             <template #start>
                 <span class="h-search-field__icon" aria-hidden="true">
                     <slot name="icon">
-                        <H0Icon :icon="searchIcon" :size="16" :stroke-width="2" />
+                        <H0Icon :icon="searchIcon" :size="16" />
                     </slot>
                 </span>
             </template>

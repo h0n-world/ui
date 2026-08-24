@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { emailIcon, plusIcon, searchIcon, trashIcon } from '@h0nio/ui/icons'
+import emailIcon from '@h0nio/icons/letter-stroke'
+import plusIcon from '@h0nio/icons/add-circle-stroke'
+import searchIcon from '@h0nio/icons/search'
+import trashIcon from '@h0nio/icons/trash-bin-trash-stroke'
 import { H0Button } from '@h0nio/ui'
 </script>
 

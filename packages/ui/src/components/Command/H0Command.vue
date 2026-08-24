@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import searchIcon from '@h0nio/icons/search'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useAttrs, useId, useTemplateRef, watch } from 'vue'
 import { useH0ControllableState } from '../../composables'
-import { searchIcon } from '../../icons'
 import { useH0Locale } from '../../locale'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
@@ -238,7 +238,7 @@ defineExpose({ close, focus, open, setQuery, toggle })
                 aria-haspopup="dialog"
                 @click="toggle"
             >
-                <H0Icon :icon="searchIcon" :size="16" :stroke-width="1.8" aria-hidden="true" />
+                <H0Icon :icon="searchIcon" :size="20" aria-hidden="true" />
                 <span>{{ resolvedTriggerLabel }}</span>
                 <kbd v-if="hotkey" class="h-command__shortcut">{{ hotkey }}</kbd>
             </button>
@@ -263,7 +263,7 @@ defineExpose({ close, focus, open, setQuery, toggle })
                             <slot name="header" :query="currentQuery" :close="close" />
                         </header>
                         <div class="h-command__search">
-                            <H0Icon class="h-command__search-icon" :icon="searchIcon" :size="18" :stroke-width="1.8" aria-hidden="true" />
+                            <H0Icon class="h-command__search-icon" :icon="searchIcon" :size="20" aria-hidden="true" />
                             <input
                                 :id="inputId"
                                 class="h-command__input"
@@ -313,7 +313,7 @@ defineExpose({ close, focus, open, setQuery, toggle })
                                         <slot name="item" :item="entry.item" :active="entry.index === activeIndex" :query="currentQuery">
                                             <span v-if="entry.item.icon || $slots['item-start']" class="h-command__item-start">
                                                 <slot name="item-start" :item="entry.item" :active="entry.index === activeIndex">
-                                                    <H0Icon v-if="entry.item.icon" :icon="entry.item.icon" :size="18" :stroke-width="1.8" />
+                                                    <H0Icon v-if="entry.item.icon" :icon="entry.item.icon" :size="18" />
                                                 </slot>
                                             </span>
                                             <span class="h-command__item-copy">

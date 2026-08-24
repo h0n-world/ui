@@ -1,54 +1,25 @@
 <script setup lang="ts">
-import {
-    arrowDownIcon,
-    arrowLeftIcon,
-    arrowRightIcon,
-    arrowUpIcon,
-    bellIcon,
-    checkIcon,
-    closeIcon,
-    emailIcon,
-    errorIcon,
-    infoIcon,
-    loadingIcon,
-    minusIcon,
-    moreHorizontalIcon,
-    pendingIcon,
-    plusIcon,
-    searchIcon,
-    settingsIcon,
-    successIcon,
-    thumbUpIcon,
-    trashIcon,
-    userIcon,
-    warningIcon,
-    type H0IconDefinition
-} from '@h0nio/ui/icons'
-import { H0Icon } from '@h0nio/ui'
+import accessibilityIcon from '@h0nio/icons/accessibility-duotone'
+import bellIcon from '@h0nio/icons/bell-stroke'
+import checkIcon from '@h0nio/icons/check-circle-stroke'
+import heartIcon from '@h0nio/icons/heart-duotone'
+import paletteIcon from '@h0nio/icons/palette-duotone'
+import searchIcon from '@h0nio/icons/search'
+import settingsIcon from '@h0nio/icons/settings-stroke'
+import trashIcon from '@h0nio/icons/trash-bin-trash-stroke'
+import userIcon from '@h0nio/icons/user-stroke'
+import { H0Icon, type H0IconSource } from '@h0nio/ui'
 
-const icons: H0IconDefinition[] = [
-    arrowDownIcon,
-    arrowLeftIcon,
-    arrowRightIcon,
-    arrowUpIcon,
+const icons: H0IconSource[] = [
+    accessibilityIcon,
     bellIcon,
     checkIcon,
-    closeIcon,
-    emailIcon,
-    errorIcon,
-    infoIcon,
-    loadingIcon,
-    minusIcon,
-    moreHorizontalIcon,
-    pendingIcon,
-    plusIcon,
+    heartIcon,
+    paletteIcon,
     searchIcon,
     settingsIcon,
-    successIcon,
-    thumbUpIcon,
     trashIcon,
-    userIcon,
-    warningIcon
+    userIcon
 ]
 </script>
 

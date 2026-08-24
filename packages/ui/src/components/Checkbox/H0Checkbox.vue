@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { checkIcon, minusIcon } from '../../icons'
+import minusIcon from '@h0nio/icons/minus-stroke'
+import unreadIcon from '@h0nio/icons/unread-stroke'
 import { computed, useAttrs, useTemplateRef, watchEffect } from 'vue'
+import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
 import { useFormField } from '../_shared/useFormField'
-import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import type { H0CheckboxSize, H0CheckboxVariant } from './Checkbox.types'
 
 defineOptions({
@@ -100,7 +101,10 @@ watchEffect(() => {
 
 <template>
     <div v-bind="mergedRootAttrs" data-h0n-component="checkbox" class="h-checkbox-field" :class="visibleError && 'h-checkbox-field--error'">
-        <label class="h-checkbox" :class="[`h-checkbox--${size}`, `h-checkbox--${variant}`, resolvedDisabled && 'h-checkbox--disabled', checked && 'h-checkbox--checked', indeterminate && 'h-checkbox--indeterminate']">
+        <label
+            class="h-checkbox"
+            :class="[`h-checkbox--${size}`, `h-checkbox--${variant}`, resolvedDisabled && 'h-checkbox--disabled', checked && 'h-checkbox--checked', indeterminate && 'h-checkbox--indeterminate']"
+        >
             <input
                 v-bind="props.controlAttrs"
                 :id="controlId"
@@ -120,9 +124,11 @@ watchEffect(() => {
                 @focus="emit('focus', $event)"
             />
             <span class="h-checkbox__box" aria-hidden="true">
-                <H0Icon class="h-checkbox__mark" :icon="indeterminate ? minusIcon : checkIcon" :size="size === 'sm' ? 12 : size === 'lg' ? 16 : 14" :stroke-width="3" />
+                <H0Icon class="h-checkbox__mark" :icon="indeterminate ? minusIcon : unreadIcon" :size="size === 'sm' ? 16 : size === 'lg' ? 26 : 20" />
             </span>
-            <span v-if="!fieldContext && (resolvedLabel || $slots.default)" class="h-checkbox__label"><slot>{{ resolvedLabel }}</slot></span>
+            <span v-if="!fieldContext && (resolvedLabel || $slots.default)" class="h-checkbox__label"
+                ><slot>{{ resolvedLabel }}</slot></span
+            >
         </label>
         <H0ErrorMessage v-if="!fieldContext && visibleError" :id="messageId" as="span" role="alert">{{ visibleError }}</H0ErrorMessage>
         <H0Description v-else-if="!fieldContext && resolvedHint" :id="messageId" as="span">{{ resolvedHint }}</H0Description>

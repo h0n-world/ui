@@ -11,7 +11,7 @@ You are working in an existing Vue project. Install and configure **@h0nio/ui@1.
 5. For the standard integration, import the default **H0Nui** plugin from **@h0nio/ui**, import **@h0nio/ui/style.css** exactly once, and add **app.use(H0Nui)** to the existing Vue application chain. Do not create a second app instance or discard existing plugins.
 6. Preserve existing product decisions. Add plugin options for theme, animation, density, radius, typography, locale, or toast only when they are already defined by the project or explicitly requested. Otherwise keep the minimal default registration.
 7. Use selective imports only when the project explicitly requires them. Import components from **@h0nio/ui/components/Family** and load either the global stylesheet once or the matching **@h0nio/ui/components/Family/style.css**.
-8. Use system icons from **@h0nio/ui/icons**. Never import package **src**, **_shared**, Vue implementation files, generated chunks, or undeclared deep paths.
+8. If application code needs icons, install **@h0nio/icons** directly and import individual **@h0nio/icons/<name>** subpaths. Treat **@h0nio/ui/icons** as compatibility-only. Never import package **src**, **_shared**, Vue implementation files, generated chunks, or undeclared deep paths.
 9. Do not modify product UI merely to add a demo unless requested. If a smoke example is requested, use public components and remove any temporary test surface that should not ship.
 10. Run the repository's real typecheck and production build, plus relevant tests. Verify that the package version is correct, the stylesheet is loaded once, the existing plugin chain remains intact, and no unrelated lockfile or formatting churn was introduced.
 

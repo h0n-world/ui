@@ -1,4 +1,4 @@
-import type { H0IconDefinition } from '../Icon'
+import type { H0IconSource } from '../Icon'
 import type { H0Size } from '../../types'
 
 export type H0StepperOrientation = 'horizontal' | 'vertical'
@@ -8,7 +8,7 @@ export type H0StepperColor = 'accent' | 'success' | 'danger' | 'warning' | 'inve
 export type H0StepperItem = {
     label?: string
     description?: string
-    icon?: H0IconDefinition
+    icon?: H0IconSource
 }
 import type H0StepperComponent from './H0Stepper.vue'
 import type { H0PublicProps } from '../_shared/publicComponent.types'

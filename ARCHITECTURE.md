@@ -25,7 +25,7 @@ h0n-ui/
       src/
         components/             # Component families and internal _shared helpers
         composables/            # Public Vue composables
-        icons/                  # Small system icon set for @h0nio/ui/icons
+        icons/                  # Compatibility facade for the former system aliases
         styles/                 # Tokens, palettes, theme, mixins, breakpoints
         entry.ts                # Full style-aware package entry
         index.ts                # Root API and Vue plugin
@@ -66,9 +66,9 @@ Root scripts explicitly compose `@h0nio/icons`, `@h0nio/ui`, and `@h0n/ui-docume
 ```mermaid
 flowchart LR
     UI["@h0nio/ui"] --> Docs["apps/documentation"]
-    IconLibrary["@h0nio/icons"] --> Docs
-    SystemIcons["@h0nio/ui/icons"] --> UI
-    SystemIcons --> Docs
+    IconLibrary["@h0nio/icons"] --> UI
+    IconLibrary --> Docs
+    CompatibilityIcons["@h0nio/ui/icons"] --> Docs
     Markdown["Markdown pages"] --> Docs
     Examples["Vue examples"] --> Docs
     Records["Typed agent records"] --> Docs
@@ -77,9 +77,9 @@ flowchart LR
     Generator --> Public["llms.txt / components.v1.json / agents/AGENTS.md"]
 ```
 
-`@h0nio/ui` owns the structural `H0IconDefinition` type, the `H0Icon` renderer, and a deliberately small system set exposed through `@h0nio/ui/icons`. Components use that set for internal controls and must not require `@h0nio/icons`. Public icon props accept compatible structural definitions from any source; components that accept arbitrary visual content expose a named slot where appropriate.
+`@h0nio/ui` owns the legacy node-based `H0IconDefinition`, the icons-compatible `H0IconBodyDefinition`, their `H0IconSource` union, and the `H0Icon` renderer. UI declares `@h0nio/icons` as a runtime dependency and internal components import only individual icon subpaths. The public `@h0nio/ui/icons` entry is a tree-shakeable compatibility facade that preserves the former aliases and `data-icon` names; runtime components do not import through it.
 
-`@h0nio/icons` is the larger framework-agnostic icon catalog and is versioned independently from `@h0nio/ui`. Its lightweight root exports rendering helpers and types; individual icon subpaths are the primary application API. `catalog` exposes metadata without definitions, raw SVG files live under `svg/*`, and the intentionally expensive `all` entry owns the complete eager registry. The package retains `private: true` only as a pre-release safety barrier and removes it in the reviewed release change.
+`@h0nio/icons` is the framework-agnostic icon catalog and is versioned independently from `@h0nio/ui`. Its lightweight root exports rendering helpers and types; individual icon subpaths are the primary application API. `catalog` exposes metadata without definitions, raw SVG files live under `svg/*`, and the intentionally expensive `all` entry owns the complete eager registry. Applications importing icon definitions directly declare the package themselves instead of relying on UI's transitive dependency.
 
 The documentation app aliases the icons package and both UI entries to workspace source and is therefore an integration surface, not a consumer of registry artifacts. A published `@h0nio/icons` release must be verified independently before a later `@h0nio/ui` release may declare it as a registry dependency.
 
@@ -188,7 +188,7 @@ Component-local variables without that prefix are private. The reviewed stable-t
 - UMD build from `src/entry.ts`;
 - multi-entry ES build for the full entry, `locale`, `theme`, `manifest`, composables, and discovered component families.
 
-External runtime dependencies are Vue and Floating UI for ES consumers. Type declarations are emitted separately by `vue-tsc`.
+External runtime dependencies are Vue, Floating UI, and individual `@h0nio/icons/*` modules for ES consumers. The UMD build bundles only definitions reached by UI's internal controls so the global build remains autonomous. Type declarations are emitted separately by `vue-tsc`.
 
 The build has two nonstandard but required CSS behaviors:
 
@@ -205,13 +205,13 @@ Package exports support:
 - root and individual composables
 - `locale`, `theme`, and `manifest`
 
-`packages/ui/package.json` is the npm publication manifest. It identifies the public MIT-licensed package, limits published files to `dist`, `README.md`, and `LICENSE`, marks CSS as side-effectful, and keeps repository, issue, style, type, ESM, UMD, and subpath metadata explicit. The package remains public and must not acquire a `private` flag.
+`packages/ui/package.json` is the npm publication manifest. It identifies the public MIT-licensed package, limits published files to `dist`, `README.md`, `LICENSE`, and `LICENSE-THIRD-PARTY`, marks CSS as side-effectful, and keeps repository, issue, style, type, ESM, UMD, and subpath metadata explicit. The package remains public and must not acquire a `private` flag. The workspace dependency `@h0nio/icons: workspace:^` is published as a compatible registry range.
 
 `scripts/write-style-types.mjs` creates CSS declaration stubs. Consumer fixtures verify real imports and tree-shaking; size checks enforce bundle budgets. `scripts/verify-package-contents.mjs` performs a dry-run pack and rejects missing export targets, unexpected top-level files, private source/test files, and source maps. `prepublishOnly` runs tests and the complete build before registry publication.
 
 Repository-level contribution, security, and release policies live in `CONTRIBUTING.md`, `SECURITY.md`, and `RELEASING.md`. GitHub issue and pull-request templates route public reports through those policies. Registry publication remains a maintainer action until npm trusted publishing is explicitly configured; the quality workflow does not publish packages.
 
-The `@h0nio/ui/icons` ES entry keeps the small internal system definitions tree-shakeable and independent from the larger `@h0nio/icons` package.
+The `@h0nio/ui/icons` ES entry re-exports individual `@h0nio/icons` definitions under the former aliases. It must remain tree-shakeable and must never import `@h0nio/icons/all` or the catalog.
 
 ## Independent Versioning and Releases
 

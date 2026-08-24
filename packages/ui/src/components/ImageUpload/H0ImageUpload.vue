@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import plusIcon from '@h0nio/icons/add-stroke'
 import { computed, ref, watch } from 'vue'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
-import { plusIcon, trashIcon } from '../../icons'
+import trashIcon from '@h0nio/icons/trash-bin-trash-stroke'
 import { useH0Locale } from '../../locale'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Image from '../Image/H0Image.vue'

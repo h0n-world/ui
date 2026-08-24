@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { settingsIcon, userIcon } from '@h0nio/ui/icons'
+import settingsIcon from '@h0nio/icons/settings-stroke'
+import userIcon from '@h0nio/icons/user-stroke'
 import { H0Stepper, type H0StepperItem } from '@h0nio/ui'
 
 const steps: H0StepperItem[] = [

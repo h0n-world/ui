@@ -7,7 +7,7 @@ H0N UI is a pnpm workspace for a self-contained Vue 3 component library, a frame
 The maintained core of the workspace is:
 
 - `packages/ui`: publishable Vue component library `@h0nio/ui`.
-- `packages/icons`: private-in-development icon library `@h0nio/icons`.
+- `packages/icons`: independently versioned icon library `@h0nio/icons`.
 - `apps/documentation`: Vite documentation and visual-validation application.
 
 Treat `apps/templates` as incubating and out of scope unless the user explicitly includes it. Do not use its current state to infer conventions for the core library.
@@ -22,7 +22,7 @@ Treat `apps/templates` as incubating and out of scope unless the user explicitly
 - `packages/ui/src/styles`: shared tokens, palettes, theme variables, mixins, and breakpoints.
 - `packages/ui/src/components/<Family>`: component family implementation and barrel.
 - `packages/ui/src/composables`: supported public composables.
-- `packages/ui/src/icons/index.ts`: small tree-shakeable system icon set exposed through `@h0nio/ui/icons`.
+- `packages/ui/src/icons/index.ts`: tree-shakeable compatibility facade for the former system aliases exposed through `@h0nio/ui/icons`.
 - `packages/icons/src`: generated framework-agnostic icon definitions, catalog, and rendering runtime exposed through `@h0nio/icons`.
 - `packages/icons/scripts`: icon import, generation, validation, and SVG copy scripts.
 - `apps/documentation/src/content/pages`: Markdown documentation pages.
@@ -85,7 +85,7 @@ Public conventions:
 - Multi-word events use kebab-case. `update:*` synchronizes state; user actions may additionally emit a normalized `change`.
 - Wrapper components explicitly route native and ARIA attributes to the actual control.
 - Internal `_shared` modules and undocumented DOM structure are not public API.
-- Icon props use the structural `H0IconDefinition` type owned by `@h0nio/ui`; do not add a required external icon package. Prefer named icon/visual slots when a component must accept arbitrary Vue or SVG content.
+- Icon props use the structural `H0IconSource` type owned by `@h0nio/ui`, accepting legacy node definitions and trusted body definitions from individual `@h0nio/icons/*` subpaths. Internal components import those subpaths directly; they never import `@h0nio/icons/all`, the catalog, or the public compatibility facade. Prefer named icon/visual slots when a component must accept arbitrary Vue or SVG content.
 
 ## Component Workflow
 

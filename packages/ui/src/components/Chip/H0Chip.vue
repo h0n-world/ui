@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { closeIcon } from '../../icons'
-import H0Icon from '../Icon/H0Icon.vue'
-import type { H0ChipTone } from './Chip.types'
+import closeIcon from '@h0nio/icons/close';
+import H0Icon from '../Icon/H0Icon.vue';
+import type { H0ChipTone } from './Chip.types';
 
 defineOptions({
     name: 'H0Chip'
@@ -45,7 +45,7 @@ function handleRemove(event: MouseEvent) {
             <slot>{{ text }}</slot>
         </button>
         <button v-if="removable" class="h-chip__remove" type="button" :disabled="disabled" :aria-label="removeAriaLabel" @click="handleRemove">
-            <H0Icon :icon="closeIcon" :size="13" :stroke-width="1.4" />
+            <H0Icon :icon="closeIcon" :size="13" />
         </button>
     </span>
 </template>

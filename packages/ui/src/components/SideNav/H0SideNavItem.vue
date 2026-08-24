@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { arrowRightIcon } from '../../icons'
+import arrowRightIcon from '@h0nio/icons/alt-arrow-right-stroke'
+import type { PropType } from 'vue'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0ListItem from '../List/H0ListItem.vue'
 import type { H0SideNavItemElement } from './SideNav.types'
-import type { PropType } from 'vue'
 
 defineOptions({
     name: 'H0SideNavItem'
@@ -40,7 +40,7 @@ defineProps({
         <template v-if="indicator || $slots.end" #end>
             <span class="h-side-nav-item__indicator" aria-hidden="true">
                 <slot name="end">
-                    <H0Icon :icon="arrowRightIcon" :size="14" :stroke-width="1.6" />
+                    <H0Icon :icon="arrowRightIcon" :size="14" />
                 </slot>
             </span>
         </template>

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { closeIcon } from '../../icons'
+import closeIcon from '@h0nio/icons/close'
 import { computed, useAttrs, useTemplateRef } from 'vue'
 import { useH0ControllableState } from '../../composables'
 import { useH0Locale } from '../../locale'
+import type { H0Size } from '../../types'
+import { useFormField } from '../_shared/useFormField'
+import type { H0IconSource } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0ErrorMessage from '../Typography/H0ErrorMessage.vue'
 import H0Label from '../Typography/H0Label.vue'
-import { useFormField } from '../_shared/useFormField'
-import type { H0IconDefinition } from '../Icon'
-import type { H0Size } from '../../types'
 import type { H0InputEmits, H0InputInputMode, H0InputVariant } from './Input.types'
 
 defineOptions({
@@ -17,60 +17,63 @@ defineOptions({
     inheritAttrs: false
 })
 
-const props = withDefaults(defineProps<{
-    modelValue?: string
-    type?: string
-    size?: H0Size
-    variant?: H0InputVariant
-    label?: string
-    ariaLabel?: string
-    placeholder?: string
-    prefix?: string
-    suffix?: string
-    prefixIcon?: H0IconDefinition
-    suffixIcon?: H0IconDefinition
-    disabled?: boolean
-    readonly?: boolean
-    required?: boolean
-    error?: string
-    hint?: string
-    clearable?: boolean
-    id?: string
-    name?: string
-    autocomplete?: string
-    inputmode?: H0InputInputMode
-    min?: string | number
-    max?: string | number
-    step?: string | number
-    defaultValue?: string
-    rootAttrs?: Record<string, unknown>
-    controlAttrs?: Record<string, unknown>
-}>(), {
-    type: 'text',
-    size: 'md',
-    variant: 'surface',
-    label: '',
-    ariaLabel: '',
-    placeholder: '',
-    prefix: '',
-    suffix: '',
-    prefixIcon: undefined,
-    suffixIcon: undefined,
-    disabled: false,
-    readonly: false,
-    required: false,
-    error: '',
-    hint: '',
-    clearable: false,
-    id: '',
-    name: '',
-    autocomplete: '',
-    inputmode: undefined,
-    min: undefined,
-    max: undefined,
-    step: undefined,
-    defaultValue: ''
-})
+const props = withDefaults(
+    defineProps<{
+        modelValue?: string
+        type?: string
+        size?: H0Size
+        variant?: H0InputVariant
+        label?: string
+        ariaLabel?: string
+        placeholder?: string
+        prefix?: string
+        suffix?: string
+        prefixIcon?: H0IconSource
+        suffixIcon?: H0IconSource
+        disabled?: boolean
+        readonly?: boolean
+        required?: boolean
+        error?: string
+        hint?: string
+        clearable?: boolean
+        id?: string
+        name?: string
+        autocomplete?: string
+        inputmode?: H0InputInputMode
+        min?: string | number
+        max?: string | number
+        step?: string | number
+        defaultValue?: string
+        rootAttrs?: Record<string, unknown>
+        controlAttrs?: Record<string, unknown>
+    }>(),
+    {
+        type: 'text',
+        size: 'md',
+        variant: 'surface',
+        label: '',
+        ariaLabel: '',
+        placeholder: '',
+        prefix: '',
+        suffix: '',
+        prefixIcon: undefined,
+        suffixIcon: undefined,
+        disabled: false,
+        readonly: false,
+        required: false,
+        error: '',
+        hint: '',
+        clearable: false,
+        id: '',
+        name: '',
+        autocomplete: '',
+        inputmode: undefined,
+        min: undefined,
+        max: undefined,
+        step: undefined,
+        defaultValue: ''
+    }
+)
 
 const emit = defineEmits<H0InputEmits>()
 const attrs = useAttrs()
@@ -148,7 +151,7 @@ defineExpose({
             <span v-if="$slots.start || $slots.prefix || hasStartAffix" class="h-input__affix h-input__affix--start">
                 <slot name="start">
                     <slot name="prefix">
-                        <H0Icon v-if="prefixIcon" :icon="prefixIcon" :size="18" :stroke-width="1.4" />
+                        <H0Icon v-if="prefixIcon" :icon="prefixIcon" :size="18" />
                         <span v-if="prefix" class="h-input__affix-text">{{ prefix }}</span>
                     </slot>
                 </slot>
@@ -181,13 +184,13 @@ defineExpose({
             />
 
             <button v-if="clearable && currentValue && !resolvedDisabled && !readonly" class="h-input__clear" type="button" :aria-label="locale.common.clear" @click="clear">
-                <H0Icon :icon="closeIcon" :size="16" :stroke-width="1.4" />
+                <H0Icon :icon="closeIcon" :size="16" />
             </button>
             <span v-if="$slots.end || $slots.suffix || hasEndAffix" class="h-input__affix h-input__affix--end">
                 <slot name="end">
                     <slot name="suffix">
                         <span v-if="suffix" class="h-input__affix-text">{{ suffix }}</span>
-                        <H0Icon v-if="suffixIcon" :icon="suffixIcon" :size="16" :stroke-width="2.1" />
+                        <H0Icon v-if="suffixIcon" :icon="suffixIcon" :size="16" />
                     </slot>
                 </slot>
             </span>

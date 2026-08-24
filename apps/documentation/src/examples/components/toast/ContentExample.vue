@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { bellIcon } from '@h0nio/ui/icons'
+import bellIcon from '@h0nio/icons/bell-stroke'
 import { H0Toast } from '@h0nio/ui'
 </script>
 

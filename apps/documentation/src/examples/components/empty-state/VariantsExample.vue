@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { plusIcon } from '@h0nio/ui/icons'
+import plusIcon from '@h0nio/icons/add-circle-stroke'
 import { H0EmptyState, type H0EmptyStateVariant } from '@h0nio/ui'
 
 const variants: Array<{ variant: H0EmptyStateVariant; title: string; description: string }> = [

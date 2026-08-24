@@ -2,7 +2,7 @@
     "release": "1.2.0",
     "rootEntrySha256": "22f254c2a57e2d9104231bc99fa5cb982432432f807d871b8403b53a77d35c39",
     "sharedTypesSha256": "afe081cdbf0dd98c213f93b26701dd95ff9a7f5be85ae135feb87c18554c2a89",
-    "componentContractsSha256": "842ac28ba7d6b4d1204ad855bc81f53497c97d5fc5c6314226d559bdbc463b17",
+    "componentContractsSha256": "f551fe2a1cf6cf971e77318f3da3d0e7f47923cdbb87799819031a66820421a5",
     "stableCssVariablesSha256": "040f4a79828c3ff46930402beb57b8661e4c8c944a4a2d571715bc2dd620bafd",
     "stableCssVariableCount": 140,
     "classification": {

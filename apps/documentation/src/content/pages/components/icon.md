@@ -1,6 +1,6 @@
 ---
 title: Icon
-description: Render lightweight, structural SVG icon definitions without an external icon package.
+description: Render legacy structural SVG nodes and tree-shakeable definitions from @h0nio/icons.
 path: /components/icon
 group: Components
 section: Content
@@ -9,25 +9,56 @@ order: 131
 
 # Icon
 
-`H0Icon` renders the structural `H0IconDefinition` type exported by `@h0nio/ui`. It has no runtime dependency on an icon package, and SVG strokes inherit the current text color.
+`H0Icon` renders both the legacy node-based `H0IconDefinition` and trusted body definitions imported from `@h0nio/icons`. Both formats inherit `currentColor`, preserve their own `viewBox`, and expose the definition name through `data-icon`.
 
 ## Import
 
 :::component-api imports
 :::
 
-## Gallery
+## Icons library
 
-Import the small system set from `@h0nio/ui/icons`, or create a compatible definition locally. The system set exists for common interface actions and is not intended to be a comprehensive icon library. `loadingIcon` is static; use `H0Spinner` for animated progress.
+Install `@h0nio/icons` as a direct application dependency, then import only the definitions the application uses. H0N UI already depends on the package for built-in controls, but direct application imports should not rely on a transitive dependency.
+
+```bash
+pnpm add @h0nio/icons
+```
+
+```vue
+<script setup lang="ts">
+import searchIcon from '@h0nio/icons/search'
+import { H0Icon } from '@h0nio/ui'
+</script>
+
+<template>
+    <H0Icon :icon="searchIcon" :size="24" />
+</template>
+```
+
+Use individual `@h0nio/icons/<name>` subpaths. Do not use `@h0nio/icons/all` or the catalog in ordinary UI runtime code.
 
 :::example components/icon/GalleryExample
 :::
 
-## Size, stroke, and color
+## Size
 
-Numeric `size` values become pixels, while CSS strings are used unchanged. Stroke color follows `currentColor`; cap, join, and width can be adjusted through public props.
+Numeric `size` values become pixels, while CSS strings are used unchanged. The same API works for every icon definition imported from `@h0nio/icons`.
+
+:::example components/icon/SizeExample
+:::
+
+## Stroke
+
+Choose a `-stroke` definition such as `settings-minimalistic-stroke` when the outlined icon style is required. Definitions from `@h0nio/icons` preserve their authored geometry; `strokeWidth`, `strokeLinecap`, and `strokeLinejoin` are compatibility props for node-based definitions and do not modify body definitions.
 
 :::example components/icon/StrokeExample
+:::
+
+## Color
+
+Icons inherit `currentColor`, so set `color` on `H0Icon` or an ancestor. This keeps icons synchronized with semantic text and state colors.
+
+:::example components/icon/ColorExample
 :::
 
 ## Decorative and meaningful icons
@@ -46,7 +77,19 @@ Native SVG attributes are forwarded to the root element. For meaningful icons, u
 
 ## Types
 
-`H0IconProps`, `H0IconDefinition`, and `H0IconNode` are exported by `@h0nio/ui`. A definition is plain readonly data, so it can be declared by an application or adapted from another icon source without depending on H0N's system set.
+`H0IconProps`, `H0IconSource`, `H0IconBodyDefinition`, `H0IconDefinition`, and `H0IconNode` are exported by `@h0nio/ui`. `H0IconSource` accepts either supported definition format.
+
+### H0IconSource
+
+:::component-api type H0IconSource
+:::
+
+### H0IconBodyDefinition
+
+:::component-api type H0IconBodyDefinition
+:::
+
+Body definitions contain trusted SVG markup. Pass only definitions shipped by `@h0nio/icons` or another reviewed local source; never pass user input, remote responses, or arbitrary HTML as an icon body. IDs used by definitions, clip paths, and `url(#...)` references are scoped per component instance and remain deterministic during SSR.
 
 ### H0IconDefinition
 
@@ -93,8 +136,8 @@ When `viewBox` is absent, `H0Icon` uses `0 0 24 24`. Custom definitions may cont
 
 ## Performance
 
-Import individual definitions from `@h0nio/ui/icons` to preserve tree shaking. Keep larger product-specific icon catalogs in the application or a dedicated third-party package.
+Import individual definitions from `@h0nio/icons/<name>` to preserve tree shaking. `@h0nio/ui/icons` remains a transition facade for the previous small alias set; it should not be used as a comprehensive catalog.
 
 ## Styling
 
-Set color on the icon or an ancestor and use public `size`, `strokeWidth`, cap, and join props. Internal SVG selectors are implementation details.
+Set color on the icon or an ancestor and use the public `size` prop. Stroke overrides apply only to legacy node definitions. Internal SVG selectors are implementation details.

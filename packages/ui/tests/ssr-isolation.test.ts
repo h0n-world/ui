@@ -1,8 +1,10 @@
 import { createSSRApp, defineComponent, h, nextTick } from 'vue'
+import gamepadIcon from '@h0nio/icons/gamepad-old-stroke'
 import { renderToString } from '@vue/server-renderer'
 import { describe, expect, it, vi } from 'vitest'
 import H0Accordion from '../src/components/Accordion/H0Accordion.vue'
 import H0Image from '../src/components/Image/H0Image.vue'
+import H0Icon from '../src/components/Icon/H0Icon.vue'
 import H0Modal from '../src/components/Modal/H0Modal.vue'
 import H0Toasts from '../src/components/Toast/H0Toasts.vue'
 import { createH0ToastService } from '../src/components/Toast/toast'
@@ -12,6 +14,19 @@ import { H0Select, H0Tab, H0TabList, H0TabPanel, H0Tabs, H0Tooltip } from '../sr
 const accordionItems = [{ title: 'First', content: 'Content' }]
 
 describe('SSR-safe component state', () => {
+    it('renders body icons with deterministic instance-scoped SVG ids', async () => {
+        const render = () => renderToString(createSSRApp({ render: () => h('main', [h(H0Icon, { icon: gamepadIcon }), h(H0Icon, { icon: gamepadIcon })]) }))
+        const first = await render()
+        const second = await render()
+        const clipPathIds = [...first.matchAll(/<clipPath id="([^"]+)"/g)].map((match) => match[1])
+
+        expect(clipPathIds).toHaveLength(2)
+        expect(new Set(clipPathIds).size).toBe(2)
+        expect(first).toContain(`clip-path="url(#${clipPathIds[0]})"`)
+        expect(first).toContain(`clip-path="url(#${clipPathIds[1]})"`)
+        expect(second).toBe(first)
+    })
+
     it('creates unique Accordion ids and reproduces them in independent renders', async () => {
         const render = () => renderToString(createSSRApp({ render: () => h('main', [h(H0Accordion, { items: accordionItems }), h(H0Accordion, { items: accordionItems })]) }))
         const firstRender = await render()

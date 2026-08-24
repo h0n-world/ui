@@ -33,7 +33,8 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 - Use `@h0nio/ui` for root components, public helpers, and types.
 - Import `@h0nio/ui/style.css` exactly once when using the root package.
 - For selective imports, use `@h0nio/ui/components/<Family>` and either the global stylesheet or the matching `@h0nio/ui/components/<Family>/style.css`.
-- Import the small built-in icon set from `@h0nio/ui/icons`. Do not add or reference `@h0n/icon`.
+- Install `@h0nio/icons` when application code imports icon definitions, then use individual `@h0nio/icons/<name>` subpaths. Do not import `@h0nio/icons/all` or its catalog in product runtime code.
+- Use `@h0nio/ui/icons` only when maintaining code written against the compatibility aliases. Do not add or reference `@h0n/icon`.
 - Use documented composable, theme, locale, and manifest subpaths only.
 - Never import package `src`, `_shared`, generated chunks, Vue implementation files, or undeclared deep paths.
 - Prefer props and public `--h0n-ui-*` variables. Component-local variables and internal class names are not API.
@@ -58,8 +59,9 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 
 ## Icons
 
-- `H0IconDefinition` is a structural type owned by `@h0nio/ui`; applications may define compatible icons locally.
-- Use `@h0nio/ui/icons` only for the small common system set.
+- `H0IconSource` accepts legacy node-based `H0IconDefinition` values and trusted body definitions from `@h0nio/icons`.
+- Never build a body definition from user input, network HTML, or another untrusted source.
+- Legacy stroke props do not override the authored geometry of body definitions.
 - Prefer a documented icon or visual slot when passing an existing Vue icon component or inline SVG.
 - Icon-only controls require an accessible name on the control; an SVG title alone is insufficient.
 

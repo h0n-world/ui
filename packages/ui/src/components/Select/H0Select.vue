@@ -1,10 +1,14 @@
 <script setup lang="ts" generic="Value extends H0SelectValue = H0SelectValue">
-import { arrowDownIcon, checkIcon } from '../../icons'
-import { autoUpdate, computePosition, flip, offset, shift, size as floatingSize } from '@floating-ui/dom'
+import { autoUpdate, computePosition, flip, size as floatingSize, offset, shift } from '@floating-ui/dom'
+import arrowDownIcon from '@h0nio/icons/alt-arrow-down-stroke'
+import unreadIcon from '@h0nio/icons/unread-stroke'
 import { computed, inject, nextTick, onBeforeUnmount, ref, useAttrs, useTemplateRef, watch } from 'vue'
-import { useFormField } from '../_shared/useFormField'
-import { useH0DocumentScrollLock } from '../_shared/useDocumentScrollLock'
+import { useH0ControllableState } from '../../composables/useH0ControllableState'
+import { useH0Locale } from '../../locale'
 import { h0OverlayContextKey, toH0OverlayZIndex } from '../_shared/Overlay.context'
+import { useH0DocumentScrollLock } from '../_shared/useDocumentScrollLock'
+import { useFormField } from '../_shared/useFormField'
+import { toH0CssSize } from '../_shared/utils'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0List from '../List/H0List.vue'
 import H0ListItem from '../List/H0ListItem.vue'
@@ -15,9 +19,6 @@ import H0Label from '../Typography/H0Label.vue'
 import H0Typography from '../Typography/H0Typography.vue'
 import type { H0SelectOption, H0SelectSize, H0SelectValue, H0SelectVariant } from './Select.types'
 import { useSelectNavigation } from './useSelectNavigation'
-import { useH0ControllableState } from '../../composables/useH0ControllableState'
-import { useH0Locale } from '../../locale'
-import { toH0CssSize } from '../_shared/utils'
 
 defineOptions({
     name: 'H0Select',
@@ -142,7 +143,9 @@ const virtualWindow = computed(() => {
     const end = Math.min(props.options.length, Math.ceil((scrollTop.value + height) / props.optionHeight) + props.overscan)
     return { start, end }
 })
-const visibleOptions = computed(() => props.options.slice(virtualWindow.value.start, virtualWindow.value.end).map((option, visibleIndex) => ({ option, index: virtualWindow.value.start + visibleIndex, visibleIndex })))
+const visibleOptions = computed(() =>
+    props.options.slice(virtualWindow.value.start, virtualWindow.value.end).map((option, visibleIndex) => ({ option, index: virtualWindow.value.start + visibleIndex, visibleIndex }))
+)
 const virtualTop = computed(() => virtualWindow.value.start * props.optionHeight)
 const virtualBottom = computed(() => Math.max(0, (props.options.length - virtualWindow.value.end) * props.optionHeight))
 
@@ -167,7 +170,7 @@ const {
     error: () => props.error,
     hint: () => props.hint,
     idPrefix: 'h-select',
-    getValue: () => (props.multiple ? selectedValues.value : selectedValues.value[0] ?? null),
+    getValue: () => (props.multiple ? selectedValues.value : (selectedValues.value[0] ?? null)),
     focus: () => triggerRef.value?.focus(),
     reset: () => {
         const value = props.multiple ? (Array.isArray(props.defaultValue) ? props.defaultValue : []) : Array.isArray(props.defaultValue) ? (props.defaultValue[0] ?? null) : props.defaultValue
@@ -339,7 +342,21 @@ watch(activeIndex, (index) => {
 </script>
 
 <template>
-    <div ref="rootRef" v-bind="mergedRootAttrs" data-h0n-component="select" class="h-select" :class="[`h-select--${props.size}`, `h-select--${props.variant}`, isOpen && 'h-select--open', (isOpen || isPopoverLeaving) && 'h-select--elevated', visibleError && 'h-select--error', resolvedDisabled && 'h-select--disabled', loading && 'h-select--loading']">
+    <div
+        ref="rootRef"
+        v-bind="mergedRootAttrs"
+        data-h0n-component="select"
+        class="h-select"
+        :class="[
+            `h-select--${props.size}`,
+            `h-select--${props.variant}`,
+            isOpen && 'h-select--open',
+            (isOpen || isPopoverLeaving) && 'h-select--elevated',
+            visibleError && 'h-select--error',
+            resolvedDisabled && 'h-select--disabled',
+            loading && 'h-select--loading'
+        ]"
+    >
         <H0Label v-if="!fieldContext && (resolvedLabel || $slots.label)" class="h-select__label" :html-for="selectId" :required="resolvedRequired">
             <slot name="label">{{ resolvedLabel }}</slot>
         </H0Label>
@@ -375,7 +392,7 @@ watch(activeIndex, (index) => {
 
             <span class="h-select__indicator" aria-hidden="true">
                 <H0Spinner v-if="loading" size="16px" />
-                <H0Icon v-else :icon="arrowDownIcon" :size="16" :stroke-width="1.4" />
+                <H0Icon v-else :icon="arrowDownIcon" :size="16" />
             </span>
         </button>
 
@@ -385,7 +402,15 @@ watch(activeIndex, (index) => {
 
         <Teleport :to="teleportTo" :disabled="teleportDisabled">
             <Transition name="h-select-overlay">
-                <button v-if="isOpen" data-h0n-component="select-overlay" class="h-select__overlay" type="button" :aria-label="locale.common.close" :style="selectOverlayStyle" @click="closeSelect"></button>
+                <button
+                    v-if="isOpen"
+                    data-h0n-component="select-overlay"
+                    class="h-select__overlay"
+                    type="button"
+                    :aria-label="locale.common.close"
+                    :style="selectOverlayStyle"
+                    @click="closeSelect"
+                ></button>
             </Transition>
 
             <Transition name="h-select-popover" @after-leave="finishPopoverLeave" @leave-cancelled="finishPopoverLeave">
@@ -421,7 +446,7 @@ watch(activeIndex, (index) => {
                         >
                             <template v-if="$slots['option-start'] || entry.option.icon" #start>
                                 <slot name="option-start" :option="entry.option" :selected="isSelected(entry.option)" :index="entry.index" :visible-index="entry.visibleIndex">
-                                    <H0Icon v-if="entry.option.icon" :icon="entry.option.icon" :size="18" :stroke-width="2.2" />
+                                    <H0Icon v-if="entry.option.icon" :icon="entry.option.icon" :size="18" />
                                 </slot>
                             </template>
 
@@ -433,7 +458,7 @@ watch(activeIndex, (index) => {
                             </slot>
 
                             <template v-if="isSelected(entry.option)" #end>
-                                <H0Icon :icon="checkIcon" :size="16" :stroke-width="1.4" />
+                                <H0Icon :icon="unreadIcon" :size="22" />
                             </template>
                         </H0ListItem>
                         <div v-if="virtualBottom" class="h-select__virtual-spacer" :style="{ height: `${virtualBottom}px` }" aria-hidden="true" />

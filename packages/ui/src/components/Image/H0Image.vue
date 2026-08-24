@@ -1,6 +1,6 @@
 <script lang="ts" setup>
+import errorIcon from '@h0nio/icons/danger-circle-stroke'
 import { computed, nextTick, onBeforeUnmount, ref, watch, type ImgHTMLAttributes } from 'vue'
-import { errorIcon } from '../../icons'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Skeleton from '../Skeleton/H0Skeleton.vue'
 import type { H0ImageFit, H0ImageLoading, H0ImageStatus } from './Image.types'
@@ -193,7 +193,8 @@ onBeforeUnmount(stopObserver)
 <template>
     <figure
         ref="rootRef"
-        data-h0n-component="image" class="h-image"
+        data-h0n-component="image"
+        class="h-image"
         :class="[`h-image--${status}`, shouldLazyLoad && 'h-image--lazy', hasFallback && 'h-image--fallback', !height && !aspectRatio && 'h-image--auto-height']"
         :style="rootStyle"
     >
@@ -223,7 +224,7 @@ onBeforeUnmount(stopObserver)
 
         <slot v-if="hasFallback" name="fallback" :status="status">
             <div class="h-image__fallback" role="img" :aria-label="alt || 'Image is not available'">
-                <H0Icon class="h-image__fallback-icon" :icon="errorIcon" :size="32" :stroke-width="1.6" aria-hidden="true" />
+                <H0Icon class="h-image__fallback-icon" :icon="errorIcon" :size="32" aria-hidden="true" />
             </div>
         </slot>
     </figure>

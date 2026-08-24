@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { searchIcon } from '@h0n/ui/icons'
 import { H0Button, H0Icon, H0Input, H0Typography } from '@h0n/ui'
+import { searchIcon } from '@h0n/ui/icons'
 import { computed, nextTick, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -15,7 +15,11 @@ const results = computed(() => {
     const needle = query.value.trim().toLowerCase()
     if (!needle) return documentationPages.slice(0, 6)
 
-    return documentationPages.filter((page) => `${page.title} ${page.description} ${page.group}`.toLowerCase().includes(needle)).slice(0, 8)
+    return documentationPages
+        .filter((page) =>
+            `${page.title} ${page.description} ${page.group}`.toLowerCase().includes(needle),
+        )
+        .slice(0, 8)
 })
 
 function close() {
@@ -58,24 +62,45 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown))
 </script>
 
 <template>
-    <dialog ref="dialog" class="search-palette" aria-label="Search documentation" @close="open = false" @click.self="close">
+    <dialog
+        ref="dialog"
+        class="search-palette"
+        aria-label="Search documentation"
+        @close="open = false"
+        @click.self="close"
+    >
         <div class="search-palette__panel">
             <div class="search-palette__field">
-                <H0Icon :icon="searchIcon" :size="18" />
-                <H0Input v-model="query" placeholder="Search documentation…" aria-label="Search documentation" />
+                <H0Icon :icon="searchIcon" :size="20" />
+                <H0Input
+                    v-model="query"
+                    placeholder="Search documentation…"
+                    aria-label="Search documentation"
+                />
                 <kbd>Esc</kbd>
             </div>
 
             <div class="search-palette__results" role="listbox" aria-label="Search results">
-                <button v-for="result in results" :key="result.path" class="search-result" type="button" role="option" @click="navigate(result.path)">
+                <button
+                    v-for="result in results"
+                    :key="result.path"
+                    class="search-result"
+                    type="button"
+                    role="option"
+                    @click="navigate(result.path)"
+                >
                     <span>
-                        <H0Typography as="span" variant="body-sm" :weight="600">{{ result.title }}</H0Typography>
+                        <H0Typography as="span" variant="body-sm" :weight="600">{{
+                            result.title
+                        }}</H0Typography>
                         <span class="search-result__description">{{ result.description }}</span>
                     </span>
                     <span class="search-result__group">{{ result.group }}</span>
                 </button>
 
-                <div v-if="!results.length" class="search-palette__empty">No pages found for “{{ query }}”.</div>
+                <div v-if="!results.length" class="search-palette__empty">
+                    No pages found for “{{ query }}”.
+                </div>
             </div>
 
             <footer class="search-palette__footer">
