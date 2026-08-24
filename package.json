@@ -18,13 +18,14 @@
         "import:duotone": "pnpm --filter @h0nio/icons import:duotone",
         "import:solid": "pnpm --filter @h0nio/icons import:solid",
         "import:stroke": "pnpm --filter @h0nio/icons import:stroke",
+        "import:examples": "pnpm --filter @h0nio/icons import:examples",
         "agents:generate": "pnpm --filter @h0n/ui-documentation agents:generate",
         "agents:check": "pnpm --filter @h0n/ui-documentation agents:check",
         "test": "pnpm run test:packages && pnpm --filter @h0n/ui-documentation agents:test",
-        "test:packages": "pnpm --filter @h0nio/ui test",
+        "test:packages": "pnpm --filter @h0nio/icons test && pnpm --filter @h0nio/ui test",
         "test:visual": "pnpm --filter @h0nio/ui test:visual",
         "typecheck": "pnpm run typecheck:packages && pnpm --filter @h0n/ui-documentation typecheck",
-        "typecheck:packages": "pnpm --filter @h0nio/ui typecheck"
+        "typecheck:packages": "pnpm --filter @h0nio/icons check && pnpm --filter @h0nio/ui typecheck"
     },
     "devDependencies": {
         "@axe-core/playwright": "^4.12.1",

@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const SlashCircleIcon = {"name":"slash-circle","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10m2.018-14.635a.75.75 0 1 0-1.448-.389l-2.589 9.66a.75.75 0 0 0 1.45.388z\" clip-rule=\"evenodd\"/>"} as const satisfies IconDefinition;
+export const SlashCircleIcon: IconDefinition = {"name":"slash-circle","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10m2.018-14.635a.75.75 0 1 0-1.448-.389l-2.589 9.66a.75.75 0 0 0 1.45.388z\" clip-rule=\"evenodd\"/></g>"};
 export default SlashCircleIcon;

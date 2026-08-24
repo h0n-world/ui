@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const UndoRightRoundStrokeIcon = {"name":"undo-right-round-stroke","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M16.477 2.462a.75.75 0 0 1 1.06.015l5 5.143a.75.75 0 0 1 0 1.046l-5 5.143a.75.75 0 1 1-1.075-1.046l3.763-3.87H8.25c-3.018 0-5.5 2.522-5.5 5.678s2.482 5.679 5.5 5.679H17a.75.75 0 0 1 0 1.5H8.25c-3.886 0-7-3.234-7-7.179 0-3.944 3.114-7.178 7-7.178h11.975l-3.763-3.87a.75.75 0 0 1 .015-1.06\" clip-rule=\"evenodd\"/>"} as const satisfies IconDefinition;
+export const UndoRightRoundStrokeIcon: IconDefinition = {"name":"undo-right-round-stroke","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M16.477 2.462a.75.75 0 0 1 1.06.015l5 5.143a.75.75 0 0 1 0 1.046l-5 5.143a.75.75 0 1 1-1.075-1.046l3.763-3.87H8.25c-3.018 0-5.5 2.522-5.5 5.678s2.482 5.679 5.5 5.679H17a.75.75 0 0 1 0 1.5H8.25c-3.886 0-7-3.234-7-7.179 0-3.944 3.114-7.178 7-7.178h11.975l-3.763-3.87a.75.75 0 0 1 .015-1.06\" clip-rule=\"evenodd\"/></g>"};
 export default UndoRightRoundStrokeIcon;

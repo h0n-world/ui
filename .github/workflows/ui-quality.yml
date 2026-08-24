@@ -16,7 +16,7 @@ jobs:
     quality:
         name: Ubuntu quality
         runs-on: ubuntu-latest
-        timeout-minutes: 20
+        timeout-minutes: 25
         steps:
             - uses: actions/checkout@v6
             - uses: pnpm/action-setup@v6
@@ -25,6 +25,13 @@ jobs:
                   node-version: 24
                   cache: pnpm
             - run: pnpm install --frozen-lockfile
+            - run: pnpm --filter @h0nio/icons check
+            - run: pnpm --filter @h0nio/icons test
+            - run: pnpm --filter @h0nio/icons build
+            - run: pnpm --filter @h0nio/icons verify:package
+            - run: pnpm --filter @h0nio/icons verify:consumer
+            - run: pnpm --filter @h0nio/icons verify:size
+            - run: pnpm --filter @h0nio/icons verify:tarball
             - run: pnpm --filter @h0nio/ui typecheck
             - run: pnpm --filter @h0nio/ui test
             - run: pnpm --filter @h0nio/ui build
@@ -48,7 +55,7 @@ jobs:
                   cache: pnpm
             - run: pnpm install --frozen-lockfile
             - run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
-            - run: pnpm --filter @h0nio/ui exec playwright test tests-visual/component-smoke.spec.ts tests-visual/component-interactions.spec.ts tests-visual/documentation-navigation.spec.ts tests-visual/table-geometry.spec.ts tests-visual/floating-performance.spec.ts tests-visual/runtime-hardening.spec.ts --config playwright.config.ts --project=${{ matrix.browser }}
+            - run: pnpm exec playwright test packages/ui/tests-visual/component-smoke.spec.ts packages/ui/tests-visual/component-interactions.spec.ts packages/ui/tests-visual/documentation-navigation.spec.ts packages/ui/tests-visual/icons-catalog.spec.ts packages/ui/tests-visual/table-geometry.spec.ts packages/ui/tests-visual/floating-performance.spec.ts packages/ui/tests-visual/runtime-hardening.spec.ts --config packages/ui/playwright.config.ts --project=${{ matrix.browser }}
 
     accessibility:
         name: Chromium accessibility
@@ -63,7 +70,7 @@ jobs:
                   cache: pnpm
             - run: pnpm install --frozen-lockfile
             - run: pnpm exec playwright install --with-deps chromium
-            - run: pnpm --filter @h0nio/ui exec playwright test tests-visual/accessibility.spec.ts --config playwright.config.ts --project=chromium
+            - run: pnpm exec playwright test packages/ui/tests-visual/accessibility.spec.ts --config packages/ui/playwright.config.ts --project=chromium
 
     windows-table:
         name: Windows Chromium Table geometry
@@ -78,4 +85,4 @@ jobs:
                   cache: pnpm
             - run: pnpm install --frozen-lockfile
             - run: pnpm exec playwright install chromium
-            - run: pnpm --filter @h0nio/ui exec playwright test tests-visual/table-geometry.spec.ts tests-visual/runtime-hardening.spec.ts --config playwright.config.ts --project=chromium
+            - run: pnpm exec playwright test packages/ui/tests-visual/table-geometry.spec.ts packages/ui/tests-visual/runtime-hardening.spec.ts --config packages/ui/playwright.config.ts --project=chromium

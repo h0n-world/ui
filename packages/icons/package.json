@@ -1,43 +1,105 @@
 {
-  "name": "@h0nio/icons",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Framework-agnostic, tree-shakeable SVG icons for h0nio projects",
-  "type": "module",
-  "sideEffects": false,
-  "files": [
-    "dist",
-    "svg"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+    "name": "@h0nio/icons",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Framework-agnostic, tree-shakeable SVG icons for h0nio projects",
+    "keywords": [
+        "icons",
+        "svg",
+        "tree-shaking",
+        "typescript",
+        "design-system"
+    ],
+    "author": {
+        "name": "H0N World",
+        "url": "https://github.com/h0n-world"
     },
-    "./runtime": {
-      "types": "./dist/runtime.d.ts",
-      "import": "./dist/runtime.js"
+    "license": "MIT AND CC-BY-4.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/h0n-world/ui.git",
+        "directory": "packages/icons"
     },
-    "./catalog": {
-      "types": "./dist/catalog.d.ts",
-      "import": "./dist/catalog.js"
+    "homepage": "https://ui.h0n.io/icons",
+    "bugs": {
+        "url": "https://github.com/h0n-world/ui/issues"
     },
-    "./svg/*": "./svg/*.svg",
-    "./*": {
-      "types": "./dist/icons/*.d.ts",
-      "import": "./dist/icons/*.js"
+    "type": "module",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "sideEffects": false,
+    "files": [
+        "dist",
+        "svg",
+        "LICENSE",
+        "LICENSE-THIRD-PARTY"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./all": {
+            "types": "./dist/all.d.ts",
+            "import": "./dist/all.js",
+            "default": "./dist/all.js"
+        },
+        "./runtime": {
+            "types": "./dist/runtime.d.ts",
+            "import": "./dist/runtime.js",
+            "default": "./dist/runtime.js"
+        },
+        "./catalog": {
+            "types": "./dist/catalog.d.ts",
+            "import": "./dist/catalog.js",
+            "default": "./dist/catalog.js"
+        },
+        "./types": {
+            "types": "./dist/types.d.ts",
+            "import": "./dist/types.js",
+            "default": "./dist/types.js"
+        },
+        "./svg/*": {
+            "types": "./dist/raw-svg.d.ts",
+            "import": "./svg/*.svg",
+            "default": "./svg/*.svg"
+        },
+        "./*": {
+            "types": "./dist/icons/*.d.ts",
+            "import": "./dist/icons/*.js",
+            "default": "./dist/icons/*.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=22.12.0"
+    },
+    "scripts": {
+        "import:duotone": "node scripts/import-duotone.mjs",
+        "import:solid": "node scripts/import-solid.mjs",
+        "import:stroke": "node scripts/import-stroke.mjs",
+        "import:examples": "node scripts/import-examples.mjs",
+        "generate": "node scripts/generate.mjs",
+        "clean": "node scripts/clean.mjs",
+        "build": "pnpm run clean && pnpm run generate && tsc -p tsconfig.json",
+        "test": "vitest run && node scripts/validate-svg.mjs && node scripts/check-generated.mjs",
+        "test:consumer": "pnpm run build && pnpm run verify:consumer && pnpm run verify:size",
+        "check": "tsc -p tsconfig.json --noEmit && node scripts/check-generated.mjs && node scripts/validate-svg.mjs",
+        "verify:package": "node scripts/verify-package-contents.mjs",
+        "verify:consumer": "node scripts/verify-consumer.mjs",
+        "verify:size": "node scripts/verify-size.mjs",
+        "verify:tarball": "node scripts/verify-tarball.mjs",
+        "prepack": "pnpm run build && pnpm run verify:package && pnpm run verify:consumer && pnpm run verify:size",
+        "prepublishOnly": "pnpm run check && pnpm run test"
+    },
+    "devDependencies": {
+        "esbuild": "^0.28.1",
+        "svgo": "^4.0.0",
+        "typescript": "^5.9.2",
+        "vitest": "^4.1.10"
     }
-  },
-  "scripts": {
-    "import:duotone": "node scripts/import-duotone.mjs",
-    "import:solid": "node scripts/import-solid.mjs",
-    "import:stroke": "node scripts/import-stroke.mjs",
-    "generate": "node scripts/generate.mjs",
-    "build": "pnpm generate && tsc -p tsconfig.json && node scripts/copy-svg.mjs",
-    "check": "tsc -p tsconfig.json --noEmit && node scripts/check-generated.mjs"
-  },
-  "devDependencies": {
-    "svgo": "^4.0.0",
-    "typescript": "^5.9.2"
-  }
 }

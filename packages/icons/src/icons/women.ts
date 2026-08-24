@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const WomenIcon = {"name":"women","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" d=\"M12.75 15.96a7.001 7.001 0 1 0-1.5 0v1.79H9.5a.75.75 0 0 0 0 1.5h1.75V22a.75.75 0 1 0 1.5 0v-2.75h1.75a.75.75 0 0 0 0-1.5h-1.75z\"/>"} as const satisfies IconDefinition;
+export const WomenIcon: IconDefinition = {"name":"women","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" d=\"M12.75 15.96a7.001 7.001 0 1 0-1.5 0v1.79H9.5a.75.75 0 0 0 0 1.5h1.75V22a.75.75 0 1 0 1.5 0v-2.75h1.75a.75.75 0 0 0 0-1.5h-1.75z\"/></g>"};
 export default WomenIcon;

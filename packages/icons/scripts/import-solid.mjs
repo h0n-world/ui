@@ -1,9 +1,9 @@
 import { readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { basename, dirname, relative, resolve } from 'node:path';
+import { assertPathInside, resolveImportSource } from './import-source.mjs';
 
 const packageRoot = resolve(import.meta.dirname, '..');
-const workspaceRoot = resolve(packageRoot, '../..');
-const sourceDir = resolve(workspaceRoot, 'example');
+const sourceDir = await resolveImportSource();
 const svgDir = resolve(packageRoot, 'src/svg');
 const metadataPath = resolve(packageRoot, 'src/metadata.json');
 
@@ -126,9 +126,7 @@ const displaced = [];
 for (const baseName of duplicateBaseNames) {
   if (metadata.icons[baseName]?.style !== 'solid') continue;
   const legacyPath = resolve(svgDir, `${baseName}.svg`);
-  if (!legacyPath.toLowerCase().startsWith(`${svgDir.toLowerCase()}\\`)) {
-    throw new Error(`Unsafe displaced path: ${legacyPath}`);
-  }
+  assertPathInside(svgDir, legacyPath, 'displaced');
   await rm(legacyPath, { force: true });
   delete metadata.icons[baseName];
   displaced.push(baseName);

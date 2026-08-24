@@ -11,8 +11,10 @@
         "paths": {
             "@/*": ["./src/*"],
             "@h0nio/icons": ["../../packages/icons/src/index.ts"],
+            "@h0nio/icons/all": ["../../packages/icons/src/all.ts"],
             "@h0nio/icons/catalog": ["../../packages/icons/src/catalog.ts"],
             "@h0nio/icons/runtime": ["../../packages/icons/src/runtime.ts"],
+            "@h0nio/icons/types": ["../../packages/icons/src/types.ts"],
             "@h0nio/icons/*": ["../../packages/icons/src/icons/*.ts"],
             "@h0nio/ui/icons": ["../../packages/ui/src/icons/index.ts"],
             "@h0nio/ui": ["../../packages/ui/src/entry.ts"],

@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const ArrowDownIcon = {"name":"arrow-down","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" d=\"M12.75 4a.75.75 0 0 0-1.5 0v9.25H6a.75.75 0 0 0-.53 1.28l6 6a.75.75 0 0 0 1.06 0l6-6a.75.75 0 0 0-.53-1.28h-5.25z\"/>"} as const satisfies IconDefinition;
+export const ArrowDownIcon: IconDefinition = {"name":"arrow-down","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" d=\"M12.75 4a.75.75 0 0 0-1.5 0v9.25H6a.75.75 0 0 0-.53 1.28l6 6a.75.75 0 0 0 1.06 0l6-6a.75.75 0 0 0-.53-1.28h-5.25z\"/></g>"};
 export default ArrowDownIcon;

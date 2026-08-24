@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const DangerTriangleIcon = {"name":"danger-triangle","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M5.312 10.762C8.23 5.587 9.689 3 12 3s3.77 2.587 6.688 7.762l.364.644c2.425 4.3 3.638 6.45 2.542 8.022S17.786 21 12.364 21h-.728c-5.422 0-8.134 0-9.23-1.572s.117-3.722 2.542-8.022zM12 7.25a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0V8a.75.75 0 0 1 .75-.75M12 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2\" clip-rule=\"evenodd\"/>"} as const satisfies IconDefinition;
+export const DangerTriangleIcon: IconDefinition = {"name":"danger-triangle","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M5.312 10.762C8.23 5.587 9.689 3 12 3s3.77 2.587 6.688 7.762l.364.644c2.425 4.3 3.638 6.45 2.542 8.022S17.786 21 12.364 21h-.728c-5.422 0-8.134 0-9.23-1.572s.117-3.722 2.542-8.022zM12 7.25a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0V8a.75.75 0 0 1 .75-.75M12 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2\" clip-rule=\"evenodd\"/></g>"};
 export default DangerTriangleIcon;

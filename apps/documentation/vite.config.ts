@@ -9,6 +9,12 @@ export default defineConfig({
         dedupe: ['vue'],
         alias: [
             {
+                find: /^@h0nio\/icons\/all$/,
+                replacement: fileURLToPath(
+                    new URL('../../packages/icons/src/all.ts', import.meta.url),
+                ),
+            },
+            {
                 find: /^@h0nio\/icons\/catalog$/,
                 replacement: fileURLToPath(
                     new URL('../../packages/icons/src/catalog.ts', import.meta.url),
@@ -18,6 +24,12 @@ export default defineConfig({
                 find: /^@h0nio\/icons\/runtime$/,
                 replacement: fileURLToPath(
                     new URL('../../packages/icons/src/runtime.ts', import.meta.url),
+                ),
+            },
+            {
+                find: /^@h0nio\/icons\/types$/,
+                replacement: fileURLToPath(
+                    new URL('../../packages/icons/src/types.ts', import.meta.url),
                 ),
             },
             {

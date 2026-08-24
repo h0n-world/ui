@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const AltArrowDownIcon = {"name":"alt-arrow-down","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" d=\"m12.37 15.835 6.43-6.63C19.201 8.79 18.958 8 18.43 8H5.57c-.528 0-.771.79-.37 1.205l6.43 6.63c.213.22.527.22.74 0\"/>"} as const satisfies IconDefinition;
+export const AltArrowDownIcon: IconDefinition = {"name":"alt-arrow-down","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" d=\"m12.37 15.835 6.43-6.63C19.201 8.79 18.958 8 18.43 8H5.57c-.528 0-.771.79-.37 1.205l6.43 6.63c.213.22.527.22.74 0\"/></g>"};
 export default AltArrowDownIcon;

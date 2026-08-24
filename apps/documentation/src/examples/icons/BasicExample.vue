@@ -2,7 +2,7 @@
 import heartIcon from '@h0nio/icons/heart-duotone'
 import paletteIcon from '@h0nio/icons/palette-duotone'
 import starIcon from '@h0nio/icons/star-duotone'
-import { renderIcon, type IconDefinition } from '@h0nio/icons/runtime'
+import { renderIcon, type IconDefinition } from '@h0nio/icons'
 import { H0CellColorPicker, H0Select, type H0SelectOption } from '@h0nio/ui'
 import { ref } from 'vue'
 

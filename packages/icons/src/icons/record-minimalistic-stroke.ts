@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const RecordMinimalisticStrokeIcon = {"name":"record-minimalistic-stroke","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M9.464 15.25A4.75 4.75 0 1 0 6 16.75h12a4.75 4.75 0 1 0-3.464-1.5zM6 8.75a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5m12 6.5a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5\" clip-rule=\"evenodd\"/>"} as const satisfies IconDefinition;
+export const RecordMinimalisticStrokeIcon: IconDefinition = {"name":"record-minimalistic-stroke","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M9.464 15.25A4.75 4.75 0 1 0 6 16.75h12a4.75 4.75 0 1 0-3.464-1.5zM6 8.75a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5m12 6.5a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5\" clip-rule=\"evenodd\"/></g>"};
 export default RecordMinimalisticStrokeIcon;

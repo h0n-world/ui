@@ -934,7 +934,8 @@
       "tags": [
         "align",
         "horizonta",
-        "spacing"
+        "spacing",
+        "align-horizontal"
       ]
     },
     "align-horizonta-spacing-duotone": {
@@ -945,7 +946,8 @@
       "tags": [
         "align",
         "horizonta",
-        "spacing"
+        "spacing",
+        "align-horizontal"
       ]
     },
     "align-horizonta-spacing-stroke": {
@@ -956,7 +958,8 @@
       "tags": [
         "align",
         "horizonta",
-        "spacing"
+        "spacing",
+        "align-horizontal"
       ]
     },
     "align-horizontal-center": {
@@ -967,7 +970,8 @@
       "tags": [
         "align",
         "horizontal",
-        "center"
+        "center",
+        "align-horizontal"
       ]
     },
     "align-horizontal-center-duotone": {
@@ -978,7 +982,8 @@
       "tags": [
         "align",
         "horizontal",
-        "center"
+        "center",
+        "align-horizontal"
       ]
     },
     "align-horizontal-center-stroke": {
@@ -989,7 +994,8 @@
       "tags": [
         "align",
         "horizontal",
-        "center"
+        "center",
+        "align-horizontal"
       ]
     },
     "align-left": {
@@ -1359,7 +1365,8 @@
       "tags": [
         "archive",
         "down",
-        "minimlistic"
+        "minimlistic",
+        "minimalistic"
       ]
     },
     "archive-down-minimlistic-duotone": {
@@ -1370,7 +1377,8 @@
       "tags": [
         "archive",
         "down",
-        "minimlistic"
+        "minimlistic",
+        "minimalistic"
       ]
     },
     "archive-down-minimlistic-stroke": {
@@ -1381,7 +1389,8 @@
       "tags": [
         "archive",
         "down",
-        "minimlistic"
+        "minimlistic",
+        "minimalistic"
       ]
     },
     "archive-down-stroke": {
@@ -1470,7 +1479,8 @@
       "tags": [
         "archive",
         "up",
-        "minimlistic"
+        "minimlistic",
+        "minimalistic"
       ]
     },
     "archive-up-minimlistic-duotone": {
@@ -1481,7 +1491,8 @@
       "tags": [
         "archive",
         "up",
-        "minimlistic"
+        "minimlistic",
+        "minimalistic"
       ]
     },
     "archive-up-minimlistic-stroke": {
@@ -1492,7 +1503,8 @@
       "tags": [
         "archive",
         "up",
-        "minimlistic"
+        "minimlistic",
+        "minimalistic"
       ]
     },
     "archive-up-stroke": {
@@ -5364,7 +5376,8 @@
       ],
       "tags": [
         "card",
-        "recive"
+        "recive",
+        "card-receive"
       ]
     },
     "card-recive-duotone": {
@@ -5374,7 +5387,8 @@
       ],
       "tags": [
         "card",
-        "recive"
+        "recive",
+        "card-receive"
       ]
     },
     "card-recive-stroke": {
@@ -5384,7 +5398,8 @@
       ],
       "tags": [
         "card",
-        "recive"
+        "recive",
+        "card-receive"
       ]
     },
     "card-search": {
@@ -8517,7 +8532,8 @@
       ],
       "tags": [
         "clound",
-        "cross"
+        "cross",
+        "cloud"
       ]
     },
     "clound-cross-duotone": {
@@ -8527,7 +8543,8 @@
       ],
       "tags": [
         "clound",
-        "cross"
+        "cross",
+        "cloud"
       ]
     },
     "clound-cross-stroke": {
@@ -8537,7 +8554,8 @@
       ],
       "tags": [
         "clound",
-        "cross"
+        "cross",
+        "cloud"
       ]
     },
     "code": {
@@ -8724,7 +8742,8 @@
       ],
       "tags": [
         "colour",
-        "tuneing"
+        "tuneing",
+        "colour-tuning"
       ]
     },
     "colour-tuneing-duotone": {
@@ -8734,7 +8753,8 @@
       ],
       "tags": [
         "colour",
-        "tuneing"
+        "tuneing",
+        "colour-tuning"
       ]
     },
     "colour-tuneing-stroke": {
@@ -8744,7 +8764,8 @@
       ],
       "tags": [
         "colour",
-        "tuneing"
+        "tuneing",
+        "colour-tuning"
       ]
     },
     "command": {
@@ -8915,7 +8936,8 @@
         "home"
       ],
       "tags": [
-        "condicioner"
+        "condicioner",
+        "conditioner"
       ]
     },
     "condicioner-2": {
@@ -8925,7 +8947,8 @@
       ],
       "tags": [
         "condicioner",
-        "2"
+        "2",
+        "conditioner"
       ]
     },
     "condicioner-2-duotone": {
@@ -8935,7 +8958,8 @@
       ],
       "tags": [
         "condicioner",
-        "2"
+        "2",
+        "conditioner"
       ]
     },
     "condicioner-2-stroke": {
@@ -8945,7 +8969,8 @@
       ],
       "tags": [
         "condicioner",
-        "2"
+        "2",
+        "conditioner"
       ]
     },
     "condicioner-duotone": {
@@ -8954,7 +8979,8 @@
         "home"
       ],
       "tags": [
-        "condicioner"
+        "condicioner",
+        "conditioner"
       ]
     },
     "condicioner-stroke": {
@@ -8963,7 +8989,8 @@
         "home"
       ],
       "tags": [
-        "condicioner"
+        "condicioner",
+        "conditioner"
       ]
     },
     "confetti": {
@@ -18614,7 +18641,8 @@
         "interface"
       ],
       "tags": [
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "magnifer-bug": {
@@ -18624,7 +18652,8 @@
       ],
       "tags": [
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "magnifer-bug-duotone": {
@@ -18634,7 +18663,8 @@
       ],
       "tags": [
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "magnifer-bug-stroke": {
@@ -18644,7 +18674,8 @@
       ],
       "tags": [
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "magnifer-duotone": {
@@ -18653,7 +18684,8 @@
         "interface"
       ],
       "tags": [
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "magnifer-stroke": {
@@ -18662,7 +18694,8 @@
         "interface"
       ],
       "tags": [
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "magnifer-zoom-in": {
@@ -18673,7 +18706,8 @@
       "tags": [
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "magnifer-zoom-in-duotone": {
@@ -18684,7 +18718,8 @@
       "tags": [
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "magnifer-zoom-in-stroke": {
@@ -18695,7 +18730,8 @@
       "tags": [
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "magnifer-zoom-out": {
@@ -18706,7 +18742,8 @@
       "tags": [
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "magnifer-zoom-out-duotone": {
@@ -18717,7 +18754,8 @@
       "tags": [
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "magnifer-zoom-out-stroke": {
@@ -18728,7 +18766,8 @@
       "tags": [
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "mailbox": {
@@ -20103,7 +20142,8 @@
       ],
       "tags": [
         "minimalistic",
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-bug": {
@@ -20114,7 +20154,8 @@
       "tags": [
         "minimalistic",
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-bug-duotone": {
@@ -20125,7 +20166,8 @@
       "tags": [
         "minimalistic",
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-bug-stroke": {
@@ -20136,7 +20178,8 @@
       "tags": [
         "minimalistic",
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-duotone": {
@@ -20146,7 +20189,8 @@
       ],
       "tags": [
         "minimalistic",
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-stroke": {
@@ -20156,7 +20200,8 @@
       ],
       "tags": [
         "minimalistic",
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-zoom-in": {
@@ -20168,7 +20213,8 @@
         "minimalistic",
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-zoom-in-duotone": {
@@ -20180,7 +20226,8 @@
         "minimalistic",
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-zoom-in-stroke": {
@@ -20192,7 +20239,8 @@
         "minimalistic",
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-zoom-out": {
@@ -20204,7 +20252,8 @@
         "minimalistic",
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-zoom-out-duotone": {
@@ -20216,7 +20265,8 @@
         "minimalistic",
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "minimalistic-magnifer-zoom-out-stroke": {
@@ -20228,7 +20278,8 @@
         "minimalistic",
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "minimize": {
@@ -26299,7 +26350,8 @@
       ],
       "tags": [
         "rounded",
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "rounded-magnifer-bug": {
@@ -26310,7 +26362,8 @@
       "tags": [
         "rounded",
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "rounded-magnifer-bug-duotone": {
@@ -26321,7 +26374,8 @@
       "tags": [
         "rounded",
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "rounded-magnifer-bug-stroke": {
@@ -26332,7 +26386,8 @@
       "tags": [
         "rounded",
         "magnifer",
-        "bug"
+        "bug",
+        "magnifier"
       ]
     },
     "rounded-magnifer-duotone": {
@@ -26342,7 +26397,8 @@
       ],
       "tags": [
         "rounded",
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "rounded-magnifer-stroke": {
@@ -26352,7 +26408,8 @@
       ],
       "tags": [
         "rounded",
-        "magnifer"
+        "magnifer",
+        "magnifier"
       ]
     },
     "rounded-magnifer-zoom-in": {
@@ -26364,7 +26421,8 @@
         "rounded",
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "rounded-magnifer-zoom-in-duotone": {
@@ -26376,7 +26434,8 @@
         "rounded",
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "rounded-magnifer-zoom-in-stroke": {
@@ -26388,7 +26447,8 @@
         "rounded",
         "magnifer",
         "zoom",
-        "in"
+        "in",
+        "magnifier"
       ]
     },
     "rounded-magnifer-zoom-out": {
@@ -26400,7 +26460,8 @@
         "rounded",
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "rounded-magnifer-zoom-out-duotone": {
@@ -26412,7 +26473,8 @@
         "rounded",
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "rounded-magnifer-zoom-out-stroke": {
@@ -26424,7 +26486,8 @@
         "rounded",
         "magnifer",
         "zoom",
-        "out"
+        "out",
+        "magnifier"
       ]
     },
     "route": {
@@ -28335,7 +28398,8 @@
         "development"
       ],
       "tags": [
-        "siderbar"
+        "siderbar",
+        "sidebar"
       ]
     },
     "siderbar-duotone": {
@@ -28344,7 +28408,8 @@
         "development"
       ],
       "tags": [
-        "siderbar"
+        "siderbar",
+        "sidebar"
       ]
     },
     "siderbar-stroke": {
@@ -28353,7 +28418,8 @@
         "development"
       ],
       "tags": [
-        "siderbar"
+        "siderbar",
+        "sidebar"
       ]
     },
     "signpost": {
@@ -30119,7 +30185,8 @@
       ],
       "tags": [
         "spedometer",
-        "low"
+        "low",
+        "speedometer"
       ]
     },
     "spedometer-low-duotone": {
@@ -30129,7 +30196,8 @@
       ],
       "tags": [
         "spedometer",
-        "low"
+        "low",
+        "speedometer"
       ]
     },
     "spedometer-low-stroke": {
@@ -30139,7 +30207,8 @@
       ],
       "tags": [
         "spedometer",
-        "low"
+        "low",
+        "speedometer"
       ]
     },
     "spedometer-max": {
@@ -30149,7 +30218,8 @@
       ],
       "tags": [
         "spedometer",
-        "max"
+        "max",
+        "speedometer"
       ]
     },
     "spedometer-max-duotone": {
@@ -30159,7 +30229,8 @@
       ],
       "tags": [
         "spedometer",
-        "max"
+        "max",
+        "speedometer"
       ]
     },
     "spedometer-max-stroke": {
@@ -30169,7 +30240,8 @@
       ],
       "tags": [
         "spedometer",
-        "max"
+        "max",
+        "speedometer"
       ]
     },
     "spedometer-middle": {
@@ -30179,7 +30251,8 @@
       ],
       "tags": [
         "spedometer",
-        "middle"
+        "middle",
+        "speedometer"
       ]
     },
     "spedometer-middle-duotone": {
@@ -30189,7 +30262,8 @@
       ],
       "tags": [
         "spedometer",
-        "middle"
+        "middle",
+        "speedometer"
       ]
     },
     "spedometer-middle-stroke": {
@@ -30199,7 +30273,8 @@
       ],
       "tags": [
         "spedometer",
-        "middle"
+        "middle",
+        "speedometer"
       ]
     },
     "square-academic-cap": {

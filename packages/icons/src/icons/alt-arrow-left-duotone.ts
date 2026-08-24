@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const AltArrowLeftDuotoneIcon = {"name":"alt-arrow-left-duotone","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" d=\"M11.596 8.303 8.165 11.63a.5.5 0 0 0 0 .74l6.63 6.43c.414.401 1.205.158 1.205-.37v-5.723z\"/><path fill=\"currentColor\" d=\"M16 11.293V5.57c0-.528-.791-.771-1.205-.37l-2.482 2.406z\" opacity=\".32\"/>"} as const satisfies IconDefinition;
+export const AltArrowLeftDuotoneIcon: IconDefinition = {"name":"alt-arrow-left-duotone","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" d=\"M11.596 8.303 8.165 11.63a.5.5 0 0 0 0 .74l6.63 6.43c.414.401 1.205.158 1.205-.37v-5.723z\"/><path fill=\"currentColor\" d=\"M16 11.293V5.57c0-.528-.791-.771-1.205-.37l-2.482 2.406z\" opacity=\".32\"/></g>"};
 export default AltArrowLeftDuotoneIcon;

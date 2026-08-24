@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const HeartDuotoneIcon = {"name":"heart-duotone","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M8.106 18.247C5.298 16.083 2 13.542 2 9.137 2 4.274 7.5.825 12 5.501V20.5c-1 0-2-.77-3.038-1.59q-.417-.326-.856-.663\" clip-rule=\"evenodd\" opacity=\".32\"/><path fill=\"currentColor\" d=\"M15.038 18.91C17.981 16.592 22 14 22 9.138S16.5.825 12 5.501V20.5c1 0 2-.77 3.038-1.59\"/>"} as const satisfies IconDefinition;
+export const HeartDuotoneIcon: IconDefinition = {"name":"heart-duotone","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M8.106 18.247C5.298 16.083 2 13.542 2 9.137 2 4.274 7.5.825 12 5.501V20.5c-1 0-2-.77-3.038-1.59q-.417-.326-.856-.663\" clip-rule=\"evenodd\" opacity=\".32\"/><path fill=\"currentColor\" d=\"M15.038 18.91C17.981 16.592 22 14 22 9.138S16.5.825 12 5.501V20.5c1 0 2-.77 3.038-1.59\"/></g>"};
 export default HeartDuotoneIcon;

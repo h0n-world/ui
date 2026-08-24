@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const SidebarMinimalisticDuotoneIcon = {"name":"sidebar-minimalistic-duotone","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M3.172 4.172C2 5.343 2 7.229 2 11v2c0 3.771 0 5.657 1.172 6.828S6.229 21 10 21h5V3h-5C6.229 3 4.343 3 3.172 4.172\" clip-rule=\"evenodd\" opacity=\".32\"/><path fill=\"currentColor\" d=\"M22 13v-2c0-3.771 0-5.657-1.172-6.828-.974-.975-3.192-1.139-5.828-1.166v17.988c2.636-.027 4.854-.191 5.828-1.166C22 18.657 22 16.771 22 13\"/>"} as const satisfies IconDefinition;
+export const SidebarMinimalisticDuotoneIcon: IconDefinition = {"name":"sidebar-minimalistic-duotone","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M3.172 4.172C2 5.343 2 7.229 2 11v2c0 3.771 0 5.657 1.172 6.828S6.229 21 10 21h5V3h-5C6.229 3 4.343 3 3.172 4.172\" clip-rule=\"evenodd\" opacity=\".32\"/><path fill=\"currentColor\" d=\"M22 13v-2c0-3.771 0-5.657-1.172-6.828-.974-.975-3.192-1.139-5.828-1.166v17.988c2.636-.027 4.854-.191 5.828-1.166C22 18.657 22 16.771 22 13\"/></g>"};
 export default SidebarMinimalisticDuotoneIcon;

@@ -21,3 +21,5 @@ import icon from '@h0nio/icons/accessibility-duotone'
 ```
 
 The catalog renders results in batches and loads more as you approach the end of the grid, so filtering the complete collection does not create thousands of DOM nodes at once.
+
+See the [usage guide](/icons/example) for runtime rendering, raw SVG imports, accessibility, entry-point costs, and licensing.

@@ -1,0 +1,14 @@
+{
+  "policy": "preserve-source-identifiers",
+  "patterns": {
+    "align-horizonta": "align-horizontal",
+    "card-recive": "card-receive",
+    "clound": "cloud",
+    "colour-tuneing": "colour-tuning",
+    "condicioner": "conditioner",
+    "magnifer": "magnifier",
+    "minimlistic": "minimalistic",
+    "siderbar": "sidebar",
+    "spedometer": "speedometer"
+  }
+}

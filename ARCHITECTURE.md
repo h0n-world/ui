@@ -1,6 +1,6 @@
 # H0N UI Architecture
 
-Last verified: 2026-08-23
+Last verified: 2026-08-24
 
 Current library version: `@h0nio/ui` `1.2.0`
 
@@ -11,7 +11,7 @@ H0N UI is a pnpm workspace centered on a self-contained Vue 3 component library,
 ```text
 h0n-ui/
   packages/
-    icons/                      # @h0nio/icons: private-in-development icon package
+    icons/                      # @h0nio/icons: independently versioned icon package
       scripts/                  # Import, generation, validation, and SVG copy tools
       src/                      # Generated definitions, catalog, metadata, and runtime
       svg/                      # Generated package SVG subpaths
@@ -79,7 +79,9 @@ flowchart LR
 
 `@h0nio/ui` owns the structural `H0IconDefinition` type, the `H0Icon` renderer, and a deliberately small system set exposed through `@h0nio/ui/icons`. Components use that set for internal controls and must not require `@h0nio/icons`. Public icon props accept compatible structural definitions from any source; components that accept arbitrary visual content expose a named slot where appropriate.
 
-`@h0nio/icons` is the larger framework-agnostic icon catalog. It remains private while its API and collection are being developed. The documentation app aliases the icons package and both UI entries to workspace source and is therefore an integration surface, not a consumer of registry artifacts.
+`@h0nio/icons` is the larger framework-agnostic icon catalog and is versioned independently from `@h0nio/ui`. Its lightweight root exports rendering helpers and types; individual icon subpaths are the primary application API. `catalog` exposes metadata without definitions, raw SVG files live under `svg/*`, and the intentionally expensive `all` entry owns the complete eager registry. The package retains `private: true` only as a pre-release safety barrier and removes it in the reviewed release change.
+
+The documentation app aliases the icons package and both UI entries to workspace source and is therefore an integration surface, not a consumer of registry artifacts. A published `@h0nio/icons` release must be verified independently before a later `@h0nio/ui` release may declare it as a registry dependency.
 
 ## Library Entry and Plugin
 
@@ -210,6 +212,17 @@ Package exports support:
 Repository-level contribution, security, and release policies live in `CONTRIBUTING.md`, `SECURITY.md`, and `RELEASING.md`. GitHub issue and pull-request templates route public reports through those policies. Registry publication remains a maintainer action until npm trusted publishing is explicitly configured; the quality workflow does not publish packages.
 
 The `@h0nio/ui/icons` ES entry keeps the small internal system definitions tree-shakeable and independent from the larger `@h0nio/icons` package.
+
+## Independent Versioning and Releases
+
+`@h0nio/ui` and `@h0nio/icons` follow semantic versioning independently. A change to documentation, workspace orchestration, or one package does not automatically change the version of the other package.
+
+Package-specific Git tags and GitHub Releases prevent the two histories from colliding:
+
+- `ui-v<version>` for `@h0nio/ui`;
+- `icons-v<version>` for `@h0nio/icons`.
+
+Every registry release is built from a reviewed commit, verified through its package-specific checks and installed-tarball fixture, and published manually according to `RELEASING.md`. The icons package must be published and its public subpaths verified before an `@h0nio/ui` release may add or update a registry dependency on it.
 
 ## Documentation Architecture
 

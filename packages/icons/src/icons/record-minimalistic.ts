@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const RecordMinimalisticIcon = {"name":"record-minimalistic","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" d=\"M5.889 16C3.74 16 2 14.21 2 12s1.741-4 3.889-4 3.889 1.79 3.889 4a4.06 4.06 0 0 1-.697 2.286h5.838A4.06 4.06 0 0 1 14.222 12c0-2.21 1.741-4 3.89-4C20.258 8 22 9.79 22 12s-1.741 4-3.889 4z\"/>"} as const satisfies IconDefinition;
+export const RecordMinimalisticIcon: IconDefinition = {"name":"record-minimalistic","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" d=\"M5.889 16C3.74 16 2 14.21 2 12s1.741-4 3.889-4 3.889 1.79 3.889 4a4.06 4.06 0 0 1-.697 2.286h5.838A4.06 4.06 0 0 1 14.222 12c0-2.21 1.741-4 3.89-4C20.258 8 22 9.79 22 12s-1.741 4-3.889 4z\"/></g>"};
 export default RecordMinimalisticIcon;

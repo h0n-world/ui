@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const ArrowRightStrokeIcon = {"name":"arrow-right-stroke","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M13.47 5.47a.75.75 0 0 1 1.06 0l6 6a.75.75 0 0 1 0 1.06l-6 6a.75.75 0 1 1-1.06-1.06l4.72-4.72H4a.75.75 0 0 1 0-1.5h14.19l-4.72-4.72a.75.75 0 0 1 0-1.06\" clip-rule=\"evenodd\"/>"} as const satisfies IconDefinition;
+export const ArrowRightStrokeIcon: IconDefinition = {"name":"arrow-right-stroke","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M13.47 5.47a.75.75 0 0 1 1.06 0l6 6a.75.75 0 0 1 0 1.06l-6 6a.75.75 0 1 1-1.06-1.06l4.72-4.72H4a.75.75 0 0 1 0-1.5h14.19l-4.72-4.72a.75.75 0 0 1 0-1.06\" clip-rule=\"evenodd\"/></g>"};
 export default ArrowRightStrokeIcon;

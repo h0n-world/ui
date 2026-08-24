@@ -1,9 +1,9 @@
 import { access, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { basename, dirname, relative, resolve } from 'node:path';
+import { assertPathInside, resolveImportSource } from './import-source.mjs';
 
 const packageRoot = resolve(import.meta.dirname, '..');
-const workspaceRoot = resolve(packageRoot, '../..');
-const sourceDir = resolve(workspaceRoot, 'example');
+const sourceDir = await resolveImportSource();
 const svgDir = resolve(packageRoot, 'src/svg');
 const metadataPath = resolve(packageRoot, 'src/metadata.json');
 
@@ -122,9 +122,7 @@ for (const item of imports) {
 
   if (!duplicateBaseNames.has(item.baseName) && metadata.icons[item.baseName]?.style === 'stroke') {
     const legacyPath = resolve(svgDir, `${item.baseName}.svg`);
-    if (!legacyPath.toLowerCase().startsWith(`${svgDir.toLowerCase()}\\`)) {
-      throw new Error(`Unsafe legacy path: ${legacyPath}`);
-    }
+    assertPathInside(svgDir, legacyPath, 'legacy');
     try {
       await access(legacyPath);
       await rm(legacyPath);

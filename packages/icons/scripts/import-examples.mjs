@@ -1,9 +1,9 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { basename, resolve } from 'node:path';
+import { resolveImportSource } from './import-source.mjs';
 
 const packageRoot = resolve(import.meta.dirname, '..');
-const workspaceRoot = resolve(packageRoot, '../..');
-const sourceDir = resolve(workspaceRoot, 'example');
+const sourceDir = await resolveImportSource();
 const targetDir = resolve(packageRoot, 'src/svg');
 const excluded = new Set([
   'IconFriends.vue',

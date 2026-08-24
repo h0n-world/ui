@@ -35,7 +35,7 @@ describe('@h0nio/ui package metadata', () => {
             version: '1.2.0',
             license: 'MIT',
             author: {
-                name: 'h0n-world',
+                name: 'H0N World',
                 url: 'https://github.com/h0n-world'
             },
             repository: {
@@ -50,7 +50,9 @@ describe('@h0nio/ui package metadata', () => {
         expect(packageJson.private).not.toBe(true)
         expect(packageJson.description).toBeTruthy()
         expect(packageJson.keywords).toEqual(expect.arrayContaining(['vue', 'component-library', 'design-system', 'typescript', 'accessibility']))
-        expect(readFileSync(resolve(packageRoot, 'LICENSE'), 'utf8')).toContain('MIT License')
+        const license = readFileSync(resolve(packageRoot, 'LICENSE'), 'utf8')
+        expect(license).toContain('MIT License')
+        expect(license).toContain('Copyright (c) 2026 H0N World')
         expect(readFileSync(resolve(packageRoot, 'README.md'), 'utf8')).toContain('# H0N UI')
     })
 

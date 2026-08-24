@@ -5,6 +5,7 @@ Vue UI library workspace with a local documentation application.
 ## Structure
 
 - `packages/ui` - reusable Vue component library.
+- `packages/icons` - framework-agnostic, independently versioned SVG icon library.
 - `apps/documentation` - Vite documentation app with live component examples.
 
 ## Commands
@@ -15,6 +16,18 @@ pnpm run dev
 pnpm run build
 pnpm run typecheck
 ```
+
+Package-specific icon commands are available from the workspace root:
+
+```bash
+pnpm run generate
+pnpm run build:icons
+pnpm --filter @h0nio/icons check
+pnpm --filter @h0nio/icons test
+```
+
+See the [`@h0nio/icons` README](./packages/icons/README.md) for installation,
+entry points, accessibility, naming, and licensing.
 
 ## Theme configuration
 

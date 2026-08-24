@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { icons, renderIcon, type IconDefinition } from '@h0nio/icons'
+import { renderIcon, type IconDefinition } from '@h0nio/icons'
+import { icons } from '@h0nio/icons/all'
 import {
     iconCatalog,
     iconCategories,

@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const TransferVerticalDuotoneIcon = {"name":"transfer-vertical-duotone","viewBox":"0 0 24 24","body":"<path fill=\"currentColor\" d=\"M20 10.25a.75.75 0 0 0 .507-1.303l-6-5.5A.75.75 0 0 0 13.25 4v16a.75.75 0 0 0 1.5 0v-9.75z\"/><path fill=\"currentColor\" d=\"M4 13.75h5.25V4a.75.75 0 1 1 1.5 0v16a.75.75 0 0 1-1.257.553l-6-5.5A.75.75 0 0 1 4 13.75\" opacity=\".32\"/>"} as const satisfies IconDefinition;
+export const TransferVerticalDuotoneIcon: IconDefinition = {"name":"transfer-vertical-duotone","viewBox":"0 0 24 24","body":"<g fill=\"none\"><path fill=\"currentColor\" d=\"M20 10.25a.75.75 0 0 0 .507-1.303l-6-5.5A.75.75 0 0 0 13.25 4v16a.75.75 0 0 0 1.5 0v-9.75z\"/><path fill=\"currentColor\" d=\"M4 13.75h5.25V4a.75.75 0 1 1 1.5 0v16a.75.75 0 0 1-1.257.553l-6-5.5A.75.75 0 0 1 4 13.75\" opacity=\".32\"/></g>"};
 export default TransferVerticalDuotoneIcon;

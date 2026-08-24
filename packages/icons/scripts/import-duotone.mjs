@@ -1,9 +1,9 @@
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { basename, dirname, relative, resolve } from 'node:path';
+import { resolveImportSource } from './import-source.mjs';
 
 const packageRoot = resolve(import.meta.dirname, '..');
-const workspaceRoot = resolve(packageRoot, '../..');
-const sourceDir = resolve(workspaceRoot, 'example');
+const sourceDir = await resolveImportSource();
 const svgDir = resolve(packageRoot, 'src/svg');
 const metadataPath = resolve(packageRoot, 'src/metadata.json');
 

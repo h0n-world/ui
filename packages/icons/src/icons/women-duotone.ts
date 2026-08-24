@@ -1,4 +1,4 @@
 import type { IconDefinition } from '../types.js';
 
-export const WomenDuotoneIcon = {"name":"women-duotone","viewBox":"0 0 24 24","body":"<circle cx=\"12\" cy=\"9\" r=\"7\" fill=\"currentColor\" opacity=\".32\"/><path fill=\"currentColor\" d=\"M11.25 15.96v1.79H9.5a.75.75 0 0 0 0 1.5h1.75V22a.75.75 0 0 0 1.5 0v-2.75h1.75a.75.75 0 0 0 0-1.5h-1.75v-1.79a7 7 0 0 1-1.5 0\"/>"} as const satisfies IconDefinition;
+export const WomenDuotoneIcon: IconDefinition = {"name":"women-duotone","viewBox":"0 0 24 24","body":"<g fill=\"none\"><circle cx=\"12\" cy=\"9\" r=\"7\" fill=\"currentColor\" opacity=\".32\"/><path fill=\"currentColor\" d=\"M11.25 15.96v1.79H9.5a.75.75 0 0 0 0 1.5h1.75V22a.75.75 0 0 0 1.5 0v-2.75h1.75a.75.75 0 0 0 0-1.5h-1.75v-1.79a7 7 0 0 1-1.5 0\"/></g>"};
 export default WomenDuotoneIcon;
