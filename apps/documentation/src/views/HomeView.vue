@@ -456,10 +456,6 @@ const interfaceTips = ref(false)
     }
 }
 
-.workspace-panel {
-    padding-top: 1.5rem;
-}
-
 .setting-row {
     gap: var(--h0n-ui-spacing-lg);
 }

@@ -132,7 +132,7 @@ defineExpose({
             <template #start>
                 <span class="h-search-field__icon" aria-hidden="true">
                     <slot name="icon">
-                        <H0Icon :icon="searchIcon" :size="16" />
+                        <H0Icon :icon="searchIcon" :size="20" />
                     </slot>
                 </span>
             </template>

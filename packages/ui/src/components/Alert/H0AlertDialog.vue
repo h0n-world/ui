@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import successIcon from '@h0nio/icons/check-circle-stroke'
-import closeIcon from '@h0nio/icons/close'
 import errorIcon from '@h0nio/icons/danger-circle-stroke'
 import warningIcon from '@h0nio/icons/danger-triangle-stroke'
 import infoIcon from '@h0nio/icons/info-circle-stroke'
@@ -11,7 +10,9 @@ import type { H0IconSource } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
+import H0OverlayContent from '../_shared/H0OverlayContent.vue'
 import H0OverlayFooter from '../_shared/H0OverlayFooter.vue'
+import H0OverlayHeader from '../_shared/H0OverlayHeader.vue'
 import H0OverlayRoot from '../_shared/H0OverlayRoot.vue'
 import { useH0OverlayModel } from '../_shared/useOverlayModel'
 import type { H0AlertDialogBackdrop, H0AlertDialogTone } from './Alert.types'
@@ -115,24 +116,24 @@ function confirm() {
         <template #default="{ panelRef }">
             <div data-h0n-component="alert-dialog" class="h-alert-dialog" :class="dialogClasses">
                 <section :ref="panelRef" class="h-alert-dialog__panel" role="alertdialog" aria-modal="true" :aria-label="title || ariaLabel || locale.overlay.alertDialog" tabindex="-1">
-                    <div class="h-alert-dialog__close">
-                        <H0Button size="sm" variant="soft" :icon="closeIcon" button-type="onlyIcon" :aria-label="closeAriaLabel || locale.overlay.closeAlertDialog" @click="close" />
-                    </div>
+                    <H0OverlayHeader :close-aria-label="closeAriaLabel || locale.overlay.closeAlertDialog" custom-content @close="close">
+                        <div class="h-alert-dialog__heading">
+                            <div class="h-alert-dialog__icon" aria-hidden="true">
+                                <H0Icon :icon="resolvedIcon" :size="20" />
+                            </div>
+                            <H0Typography class="h-alert-dialog__title" variant="body" as="h2" :weight="600">
+                                <slot name="title">{{ title || locale.overlay.confirmAction }}</slot>
+                            </H0Typography>
+                        </div>
+                    </H0OverlayHeader>
 
-                    <div class="h-alert-dialog__icon" aria-hidden="true">
-                        <H0Icon :icon="resolvedIcon" :size="20" />
-                    </div>
-
-                    <div class="h-alert-dialog__body">
-                        <H0Typography class="h-alert-dialog__title" variant="body" as="h2" :weight="600">
-                            <slot name="title">{{ title || locale.overlay.confirmAction }}</slot>
-                        </H0Typography>
-                        <H0Description v-if="text || $slots.default" class="h-alert-dialog__text">
+                    <H0OverlayContent v-if="text || $slots.default">
+                        <H0Description class="h-alert-dialog__text">
                             <slot>{{ text }}</slot>
                         </H0Description>
-                    </div>
+                    </H0OverlayContent>
 
-                    <H0OverlayFooter>
+                    <H0OverlayFooter :class="{ 'h-alert-dialog__footer--standalone': !(text || $slots.default) }">
                         <slot name="actions" :cancel="cancel" :confirm="confirm" :close="close">
                             <H0Button variant="soft" size="sm" @click="cancel">{{ cancelText || locale.overlay.cancel }}</H0Button>
                             <H0Button :tone="confirmTone" size="sm" @click="confirm">{{ confirmText || locale.overlay.confirm }}</H0Button>
@@ -176,19 +177,22 @@ function confirm() {
     border-radius: var(--h0n-ui-radius-xl);
     box-shadow: var(--h0n-ui-shadow-lg);
     color: var(--h0n-ui-color-text);
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 32px);
     max-width: calc(100vw - 32px);
     min-width: 0;
-    padding: 16px;
+    overflow: hidden;
     pointer-events: auto;
     position: relative;
     width: min(360px, calc(100vw - 32px));
 }
 
-.h-alert-dialog__close {
-    position: absolute;
-    inset-block-start: 14px;
-    inset-inline-end: 14px;
+.h-alert-dialog__heading {
+    align-items: center;
+    display: flex;
+    gap: var(--h0n-ui-spacing-md);
+    min-width: 0;
 }
 
 .h-alert-dialog__icon {
@@ -202,20 +206,18 @@ function confirm() {
     width: 38px;
 }
 
-.h-alert-dialog__body {
-    display: grid;
-    gap: 10px;
-    min-width: 0;
-    padding-block: 12px;
-}
-
 .h-alert-dialog__title {
     color: var(--h0n-ui-color-text);
     line-height: 1.35;
+    min-width: 0;
 }
 
 .h-alert-dialog__text {
     color: var(--h0n-ui-color-muted);
+}
+
+.h-alert-dialog__footer--standalone {
+    padding-block-start: 16px;
 }
 
 :global(.h-overlay-enter-active .h-alert-dialog__panel),

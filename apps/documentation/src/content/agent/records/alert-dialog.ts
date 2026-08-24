@@ -46,7 +46,7 @@ export const alertDialogAgentRecord = {
     useWhen: ['A destructive or consequential action requires an explicit decision.', 'The user must acknowledge risk before a workflow continues.'],
     avoidWhen: ['Feedback is informational or non-blocking.', 'The workflow is a general form better suited to H0Modal.'],
     accessibility: ['Use a specific title.', 'Keep a clear cancellation path.', 'Choose initial focus conservatively for destructive actions.'],
-    styling: ['Use semantic tone and public H0N tokens.', 'Treat internal alert-dialog selectors as implementation details.'],
+    styling: ['Use semantic tone and public H0N tokens.', 'The built-in header, content, and footer follow the shared overlay section layout.', 'Treat internal alert-dialog selectors as implementation details.'],
     responsive: ['Keep copy and actions concise so they wrap on narrow screens.'],
     performance: ['Keep blocking content small; it mounts only while open.'],
     examples: [

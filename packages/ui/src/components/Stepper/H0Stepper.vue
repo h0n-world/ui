@@ -230,8 +230,10 @@ function getStepState(index: number) {
     }
 
     .h-stepper__item {
+        align-content: start;
         display: grid;
         gap: var(--h-stepper-gap);
+        grid-template-rows: var(--h-stepper-marker-size) auto;
         justify-items: center;
         text-align: center;
     }

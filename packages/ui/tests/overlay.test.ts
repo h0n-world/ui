@@ -102,13 +102,29 @@ describe('overlay focus management', () => {
         wrapper.unmount()
     })
 
-    it('uses the shared footer layout for AlertDialog actions', async () => {
+    it('uses the shared header, content, and footer layout for AlertDialog', async () => {
         const wrapper = mount(H0AlertDialog, {
-            props: { modelValue: true, teleportDisabled: true }
+            props: { modelValue: true, teleportDisabled: true, title: 'Delete project?', text: 'This action cannot be undone.' }
         })
 
         await nextTick()
+        const panel = wrapper.get('.h-alert-dialog__panel')
+        expect(panel.get('.h-overlay-header').exists()).toBe(true)
+        expect(panel.get('.h-overlay-content').text()).toContain('This action cannot be undone.')
         expect(wrapper.find('.h-overlay-footer').exists()).toBe(true)
+        expect(panel.find('.h-alert-dialog__close').exists()).toBe(false)
+        expect(panel.get('.h-overlay-header').find('button').exists()).toBe(true)
+        wrapper.unmount()
+    })
+
+    it('keeps AlertDialog footer spacing when description content is omitted', async () => {
+        const wrapper = mount(H0AlertDialog, {
+            props: { modelValue: true, teleportDisabled: true, title: 'Confirm action' }
+        })
+
+        await nextTick()
+        expect(wrapper.find('.h-overlay-content').exists()).toBe(false)
+        expect(wrapper.get('.h-overlay-footer').classes()).toContain('h-alert-dialog__footer--standalone')
         wrapper.unmount()
     })
 

@@ -1,6 +1,7 @@
 import type { H0OverlayBackdrop } from '../_shared/Overlay.types'
 
 export type H0AlertTone = 'default' | 'info' | 'success' | 'warning' | 'danger'
+export type H0AlertVariant = 'secondary' | 'surface' | 'outline'
 
 export type H0AlertDialogTone = 'danger' | 'info' | 'success' | 'warning'
 

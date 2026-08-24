@@ -16,6 +16,13 @@ order: 150
 :::component-api imports
 :::
 
+## Variants
+
+Use `surface` for the standard alert container, `secondary` for a stronger filled surface, and `outline` for a transparent container with a border. Variant controls the container appearance independently from the semantic `tone`.
+
+:::example components/alert/VariantsExample
+:::
+
 ## Tones
 
 Choose tone from the meaning of the message, not decoration. `default` and `info` use the same information icon with different color treatment. Tone is visual and is not announced by assistive technology, so communicate the status explicitly in text.
@@ -68,6 +75,11 @@ Native fallthrough attributes and listeners apply to the root alert `div`.
 ### H0AlertTone
 
 :::component-api type H0AlertTone
+:::
+
+### H0AlertVariant
+
+:::component-api type H0AlertVariant
 :::
 
 ## Slots

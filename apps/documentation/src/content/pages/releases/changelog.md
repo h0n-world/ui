@@ -19,18 +19,21 @@ This minor release adds Command and color-selection components, expands typograp
 
 - Added `H0CellColorPicker` with controlled and uncontrolled HEX values, `standard` and `minimal` trigger layouts, configurable swatch placement, `surface`, `secondary`, and `ghost` variants, and `sm`, `md`, and `lg` sizes.
 - Added `H0Command` with configurable trigger variants and sizes, modal window sizes and backdrops, hotkey opening, searchable grouped commands, and keyboard navigation.
+- Added `H0ContentState` for smoothly switching a controlled content region between loading, error, empty, and resolved content slots.
 - Added a custom saturation and brightness plane with a hue slider, pointer and touch interaction, keyboard controls, accessible slider semantics, and localized labels.
 - Added form submission through the `name` prop, disabled behavior, popup teleport and positioning options, and the public `open`, `close`, `focus`, and `setValue` methods.
 - Added the `lineHeight` prop to `H0Typography` for unitless numeric and explicit CSS line-height overrides.
 - Added `letterSpacing` and `textTransform` props to `H0Typography`, including pixel-based numeric tracking and explicit CSS values.
 - Added standard `subtitle` support to Modal, Drawer, and Sheet headers.
 - Added a standard close control and `footer` slot to Sheet, aligning its built-in overlay API with Modal and Drawer.
+- Added `surface`, `secondary`, and `outline` variants to Alert, with `surface` as the default.
 - Added direct support for tree-shakeable definitions from `@h0nio/icons` across `H0Icon` and every component icon prop, while retaining legacy node definitions and the `@h0nio/ui/icons` compatibility facade.
 
 ### Fixed and improved
 
 - Prevented document scrolling behind Command, Select, Modal, Sheet, Drawer, and AlertDialog overlays without replacing the body positioning, preserving sticky page regions, nested-overlay locks, scrollbar compensation, and the original page position. Command search focus no longer requests a second scrollable focus transition when opening the system keyboard.
 - Unified Modal, Drawer, and Sheet around shared header, content, and footer layouts with consistent 16px spacing, predictable bordered sections, and correct content padding when optional regions are omitted.
+- Aligned Alert Dialog with the shared overlay header, content, and footer structure, removing double panel padding and the absolutely positioned close control.
 - Replaced duplicated UI system SVG definitions with individual `@h0nio/icons` subpath imports. Body-based SVG definitions preserve their authored solid, stroke, and duotone geometry and receive deterministic per-instance IDs for SSR-safe definitions and clip paths.
 
 ## Version 1.1.0

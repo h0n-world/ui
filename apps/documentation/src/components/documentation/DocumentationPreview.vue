@@ -127,6 +127,7 @@ onBeforeUnmount(() => {
     margin: 26px 0 36px;
     min-width: 0;
     overflow: hidden;
+    overflow-anchor: none;
     position: relative;
 
     &__toolbar {
@@ -153,6 +154,7 @@ onBeforeUnmount(() => {
         justify-content: center;
         min-width: 0;
         overflow-x: auto;
+        overflow-y: hidden;
         padding: var(--h0n-ui-spacing-lg);
     }
 
@@ -161,7 +163,7 @@ onBeforeUnmount(() => {
     }
 
     &__frame {
-        align-items: center;
+        align-items: flex-start;
         background: var(--h0n-background);
         border-radius: var(--h0n-ui-radius-lg);
         container-name: documentation-preview;

@@ -98,7 +98,7 @@ The panel is capped to the viewport with a fluid width. Keep action labels short
 
 ## Styling
 
-Semantic tones and overlay surfaces use public H0N tokens. Treat `.h-alert-dialog` selectors as implementation details.
+Semantic tones and overlay surfaces use public H0N tokens. Alert Dialog shares the standard overlay header, scrollable content, and footer regions with Modal, Sheet, and Drawer, so their padding and close-control placement remain synchronized. Treat `.h-alert-dialog` selectors as implementation details.
 
 ## Performance
 

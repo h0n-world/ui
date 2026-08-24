@@ -11,6 +11,7 @@ import { carouselAgentRecord } from './carousel.ts'
 import { cellColorPickerAgentRecord } from './cell-color-picker.ts'
 import { chipAgentRecord } from './chip.ts'
 import { commandAgentRecord } from './command.ts'
+import { contentStateAgentRecord } from './content-state.ts'
 import { checkboxAgentRecord } from './checkbox.ts'
 import { checkboxGroupAgentRecord } from './checkbox-group.ts'
 import { containerAgentRecord } from './container.ts'
@@ -86,6 +87,7 @@ export const componentAgentRecords = [
     cellColorPickerAgentRecord,
     chipAgentRecord,
     commandAgentRecord,
+    contentStateAgentRecord,
     checkboxAgentRecord,
     checkboxGroupAgentRecord,
     containerAgentRecord,

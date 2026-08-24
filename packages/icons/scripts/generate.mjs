@@ -196,7 +196,7 @@ for (const file of files) {
   const viewBox = root?.[1].match(/\bviewBox="([^"]+)"/)?.[1];
   if (!root || !viewBox) throw new Error(`${file}: optimized SVG must have a viewBox`);
 
-  const body = preserveRootPresentation(root[1], root[2]);
+  const body = preserveRootPresentation(root[1], root[2]).replace(/\r\n?/g, '\n');
   const module = `import type { IconDefinition } from '../types.js';\n\nexport const ${identifier}: IconDefinition = ${JSON.stringify({ name, viewBox, body })};\nexport default ${identifier};\n`;
   const svg = `${optimized}\n`;
   expectedIconModules.set(`${name}.ts`, module);

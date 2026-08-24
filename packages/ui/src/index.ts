@@ -14,6 +14,7 @@ import { H0CellColorPicker } from './components/CellColorPicker'
 import { H0Checkbox, H0CheckboxGroup } from './components/Checkbox'
 import { H0Chip } from './components/Chip'
 import { H0Command } from './components/Command'
+import { H0ContentState } from './components/ContentState'
 import { H0Drawer } from './components/Drawer'
 import { H0DataTable } from './components/DataTable'
 import { H0EmptyState } from './components/EmptyState'
@@ -57,7 +58,7 @@ import { H0Description, H0ErrorMessage, H0Label, H0Message, H0Typography } from 
 import { createH0ThemeService, provideH0Theme, type H0ThemeConfig } from './theme'
 
 const components = [
-    H0Accordion, H0Alert, H0AlertDialog, H0Avatar, H0Badge, H0Breadcrumbs, H0Button, H0ButtonGroup, H0Card, H0Carousel, H0CellColorPicker, H0Checkbox, H0CheckboxGroup, H0Chip, H0Command,
+    H0Accordion, H0Alert, H0AlertDialog, H0Avatar, H0Badge, H0Breadcrumbs, H0Button, H0ButtonGroup, H0Card, H0Carousel, H0CellColorPicker, H0Checkbox, H0CheckboxGroup, H0Chip, H0Command, H0ContentState,
     H0DataTable, H0Description, H0Divider, H0Drawer, H0EmptyState, H0ErrorMessage, H0Field, H0FileUpload, H0Form, H0Grid, H0Icon, H0Image, H0ImageUpload,
     H0InfiniteScroll, H0Inline, H0Input, H0InputOTP, H0Label, H0Link, H0List, H0ListItem, H0Container, H0Message,
     H0Modal, H0NumberInput, H0Pagination, H0PasswordInput, H0Radio, H0RadioGroup, H0Ripple, H0ScrollArea, H0SearchField, H0Segment, H0Select, H0Sheet, H0Skeleton, H0Spacer, H0Spinner,
@@ -101,6 +102,7 @@ export {
     H0CheckboxGroup,
     H0Chip,
     H0Command,
+    H0ContentState,
     H0Description,
     H0Divider,
     H0ErrorMessage,
@@ -181,6 +183,7 @@ export type * from './components/CellColorPicker'
 export type * from './components/Checkbox'
 export type * from './components/Chip'
 export type * from './components/Command'
+export type * from './components/ContentState'
 export type * from './components/DataTable'
 export type * from './components/Drawer'
 export type * from './components/EmptyState'

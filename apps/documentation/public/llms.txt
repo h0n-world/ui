@@ -49,7 +49,7 @@ Paths in this file are relative to the H0N UI documentation origin. They are not
 
 Do not import `src`, `_shared`, generated chunks, private selectors, or component-local CSS variables.
 
-## Supported components (73)
+## Supported components (74)
 
 ### Actions
 
@@ -107,6 +107,7 @@ Do not import `src`, `_shared`, generated chunks, private selectors, or componen
 ### Feedback
 
 - [H0Alert](/components/alert): Persistent assertive inline feedback with semantic tones, compact and loading states, actions, dismissal, and rich content.
+- [H0ContentState](/components/contentstate): Controlled state region that transitions between loading, error, empty, and resolved content slots.
 - [H0EmptyState](/components/emptystate): Centered empty-content explanation with visual, description, actions, and inline, surface, or page layout.
 - [H0Ripple](/components/ripple): Low-level pointer-origin animation for custom positioned interactive surfaces.
 - [H0Skeleton](/components/skeleton): Decorative loading placeholder with block, text, and circular geometry and reduced-motion shimmer handling.

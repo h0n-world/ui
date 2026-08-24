@@ -11,7 +11,7 @@ import type { H0IconSource } from '../Icon'
 import H0Icon from '../Icon/H0Icon.vue'
 import H0Description from '../Typography/H0Description.vue'
 import H0Typography from '../Typography/H0Typography.vue'
-import type { H0AlertTone } from './Alert.types'
+import type { H0AlertTone, H0AlertVariant } from './Alert.types'
 
 defineOptions({
     name: 'H0Alert'
@@ -20,6 +20,7 @@ defineOptions({
 const props = withDefaults(
     defineProps<{
         tone?: H0AlertTone
+        variant?: H0AlertVariant
         loading?: boolean
         title?: string
         text?: string
@@ -29,6 +30,7 @@ const props = withDefaults(
     }>(),
     {
         tone: 'default',
+        variant: 'surface',
         loading: false,
         title: '',
         text: '',
@@ -66,7 +68,7 @@ const resolvedIcon = computed<H0IconSource>(() => {
 </script>
 
 <template>
-    <div data-h0n-component="alert" class="h-alert" :class="[`h-alert--${loading ? 'loading' : tone}`, isCompact && 'h-alert--compact']" role="alert">
+    <div data-h0n-component="alert" class="h-alert" :class="[`h-alert--${variant}`, `h-alert--${loading ? 'loading' : tone}`, isCompact && 'h-alert--compact']" role="alert">
         <slot name="icon">
             <H0Icon class="h-alert__icon" :icon="resolvedIcon" :size="20" />
         </slot>
@@ -95,11 +97,13 @@ const resolvedIcon = computed<H0IconSource>(() => {
 .h-alert {
     --h-alert-accent: var(--h0n-ui-color-primary);
     --h-alert-action-color: var(--h0n-ui-color-primary-contrast);
+    --h-alert-bg: var(--h0n-ui-color-surface);
+    --h-alert-border: transparent;
     --h-alert-title-color: var(--h0n-ui-color-text);
 
     align-items: flex-start;
-    background: var(--h0n-ui-color-surface);
-    border: 0;
+    background: var(--h-alert-bg);
+    border: 1px solid var(--h-alert-border);
     border-radius: var(--h0n-ui-radius-xxl);
     color: var(--h0n-ui-color-text);
     display: grid;
@@ -108,6 +112,19 @@ const resolvedIcon = computed<H0IconSource>(() => {
     grid-template-columns: auto minmax(0, 1fr) auto;
     min-width: 0;
     padding: 14px 14px 14px 18px;
+
+    &--secondary {
+        --h-alert-bg: var(--h0n-ui-color-secondary);
+    }
+
+    &--surface {
+        --h-alert-bg: var(--h0n-ui-color-surface);
+    }
+
+    &--outline {
+        --h-alert-bg: transparent;
+        --h-alert-border: var(--h0n-ui-color-border);
+    }
 
     &--compact {
         align-items: center;

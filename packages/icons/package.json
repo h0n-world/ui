@@ -19,7 +19,7 @@
         "url": "git+https://github.com/h0n-world/ui.git",
         "directory": "packages/icons"
     },
-    "homepage": "https://ui.h0n.io/icons",
+    "homepage": "https://ui.h0n.io/icons/overview",
     "bugs": {
         "url": "https://github.com/h0n-world/ui/issues"
     },

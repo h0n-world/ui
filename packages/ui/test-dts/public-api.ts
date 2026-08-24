@@ -3,6 +3,7 @@ import {
     H0ErrorMessage,
     H0Button,
     H0CheckboxGroup,
+    H0ContentState,
     H0DataTable,
     H0Field,
     H0Stack,
@@ -22,6 +23,7 @@ import {
     type H0CheckboxOption,
     type H0CheckboxSize,
     type H0CheckboxVariant,
+    type H0ContentStateValue,
     type H0DataTableColumn,
     type H0DataTableFilters,
     type H0DataTableSort,
@@ -64,6 +66,7 @@ export type H0PublicPropsFixture = [
     H0Public.H0CheckboxProps,
     H0Public.H0CheckboxGroupProps,
     H0Public.H0ChipProps,
+    H0Public.H0ContentStateProps,
     H0Public.H0ContainerProps,
     H0Public.H0DescriptionProps,
     H0Public.H0DividerProps,
@@ -158,6 +161,7 @@ const accordionItem: H0AccordionItem = { title: 'Question', content: 'Answer' }
 const checkboxOption: H0CheckboxOption = { label: 'Accept', value: 'yes' }
 const checkboxSize: H0CheckboxSize = 'lg'
 const checkboxVariant: H0CheckboxVariant = 'secondary'
+const contentState: H0ContentStateValue = 'content'
 const dataTableColumns: H0DataTableColumn[] = [{ key: 'name', label: 'Name', sortable: true }]
 const dataTableFilters: H0DataTableFilters = { name: 'Ada' }
 const dataTableSort: H0DataTableSort = { key: 'name', direction: 'asc' }
@@ -225,6 +229,7 @@ void [
     H0ErrorMessage,
     H0Button,
     H0CheckboxGroup,
+    H0ContentState,
     H0DataTable,
     H0Field,
     H0Stack,
@@ -236,6 +241,7 @@ void [
     accordionItem,
     checkboxOption,
     checkboxSize,
+    contentState,
     dataTableColumns,
     dataTableFilters,
     dataTableSort,

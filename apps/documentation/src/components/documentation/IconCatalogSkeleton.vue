@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { H0Skeleton } from '@h0nio/ui'
+import { H0Skeleton } from '@h0nio/ui';
 
 defineOptions({
     name: 'IconCatalogSkeleton',
@@ -89,7 +89,6 @@ const cards = Array.from({ length: 8 }, (_, index) => index)
 
 .catalog-toolbar-skeleton {
     background: color-mix(in srgb, var(--h0n-ui-color-surface) 88%, transparent);
-    border: 1px solid var(--h0n-ui-color-border);
     border-radius: var(--h0n-ui-radius-xl);
     display: grid;
     grid-template-columns:
