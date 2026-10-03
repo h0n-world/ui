@@ -20,6 +20,7 @@ The file is generated from the package version, public component manifest, and t
 - [`/agent-data/components.v1.json`](/agent-data/components.v1.json) is the versioned machine contract for exact imports, props, events, slots, exposed APIs, public types, examples, accessibility, styling, responsive behavior, and selection guidance.
 - [`/agents/AGENTS.md`](/agents/AGENTS.md) is a reusable implementation-policy template for projects consuming `@h0nio/ui`.
 - Component documentation and executable examples explain composition and product intent after the exact API has been established.
+- The [H0N UI Agent Skill](/docs/agents/skills) provides an installable workflow and bundled component discovery reference.
 
 ## Recommended agent flow
 
@@ -28,6 +29,7 @@ The file is generated from the package version, public component manifest, and t
 3. Read that component's JSON record and the linked documentation page.
 4. Verify uncertain details against the installed TypeScript declarations.
 5. Implement only documented imports, APIs, slots, and public `--h0n-ui-*` variables.
+   Check the actual enclosing background: a default surface card normally uses secondary form controls. The catalog's optional `surface` metadata records the relevant variant defaults and tokens; OTP defaults to secondary.
 6. Run the consuming project's typecheck, build, behavioral tests, and relevant accessibility or responsive checks.
 
 ## Path resolution

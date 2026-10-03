@@ -318,6 +318,8 @@ The generator combines records, manifest metadata, pages, examples, and the `@h0
 - `public/agent-data/components.v1.json`
 - `public/agents/AGENTS.md`
 - `public/agents/install-prompt.md`
+- `public/agents/skills/h0n-ui/SKILL.md`
+- `public/agents/skills/h0n-ui/references/components.md`
 
 The resources have distinct roles:
 
@@ -326,7 +328,9 @@ The resources have distinct roles:
 - `agents/AGENTS.md` is a reusable policy template for repositories consuming `@h0nio/ui`.
 - `agents/install-prompt.md` is a versioned copy-paste workflow for installing, configuring, and validating H0N UI in an existing Vue project.
 
-Consumer agents resolve leading-slash links against the H0N UI documentation origin, not the consuming application. They treat the installed package version and TypeScript declarations as the executable contract, then use the matching catalog, compact index, and human documentation in that order. These files are derived artifacts and deterministic tests reject stale committed output. MCP server and distributable Agent Skills remain planned and are not part of the current runtime.
+Consumer agents resolve leading-slash links against the H0N UI documentation origin, not the consuming application. They treat the installed package version and TypeScript declarations as the executable contract, then use the matching catalog, compact index, and human documentation in that order. These files are derived artifacts and deterministic tests reject stale committed output. The portable `h0n-ui` skill is distributed as two static files, preserving the skill directory structure; its bundled index supports offline discovery while exact APIs come from installed declarations and the matching online catalog. MCP server remains planned.
+
+`content/agent/guidance.ts` owns shared component-selection and nested-surface guidance. Optional `ComponentAgentRecordV1.surface` metadata records a component's surface/secondary background tokens and actual variant default, validated against its typed variant API. Agent guidance recommends alternate backgrounds where visual separation is intended (including secondary controls on a surface card), with explicit exceptions for flat styling, custom backgrounds, indicator states, and teleported content. Component defaults and runtime behavior remain unchanged.
 
 ## Verification Layers
 

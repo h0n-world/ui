@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { attributeRoutingProps, standardFormGuidance } from './forms-shared.ts'
 
 export const searchFieldAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0SearchField', status: 'migrated', summary: 'Compact native search control with clear action, controlled value, icon customization, and imperative focus helpers.',
     imports: { components: ['H0SearchField'], types: ['H0SearchFieldEmits', 'H0SearchFieldProps', 'H0SearchFieldVariant'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [

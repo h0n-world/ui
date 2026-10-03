@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
-import { H0Button, H0Carousel } from '@h0nio/ui'
-import { ref } from 'vue'
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue';
+import { H0Button, H0Carousel } from '@h0nio/ui';
+import { ref } from 'vue';
 
 type CarouselPlaybackApi = { pause: () => void; play: () => void }
 
@@ -22,13 +22,28 @@ function togglePlayback() {
 
 <template>
     <div class="autoplay-example">
-        <H0Carousel ref="carousel" class="carousel-example" :items="announcements" :height="160" autoplay loop :autoplay-interval="2600" pause-on-hover pause-on-focus show-pagination :show-controls="false" aria-label="Product announcements">
+        <H0Carousel
+            ref="carousel"
+            class="carousel-example"
+            :items="announcements"
+            :height="160"
+            autoplay
+            loop
+            :autoplay-interval="2600"
+            pause-on-hover
+            pause-on-focus
+            show-pagination
+            :show-controls="false"
+            aria-label="Product announcements"
+        >
             <template #default="{ item }">
                 <div class="slide">{{ item }}</div>
             </template>
         </H0Carousel>
         <DocumentationPreviewActions>
-            <H0Button size="sm" variant="soft" @click="togglePlayback">{{ isPlaying ? 'Pause autoplay' : 'Play autoplay' }}</H0Button>
+            <H0Button size="sm" variant="soft" @click="togglePlayback">{{
+                isPlaying ? 'Pause autoplay' : 'Play autoplay'
+            }}</H0Button>
         </DocumentationPreviewActions>
     </div>
 </template>
@@ -50,7 +65,6 @@ function togglePlayback() {
 .slide {
     align-items: center;
     background: var(--h0n-ui-color-surface);
-    border: 1px solid var(--h0n-ui-color-border);
     border-radius: var(--h0n-ui-radius-xl);
     display: grid;
     font-size: var(--h0n-ui-typography-h4-size);

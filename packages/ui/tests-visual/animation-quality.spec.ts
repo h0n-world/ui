@@ -1,11 +1,10 @@
 import { expect, test } from '@playwright/test'
 
 async function selectQuality(page: import('@playwright/test').Page, value: 'off' | 'low' | 'medium' | 'high' | 'recommended') {
-    const selector = page.getByRole('combobox', { name: 'Animation quality', exact: true })
+    const selector = page.getByRole('button', { name: 'Animation quality', exact: true })
     await selector.click()
-    await page.keyboard.press('Home')
-    for (let i = 0; i < ['recommended', 'off', 'low', 'medium', 'high'].indexOf(value); i++) await page.keyboard.press('ArrowDown')
-    await page.keyboard.press('Enter')
+    const label = value === 'recommended' ? 'Recommended' : value.charAt(0).toUpperCase() + value.slice(1)
+    await page.getByRole('dialog', { name: 'Animation quality' }).getByRole('button', { name: label, exact: true }).click()
     await expect(page.locator('html')).toHaveAttribute('data-h0n-animation-preference', value)
 }
 
@@ -69,15 +68,18 @@ test('animation controls fit a narrow Header and update application composables'
     await selectQuality(page, 'off')
     await expect(page.locator('[data-motion-quality]')).toHaveText('off')
     expect(await page.locator('.site-header').evaluate(element => element.scrollWidth <= window.innerWidth)).toBe(true)
-    const palette = page.getByRole('combobox', { name: 'Accent palette' })
-    const motion = page.getByRole('combobox', { name: 'Animation quality', exact: true })
+    const palette = page.getByRole('button', { name: 'Accent palette', exact: true })
+    const motion = page.getByRole('button', { name: 'Animation quality', exact: true })
     await expect(palette).toBeInViewport()
     await expect(motion).toBeInViewport()
     await page.screenshot({ path: 'test-results/animation-mobile.png' })
-    for (const width of [768, 900, 1280]) {
+    for (const width of [320, 390, 768, 900, 1280]) {
         await page.setViewportSize({ width, height: 800 })
         expect(await page.locator('.site-header').evaluate(element => element.scrollWidth <= window.innerWidth)).toBe(true)
         await expect(palette).toBeInViewport()
         await expect(motion).toBeInViewport()
+        const paletteBox = await palette.boundingBox()
+        const searchBox = await page.getByRole('button', { name: 'Search documentation', exact: true }).boundingBox()
+        expect(Math.abs(paletteBox!.y + paletteBox!.height / 2 - searchBox!.y - searchBox!.height / 2)).toBeLessThan(2)
     }
 })

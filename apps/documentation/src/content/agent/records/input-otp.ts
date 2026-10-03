@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { fieldProps, focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
 
 export const inputOtpAgentRecord = {
+    surface: { prop: 'variant', default: 'secondary', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0InputOTP', status: 'migrated', summary: 'Segmented one-time-code input with paste distribution, validation, completion events, and accessible grouped semantics.',
     imports: { components: ['H0InputOTP'], types: ['H0InputOTPEmits', 'H0InputOTPLength', 'H0InputOTPProps', 'H0InputOTPSize', 'H0InputOTPValidation', 'H0InputOTPValidator', 'H0InputOTPVariant'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [

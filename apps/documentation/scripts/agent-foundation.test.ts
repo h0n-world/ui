@@ -9,7 +9,7 @@ import { renderAgentArtifacts } from '../src/content/agent/artifacts.ts'
 import { expandComponentApiDirectives, renderComponentApiSection } from '../src/content/agent/directives.ts'
 import { resolveRelatedComponentLinks } from '../src/content/agent/related.ts'
 import { componentAgentRecords } from '../src/content/agent/records/index.ts'
-import { getManifestMetadata, validateComponentAgentRecords } from '../src/content/agent/schema.ts'
+import { getManifestMetadata, validateComponentAgentRecords, type ComponentAgentRecordV1 } from '../src/content/agent/schema.ts'
 
 const documentationRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const packageVersion = (JSON.parse(readFileSync(resolve(documentationRoot, '../../packages/ui/package.json'), 'utf8')) as { version: string }).version
@@ -176,7 +176,7 @@ test('generation is deterministic and committed snapshots are current', () => {
     const llms = first.find((artifact) => artifact.path === 'llms.txt')!.content
     const agents = first.find((artifact) => artifact.path === 'agents/AGENTS.md')!.content
     const installPrompt = first.find((artifact) => artifact.path === 'agents/install-prompt.md')!.content
-    assert.equal(first.length, 4)
+    assert.equal(first.length, 6)
     assert.match(llms, new RegExp(`^# H0N UI ${packageVersion.replaceAll('.', '\\.')}$`, 'm'))
     assert.match(llms, new RegExp(`^## Supported components \\(${componentAgentRecords.length}\\)$`, 'm'))
     assert.doesNotMatch(llms, /Migrated components/)
@@ -196,4 +196,47 @@ test('generation is deterministic and committed snapshots are current', () => {
     for (const artifact of first) {
         assert.equal(readFileSync(join(documentationRoot, 'public', artifact.path), 'utf8'), artifact.content)
     }
+})
+
+test('surface metadata covers implemented surface variants and matches runtime defaults', () => {
+    const componentRoot = resolve(documentationRoot, '../../packages/ui/src/components')
+    const records: readonly ComponentAgentRecordV1[] = componentAgentRecords
+    for (const record of records) {
+        const metadata = getManifestMetadata(record, h0ComponentManifest)
+        const sourcePath = join(componentRoot, metadata.family, `${record.component}.vue`)
+        let source: string
+        try { source = readFileSync(sourcePath, 'utf8') } catch (error) {
+            if (record.surface) throw error
+            continue
+        }
+        const defaultVariant = source.match(/variant:\s*'(surface|secondary)'/)?.[1]
+        if (record.surface) assert.ok(defaultVariant, `${record.component} needs a runtime surface default`)
+        if (!defaultVariant) continue
+        assert.ok(record.surface, `${record.component} needs surface metadata`)
+        assert.equal(record.surface.default, defaultVariant, record.component)
+    }
+    assert.equal(records.find((record) => record.component === 'H0InputOTP')!.surface!.default, 'secondary')
+})
+
+test('surface validation rejects drift and skill reference covers exactly the supported catalog', () => {
+    const records: readonly ComponentAgentRecordV1[] = componentAgentRecords
+    const context = {
+        manifest: h0ComponentManifest,
+        pagePaths: [...new Set(records.map((record) => getManifestMetadata(record, h0ComponentManifest).docsPath))],
+        exampleKeys: records.flatMap((record) => record.examples.map((example) => example.key)),
+    }
+    assert.throws(() => validateComponentAgentRecords(records.map((record) => record.component === 'H0InputOTP'
+        ? { ...record, surface: { ...record.surface!, default: 'surface' } } : record), context), /surface metadata does not match/)
+    assert.throws(() => validateComponentAgentRecords(records.map((record) => record.component === 'H0Button'
+        ? { ...record, surface: records.find((candidate) => candidate.component === 'H0Input')!.surface } : record), context), /surface metadata does not match/)
+    const artifacts = renderAgentArtifacts(records, h0ComponentManifest, packageVersion)
+    const skill = artifacts.find((artifact) => artifact.path === 'agents/skills/h0n-ui/SKILL.md')!.content
+    const reference = artifacts.find((artifact) => artifact.path === 'agents/skills/h0n-ui/references/components.md')!
+    const relativeReference = skill.match(/\]\((references\/[^)]+)\)/)![1]!
+    assert.equal(`agents/skills/h0n-ui/${relativeReference}`, reference.path)
+    const names = [...reference.content.matchAll(/^## (H0\w+)$/gm)].map((match) => match[1])
+    assert.deepEqual(names.sort(), records.map((record) => record.component).sort())
+    const catalog = JSON.parse(artifacts.find((artifact) => artifact.path === 'agent-data/components.v1.json')!.content)
+    assert.deepEqual(catalog.components.find((record: ComponentAgentRecordV1) => record.component === 'H0InputOTP').surface,
+        records.find((record) => record.component === 'H0InputOTP')!.surface)
 })

@@ -54,7 +54,7 @@ pnpm --filter @h0n/ui-documentation agents:test
 
 Review the generated diff for `public/llms.txt`, `public/agent-data/components.v1.json`, `public/agents/AGENTS.md`, and `public/agents/install-prompt.md`. A version-only library change may produce only a mechanical version update.
 
-MCP Server and distributable Agent Skills remain planned. Do not describe them as available until their runtime and distribution contracts exist.
+The generator also emits `public/agents/skills/h0n-ui/SKILL.md` and its `references/components.md`. Shared selection and composition guidance lives in `src/content/agent/guidance.ts`; optional record `surface` metadata identifies supported surface/secondary background variants and their real defaults. Update typed sources and regenerate both skill files alongside the other artifacts. Installation preserves the directory structure as documented at `/docs/agents/skills`. MCP Server remains planned.
 
 ## Verification
 

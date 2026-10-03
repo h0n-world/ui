@@ -50,6 +50,20 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 
 ## Component selection
 
+Select by semantics and interaction model. Search the supported component index before creating a native control or a custom replacement. In a project using H0N UI, prefer the supported component when it meets the requirement; keep native HTML when the product explicitly needs native behavior or the library lacks the capability. Do not replace existing native controls outside the requested scope.
+
+| Requirement | Component to inspect |
+| --- | --- |
+| Known options, single or multiple choice | H0Select |
+| Ordinary text / multiline text | H0Input / H0Textarea |
+| Password / number / search / one-time code | H0PasswordInput / H0NumberInput / H0SearchField / H0InputOTP |
+| Boolean / immediate setting / one of a few choices | H0Checkbox / H0Switch / H0RadioGroup |
+| Action / navigation | H0Button / H0Link |
+| Grouped content / field layout / form validation | H0Card / H0Field / H0Form |
+| Presentation table / managed data interactions | H0Table / H0DataTable |
+
+H0Select takes an options array and a controlled model; read its record for H0SelectOption and H0SelectValue instead of nesting native option elements. It is not a free-text combobox. Use the index for other needs and inspect useWhen, avoidWhen, props, slots, and examples before implementing. Do not invent planned components.
+
 - Select by semantics and interaction model, not visual similarity.
 - Use native links or `H0Link` for navigation and `H0Button` for actions.
 - Use checkbox/switch/radio/segment/select according to boolean, immediate-setting, single-choice, or option-picker semantics.
@@ -57,7 +71,49 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 - Use `H0Table` for presentation and `H0DataTable` only when sorting, filtering, selection, pagination, loading, or virtualization is required.
 - Do not use removed, undocumented, or planned components even if old examples or model knowledge mention them.
 
-## Icons
+## Nested surfaces
+
+Choose the background variant from the actual enclosing surface, not from the component name or nesting depth. Where a distinct card or control boundary is intended:
+
+- On --h0n-ui-color-surface, use variant="secondary" for components listed below.
+- On --h0n-ui-color-secondary, use variant="surface".
+- On a page background or a custom background, inspect the actual tokens and rendered result before choosing. Transparent containers inherit the visible background behind them.
+- A default H0Card is surface: its H0Input, H0Textarea, H0Select and other listed controls should normally be secondary. A secondary card normally uses surface controls. A card on a surface section should normally be secondary.
+- H0InputOTP already defaults to secondary; retain it on surface and choose surface on secondary.
+- For H0Checkbox and H0Radio this controls the unchecked indicator background; checked states retain their semantic color. For H0Select and H0Command it controls the trigger, not the popup. Alert tone is independent of its container variant.
+- Preserve an explicitly requested flat appearance. Prefer the documented variant over overriding private background variables. These variants distinguish layers; they do not guarantee text contrast under custom theme overrides.
+- Do not apply this rule to unrelated variant names such as H0Button primary/secondary or H0Typography variants. Teleported content has its own enclosing surface.
+
+Example with a non-interactive card (name is a string model and country is a H0SelectValue or null):
+
+~~~vue
+<H0Card padding>
+    <H0Input v-model="name" label="Name" variant="secondary" />
+    <H0Select v-model="country" label="Country" variant="secondary"
+        :options="[{ label: 'Ukraine', value: 'ua' }]" />
+</H0Card>
+~~~
+
+Verify light and dark themes, focus, invalid and disabled states, and narrow layouts. Do not put form controls inside an interactive card.
+
+| Component | Default variant | surface background | secondary background |
+| --- | --- | --- | --- |
+| H0Alert | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0Card | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0CellColorPicker | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0Checkbox | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0Command | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0FileUpload | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0Input | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0InputOTP | secondary | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0NumberInput | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0PasswordInput | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0Radio | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0SearchField | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0Select | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+| H0Textarea | surface | --h0n-ui-color-surface | --h0n-ui-color-secondary |
+
+## Icon sources
 
 - `H0IconSource` accepts legacy node-based `H0IconDefinition` values and trusted body definitions from `@h0nio/icons`.
 - Never build a body definition from user input, network HTML, or another untrusted source.
@@ -90,4 +146,4 @@ After UI changes, run the consuming project's actual:
 - keyboard/accessibility checks for interactive work;
 - responsive and relevant visual smoke tests.
 
-Do not claim compatibility from a rendered screenshot alone. MCP Server and distributable Agent Skills are planned and must not be described as currently available.
+Do not claim compatibility from a rendered screenshot alone. The reusable H0N UI skill is at /agents/skills/h0n-ui/SKILL.md; installation instructions are at /docs/agents/skills. MCP Server remains planned.

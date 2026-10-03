@@ -46,9 +46,12 @@ When you know the H0N UI documentation origin, resolve these paths against that 
 - **/llms.txt** — compact versioned index and supported package boundaries.
 - **/agent-data/components.v1.json** — exact component APIs and implementation guidance.
 - **/agents/AGENTS.md** — reusable rules for future H0N UI work in the project.
+- **/agents/skills/h0n-ui/SKILL.md** — reusable skill; follow **/docs/agents/skills** to install it when requested.
 - **/docs/quick-start** — human-readable setup and plugin options.
 
 The installed package's TypeScript declarations are the executable contract. If documentation and the installed version differ, follow the installed version or align the package version deliberately before implementation.
+
+For subsequent UI work, inspect the supported component catalog before using native controls: prefer H0Select for a known option list, H0Input for text, and H0Textarea for multiline text when their capabilities fit. On a default surface H0Card, normally set these controls to variant="secondary" so they remain visually distinct. On a secondary card, normally use surface controls. H0InputOTP already defaults to secondary. See /agents/AGENTS.md and /agents/skills/h0n-ui/SKILL.md for contextual rules and exceptions.
 
 ## Completion report
 

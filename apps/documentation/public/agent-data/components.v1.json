@@ -156,6 +156,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Alert",
       "status": "migrated",
@@ -1504,6 +1512,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Card",
       "status": "migrated",
@@ -2020,6 +2036,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0CellColorPicker",
       "status": "migrated",
@@ -2288,6 +2312,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Checkbox",
       "status": "migrated",
@@ -2828,6 +2860,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Command",
       "status": "migrated",
@@ -5174,6 +5214,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0FileUpload",
       "status": "migrated",
@@ -7108,6 +7156,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Input",
       "status": "migrated",
@@ -7472,6 +7528,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "secondary",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0InputOTP",
       "status": "migrated",
@@ -8712,6 +8776,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0NumberInput",
       "status": "migrated",
@@ -9178,6 +9250,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0PasswordInput",
       "status": "migrated",
@@ -9430,6 +9510,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Radio",
       "status": "migrated",
@@ -10197,6 +10285,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0SearchField",
       "status": "migrated",
@@ -10645,6 +10741,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Select",
       "status": "migrated",
@@ -13162,6 +13266,14 @@
       }
     },
     {
+      "surface": {
+        "prop": "variant",
+        "default": "surface",
+        "backgrounds": {
+          "surface": "--h0n-ui-color-surface",
+          "secondary": "--h0n-ui-color-secondary"
+        }
+      },
       "schemaVersion": 1,
       "component": "H0Textarea",
       "status": "migrated",

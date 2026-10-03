@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { H0Carousel } from '@h0nio/ui'
+import { H0Carousel } from '@h0nio/ui';
 
 const slides = ['Plan', 'Build', 'Review']
 </script>
 
 <template>
-    <H0Carousel class="custom-controls-example" :items="slides" :height="170" effect="static" show-pagination aria-label="Delivery workflow">
+    <H0Carousel
+        class="custom-controls-example"
+        :items="slides"
+        :height="170"
+        effect="static"
+        show-pagination
+        aria-label="Delivery workflow"
+    >
         <template #default="{ item, index }">
             <div class="slide">
                 <span>Step {{ index + 1 }}</span>
@@ -31,7 +38,6 @@ const slides = ['Plan', 'Build', 'Review']
 .slide {
     align-content: center;
     background: var(--h0n-ui-color-surface);
-    border: 1px solid var(--h0n-ui-color-border);
     border-radius: var(--h0n-ui-radius-xl);
     display: grid;
     gap: var(--h0n-ui-spacing-xs);

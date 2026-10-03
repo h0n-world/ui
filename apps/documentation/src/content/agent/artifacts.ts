@@ -1,5 +1,6 @@
 import type { H0ComponentManifestEntry } from '../../../../../packages/ui/src/manifest.ts'
 import { getManifestMetadata, type ComponentAgentRecordV1, type ComponentAgentRecordWithManifestV1 } from './schema.ts'
+import { componentSelectionGuidance, surfaceCompositionGuidance, renderSurfaceTable } from './guidance.ts'
 
 export type GeneratedAgentArtifact = {
     path: string
@@ -85,6 +86,7 @@ export function renderLlmsTxt(records: readonly ComponentAgentRecordV1[], manife
 - [Component catalog schema v1](/agent-data/components.v1.json): exact imports, props, events, slots, exposed APIs, public types, examples, accessibility, styling, responsive, performance, use-when, and avoid-when guidance.
 - [Consumer AGENTS.md template](/agents/AGENTS.md): reusable implementation rules for projects consuming H0N UI.
 - [AI installation prompt](/agents/install-prompt.md): copy-paste workflow for inspecting, installing, configuring, and validating H0N UI in a consumer project.
+- [H0N UI Agent Skill](/agents/skills/h0n-ui/SKILL.md): reusable component-selection and composition workflow with a bundled component reference. See [installation](/docs/agents/skills).
 - [llms.txt guide](/docs/agents/llms-txt)
 
 Paths in this file are relative to the H0N UI documentation origin. They are not routes in the consuming application.
@@ -115,7 +117,17 @@ Do not import \`src\`, \`_shared\`, generated chunks, private selectors, or comp
 
 ${groupedComponents}
 
-Every component in this index has a synchronized public export, manifest entry, documentation route, and validated typed record. The installation prompt and consumer instructions are available now; MCP and distributable Agent Skills are not published yet.
+## Component selection
+
+${componentSelectionGuidance}
+
+## Nested surfaces
+
+${surfaceCompositionGuidance}
+
+${renderSurfaceTable(records)}
+
+Every component in this index has a synchronized public export, manifest entry, documentation route, and validated typed record. Agent Skill files are generated alongside this index; MCP is planned.
 `
 }
 
@@ -168,9 +180,12 @@ When you know the H0N UI documentation origin, resolve these paths against that 
 - **/llms.txt** — compact versioned index and supported package boundaries.
 - **/agent-data/components.v1.json** — exact component APIs and implementation guidance.
 - **/agents/AGENTS.md** — reusable rules for future H0N UI work in the project.
+- **/agents/skills/h0n-ui/SKILL.md** — reusable skill; follow **/docs/agents/skills** to install it when requested.
 - **/docs/quick-start** — human-readable setup and plugin options.
 
 The installed package's TypeScript declarations are the executable contract. If documentation and the installed version differ, follow the installed version or align the package version deliberately before implementation.
+
+For subsequent UI work, inspect the supported component catalog before using native controls: prefer H0Select for a known option list, H0Input for text, and H0Textarea for multiline text when their capabilities fit. On a default surface H0Card, normally set these controls to variant="secondary" so they remain visually distinct. On a secondary card, normally use surface controls. H0InputOTP already defaults to secondary. See /agents/AGENTS.md and /agents/skills/h0n-ui/SKILL.md for contextual rules and exceptions.
 
 ## Completion report
 
@@ -187,7 +202,7 @@ Do not claim completion when typecheck or build fails. Distinguish pre-existing 
 `
 }
 
-export function renderPublicAgentsTemplate(version: string) {
+export function renderPublicAgentsTemplate(version: string, records: readonly ComponentAgentRecordV1[] = []) {
     return `# H0N UI Consumer Agent Instructions
 
 These instructions apply to projects consuming \`@h0nio/ui\` ${version}. Merge them with the consuming repository's own instructions; repository-specific architecture and commands take precedence.
@@ -240,6 +255,8 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 
 ## Component selection
 
+${componentSelectionGuidance}
+
 - Select by semantics and interaction model, not visual similarity.
 - Use native links or \`H0Link\` for navigation and \`H0Button\` for actions.
 - Use checkbox/switch/radio/segment/select according to boolean, immediate-setting, single-choice, or option-picker semantics.
@@ -247,7 +264,13 @@ The leading-slash resource paths above are relative to the H0N UI documentation 
 - Use \`H0Table\` for presentation and \`H0DataTable\` only when sorting, filtering, selection, pagination, loading, or virtualization is required.
 - Do not use removed, undocumented, or planned components even if old examples or model knowledge mention them.
 
-## Icons
+## Nested surfaces
+
+${surfaceCompositionGuidance}
+
+${renderSurfaceTable(records)}
+
+## Icon sources
 
 - \`H0IconSource\` accepts legacy node-based \`H0IconDefinition\` values and trusted body definitions from \`@h0nio/icons\`.
 - Never build a body definition from user input, network HTML, or another untrusted source.
@@ -280,8 +303,51 @@ After UI changes, run the consuming project's actual:
 - keyboard/accessibility checks for interactive work;
 - responsive and relevant visual smoke tests.
 
-Do not claim compatibility from a rendered screenshot alone. MCP Server and distributable Agent Skills are planned and must not be described as currently available.
+Do not claim compatibility from a rendered screenshot alone. The reusable H0N UI skill is at /agents/skills/h0n-ui/SKILL.md; installation instructions are at /docs/agents/skills. MCP Server remains planned.
 `
+}
+
+export function renderAgentSkill(records: readonly ComponentAgentRecordV1[], version: string) {
+    return `---
+name: h0n-ui
+description: Build and edit Vue interfaces using @h0nio/ui, select supported H0 components, and compose nested surfaces with documented variants. Use when a project uses H0N UI or the user requests it.
+---
+
+# H0N UI
+
+This skill targets @h0nio/ui ${version}. Respect the consuming repository's instructions, existing wrappers, package manager, and requested scope.
+
+## Establish the contract
+
+Inspect the installed package version and TypeScript declarations first. If the version differs, use matching resources or the installed declarations; do not silently upgrade. Inspect the existing plugin and stylesheet setup. For requested installation, use the version-matching installation prompt on the documentation site; preserve the existing Vue app and register styles and services once.
+
+Read [references/components.md](references/components.md) to discover supported components and their use/avoid guidance. For exact imports, props, events, slots, and types, read the target record in /agent-data/components.v1.json and the linked component page, resolving paths against the H0N UI documentation origin recorded in the consuming project. If the origin is unknown, obtain it from the user or project configuration; do not guess a host or resolve paths against the consumer app. The bundled reference remains usable offline; installed declarations take precedence over remote metadata.
+
+## Select and compose
+
+${componentSelectionGuidance}
+
+## Choose nested backgrounds
+
+${surfaceCompositionGuidance}
+
+${renderSurfaceTable(records)}
+
+## Implement and verify
+
+Use documented @h0nio/ui root or component-family imports and public --h0n-ui-* tokens. Never import src, _shared, generated chunks, or private selectors. Use individual @h0nio/icons/<name> imports with a direct dependency when application code needs icons.
+
+Preserve modelValue/update:modelValue for controlled state and defaultValue for uncontrolled initialization. Check the exact component API before using change events, native/ARIA attribute routing, slots, or methods. Retain labels, hints/errors, keyboard interaction, and overlay focus behavior. Do not invent props or replace missing capabilities with imaginary components.
+
+Run the consumer's relevant typecheck, build, and behavior checks. Inspect the composed surfaces in light/dark themes and narrow/wide layouts when feasible. Report which checks ran and any version, capability, or verification gaps.
+`
+}
+
+export function renderSkillComponentReference(records: readonly ComponentAgentRecordV1[], manifest: readonly H0ComponentManifestEntry[], version: string) {
+    return `# Supported H0N UI components (${version})\n\nPaths below are relative to the H0N UI documentation origin. Exact APIs are in /agent-data/components.v1.json.\n\n${sortRecords(records).map((record) => {
+        const metadata = getManifestMetadata(record, manifest)
+        return `## ${record.component}\n\n${record.summary}\n\n- Documentation: ${metadata.docsPath}${metadata.docsAnchor ? `#${metadata.docsAnchor}` : ''}\n- Use: ${record.useWhen.join(' ')}\n- Avoid: ${record.avoidWhen.join(' ')}`
+    }).join('\n\n')}\n`
 }
 
 export function renderAgentArtifacts(records: readonly ComponentAgentRecordV1[], manifest: readonly H0ComponentManifestEntry[], version: string): GeneratedAgentArtifact[] {
@@ -290,7 +356,9 @@ export function renderAgentArtifacts(records: readonly ComponentAgentRecordV1[],
     return [
         { path: 'llms.txt', content: renderLlmsTxt(records, manifest, version) },
         { path: 'agent-data/components.v1.json', content: `${JSON.stringify(catalog, null, 2)}\n` },
-        { path: 'agents/AGENTS.md', content: renderPublicAgentsTemplate(version) },
+        { path: 'agents/AGENTS.md', content: renderPublicAgentsTemplate(version, records) },
         { path: 'agents/install-prompt.md', content: renderInstallPrompt(version) },
+        { path: 'agents/skills/h0n-ui/SKILL.md', content: renderAgentSkill(records, version) },
+        { path: 'agents/skills/h0n-ui/references/components.md', content: renderSkillComponentReference(records, manifest, version) },
     ]
 }

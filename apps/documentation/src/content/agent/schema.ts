@@ -20,6 +20,11 @@ export type ComponentAgentRecordV1 = {
     component: `H0${string}`
     status: ComponentAgentStatus
     summary: string
+    surface?: {
+        prop: 'variant'
+        default: 'surface' | 'secondary'
+        backgrounds: { surface: '--h0n-ui-color-surface'; secondary: '--h0n-ui-color-secondary' }
+    }
     imports: {
         components: string[]
         types: string[]
@@ -129,6 +134,16 @@ export function validateComponentAgentRecords(records: readonly ComponentAgentRe
         if (record.schemaVersion !== 1) throw new Error(`[agents] ${record.component} uses an unsupported schema version.`)
         if (record.status !== 'migrated') throw new Error(`[agents] ${record.component} uses an unsupported agent record status.`)
         if (!record.summary.trim()) throw new Error(`[agents] ${record.component} is missing a summary.`)
+        if (record.surface) {
+            const variant = record.api.props.find((prop) => prop.name === record.surface!.prop)
+            const variants = record.api.types.find((table) => table.name === variant?.type)?.fields.map((field) => field.type).join(' ') ?? variant?.type ?? ''
+            if (variant?.default !== `'${record.surface.default}'` || !variants.includes("'surface'") || !variants.includes("'secondary'")) {
+                throw new Error(`[agents] ${record.component} surface metadata does not match its variant API.`)
+            }
+            if (record.surface.backgrounds.surface !== '--h0n-ui-color-surface' || record.surface.backgrounds.secondary !== '--h0n-ui-color-secondary') {
+                throw new Error(`[agents] ${record.component} surface metadata uses unsupported background tokens.`)
+            }
+        }
         if (!record.imports.components.includes(record.component)) throw new Error(`[agents] ${record.component} must list itself in imports.components.`)
 
         for (const [section, imports] of Object.entries(record.imports)) {

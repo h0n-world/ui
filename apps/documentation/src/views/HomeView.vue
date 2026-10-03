@@ -58,49 +58,6 @@ const interfaceTips = ref(false)
 
         <main>
             <HomeHero />
-            <!-- <H0Container as="section" size="full" class="hero-section">
-                <div class="hero-section__glow" aria-hidden="true" />
-                <H0Stack class="hero-section__content" align="center" gap="lg">
-                    <H0Badge tone="primary" dot>H0N UI · {{ siteConfig.version }}</H0Badge>
-
-                    <H0Typography variant="h1" align="center" class="hero-section__title">
-                        Build interfaces that<br /><span>already feel complete.</span>
-                    </H0Typography>
-
-                    <H0Typography
-                        variant="body"
-                        color="muted"
-                        align="center"
-                        class="hero-section__description"
-                    >
-                        A self-contained Vue 3 component library with accessible interaction
-                        patterns, a coherent visual system, and the building blocks for production
-                        interfaces.
-                    </H0Typography>
-
-                    <H0Inline gap="sm" justify="center">
-                        <H0Button :as="RouterLink" to="/docs/quick-start" tone="primary">
-                            Start building
-                        </H0Button>
-                        <H0Button :as="RouterLink" to="/components/all" variant="outline">
-                            Browse components
-                        </H0Button>
-                    </H0Inline>
-
-                    <H0Inline class="hero-section__meta" gap="lg" justify="center">
-                        <H0Inline as="span" gap="xs" :wrap="false">
-                            <H0Icon :icon="checkIcon" :size="16" /> Accessible by design
-                        </H0Inline>
-                        <H0Inline as="span" gap="xs" :wrap="false">
-                            <H0Icon :icon="checkIcon" :size="16" /> Fully typed
-                        </H0Inline>
-                        <H0Inline as="span" gap="xs" :wrap="false">
-                            <H0Icon :icon="checkIcon" :size="16" /> Theme ready
-                        </H0Inline>
-                    </H0Inline>
-                </H0Stack>
-            </H0Container> -->
-
             <H0Container
                 as="section"
                 size="xl"

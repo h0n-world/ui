@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { H0Button, H0Command, H0Select, useH0Theme, type H0AccentName, type H0AnimationLevel, type H0CommandItem, type H0SelectOption } from '@h0nio/ui'
+import { H0Button, H0Command, H0Dropdown, useH0Theme, type H0AccentName, type H0AnimationLevel, type H0CommandItem } from '@h0nio/ui'
 import { computed, onMounted, onUnmounted, useTemplateRef } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 
@@ -11,6 +11,7 @@ import { siteConfig } from '@/content/site'
 import sidebarIcon from '@h0nio/icons/sidebar-minimalistic-stroke'
 import sunIcon from '@h0nio/icons/sun-2'
 import sunDarkIcon from '@h0nio/icons/sun-2-stroke'
+import motionIcon from '@h0nio/icons/play-circle-stroke'
 
 defineOptions({
     name: 'SystemHeader',
@@ -22,7 +23,7 @@ const emit = defineEmits<{ menu: [] }>()
 const route = useRoute()
 const router = useRouter()
 const theme = useH0Theme()
-const animationOptions: H0SelectOption<H0AnimationLevel>[] = [
+const animationOptions: { value: H0AnimationLevel; label: string }[] = [
     { value: 'recommended', label: 'Recommended' },
     { value: 'off', label: 'Off' },
     { value: 'low', label: 'Low' },
@@ -32,11 +33,13 @@ const animationOptions: H0SelectOption<H0AnimationLevel>[] = [
 function changeAnimation(value: unknown) {
     if (value === 'recommended' || value === 'off' || value === 'low' || value === 'medium' || value === 'high') theme.setAnimation(value)
 }
-const accentOptions: H0SelectOption<H0AccentName>[] = [
+const accentOptions: { value: H0AccentName; label: string }[] = [
     { value: 'default', label: 'Default' },
     { value: 'telegram', label: 'Telegram' },
     { value: 'uber', label: 'Uber' },
 ]
+const accentLabel = computed(() => accentOptions.find(option => option.value === theme.accent.value)?.label)
+const animationLabel = computed(() => animationOptions.find(option => option.value === theme.animation.value)?.label)
 function changeAccent(value: unknown) {
     if (value === 'default' || value === 'telegram' || value === 'uber') theme.setAccent(value)
 }
@@ -103,35 +106,72 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
                     @select="navigate"
                 />
 
-                <H0Select
+                <H0Dropdown
                     class="accent-select"
-                    :model-value="theme.accent.value"
-                    :options="accentOptions"
-                    size="sm"
-                    variant="secondary"
-                    placeholder="Accent palette"
-                    list-aria-label="Accent palettes"
-                    @update:model-value="changeAccent"
+                    aria-label="Accent palettes"
+                    placement="bottom-end"
+                    :min-width="160"
                 >
-                    <template #value="{ selectedOptions }">
+                    <H0Button
+                        class="header-preference-trigger"
+                        size="sm"
+                        variant="soft"
+                        aria-label="Accent palette"
+                        :aria-description="`Current palette: ${accentLabel}`"
+                        :title="`Accent palette: ${accentLabel}`"
+                    >
                         <span class="accent-select__value">
                             <span class="accent-select__swatch" aria-hidden="true"></span>
-                            {{ selectedOptions[0]?.label }}
+                            <span class="header-preference-label">{{ accentLabel }}</span>
                         </span>
+                    </H0Button>
+                    <template #content="{ close }">
+                        <div class="header-preference-options">
+                            <H0Button
+                                v-for="option in accentOptions"
+                                :key="option.value"
+                                size="sm"
+                                :variant="theme.accent.value === option.value ? 'soft' : 'ghost'"
+                                :aria-pressed="theme.accent.value === option.value"
+                                full-width
+                                @click="changeAccent(option.value); close()"
+                            >{{ option.label }}</H0Button>
+                        </div>
                     </template>
-                </H0Select>
+                </H0Dropdown>
 
-                <H0Select
+                <H0Dropdown
                     class="animation-select"
-                    :model-value="theme.animation.value"
-                    :options="animationOptions"
-                    size="sm"
-                    variant="secondary"
-                    placeholder="Animation quality"
-                    list-aria-label="Animation quality"
-                    :title="`Effective motion: ${theme.resolvedAnimation.value}`"
-                    @update:model-value="changeAnimation"
-                />
+                    aria-label="Animation quality"
+                    placement="bottom-end"
+                    :min-width="180"
+                >
+                    <H0Button
+                        class="header-preference-trigger"
+                        size="sm"
+                        variant="soft"
+                        :icon="motionIcon"
+                        button-type="withIcon"
+                        aria-label="Animation quality"
+                        :aria-description="`Preference: ${animationLabel}. Effective motion: ${theme.resolvedAnimation.value}`"
+                        :title="`Animation: ${animationLabel}. Effective motion: ${theme.resolvedAnimation.value}`"
+                    >
+                        <span class="header-preference-label">{{ animationLabel }}</span>
+                    </H0Button>
+                    <template #content="{ close }">
+                        <div class="header-preference-options">
+                            <H0Button
+                                v-for="option in animationOptions"
+                                :key="option.value"
+                                size="sm"
+                                :variant="theme.animation.value === option.value ? 'soft' : 'ghost'"
+                                :aria-pressed="theme.animation.value === option.value"
+                                full-width
+                                @click="changeAnimation(option.value); close()"
+                            >{{ option.label }}</H0Button>
+                        </div>
+                    </template>
+                </H0Dropdown>
 
                 <H0Button
                     class="theme-button"
@@ -299,8 +339,6 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
 }
 
 .accent-select {
-    width: 148px;
-
     &__value {
         align-items: center;
         display: inline-flex;
@@ -311,12 +349,19 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
         background: var(--h0n-ui-color-primary);
         border: 1px solid var(--h0n-ui-color-border);
         border-radius: 50%;
-        flex: 0 0 14px;
-        height: 14px;
+        flex: 0 0 12px;
+        height: 12px;
     }
 }
 
-.animation-select { width: 168px; }
+.header-preference-trigger {
+    padding-inline: var(--h0n-ui-spacing-sm);
+}
+
+.header-preference-options {
+    display: grid;
+    gap: var(--h0n-ui-spacing-xs);
+}
 
 @media (max-width: 1120px) {
     .menu-button {
@@ -331,24 +376,12 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
 
 @media (max-width: 960px) {
     .site-header__row {
-        display: grid;
         gap: 8px;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
         min-height: 60px;
         padding: 8px 16px;
     }
 
-    .site-header__actions { display: contents; }
-    .site-header__brand { grid-column: 1; grid-row: 1; }
-    .header-search { grid-column: 2; grid-row: 1; justify-self: end; }
-    .theme-button { grid-column: 3; grid-row: 1; justify-self: end; }
-    .menu-button { grid-column: 4; grid-row: 1; justify-self: end; }
-    .accent-select {
-        grid-column: 1 / span 2;
-        grid-row: 2;
-        width: 100%;
-    }
-    .animation-select { grid-column: 3 / span 2; grid-row: 2; width: 100%; }
+    .site-header__actions { gap: 4px; }
 
     .site-header__navigation {
         padding: 0 16px;
@@ -372,6 +405,14 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
 }
 
 @media (max-width: 720px) {
+    .header-preference-label {
+        display: none;
+    }
+
+    .header-preference-trigger {
+        min-width: var(--h0n-ui-icon-control-size-sm);
+    }
+
     .site-header__version,
     .site-header__divider,
     .site-header__brand > span:not(.brand-mark) {

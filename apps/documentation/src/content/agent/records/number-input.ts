@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { attributeRoutingProps, fieldProps, focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
 
 export const numberInputAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0NumberInput', status: 'migrated', summary: 'Localized numeric input with parsing, formatting, precision, bounds, step controls, and controlled null state.',
     imports: { components: ['H0NumberInput'], types: ['H0InputVariant', 'H0NumberFormatOptions', 'H0NumberFormatter', 'H0NumberInputEmits', 'H0NumberInputProps', 'H0NumberParser'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [

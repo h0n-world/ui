@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { fieldProps, focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
 
 export const fileUploadAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0FileUpload', status: 'migrated', summary: 'Accessible file picker and drop zone with validation, upload queue state, progress, retry, cancellation, and optional reordering.',
     imports: { components: ['H0FileUpload'], types: ['H0FileUploadEmits', 'H0FileUploadProps', 'H0FileUploadValidationError', 'H0FileUploadVariant', 'H0UploadAdapter', 'H0UploadAdapterContext', 'H0UploadItem', 'H0UploadStatus'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [

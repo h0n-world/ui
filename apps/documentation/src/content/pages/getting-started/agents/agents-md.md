@@ -17,6 +17,8 @@ The template establishes an authority order between the installed TypeScript dec
 
 ## What to customize
 
+The template includes contextual surface rules and concrete component mappings, including `H0Select` for option lists and secondary inputs on surface cards. Pair it with the [Agent Skill](/docs/agents/skills) for reusable component discovery.
+
 - Record the absolute H0N UI documentation origin used to resolve the template's `/llms.txt`, `/agent-data`, and `/components` links.
 - Add the consuming application's actual typecheck, test, build, and visual verification commands.
 - Describe where the plugin, global `@h0nio/ui` styles, and theme, locale, or toast configuration are initialized.

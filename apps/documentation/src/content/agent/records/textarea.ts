@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { attributeRoutingProps, fieldProps, focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
 
 export const textareaAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1,
     component: 'H0Textarea',
     status: 'migrated',

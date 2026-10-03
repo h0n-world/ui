@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { attributeRoutingProps, standardFormGuidance } from './forms-shared.ts'
 
 export const radioAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0Radio', status: 'migrated', summary: 'Standalone native radio control with surface variants, label, description, validation, and programmatic focus.',
     imports: { components: ['H0Radio'], types: ['H0RadioEmits', 'H0RadioProps', 'H0RadioValidator', 'H0RadioValue', 'H0RadioVariant'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [

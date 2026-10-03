@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
 
 export const selectAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0Select', status: 'migrated', summary: 'Accessible single or multiple option picker with custom rendering, virtualization, loading state, and teleported listbox.',
     imports: { components: ['H0Select'], types: ['H0IconSource', 'H0SelectEmits', 'H0SelectOption', 'H0SelectProps', 'H0SelectSize', 'H0SelectValue', 'H0SelectVariant'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [

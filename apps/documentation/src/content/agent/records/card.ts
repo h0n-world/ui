@@ -1,6 +1,7 @@
 import type { ComponentAgentRecordV1 } from '../schema.ts'
 
 export const cardAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0Card', status: 'migrated', summary: 'Composable surface for grouped content, metadata, and actions with optional interactivity.',
     imports: { components: ['H0Card'], types: ['H0CardElement', 'H0CardProps', 'H0CardRadius', 'H0CardRadiusCorner', 'H0CardVariant'], styles: ['@h0nio/ui/style.css'] },
     api: {

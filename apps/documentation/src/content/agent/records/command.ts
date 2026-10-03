@@ -1,6 +1,7 @@
 import type { ComponentAgentRecordV1 } from '../schema.ts'
 
 export const commandAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1,
     component: 'H0Command',
     status: 'migrated',

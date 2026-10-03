@@ -2,6 +2,7 @@ import type { ComponentAgentRecordV1 } from '../schema.ts'
 import { attributeRoutingProps, fieldProps, focusBlurEvents, standardFormGuidance } from './forms-shared.ts'
 
 export const passwordInputAgentRecord = {
+    surface: { prop: 'variant', default: 'surface', backgrounds: { surface: '--h0n-ui-color-surface', secondary: '--h0n-ui-color-secondary' } },
     schemaVersion: 1, component: 'H0PasswordInput', status: 'migrated', summary: 'Password field with controlled visibility, optional strength feedback, autocomplete guidance, and H0N validation messaging.',
     imports: { components: ['H0PasswordInput'], types: ['H0InputVariant', 'H0PasswordInputEmits', 'H0PasswordInputProps', 'H0PasswordStrength'], styles: ['@h0nio/ui/style.css'] },
     api: { props: [
