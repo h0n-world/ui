@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { onBeforeUnmount, ref } from 'vue'
 import { H0Button, H0Spinner, H0Typography } from '@h0nio/ui'
 
@@ -22,7 +23,9 @@ onBeforeUnmount(() => {
 
 <template>
     <div class="async-example">
-        <H0Button size="sm" variant="soft" :disabled="loading" @click="load">Load account</H0Button>
+        <DocumentationPreviewActions>
+            <H0Button size="sm" variant="soft" :disabled="loading" @click="load">Load account</H0Button>
+        </DocumentationPreviewActions>
         <div v-if="loading" class="status-row">
             <H0Spinner size="20px" label="Loading account" />
             <H0Typography variant="body-sm">Loading account data…</H0Typography>

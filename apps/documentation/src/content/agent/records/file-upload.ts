@@ -9,7 +9,7 @@ export const fileUploadAgentRecord = {
         { name: 'accept', type: 'string', default: "''", description: 'Native file accept filter.' }, { name: 'multiple', type: 'boolean', default: 'false', description: 'Allows multiple files.' },
         { name: 'maxFiles', type: 'number', default: 'undefined', description: 'Maximum file count.' }, { name: 'maxSize', type: 'number', default: 'undefined', description: 'Maximum bytes per file.' },
         { name: 'validator', type: '(file: File, files: readonly File[]) => string | null | undefined | Promise<string | null | undefined>', default: 'undefined', description: 'Custom validation callback.' }, { name: 'upload', type: 'H0UploadAdapter<Result>', default: 'undefined', description: 'Async upload adapter.' },
-        { name: 'autoUpload', type: 'boolean', default: 'false', description: 'Starts uploads after selection.' }, { name: 'concurrency', type: 'number', default: '3', description: 'Maximum simultaneous uploads.' }, { name: 'reorderable', type: 'boolean', default: 'false', description: 'Enables queue reordering.' }, { name: 'variant', type: 'H0FileUploadVariant', default: "'surface'", description: 'Drop-area background treatment.' },
+        { name: 'autoUpload', type: 'boolean', default: 'false', description: 'Starts uploads after selection.' }, { name: 'concurrency', type: 'number', default: '3', description: 'Maximum simultaneous uploads, rounded down and clamped to one. Non-finite input uses one; lowering the limit does not abort existing transfers.' }, { name: 'reorderable', type: 'boolean', default: 'false', description: 'Enables queue reordering.' }, { name: 'variant', type: 'H0FileUploadVariant', default: "'surface'", description: 'Drop-area background treatment.' },
         ...fieldProps,
     ], events: [
         { name: 'update:modelValue', type: 'File[]', description: 'Requests file value update.' }, { name: 'change', type: 'File[]', description: 'Reports the complete file list.' }, { name: 'add', type: 'File[]', description: 'Reports accepted files.' },
@@ -21,7 +21,7 @@ export const fileUploadAgentRecord = {
         { name: 'drop', type: '{ open }', description: 'Drop-zone content and picker action.' }, { name: 'item', type: '{ item, index, remove, retry, cancel }', description: 'Custom queue item.' },
     ], exposed: [
         { name: 'open', type: '() => void', description: 'Opens the native file picker.' }, { name: 'start', type: '(id?: string) => Promise<void>', description: 'Starts queued uploads.' },
-        { name: 'retry', type: '(id: string) => void', description: 'Retries a failed upload.' }, { name: 'cancel', type: '(id: string) => void', description: 'Cancels an upload.' },
+        { name: 'retry', type: '(id: string) => void', description: 'Retries an item; ignores an already running upload.' }, { name: 'cancel', type: '(id: string) => void', description: 'Aborts an upload. Cancellation settles with the adapter; late progress and successful results after abort are ignored.' },
         { name: 'remove', type: '(target: File | string) => void', description: 'Removes an item by its file or generated ID.' }, { name: 'clear', type: '() => void', description: 'Clears all items.' },
         { name: 'reorder', type: '(from: number, to: number) => void', description: 'Moves an item.' }, { name: 'queue', type: 'H0UploadItem<Result>[]', description: 'Reactive upload queue.' },
     ], types: [

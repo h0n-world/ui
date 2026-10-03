@@ -11,7 +11,9 @@ test('Table critical states and scroll positions', async ({ page }) => {
     const states = page.locator('#markdown-example-componentstable-3').locator('.h-table')
 
     await expect(states.nth(0)).toHaveScreenshot('table-empty.png', screenshotOptions)
-    await expect(states.nth(1)).toHaveScreenshot('table-one-row.png', screenshotOptions)
+    await expect(states.nth(1)).toHaveScreenshot('table-loading.png', screenshotOptions)
+    await expect(states.nth(3).locator('.h-table__row')).toHaveCount(1)
+    await expect(states.nth(3)).toHaveScreenshot('table-one-row.png', screenshotOptions)
 
     const scrollTable = page.locator('#markdown-example-componentstable-2').locator('.h-table')
     const viewport = scrollTable.locator('.h-table__viewport')
@@ -67,7 +69,7 @@ test('Form controls and overlay surfaces', async ({ page }) => {
 
 test('Layout and Tabs surfaces', async ({ page }) => {
     await page.goto('/components/layout')
-    await expect(page.locator('#markdown-example-componentslayout-1 .layout-example')).toHaveScreenshot(
+    await expect(page.locator('#markdown-example-componentslayout-1 .layout-composition')).toHaveScreenshot(
         'layout-responsive.png',
         screenshotOptions,
     )

@@ -19,6 +19,7 @@ import { descriptionAgentRecord } from './description.ts'
 import { dataTableAgentRecord } from './data-table.ts'
 import { dividerAgentRecord } from './divider.ts'
 import { drawerAgentRecord } from './drawer.ts'
+import { dropdownAgentRecord } from './dropdown.ts'
 import { errorMessageAgentRecord } from './error-message.ts'
 import { emptyStateAgentRecord } from './empty-state.ts'
 import { fieldAgentRecord } from './field.ts'
@@ -71,6 +72,7 @@ import { toolbarItemAgentRecord } from './toolbar-item.ts'
 import { toolbarSeparatorAgentRecord } from './toolbar-separator.ts'
 import { tooltipAgentRecord } from './tooltip.ts'
 import { textareaAgentRecord } from './textarea.ts'
+import { textShimmerAgentRecord } from './text-shimmer.ts'
 import { typographyAgentRecord } from './typography.ts'
 
 export const componentAgentRecords = [
@@ -95,6 +97,7 @@ export const componentAgentRecords = [
     dataTableAgentRecord,
     dividerAgentRecord,
     drawerAgentRecord,
+    dropdownAgentRecord,
     errorMessageAgentRecord,
     emptyStateAgentRecord,
     fieldAgentRecord,
@@ -147,5 +150,6 @@ export const componentAgentRecords = [
     toolbarSeparatorAgentRecord,
     tooltipAgentRecord,
     textareaAgentRecord,
+    textShimmerAgentRecord,
     typographyAgentRecord,
 ]

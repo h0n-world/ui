@@ -90,6 +90,48 @@
     --h0n-ui-duration-slow: 220ms;
 }
 
+[data-h0n-animation='medium'] {
+    --h0n-ui-duration-fast: 130ms;
+    --h0n-ui-duration-normal: 190ms;
+    --h0n-ui-duration-slow: 250ms;
+}
+
+[data-h0n-animation='off'] {
+    --h0n-ui-duration-fast: 0ms;
+    --h0n-ui-duration-normal: 0ms;
+    --h0n-ui-duration-slow: 0ms;
+}
+
+// Limit overrides to library surfaces, including pseudo-elements and teleports
+// under the configured appearance target. Explicit Off also covers custom durations.
+[data-h0n-animation='off'] :where([data-h0n-component], [data-h0n-component] *, [data-h0n-component]::before, [data-h0n-component]::after, [data-h0n-component] *::before, [data-h0n-component] *::after) {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+    will-change: auto !important;
+}
+
+[data-h0n-animation='low'] :where([data-h0n-component], [data-h0n-component] *, [data-h0n-component]::before, [data-h0n-component]::after, [data-h0n-component] *::before, [data-h0n-component] *::after) {
+    animation: none !important;
+    transition-property: color, background-color, border-color, opacity !important;
+    will-change: auto !important;
+}
+
+:is([data-h0n-animation='off'], [data-h0n-animation='low'], [data-h0n-animation='medium']) .h-ripple,
+:is([data-h0n-animation='off'], [data-h0n-animation='low'], [data-h0n-animation='medium']) .h-skeleton::after {
+    display: none;
+}
+
+:is([data-h0n-animation='off'], [data-h0n-animation='low']) .h-overlay__backdrop {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+[data-h0n-animation='medium'] .h-overlay__backdrop {
+    transition-property: background-color, opacity !important;
+    will-change: auto !important;
+}
+
 [data-h0n-animation='high'] {
     --h0n-ui-duration-fast: 160ms;
     --h0n-ui-duration-normal: 220ms;
@@ -99,11 +141,23 @@
 @media (prefers-reduced-motion: reduce) {
     :root,
     [data-h0n-animation='low'],
+    [data-h0n-animation='off'],
+    [data-h0n-animation='medium'],
     [data-h0n-animation='high'] {
         --h0n-ui-duration-fast: 0ms;
         --h0n-ui-duration-normal: 0ms;
         --h0n-ui-duration-slow: 0ms;
     }
+
+    :where([data-h0n-component], [data-h0n-component] *, [data-h0n-component]::before, [data-h0n-component]::after, [data-h0n-component] *::before, [data-h0n-component] *::after) {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+        will-change: auto !important;
+    }
+
+    .h-ripple, .h-skeleton::after { display: none; }
+    .h-overlay__backdrop { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 }
 
 :root,

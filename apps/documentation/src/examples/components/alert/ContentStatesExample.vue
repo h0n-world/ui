@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import arrowRightIcon from '@h0nio/icons/alt-arrow-right-stroke'
 import infoIcon from '@h0nio/icons/info-circle-stroke'
 import { H0Alert, H0Button, H0Icon } from '@h0nio/ui'
@@ -49,12 +50,12 @@ const message = ref('No rich action selected')
             @action="message = 'Loading alert action selected'"
         />
 
-        <div class="example-controls">
+        <DocumentationPreviewActions>
             <H0Button size="sm" variant="soft" @click="loading = !loading">{{
                 loading ? 'Finish loading' : 'Restart loading'
             }}</H0Button>
-            <output aria-live="polite">{{ message }}</output>
-        </div>
+        </DocumentationPreviewActions>
+        <output aria-live="polite">{{ message }}</output>
     </div>
 </template>
 
@@ -67,13 +68,6 @@ const message = ref('No rich action selected')
 
 .content-states-example ul {
     margin-block: 0;
-}
-
-.example-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--h0n-ui-spacing-sm);
 }
 
 output {

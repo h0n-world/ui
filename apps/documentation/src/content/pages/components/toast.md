@@ -175,6 +175,9 @@ Stacks stay within the viewport and use full available width on small screens. T
 
 Render one stack per service, set a reasonable `maxVisible`, dismiss obsolete notifications, and call `dispose` for manually created services that outlive their view.
 
+`maxVisible` is floored and clamped to zero. Non-finite values use the default
+of four. Zero hides the stack without dismissing the service's queued items.
+
 ## Styling
 
 Use tone and public tokens. Placement belongs to the service; stack transforms, transition classes, and toast selectors are implementation details.

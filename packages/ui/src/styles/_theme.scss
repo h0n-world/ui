@@ -1,4 +1,5 @@
 @use './palettes.scss' as palettes;
+@use 'sass:map';
 
 @mixin h0n-token-vars($palette) {
     @each $name, $value in $palette {
@@ -9,7 +10,7 @@
 @mixin h0n-ui-compat-vars {
     --h0n-ui-color-primary: var(--h0n-accent);
     --h0n-ui-color-primary-hover: var(--h0n-accent-hover);
-    --h0n-ui-color-primary-contrast: var(--h0n-snow);
+    --h0n-ui-color-primary-contrast: var(--h0n-accent-contrast);
     --h0n-ui-color-secondary: var(--h0n-secondary);
     --h0n-ui-color-secondary-hover: var(--h0n-secondary-hover);
     --h0n-ui-color-surface: var(--h0n-surface);
@@ -51,6 +52,7 @@
 [data-h0n-theme='light'] {
     color-scheme: light;
     @include h0n-token-vars(palettes.$h0n-overall-palette);
+    --h0n-accent-contrast: var(--h0n-snow);
     @include h0n-token-vars(palettes.$h0n-light-palette);
     @include h0n-token-vars(palettes.$h0n-avatar-palette);
 
@@ -61,9 +63,23 @@
 [data-h0n-theme='dark'] {
     color-scheme: dark;
     @include h0n-token-vars(palettes.$h0n-overall-palette);
+    --h0n-accent-contrast: var(--h0n-snow);
     @include h0n-token-vars(palettes.$h0n-dark-palette);
     @include h0n-token-vars(palettes.$h0n-avatar-palette);
 
     @include h0n-ui-compat-vars;
     @include h0n-token-vars(palettes.$h0n-button-dark-palette);
+}
+
+// Palettes live on the appearance target so aliases resolve in that scope.
+// An explicit light/dark boundary always initializes its own Default palette.
+@each $accent, $modes in palettes.$h0n-accent-palettes {
+    :root[data-h0n-accent='#{$accent}']:not([data-h0n-theme='dark']),
+    [data-h0n-theme='light'][data-h0n-accent='#{$accent}'] {
+        @include h0n-token-vars(map.get($modes, light));
+    }
+
+    [data-h0n-theme='dark'][data-h0n-accent='#{$accent}'] {
+        @include h0n-token-vars(map.get($modes, dark));
+    }
 }

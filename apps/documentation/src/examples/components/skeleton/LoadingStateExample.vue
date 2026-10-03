@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { ref } from 'vue'
 import { H0Button, H0Card, H0Skeleton, H0Typography } from '@h0nio/ui'
 
@@ -7,7 +8,9 @@ const loading = ref(true)
 
 <template>
     <div class="loading-example">
-        <H0Button size="sm" variant="soft" @click="loading = !loading">{{ loading ? 'Show content' : 'Show loading state' }}</H0Button>
+        <DocumentationPreviewActions>
+            <H0Button size="sm" variant="soft" @click="loading = !loading">{{ loading ? 'Show content' : 'Show loading state' }}</H0Button>
+        </DocumentationPreviewActions>
 
         <div class="content-region" :aria-busy="loading">
             <div v-if="loading" class="content-skeleton" role="status" aria-label="Loading release summary">

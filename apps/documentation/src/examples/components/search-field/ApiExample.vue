@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { H0Button, H0SearchField } from '@h0nio/ui'
 import { ref } from 'vue'
 
@@ -20,11 +21,11 @@ const lastEvent = ref('No input yet')
             @input="(value) => (lastEvent = `Input: ${value}`)"
             @clear="lastEvent = 'Query cleared'"
         />
-        <div class="actions">
+        <DocumentationPreviewActions>
             <H0Button size="sm" @click="field?.setValue('accessibility')">Set query</H0Button>
             <H0Button size="sm" variant="ghost" @click="field?.focus()">Focus</H0Button>
             <H0Button size="sm" variant="ghost" @click="field?.clear()">Clear</H0Button>
-        </div>
+        </DocumentationPreviewActions>
         <output aria-live="polite">{{ lastEvent }}</output>
     </div>
 </template>
@@ -34,11 +35,6 @@ const lastEvent = ref('No input yet')
     display: grid;
     gap: var(--h0n-ui-spacing-md);
     width: min(26rem, 100%);
-}
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--h0n-ui-spacing-sm);
 }
 output {
     color: var(--h0n-ui-color-muted);

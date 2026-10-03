@@ -78,6 +78,11 @@ describe('H0Select keyboard navigation', () => {
 })
 
 describe('H0ListItem interaction', () => {
+    it('preserves composite roles, tab order and ARIA attributes on the real control', () => {
+        const wrapper = mount(H0ListItem, { attrs: { role: 'option', tabindex: -1, 'aria-disabled': 'true' } })
+        expect(wrapper.get('button').attributes()).toMatchObject({ role: 'option', tabindex: '-1', 'aria-disabled': 'true' })
+        wrapper.unmount()
+    })
     it('renders an interactive item as a native button by default', () => {
         const wrapper = mount(H0ListItem, {
             props: {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { H0Button, H0Command, useH0Theme, type H0CommandItem } from '@h0nio/ui'
+import { H0Button, H0Command, H0Select, useH0Theme, type H0AccentName, type H0AnimationLevel, type H0CommandItem, type H0SelectOption } from '@h0nio/ui'
 import { computed, onMounted, onUnmounted, useTemplateRef } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 
@@ -16,12 +16,30 @@ defineOptions({
     name: 'SystemHeader',
 })
 
-const props = defineProps<{ minimal?: boolean }>()
+const props = defineProps<{ minimal?: boolean; showPrimary?: boolean }>()
 const emit = defineEmits<{ menu: [] }>()
 
 const route = useRoute()
 const router = useRouter()
 const theme = useH0Theme()
+const animationOptions: H0SelectOption<H0AnimationLevel>[] = [
+    { value: 'recommended', label: 'Recommended' },
+    { value: 'off', label: 'Off' },
+    { value: 'low', label: 'Low' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'high', label: 'High' },
+]
+function changeAnimation(value: unknown) {
+    if (value === 'recommended' || value === 'off' || value === 'low' || value === 'medium' || value === 'high') theme.setAnimation(value)
+}
+const accentOptions: H0SelectOption<H0AccentName>[] = [
+    { value: 'default', label: 'Default' },
+    { value: 'telegram', label: 'Telegram' },
+    { value: 'uber', label: 'Uber' },
+]
+function changeAccent(value: unknown) {
+    if (value === 'default' || value === 'telegram' || value === 'uber') theme.setAccent(value)
+}
 const commandRef = useTemplateRef<{ open: () => void }>('commandRef')
 const searchItems: H0CommandItem[] = documentationPages.map((page) => ({
     value: page.path,
@@ -85,6 +103,36 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
                     @select="navigate"
                 />
 
+                <H0Select
+                    class="accent-select"
+                    :model-value="theme.accent.value"
+                    :options="accentOptions"
+                    size="sm"
+                    variant="secondary"
+                    placeholder="Accent palette"
+                    list-aria-label="Accent palettes"
+                    @update:model-value="changeAccent"
+                >
+                    <template #value="{ selectedOptions }">
+                        <span class="accent-select__value">
+                            <span class="accent-select__swatch" aria-hidden="true"></span>
+                            {{ selectedOptions[0]?.label }}
+                        </span>
+                    </template>
+                </H0Select>
+
+                <H0Select
+                    class="animation-select"
+                    :model-value="theme.animation.value"
+                    :options="animationOptions"
+                    size="sm"
+                    variant="secondary"
+                    placeholder="Animation quality"
+                    list-aria-label="Animation quality"
+                    :title="`Effective motion: ${theme.resolvedAnimation.value}`"
+                    @update:model-value="changeAnimation"
+                />
+
                 <H0Button
                     class="theme-button"
                     variant="ghost"
@@ -109,7 +157,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
             </div>
         </div>
 
-        <div v-if="!minimal" class="site-header__navigation">
+        <div v-if="!minimal || showPrimary" class="site-header__navigation">
             <nav class="site-header__primary" aria-label="Primary navigation">
                 <RouterLink
                     v-for="link in siteConfig.headerLinks"
@@ -250,6 +298,26 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
     display: none;
 }
 
+.accent-select {
+    width: 148px;
+
+    &__value {
+        align-items: center;
+        display: inline-flex;
+        gap: 8px;
+    }
+
+    &__swatch {
+        background: var(--h0n-ui-color-primary);
+        border: 1px solid var(--h0n-ui-color-border);
+        border-radius: 50%;
+        flex: 0 0 14px;
+        height: 14px;
+    }
+}
+
+.animation-select { width: 168px; }
+
 @media (max-width: 1120px) {
     .menu-button {
         display: inline-flex;
@@ -261,11 +329,26 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 960px) {
     .site-header__row {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         min-height: 60px;
-        padding: 0 16px;
+        padding: 8px 16px;
     }
+
+    .site-header__actions { display: contents; }
+    .site-header__brand { grid-column: 1; grid-row: 1; }
+    .header-search { grid-column: 2; grid-row: 1; justify-self: end; }
+    .theme-button { grid-column: 3; grid-row: 1; justify-self: end; }
+    .menu-button { grid-column: 4; grid-row: 1; justify-self: end; }
+    .accent-select {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+        width: 100%;
+    }
+    .animation-select { grid-column: 3 / span 2; grid-row: 2; width: 100%; }
 
     .site-header__navigation {
         padding: 0 16px;
@@ -283,7 +366,12 @@ onUnmounted(() => window.removeEventListener('keydown', handleSearchShortcut))
         }
     }
 
-    .theme-button :deep(.h-button__content span:last-child),
+    .theme-button :deep(.h-button__content span:last-child) {
+        display: none;
+    }
+}
+
+@media (max-width: 720px) {
     .site-header__version,
     .site-header__divider,
     .site-header__brand > span:not(.brand-mark) {

@@ -2,12 +2,16 @@ import { fileURLToPath, URL } from 'node:url'
 
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
+import { editorCompilerPath, editorRuntimePlugin } from './scripts/editor-runtime-plugin'
+import { editorTypesPlugin } from './scripts/editor-types-plugin'
 
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [vue(), editorRuntimePlugin(), editorTypesPlugin()],
+    optimizeDeps: { include: ['@vue/language-core', '@volar/source-map', 'typescript'] },
     resolve: {
         dedupe: ['vue'],
         alias: [
+            { find: /^vue\/compiler-sfc$/, replacement: editorCompilerPath },
             {
                 find: /^@h0nio\/icons\/all$/,
                 replacement: fileURLToPath(

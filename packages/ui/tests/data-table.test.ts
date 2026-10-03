@@ -168,4 +168,45 @@ describe('H0DataTable', () => {
 
         expect(warn).toHaveBeenCalledWith('[H0N UI] DataTable row keys must be unique and stable.')
     })
+    it('keeps virtual rows visible when a scrolled dataset shrinks', async () => {
+        const rows = Array.from({ length: 100 }, (_, id) => ({ id, name: `Row ${id}` }))
+        const wrapper = mount(H0DataTable, { props: { columns, rows, getRowKey, virtual: true, rowHeight: 24, scrollHeight: 240 } })
+        const viewport = wrapper.get('.h-table__viewport').element as HTMLElement
+        Object.defineProperties(viewport, {
+            scrollTop: { configurable: true, writable: true, value: 80 * 24 },
+            clientHeight: { configurable: true, value: 240 },
+        })
+        await wrapper.get('.h-table__viewport').trigger('scroll')
+        await wrapper.setProps({ rows: rows.slice(0, 3) })
+        expect(renderedNames(wrapper)).toEqual(['Row 0', 'Row 1', 'Row 2'])
+        wrapper.unmount()
+    })
+    it.each([0, -1, Number.NaN, Number.POSITIVE_INFINITY])('falls back to ordinary rows for invalid rowHeight %s', rowHeight => {
+        vi.spyOn(console, 'warn').mockImplementation(() => {})
+        const wrapper = mount(H0DataTable, { props: { columns, getRowKey, virtual: true, rowHeight, scrollHeight: 240, rows: [{ id: 0, name: 'Visible' }] } })
+        expect(renderedNames(wrapper)).toEqual(['Visible'])
+        expect(wrapper.html()).not.toContain('NaNpx')
+        wrapper.unmount()
+    })
+    it('preserves row callback indices when non-selectable rows precede selectable rows', async () => {
+        const wrapper = mount(H0DataTable, { props: {
+            columns, rows: [{ id: 0, name: 'Disabled' }, { id: 1, name: 'Enabled' }],
+            getRowKey: (row: Record<string, unknown>, index: number) => `${row.id}:${index}`,
+            isRowSelectable: (row: Record<string, unknown>) => row.id !== 0,
+            selectionMode: 'multiple',
+        } })
+        await wrapper.findAll('input[type="checkbox"]')[0].trigger('change')
+        expect(wrapper.emitted('update:selection')?.[0]).toEqual([['1:1']])
+        expect((wrapper.findAll('input[type="checkbox"]')[2].element as HTMLInputElement).checked).toBe(true)
+        wrapper.unmount()
+    })
+    it('preserves natural sorting, equal-key order and custom comparison ownership', () => {
+        const rows = [{ id: 0, name: 'Item 10' }, { id: 1, name: 'item 2' }, { id: 2, name: 'Item 2' }, { id: 3, name: null }]
+        const wrapper = mount(H0DataTable, { props: { columns, rows, getRowKey, sort: { key: 'name', direction: 'asc' } } })
+        expect(renderedNames(wrapper)).toEqual(['item 2', 'Item 2', 'Item 10', ''])
+        wrapper.unmount()
+        const custom = mount(H0DataTable, { props: { columns: [{ key: 'name', label: 'Name', compare: (a, b) => Number(b.id) - Number(a.id), sortValue: () => { throw new Error('Custom comparator owns values') } }], rows, getRowKey, sort: { key: 'name', direction: 'asc' } } })
+        expect(renderedNames(custom)).toEqual(['', 'Item 2', 'item 2', 'Item 10'])
+        custom.unmount()
+    })
 })

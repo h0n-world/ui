@@ -13,8 +13,66 @@ import type { H0FileUploadValidationError, H0FileUploadVariant } from './FileUpl
 
 defineOptions({ name: 'H0FileUpload' })
 type QueueItem = H0UploadItem<Result> & { previewUrl?: string }
-const props = withDefaults(defineProps<{ modelValue?: File[]; defaultValue?: File[]; multiple?: boolean; accept?: string; maxSize?: number; maxFiles?: number; validator?: (file: File, files: readonly File[]) => string | null | undefined | Promise<string | null | undefined>; upload?: H0UploadAdapter<Result>; autoUpload?: boolean; concurrency?: number; reorderable?: boolean; variant?: H0FileUploadVariant; id?: string; name?: string; label?: string; required?: boolean; disabled?: boolean; error?: string; hint?: string }>(), { modelValue: undefined, defaultValue: () => [], multiple: false, accept: '', maxSize: undefined, maxFiles: undefined, validator: undefined, upload: undefined, autoUpload: false, concurrency: 3, reorderable: false, variant: 'surface', id: '', name: '', label: '', required: false, disabled: false, error: '', hint: '' })
-const emit = defineEmits<{ 'update:modelValue': [files: File[]]; change: [files: File[]]; add: [files: File[]]; remove: [file: File]; clear: []; invalid: [error: H0FileUploadValidationError]; 'upload-start': [item: H0UploadItem<Result>]; progress: [item: H0UploadItem<Result>]; success: [item: H0UploadItem<Result>]; error: [item: H0UploadItem<Result>]; cancel: [item: H0UploadItem<Result>]; reorder: [files: File[]]; focus: [event: FocusEvent]; blur: [event: FocusEvent] }>()
+const props = withDefaults(
+    defineProps<{
+        modelValue?: File[]
+        defaultValue?: File[]
+        multiple?: boolean
+        accept?: string
+        maxSize?: number
+        maxFiles?: number
+        validator?: (file: File, files: readonly File[]) => string | null | undefined | Promise<string | null | undefined>
+        upload?: H0UploadAdapter<Result>
+        autoUpload?: boolean
+        concurrency?: number
+        reorderable?: boolean
+        variant?: H0FileUploadVariant
+        id?: string
+        name?: string
+        label?: string
+        required?: boolean
+        disabled?: boolean
+        error?: string
+        hint?: string
+    }>(),
+    {
+        modelValue: undefined,
+        defaultValue: () => [],
+        multiple: false,
+        accept: '',
+        maxSize: undefined,
+        maxFiles: undefined,
+        validator: undefined,
+        upload: undefined,
+        autoUpload: false,
+        concurrency: 3,
+        reorderable: false,
+        variant: 'surface',
+        id: '',
+        name: '',
+        label: '',
+        required: false,
+        disabled: false,
+        error: '',
+        hint: ''
+    }
+)
+const emit = defineEmits<{
+    'update:modelValue': [files: File[]]
+    change: [files: File[]]
+    add: [files: File[]]
+    remove: [file: File]
+    clear: []
+    invalid: [error: H0FileUploadValidationError]
+    'upload-start': [item: H0UploadItem<Result>]
+    progress: [item: H0UploadItem<Result>]
+    success: [item: H0UploadItem<Result>]
+    error: [item: H0UploadItem<Result>]
+    cancel: [item: H0UploadItem<Result>]
+    reorder: [files: File[]]
+    focus: [event: FocusEvent]
+    blur: [event: FocusEvent]
+}>()
 const input = ref<HTMLInputElement>()
 const dragging = ref(false)
 const queue = shallowRef<QueueItem[]>([])
@@ -22,37 +80,254 @@ const controllers = new Map<string, AbortController>()
 const uploadWaiters = new Set<() => void>()
 let counter = 0
 let active = 0
+let generation = 0
+let disposed = false
+let additions: Promise<void> = Promise.resolve()
 const localeService = useH0Locale()
 const text = computed(() => localeService.locale.value.fileUpload ?? defaultH0FileUploadLocale)
 const state = useH0ControllableState<File[]>({ modelValue: () => props.modelValue, defaultValue: () => [...props.defaultValue], onUpdate: (value) => emit('update:modelValue', value) })
 const localError = ref('')
-const { controlId, fieldContext, hasMessage, messageId, resolvedDisabled, resolvedHint, resolvedLabel, resolvedName, resolvedRequired, setFormValue, visibleError } = useFormField({ id: () => props.id, name: () => props.name, label: () => props.label, required: () => props.required, disabled: () => props.disabled, error: () => props.error || localError.value, hint: () => props.hint, idPrefix: 'h-file-upload', getValue: () => state.value.value, getValidationMessage: () => localError.value || input.value?.validationMessage || '', focus: () => input.value?.focus(), reset: () => { cleanup(); queue.value = []; if (input.value) input.value.value = ''; return state.reset() } })
-function syncQueue(files: readonly File[]) { const ids = new Set(files); for (const item of queue.value) if (!ids.has(item.file)) disposeItem(item); const previous = new Map(queue.value.map((item) => [item.file, item])); queue.value = files.map((file) => previous.get(file) ?? { id: createH0UploadId(file, ++counter), file, status: 'idle', progress: 0, previewUrl: file.type.startsWith('image/') && typeof URL !== 'undefined' ? URL.createObjectURL(file) : undefined }) }
+const { controlId, fieldContext, hasMessage, messageId, resolvedDisabled, resolvedHint, resolvedLabel, resolvedName, resolvedRequired, setFormValue, visibleError } = useFormField({
+    id: () => props.id,
+    name: () => props.name,
+    label: () => props.label,
+    required: () => props.required,
+    disabled: () => props.disabled,
+    error: () => props.error || localError.value,
+    hint: () => props.hint,
+    idPrefix: 'h-file-upload',
+    getValue: () => state.value.value,
+    getValidationMessage: () => localError.value || input.value?.validationMessage || '',
+    focus: () => input.value?.focus(),
+    reset: () => {
+        cleanup()
+        queue.value = []
+        if (input.value) input.value.value = ''
+        return state.reset()
+    }
+})
+function syncQueue(files: readonly File[]) {
+    const ids = new Set(files)
+    for (const item of queue.value) if (!ids.has(item.file)) disposeItem(item)
+    const previous = new Map(queue.value.map((item) => [item.file, item]))
+    queue.value = files.map(
+        (file) =>
+            previous.get(file) ?? {
+                id: createH0UploadId(file, ++counter),
+                file,
+                status: 'idle',
+                progress: 0,
+                previewUrl: file.type.startsWith('image/') && typeof window !== 'undefined' && typeof URL !== 'undefined' && typeof URL.createObjectURL === 'function' ? URL.createObjectURL(file) : undefined
+            }
+    )
+}
 watch(state.value, (files) => syncQueue(files), { immediate: true })
-function disposeItem(item: QueueItem) { controllers.get(item.id)?.abort(); controllers.delete(item.id); if (item.previewUrl && typeof URL !== 'undefined') URL.revokeObjectURL(item.previewUrl) }
-function resolveUploadWaiters() { uploadWaiters.forEach((resolve) => resolve()); uploadWaiters.clear() }
-function settleUploadWaiters() { if (!active && !queue.value.some((item) => item.status === 'idle' || item.status === 'uploading')) resolveUploadWaiters() }
-function cleanup() { queue.value.forEach(disposeItem); controllers.clear(); active = 0; resolveUploadWaiters() }
-function commit(files: File[]) { state.setValue(files); setFormValue(files); emit('change', files) }
-async function addFiles(incoming: readonly File[]) { const accepted: File[] = []; const base = props.multiple ? [...state.value.value] : []; for (const file of incoming) { if (props.maxFiles != null && base.length + accepted.length >= props.maxFiles) { emit('invalid', { code: 'count', message: text.value.invalid, file }); break } const code = validateH0File(file, { accept: props.accept, maxSize: props.maxSize }); const custom = !code ? await props.validator?.(file, [...base, ...accepted]) : null; if (code || custom) { const issue = { code: code ?? 'custom', message: custom || text.value.invalid, file } as H0FileUploadValidationError; localError.value = issue.message; emit('invalid', issue); continue } accepted.push(file); if (!props.multiple) break } if (!accepted.length) return; localError.value = ''; const next = props.multiple ? [...base, ...accepted] : accepted; commit(next); emit('add', accepted); if (props.autoUpload) queueMicrotask(() => void start()) }
-function onInput(event: Event) { void addFiles(Array.from((event.target as HTMLInputElement).files ?? [])); (event.target as HTMLInputElement).value = '' }
-function remove(target: File | string) { const item = typeof target === 'string' ? queue.value.find((entry) => entry.id === target) : queue.value.find((entry) => entry.file === target); if (!item) return; disposeItem(item); const next = state.value.value.filter((file) => file !== item.file); commit(next); emit('remove', item.file) }
-function clear() { cleanup(); queue.value = []; commit([]); emit('clear'); settleUploadWaiters() }
-async function run(item: QueueItem) { if (!props.upload || item.status === 'uploading') return; const controller = new AbortController(); controllers.set(item.id, controller); item.status = 'uploading'; item.progress = 0; active += 1; triggerRef(queue); emit('upload-start', item); try { item.result = await props.upload(item.file, { signal: controller.signal, onProgress: (progress) => { item.progress = Math.max(0, Math.min(100, progress)); triggerRef(queue); emit('progress', item) } }); item.progress = 100; item.status = 'success'; triggerRef(queue); emit('success', item) } catch (error) { if (controller.signal.aborted) { item.status = 'cancelled'; triggerRef(queue); emit('cancel', item) } else { item.status = 'error'; item.error = error instanceof Error ? error.message : String(error); triggerRef(queue); emit('error', item) } } finally { controllers.delete(item.id); active = Math.max(0, active - 1); pump(); settleUploadWaiters() } }
-function pump() { if (!props.upload) return; const capacity = Math.max(1, props.concurrency) - active; queue.value.filter((item) => item.status === 'idle').slice(0, capacity).forEach((item) => void run(item)) }
-function start(target?: string): Promise<void> { if (!props.upload) return Promise.resolve(); if (target) { const item = queue.value.find((entry) => entry.id === target); if (item && item.status !== 'uploading') { item.status = 'idle'; triggerRef(queue) } } pump(); if (!active && !queue.value.some((item) => item.status === 'idle')) return Promise.resolve(); return new Promise((resolve) => uploadWaiters.add(resolve)) }
-function retry(id: string) { const item = queue.value.find((entry) => entry.id === id); if (!item) return; item.status = 'idle'; item.error = undefined; triggerRef(queue); void start(id) }
-function cancel(id: string) { controllers.get(id)?.abort() }
-function reorder(from: number, to: number) { if (!props.reorderable || from === to || from < 0 || to < 0 || from >= queue.value.length || to >= queue.value.length) return; const next = [...state.value.value]; const [file] = next.splice(from, 1); next.splice(to, 0, file); commit(next); emit('reorder', next) }
-function open() { if (!resolvedDisabled.value) input.value?.click() }
+function disposeItem(item: QueueItem) {
+    controllers.get(item.id)?.abort()
+    controllers.delete(item.id)
+    if (item.previewUrl && typeof URL !== 'undefined') URL.revokeObjectURL(item.previewUrl)
+}
+function resolveUploadWaiters() {
+    uploadWaiters.forEach((resolve) => resolve())
+    uploadWaiters.clear()
+}
+function settleUploadWaiters() {
+    if (!active && !queue.value.some((item) => item.status === 'idle' || item.status === 'uploading')) resolveUploadWaiters()
+}
+function cleanup() {
+    generation += 1
+    additions = Promise.resolve()
+    queue.value.forEach(disposeItem)
+    controllers.clear()
+    active = 0
+    resolveUploadWaiters()
+}
+function commit(files: File[]) {
+    state.setValue(files)
+    setFormValue(files)
+    emit('change', files)
+}
+function addFiles(incoming: readonly File[]): Promise<void> {
+    if (disposed || resolvedDisabled.value) return Promise.resolve()
+    const additionGeneration = generation
+    const task = additions.then(() => validateFiles(incoming, additionGeneration))
+    additions = task.catch(() => {})
+    return task
+}
+async function validateFiles(incoming: readonly File[], additionGeneration: number) {
+    if (disposed || resolvedDisabled.value || generation !== additionGeneration) return
+    const accepted: File[] = []
+    const original = [...state.value.value]
+    const base = props.multiple ? [...state.value.value] : []
+    const isCurrent = () => !disposed && !resolvedDisabled.value && generation === additionGeneration && original.length === state.value.value.length && original.every((file, index) => state.value.value[index] === file)
+    for (const file of incoming) {
+        if (props.maxFiles != null && base.length + accepted.length >= props.maxFiles) {
+            emit('invalid', { code: 'count', message: text.value.invalid, file })
+            break
+        }
+        const code = validateH0File(file, { accept: props.accept, maxSize: props.maxSize })
+        let custom: string | null | undefined = null
+        if (!code) {
+            try {
+                custom = await props.validator?.(file, [...base, ...accepted])
+            } catch {
+                custom = text.value.invalid
+            }
+        }
+        if (!isCurrent()) return
+        if (code || custom) {
+            const issue = { code: code ?? 'custom', message: custom || text.value.invalid, file } as H0FileUploadValidationError
+            localError.value = issue.message
+            emit('invalid', issue)
+            continue
+        }
+        accepted.push(file)
+        if (!props.multiple) break
+    }
+    if (!accepted.length || !isCurrent()) return
+    localError.value = ''
+    const next = props.multiple ? [...base, ...accepted] : accepted
+    commit(next)
+    emit('add', accepted)
+    if (props.autoUpload) queueMicrotask(() => void start())
+}
+function onInput(event: Event) {
+    void addFiles(Array.from((event.target as HTMLInputElement).files ?? []))
+    ;(event.target as HTMLInputElement).value = ''
+}
+function remove(target: File | string) {
+    const item = typeof target === 'string' ? queue.value.find((entry) => entry.id === target) : queue.value.find((entry) => entry.file === target)
+    if (!item) return
+    disposeItem(item)
+    const next = state.value.value.filter((file) => file !== item.file)
+    commit(next)
+    emit('remove', item.file)
+}
+function clear() {
+    cleanup()
+    queue.value = []
+    commit([])
+    emit('clear')
+    settleUploadWaiters()
+}
+async function run(item: QueueItem) {
+    if (disposed || !props.upload || item.status === 'uploading') return
+    const runGeneration = generation
+    const controller = new AbortController()
+    const isCurrent = () => !disposed && generation === runGeneration && controllers.get(item.id) === controller && queue.value.includes(item)
+    controllers.set(item.id, controller)
+    item.status = 'uploading'
+    item.progress = 0
+    active += 1
+    triggerRef(queue)
+    emit('upload-start', item)
+    try {
+        if (!isCurrent()) return
+        const result = await props.upload(item.file, {
+            signal: controller.signal,
+            onProgress: (progress) => {
+                if (!isCurrent() || controller.signal.aborted || !Number.isFinite(progress)) return
+                item.progress = Math.max(0, Math.min(100, progress))
+                triggerRef(queue)
+                emit('progress', item)
+            }
+        })
+        if (!isCurrent()) return
+        if (controller.signal.aborted) {
+            item.status = 'cancelled'
+            triggerRef(queue)
+            emit('cancel', item)
+            return
+        }
+        item.result = result
+        item.progress = 100
+        item.status = 'success'
+        triggerRef(queue)
+        emit('success', item)
+    } catch (error) {
+        if (!isCurrent()) return
+        if (controller.signal.aborted) {
+            item.status = 'cancelled'
+            triggerRef(queue)
+            emit('cancel', item)
+        } else {
+            item.status = 'error'
+            item.error = error instanceof Error ? error.message : String(error)
+            triggerRef(queue)
+            emit('error', item)
+        }
+    } finally {
+        if (generation !== runGeneration || disposed) return
+        controllers.delete(item.id)
+        active = Math.max(0, active - 1)
+        pump()
+        settleUploadWaiters()
+    }
+}
+function pump() {
+    if (disposed || !props.upload) return
+    const limit = Number.isFinite(props.concurrency) ? Math.max(1, Math.floor(props.concurrency)) : 1
+    const capacity = Math.max(0, limit - active)
+    queue.value
+        .filter((item) => item.status === 'idle')
+        .slice(0, capacity)
+        .forEach((item) => void run(item))
+}
+function start(target?: string): Promise<void> {
+    if (disposed || !props.upload) return Promise.resolve()
+    if (target) {
+        const item = queue.value.find((entry) => entry.id === target)
+        if (item && item.status !== 'uploading') {
+            item.status = 'idle'
+            triggerRef(queue)
+        }
+    }
+    pump()
+    if (!active && !queue.value.some((item) => item.status === 'idle')) return Promise.resolve()
+    return new Promise((resolve) => uploadWaiters.add(resolve))
+}
+function retry(id: string) {
+    const item = queue.value.find((entry) => entry.id === id)
+    if (!item || item.status === 'uploading') return
+    item.status = 'idle'
+    item.error = undefined
+    triggerRef(queue)
+    void start(id)
+}
+function cancel(id: string) {
+    controllers.get(id)?.abort()
+}
+function reorder(from: number, to: number) {
+    if (!props.reorderable || from === to || from < 0 || to < 0 || from >= queue.value.length || to >= queue.value.length) return
+    const next = [...state.value.value]
+    const [file] = next.splice(from, 1)
+    next.splice(to, 0, file)
+    commit(next)
+    emit('reorder', next)
+}
+function open() {
+    if (!resolvedDisabled.value) input.value?.click()
+}
 defineExpose({ cancel, clear, open, queue, remove, reorder, retry, start })
-onBeforeUnmount(cleanup)
+onBeforeUnmount(() => {
+    disposed = true
+    cleanup()
+})
 </script>
 
 <template>
     <div data-h0n-component="file-upload" class="h-file-upload" :class="`h-file-upload--${variant}`">
         <H0Label v-if="!fieldContext && resolvedLabel" :for="controlId" :required="resolvedRequired">{{ resolvedLabel }}</H0Label>
-        <button class="h-file-upload__drop" type="button" :disabled="resolvedDisabled" :class="{ 'is-dragging': dragging }" @click="open" @dragover.prevent="dragging = true" @dragleave="dragging = false" @drop.prevent="dragging = false; addFiles(Array.from($event.dataTransfer?.files ?? []))">
+        <button
+            class="h-file-upload__drop"
+            type="button"
+            :disabled="resolvedDisabled"
+            :class="{ 'is-dragging': dragging }"
+            @click="open"
+            @dragover.prevent="dragging = !resolvedDisabled"
+            @dragleave="dragging = false"
+            @drop.prevent="((dragging = false), addFiles(Array.from($event.dataTransfer?.files ?? [])))"
+        >
             <slot name="drop" :open="open">{{ text.drop }}</slot>
         </button>
         <input
@@ -65,6 +340,8 @@ onBeforeUnmount(cleanup)
             :multiple="multiple"
             :required="resolvedRequired && !state.value.value.length"
             :disabled="resolvedDisabled"
+            :aria-invalid="visibleError ? 'true' : undefined"
+            :aria-describedby="hasMessage ? messageId : undefined"
             @change="onInput"
             @focus="emit('focus', $event)"
             @blur="emit('blur', $event)"
@@ -111,7 +388,7 @@ onBeforeUnmount(cleanup)
     &__drop {
         background: var(--h0n-input-control-background);
         border: 1px dashed var(--h0n-ui-color-border);
-        border-radius: var(--h0n-ui-radius-lg);
+        border-radius: var(--h0n-ui-radius-xl);
         color: inherit;
         cursor: pointer;
         min-block-size: 7rem;
@@ -146,11 +423,11 @@ onBeforeUnmount(cleanup)
         li {
             align-items: center;
             border: 1px solid var(--h0n-ui-color-border);
-            border-radius: var(--h0n-ui-radius-md);
+            border-radius: var(--h0n-ui-radius-xl);
             display: flex;
             flex-wrap: wrap;
             gap: var(--h0n-ui-spacing-sm);
-            padding: var(--h0n-ui-spacing-sm);
+            padding: var(--h0n-ui-spacing-sm) var(--h0n-ui-spacing-md);
         }
 
         li > span:first-child {

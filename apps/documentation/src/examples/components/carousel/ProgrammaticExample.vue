@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { H0Button, H0Carousel } from '@h0nio/ui'
 import { ref } from 'vue'
 
@@ -14,13 +15,13 @@ const slides = [1, 2, 3]
                 <div class="slide">{{ item }}</div>
             </template>
         </H0Carousel>
-        <div>
+        <DocumentationPreviewActions>
             <H0Button size="sm" variant="soft" @click="carousel?.previous()">Previous</H0Button>
             <H0Button size="sm" variant="soft" @click="carousel?.next()">Next</H0Button>
             <H0Button size="sm" variant="ghost" @click="carousel?.goTo(0)">First</H0Button>
             <H0Button size="sm" variant="ghost" @click="carousel?.play()">Play</H0Button>
             <H0Button size="sm" variant="ghost" @click="carousel?.pause()">Pause</H0Button>
-        </div>
+        </DocumentationPreviewActions>
     </div>
 </template>
 
@@ -30,13 +31,6 @@ const slides = [1, 2, 3]
     gap: var(--h0n-ui-spacing-md);
     max-width: 34rem;
     width: 100%;
-}
-
-.carousel-controller > div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--h0n-ui-spacing-sm);
-    justify-content: center;
 }
 
 .slide {

@@ -57,6 +57,15 @@ Loading and disabled states prevent opening. Use `error` for field validation, `
 
 Enable `virtual` for large fixed-height lists. Keep `optionHeight` equal to the rendered row height; `overscan` controls extra rows rendered outside the viewport.
 
+`optionHeight` must be finite and positive; otherwise options render normally.
+Overscan is rounded down, with negative or non-finite values treated as zero.
+The virtual window stays within the current option list when options are removed,
+and the active selected option is scrolled into view on opening. `scrollHeight`
+accepts CSS lengths such as `20rem` as well as pixel numbers.
+
+Options expose their `option` role while keyboard focus stays on the combobox.
+Disabling the control directly or through a Field closes an open list.
+
 :::example components/select/VirtualExample
 :::
 

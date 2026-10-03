@@ -42,6 +42,8 @@ const requestLocked = ref(false)
 const { locale } = useH0Locale()
 const resolvedLoadingText = computed(() => props.loadingText || locale.value.infiniteScroll.loading)
 let observer: IntersectionObserver | undefined
+let observerGeneration = 0
+let disposed = false
 
 const canLoad = computed(() => !props.disabled && !props.loading && props.hasMore)
 
@@ -63,12 +65,13 @@ function findScrollParent(element: HTMLElement) {
 }
 
 function disconnectObserver() {
+    observerGeneration += 1
     observer?.disconnect()
     observer = undefined
 }
 
 function requestLoad() {
-    if (!canLoad.value || requestLocked.value) {
+    if (disposed || !props.observeOnMount || !canLoad.value || requestLocked.value) {
         return
     }
 
@@ -79,15 +82,16 @@ function requestLoad() {
 function createObserver() {
     disconnectObserver()
 
-    if (!props.observeOnMount || typeof IntersectionObserver === 'undefined' || !sentinelRef.value) {
+    if (disposed || !props.observeOnMount || typeof IntersectionObserver === 'undefined' || !sentinelRef.value) {
         return
     }
 
     const root = props.root === 'nearest' && rootRef.value ? findScrollParent(rootRef.value) : null
 
+    const generation = observerGeneration
     observer = new IntersectionObserver(
         (entries) => {
-            if (entries.some((entry) => entry.isIntersecting)) {
+            if (!disposed && generation === observerGeneration && entries.some((entry) => entry.isIntersecting)) {
                 requestLoad()
             }
         },
@@ -113,7 +117,7 @@ watch(
 )
 
 watch(
-    () => [props.disabled, props.hasMore, props.root, props.rootMargin, props.threshold] as const,
+    () => [props.disabled, props.hasMore, props.root, props.rootMargin, props.threshold, props.observeOnMount] as const,
     async () => {
         requestLocked.value = false
         await nextTick()
@@ -126,7 +130,7 @@ onMounted(async () => {
     createObserver()
 })
 
-onBeforeUnmount(disconnectObserver)
+onBeforeUnmount(() => { disposed = true; disconnectObserver() })
 </script>
 
 <template>

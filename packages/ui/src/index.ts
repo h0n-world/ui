@@ -16,6 +16,7 @@ import { H0Chip } from './components/Chip'
 import { H0Command } from './components/Command'
 import { H0ContentState } from './components/ContentState'
 import { H0Drawer } from './components/Drawer'
+import { H0Dropdown } from './components/Dropdown'
 import { H0DataTable } from './components/DataTable'
 import { H0EmptyState } from './components/EmptyState'
 import { H0Field } from './components/Field'
@@ -50,6 +51,7 @@ import { H0Switch } from './components/Switch'
 import { H0Table } from './components/Table'
 import { H0Tab, H0TabList, H0TabPanel, H0Tabs } from './components/Tabs'
 import { H0Textarea } from './components/Textarea'
+import { H0TextShimmer } from './components/TextShimmer'
 import { H0Toast, H0Toasts } from './components/Toast'
 import { H0Tooltip } from './components/Tooltip'
 import { H0Toolbar, H0ToolbarGroup, H0ToolbarItem, H0ToolbarSeparator } from './components/Toolbar'
@@ -59,10 +61,10 @@ import { createH0ThemeService, provideH0Theme, type H0ThemeConfig } from './them
 
 const components = [
     H0Accordion, H0Alert, H0AlertDialog, H0Avatar, H0Badge, H0Breadcrumbs, H0Button, H0ButtonGroup, H0Card, H0Carousel, H0CellColorPicker, H0Checkbox, H0CheckboxGroup, H0Chip, H0Command, H0ContentState,
-    H0DataTable, H0Description, H0Divider, H0Drawer, H0EmptyState, H0ErrorMessage, H0Field, H0FileUpload, H0Form, H0Grid, H0Icon, H0Image, H0ImageUpload,
+    H0DataTable, H0Description, H0Divider, H0Drawer, H0Dropdown, H0EmptyState, H0ErrorMessage, H0Field, H0FileUpload, H0Form, H0Grid, H0Icon, H0Image, H0ImageUpload,
     H0InfiniteScroll, H0Inline, H0Input, H0InputOTP, H0Label, H0Link, H0List, H0ListItem, H0Container, H0Message,
     H0Modal, H0NumberInput, H0Pagination, H0PasswordInput, H0Radio, H0RadioGroup, H0Ripple, H0ScrollArea, H0SearchField, H0Segment, H0Select, H0Sheet, H0Skeleton, H0Spacer, H0Spinner,
-    H0SideNav, H0SideNavGroup, H0SideNavItem, H0Stack, H0Stepper, H0Switch, H0Tab, H0Table, H0TabList, H0TabPanel, H0Tabs, H0Textarea, H0Toast, H0Toasts, H0Toolbar, H0ToolbarGroup, H0ToolbarItem, H0ToolbarSeparator, H0Tooltip, H0Typography
+    H0SideNav, H0SideNavGroup, H0SideNavItem, H0Stack, H0Stepper, H0Switch, H0Tab, H0Table, H0TabList, H0TabPanel, H0Tabs, H0Textarea, H0TextShimmer, H0Toast, H0Toasts, H0Toolbar, H0ToolbarGroup, H0ToolbarItem, H0ToolbarSeparator, H0Tooltip, H0Typography
 ]
 
 const H0Nui = {
@@ -107,6 +109,7 @@ export {
     H0Divider,
     H0ErrorMessage,
     H0Drawer,
+    H0Dropdown,
     H0DataTable,
     H0EmptyState,
     H0Field,
@@ -153,6 +156,7 @@ export {
     H0TabPanel,
     H0Tabs,
     H0Textarea,
+    H0TextShimmer,
     H0Toast,
     H0Toasts,
     H0Toolbar,
@@ -186,6 +190,7 @@ export type * from './components/Command'
 export type * from './components/ContentState'
 export type * from './components/DataTable'
 export type * from './components/Drawer'
+export type * from './components/Dropdown'
 export type * from './components/EmptyState'
 export type * from './components/Field'
 export type * from './components/FileUpload'
@@ -219,6 +224,7 @@ export type * from './components/Switch'
 export type * from './components/Table'
 export type * from './components/Tabs'
 export type * from './components/Textarea'
+export type * from './components/TextShimmer'
 export type * from './components/Toast'
 export type * from './components/Tooltip'
 export type * from './components/Toolbar'
@@ -227,6 +233,6 @@ export type { H0OverlayBackdrop } from './components/_shared/Overlay.types'
 export { createH0ToastService, provideH0Toast, useH0Toast } from './components/Toast'
 export { createH0ThemeService, useH0Theme } from './theme'
 
-export type { H0AnimationLevel, H0RadiusSize, H0ThemeConfig, H0ThemeName, H0ThemePreference, H0ThemeService, H0TypographySize } from './theme'
+export type { H0AccentName, H0AnimationLevel, H0AnimationQuality, H0AnimationRecommendationReason, H0RadiusSize, H0ThemeConfig, H0ThemeName, H0ThemePreference, H0ThemeService, H0TypographySize } from './theme'
 
 export default H0Nui

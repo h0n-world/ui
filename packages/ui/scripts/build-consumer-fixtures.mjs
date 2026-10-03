@@ -17,7 +17,7 @@ await transform(`import { h } from 'vue'\n${localeChunk}`, { format: 'esm', targ
 
 await rm(outputDirectory, { force: true, recursive: true })
 
-for (const fixture of ['root-button', 'subpath-button', 'subpath-icons', 'icon-source', 'subpath-datatable', 'subpath-numberinput', 'subpath-passwordinput', 'subpath-fileupload', 'full-css', 'full-and-button-css', 'button-css', 'select-css', 'overlay-css', 'datatable-css', 'layout-css', 'tooltip-css', 'tabs-css', 'field-css', 'scrollarea-css', 'integration-app']) {
+for (const fixture of ['root-button', 'subpath-button', 'subpath-dropdown', 'subpath-textshimmer', 'subpath-animation', 'subpath-icons', 'icon-source', 'subpath-datatable', 'subpath-numberinput', 'subpath-passwordinput', 'subpath-fileupload', 'full-css', 'full-and-button-css', 'button-css', 'select-css', 'overlay-css', 'datatable-css', 'layout-css', 'tooltip-css', 'tabs-css', 'field-css', 'scrollarea-css', 'integration-app']) {
     const fixtureOutputDirectory = resolve(outputDirectory, fixture)
 
     await build({

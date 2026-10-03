@@ -171,7 +171,7 @@ function setAvatarStatus(status: Exclude<H0AvatarStatus, 'pending'>) {
 
     &--fallback {
         background: var(--h-avatar-color, var(--h0n-avatar-blue));
-        color: var(--h0n-ui-color-primary-contrast);
+        color: var(--h0n-snow);
         font-size: calc(var(--h-avatar-size) * 0.34);
         font-weight: var(--h0n-ui-font-weight-semibold);
     }

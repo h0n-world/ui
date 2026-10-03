@@ -19,13 +19,20 @@ function getDocumentState(document: Document) {
     return state
 }
 
-function isFocusable(element: HTMLElement) {
+function isFocusable(element: HTMLElement, styles: Map<HTMLElement, CSSStyleDeclaration | undefined>) {
     if (element.matches(':disabled, [hidden], [inert], [aria-hidden="true"]') || element.closest('[hidden], [inert], [aria-hidden="true"], fieldset:disabled')) {
         return false
     }
 
-    const style = element.ownerDocument.defaultView?.getComputedStyle(element)
-    return element.tabIndex >= 0 && style?.display !== 'none' && style?.visibility !== 'hidden'
+    const styleFor = (target: HTMLElement) => {
+        if (!styles.has(target)) styles.set(target, target.ownerDocument.defaultView?.getComputedStyle(target))
+        return styles.get(target)
+    }
+    if (element.tabIndex < 0 || styleFor(element)?.visibility === 'hidden') return false
+    for (let target: HTMLElement | null = element; target; target = target.parentElement) {
+        if (styleFor(target)?.display === 'none') return false
+    }
+    return true
 }
 
 export type H0OverlayOptions = {
@@ -44,6 +51,8 @@ export function useOverlay(options: H0OverlayOptions) {
     const overlayId = Symbol('h0-overlay')
     let isKeydownBound = false
     let previouslyFocusedElement: HTMLElement | null = null
+    let lifecycle = 0
+    let disposed = false
 
     function getDocument() {
         return options.panel.value?.ownerDocument ?? (typeof document === 'undefined' ? undefined : document)
@@ -72,14 +81,16 @@ export function useOverlay(options: H0OverlayOptions) {
     }
 
     function getFocusableElements() {
-        return Array.from(options.panel.value?.querySelectorAll<HTMLElement>(focusableSelector) ?? []).filter(isFocusable)
+        const styles = new Map<HTMLElement, CSSStyleDeclaration | undefined>()
+        return Array.from(options.panel.value?.querySelectorAll<HTMLElement>(focusableSelector) ?? []).filter(element => isFocusable(element, styles))
     }
 
     function resolveInitialFocus(panel: HTMLElement) {
         const requested = options.initialFocus === undefined ? undefined : toValue(options.initialFocus)
         if (requested instanceof HTMLElement) return requested
         if (typeof requested === 'string') return panel.querySelector<HTMLElement>(requested)
-        return panel.querySelector<HTMLElement>('[autofocus]') ?? getFocusableElements()[0] ?? panel
+        const autofocus = panel.querySelector<HTMLElement>('[autofocus]')
+        return autofocus && isFocusable(autofocus, new Map()) ? autofocus : getFocusableElements()[0] ?? panel
     }
 
     function trapFocus(event: KeyboardEvent) {
@@ -104,7 +115,7 @@ export function useOverlay(options: H0OverlayOptions) {
     }
 
     function handleKeydown(event: KeyboardEvent) {
-        if (!isTopOverlay()) return
+        if (!isTopOverlay() || event.defaultPrevented) return
         if (event.key === 'Escape' && (options.closeOnEsc === undefined || Boolean(toValue(options.closeOnEsc)))) {
             event.preventDefault()
             options.onClose()
@@ -131,6 +142,7 @@ export function useOverlay(options: H0OverlayOptions) {
     watch(
         options.isOpen,
         async (isOpen) => {
+            const currentLifecycle = ++lifecycle
             setKeydownListener(isOpen)
             if (isOpen) {
                 const ownerDocument = getDocument()
@@ -138,14 +150,14 @@ export function useOverlay(options: H0OverlayOptions) {
                 previouslyFocusedElement = ownerDocument.activeElement instanceof HTMLElement ? ownerDocument.activeElement : null
                 addToStack()
                 await nextTick()
-                if (toValue(options.isOpen) && isTopOverlay()) resolveInitialFocus(options.panel.value!)?.focus({ preventScroll: true })
+                if (!disposed && lifecycle === currentLifecycle && toValue(options.isOpen) && isTopOverlay() && options.panel.value) resolveInitialFocus(options.panel.value)?.focus({ preventScroll: true })
                 return
             }
             const wasTop = isTopOverlay()
             removeFromStack()
             if (wasTop) {
                 await nextTick()
-                restoreFocus()
+                if (!disposed && lifecycle === currentLifecycle && !toValue(options.isOpen)) restoreFocus()
             } else previouslyFocusedElement = null
         },
         { immediate: true }
@@ -158,6 +170,8 @@ export function useOverlay(options: H0OverlayOptions) {
     })
 
     onBeforeUnmount(() => {
+        disposed = true
+        lifecycle += 1
         const wasTop = isTopOverlay()
         removeFromStack()
         setKeydownListener(false)

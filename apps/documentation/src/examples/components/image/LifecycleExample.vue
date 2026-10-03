@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import type { H0ImageStatus } from '@h0nio/ui'
 import { H0Button, H0Image } from '@h0nio/ui'
 import { ref } from 'vue'
@@ -38,12 +39,12 @@ function recordStatus(status: H0ImageStatus) {
             @load="nativeEvent = 'load'"
             @error="nativeEvent = 'error'"
         />
-        <div class="lifecycle-example__actions">
+        <DocumentationPreviewActions>
             <H0Button size="sm" @click="loadSuccessfulImage">Load image</H0Button>
             <H0Button size="sm" variant="soft" @click="loadMissingImage"
                 >Load missing image</H0Button
             >
-        </div>
+        </DocumentationPreviewActions>
         <output aria-live="polite"
             >Statuses: {{ history.join(' → ') || 'none' }} · Native event: {{ nativeEvent }}</output
         >
@@ -56,12 +57,6 @@ function recordStatus(status: H0ImageStatus) {
     gap: var(--h0n-ui-spacing-md);
     max-width: 36rem;
     width: 100%;
-}
-
-.lifecycle-example__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--h0n-ui-spacing-sm);
 }
 
 .lifecycle-example output {

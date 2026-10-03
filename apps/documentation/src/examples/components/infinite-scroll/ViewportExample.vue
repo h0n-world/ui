@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { computed, ref } from 'vue'
 import { H0Button, H0Card, H0Description, H0InfiniteScroll } from '@h0nio/ui'
 
@@ -24,7 +25,9 @@ async function loadMore() {
     <div class="viewport-example">
         <div class="viewport-controls">
             <H0Description as="span">Viewport observer · {{ requestCount }} load requests</H0Description>
-            <H0Button size="sm" variant="soft" @click="disabled = !disabled">{{ disabled ? 'Resume observation' : 'Pause observation' }}</H0Button>
+            <DocumentationPreviewActions>
+                <H0Button size="sm" variant="soft" @click="disabled = !disabled">{{ disabled ? 'Resume observation' : 'Pause observation' }}</H0Button>
+            </DocumentationPreviewActions>
         </div>
 
         <H0InfiniteScroll

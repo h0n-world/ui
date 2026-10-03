@@ -10,13 +10,19 @@ $h0n-container-lg: 1024px;
 $h0n-container-xl: 1280px;
 
 @mixin h0n-at-most($breakpoint) {
-    @media (max-width: $breakpoint) {
+    // @media (max-width: $breakpoint) {
+    //     @content;
+    // }
+    @media (width < $breakpoint) {
         @content;
     }
 }
 
 @mixin h0n-at-least($breakpoint) {
-    @media (min-width: $breakpoint) {
+    // @media (min-width: $breakpoint) {
+    //     @content;
+    // }
+    @media (width >=$breakpoint) {
         @content;
     }
 }

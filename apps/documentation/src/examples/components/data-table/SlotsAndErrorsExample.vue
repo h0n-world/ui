@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { computed, ref } from 'vue'
 import { H0Badge, H0Button, H0DataTable, H0Description, type H0DataTableColumn, type H0DataTableFilters, type H0TableRowKey } from '@h0nio/ui'
 
@@ -33,11 +34,13 @@ function isJobSelectable(row: Job) {
 
 <template>
     <div class="slots-example">
-        <div class="error-controls" role="group" aria-label="Error state">
-            <H0Button size="sm" variant="soft" :tone="errorMode === 'none' ? 'primary' : 'default'" @click="errorMode = 'none'">Normal</H0Button>
-            <H0Button size="sm" variant="soft" :tone="errorMode === 'with-rows' ? 'primary' : 'default'" @click="errorMode = 'with-rows'">Error with rows</H0Button>
-            <H0Button size="sm" variant="soft" :tone="errorMode === 'empty' ? 'primary' : 'default'" @click="errorMode = 'empty'">Empty error</H0Button>
-        </div>
+        <DocumentationPreviewActions>
+            <div class="error-controls" role="group" aria-label="Error state">
+                <H0Button size="sm" variant="soft" :tone="errorMode === 'none' ? 'primary' : 'default'" @click="errorMode = 'none'">Normal</H0Button>
+                <H0Button size="sm" variant="soft" :tone="errorMode === 'with-rows' ? 'primary' : 'default'" @click="errorMode = 'with-rows'">Error with rows</H0Button>
+                <H0Button size="sm" variant="soft" :tone="errorMode === 'empty' ? 'primary' : 'default'" @click="errorMode = 'empty'">Empty error</H0Button>
+            </div>
+        </DocumentationPreviewActions>
 
         <H0DataTable
             v-model:filters="filters"
@@ -83,7 +86,6 @@ function isJobSelectable(row: Job) {
     width: min(50rem, 100%);
 }
 
-.error-controls,
 .status-filter,
 .toolbar-content {
     display: flex;
@@ -100,5 +102,10 @@ function isJobSelectable(row: Job) {
     padding: var(--h0n-ui-spacing-lg);
     color: var(--h0n-ui-color-danger-text);
     text-align: center;
+}
+
+.error-controls {
+    display: grid;
+    gap: var(--h0n-ui-spacing-xs);
 }
 </style>

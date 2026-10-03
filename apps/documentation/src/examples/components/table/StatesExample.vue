@@ -29,6 +29,11 @@ const columns: H0TableColumn[] = [
                 </template>
             </H0Table>
         </section>
+
+        <section>
+            <H0Typography as="p" variant="body-sm" :weight="600">One row</H0Typography>
+            <H0Table :columns="columns" :rows="[{ name: 'Ada Lovelace', status: 'Active' }]" bordered aria-label="Single-member team directory" />
+        </section>
     </div>
 </template>
 

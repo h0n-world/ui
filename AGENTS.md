@@ -1,6 +1,6 @@
 # H0N UI Codex Instructions
 
-H0N UI is a pnpm workspace for a self-contained Vue 3 component library, a framework-agnostic icon library, and a source-linked documentation application. The current UI library version is `@h0nio/ui` `1.2.0`.
+H0N UI is a pnpm workspace for a self-contained Vue 3 component library, a framework-agnostic icon library, and a source-linked documentation application. The current UI library version is `@h0nio/ui` `1.3.0`.
 
 ## Current Scope
 
@@ -140,6 +140,6 @@ The documentation app aliases `@h0nio/icons`, `@h0nio/ui`, and `@h0nio/ui/icons`
 
 ## Versioning and Git Hygiene
 
-- `@h0nio/ui` is currently at `1.2.0`. Patch releases fix behavior, minor releases add compatible API, and breaking supported API changes require a major release.
+- `@h0nio/ui` is currently at `1.3.0`. Patch releases fix behavior, minor releases add compatible API, and breaking supported API changes require a major release.
 - Do not add historical migration notes during ordinary development. Record durable architecture in `ARCHITECTURE.md`; add a migration guide only for an actual released breaking change.
 - Preserve user changes, keep edits scoped, and avoid unrelated formatting or lockfile churn.

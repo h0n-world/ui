@@ -1,4 +1,5 @@
 export * from './useH0Breakpoint'
+export * from './useH0Animation'
 export * from './useH0ControllableState'
 export * from './useH0InfiniteScroll'
 export * from './useH0Locale'

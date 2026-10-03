@@ -29,6 +29,19 @@ afterEach(() => {
 })
 
 describe('overlay focus management', () => {
+    it.each(['', 'autofocus'])('skips controls inside a CSS-hidden ancestor when choosing initial focus (%s)', async (autofocus) => {
+        const wrapper = mount(H0Modal, {
+            attachTo: document.body,
+            props: { modelValue: true, teleportDisabled: true },
+            slots: { default: `<div style="display:none"><button ${autofocus}>Hidden control</button></div><button id="visible-initial">Visible control</button>` },
+        })
+        try {
+            await nextTick()
+            expect(document.activeElement).toBe(wrapper.get('#visible-initial').element)
+        } finally {
+            wrapper.unmount()
+        }
+    })
     it.each([
         ['Modal', H0Modal],
         ['Drawer', H0Drawer],

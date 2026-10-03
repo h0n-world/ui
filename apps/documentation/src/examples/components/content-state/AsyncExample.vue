@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
 import { H0Alert, H0Button, H0ContentState, H0EmptyState, H0Skeleton, H0Stack, H0Typography, type H0ContentStateValue } from '@h0nio/ui'
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 
 const state = ref<H0ContentStateValue>('empty')
 let requestTimer: ReturnType<typeof setTimeout> | undefined
@@ -21,10 +22,10 @@ onBeforeUnmount(() => {
 
 <template>
     <H0Stack class="async-example" gap="md">
-        <H0Stack gap="sm">
+        <DocumentationPreviewActions>
             <H0Button size="sm" @click="loadUsers('content')">Load users</H0Button>
             <H0Button size="sm" variant="soft" @click="loadUsers('error')">Simulate error</H0Button>
-        </H0Stack>
+        </DocumentationPreviewActions>
 
         <H0ContentState class="state-region" :state="state">
             <template #loading>

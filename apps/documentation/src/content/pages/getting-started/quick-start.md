@@ -48,7 +48,7 @@ import App from './App.vue'
 
 createApp(App)
     .use(H0Nui, {
-        animation: 'high',
+        animation: 'recommended',
         density: 'default',
         radiusSize: 'lg',
         storageKey: 'product-theme',
@@ -65,7 +65,7 @@ The root `@h0nio/ui` entry also includes the shared stylesheet in its ES bundle.
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | `theme` | `'light' \| 'dark' \| 'system'` | `'light'` | Theme preference. `system` follows `prefers-color-scheme`. |
-| `animation` | `'low' \| 'high'` | `'low'` | Motion profile. `low` suppresses optional continuous effects; system reduced-motion preference always takes priority. |
+| `animation` | `'off' \| 'low' \| 'medium' \| 'high' \| 'recommended'` | `'low'` | Motion profile. Recommended selects an effective quality; system reduced motion resolves every mode to Off. See [Animations](/docs/animations). |
 | `density` | `'compact' \| 'default' \| 'comfortable'` | `'default'` | Shared control and table density. |
 | `radiusSize` | `'sm' \| 'md' \| 'lg'` | `'lg'` | Global radius scale. |
 | `typographySize` | `'sm' \| 'md' \| 'lg'` | `'md'` | Global typography scale. |
@@ -112,7 +112,7 @@ const theme = useH0Theme()
 </template>
 ```
 
-Available setters are `setTheme`, `setAnimation`, `setDensity`, `setRadiusSize`, and `setTypographySize`.
+Available setters are `setTheme`, `setAccent`, `setAnimation`, `setDensity`, `setRadiusSize`, and `setTypographySize`. Use [`useH0Animation`](/docs/animations) to share the effective animation quality with your application.
 
 ## Selective imports
 

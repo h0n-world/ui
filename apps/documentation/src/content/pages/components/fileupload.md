@@ -34,12 +34,27 @@ Without an upload adapter, `v-model` exposes accepted `File[]` values for applic
 
 Validation runs accept, size, count, then the synchronous or asynchronous `validator`. The `invalid` event reports one structured reason at a time.
 
+Selections are validated in order, so overlapping picker/drop actions respect
+the current file count. A rejected validator promise reports a custom validation
+error. Clearing, resetting, disabling, or replacing the file list while validation
+is pending prevents that stale selection from being added.
+
 :::example components/file-upload/ValidationExample
 :::
 
 ## Upload queue
 
 Provide an `H0UploadAdapter` to enable progress, retry, cancellation, and queue state. With manual upload, the component renders one **Upload files** action; use `autoUpload` for immediate transfer instead. The exposed `start()` method is available when a custom external action is required and resolves after the queued uploads settle. `concurrency` limits simultaneous uploads.
+
+The concurrency limit is rounded down and clamped to at least one; non-finite
+values use one. Lowering it allows existing transfers to finish before starting
+more. Retrying an already running item does nothing.
+
+The adapter should honor its `AbortSignal`. Cancellation never reports success,
+even if the adapter resolves after being aborted. Late progress/results from
+removed items, cleared queues, and unmounted components are ignored. Cancellation
+of an active item settles when its adapter settles; clearing/resetting the queue
+or unmounting resolves pending `start()` calls immediately.
 
 :::example components/file-upload/QueueExample
 :::

@@ -7,6 +7,7 @@ import { componentAgentRecords } from './agent/records/index.ts'
 import { resolveRelatedComponentLinks, type DocumentationComponentLink } from './agent/related.ts'
 import { getManifestMetadata, validateComponentAgentRecords } from './agent/schema.ts'
 import { documentationExampleKeys, getDocumentationExample, type DocumentationExample } from './examples'
+import { resolveComponentResourceLinks, type DocumentationResourceLink } from './componentResources'
 
 export type DocumentationSection = {
     title: string
@@ -35,6 +36,7 @@ export type RenderedDocumentationPage = DocumentationPage & {
     examples: RenderedDocumentationExample[]
     html: string
     relatedComponents: DocumentationComponentLink[]
+    resourceLinks: DocumentationResourceLink[]
     source: string
     tables: DocumentationTable[]
     toc: TableOfContentsItem[]
@@ -459,6 +461,7 @@ export function renderDocumentationPage(path: string): RenderedDocumentationPage
         examples: exampleResult.examples,
         html: markdown.render(tableResult.source),
         relatedComponents: resolveRelatedComponentLinks(componentApiContext.root, componentAgentRecords, h0ComponentManifest),
+        resourceLinks: resolveComponentResourceLinks(componentApiContext.root, h0ComponentManifest),
         source: record.body,
         tables: tableResult.tables,
         toc,

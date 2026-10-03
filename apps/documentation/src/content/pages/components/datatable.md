@@ -183,6 +183,16 @@ Set column minimum widths and a table `minWidth` for datasets that cannot collap
 
 Use client mode for moderate local datasets and server mode for remote or expensive queries. Keep columns, callbacks, and row keys stable. Enable virtualization only for large, fixed-height collections and tune `overscan` conservatively.
 
+Client sorting prepares values once per row and reuses a locale-aware numeric
+collator. Custom comparators own value resolution. Transform callbacks should be
+pure: their invocation count is an implementation detail.
+
+Virtualization measures its viewport on mount and observes changes in its size.
+When filtering or replacing a scrolled dataset, the rendered window is clamped
+to the remaining rows. It falls back to ordinary rendering when `rowHeight` is
+not finite and positive, `scrollHeight` is missing, or page pagination is enabled.
+`overscan` is rounded down; negative or non-finite input uses zero.
+
 ## Styling
 
 `H0DataTable` forwards `density`, `striped`, `hoverable`, `bordered`, and `stickyHeader` to `H0Table`. Style custom cells and toolbar content through their slots with public tokens; sorting, filter, spacer, and selection selectors are implementation details.

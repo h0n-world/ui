@@ -144,16 +144,19 @@ const resolvedIcon = computed<H0IconSource>(() => {
     }
 
     &--success {
+        --h-alert-action-color: var(--h0n-ui-button-success-contrast);
         --h-alert-accent: var(--h0n-ui-color-success);
         --h-alert-title-color: var(--h0n-ui-color-success-text);
     }
 
     &--warning {
+        --h-alert-action-color: var(--h0n-ui-button-warning-contrast);
         --h-alert-accent: var(--h0n-ui-color-warning);
         --h-alert-title-color: var(--h0n-ui-color-warning-text);
     }
 
     &--danger {
+        --h-alert-action-color: var(--h0n-ui-button-danger-contrast);
         --h-alert-accent: var(--h0n-ui-color-danger);
         --h-alert-title-color: var(--h0n-ui-color-danger-text);
     }
@@ -190,7 +193,7 @@ const resolvedIcon = computed<H0IconSource>(() => {
         align-self: center;
         --h-button-bg: var(--h-alert-accent);
         --h-button-color: var(--h-alert-action-color);
-        --h-button-hover-bg: color-mix(in srgb, var(--h-alert-accent) 90%, var(--h0n-ui-color-primary-contrast) 10%);
+        --h-button-hover-bg: color-mix(in srgb, var(--h-alert-accent) 90%, var(--h-alert-action-color) 10%);
         min-height: 32px;
         padding: 0 14px;
     }
@@ -236,7 +239,7 @@ const resolvedIcon = computed<H0IconSource>(() => {
     }
 }
 
-:global([data-h0n-animation='low']) .h-alert--loading .h-alert__icon {
+[data-h0n-animation='low'] .h-alert--loading .h-alert__icon {
     animation: none;
 }
 

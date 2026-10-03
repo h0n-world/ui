@@ -106,11 +106,12 @@ function handlePointerDown(event: PointerEvent) {
 .h-card {
     --h-card-bg: var(--h0n-ui-color-surface);
     --h-card-border: transparent;
+    --h-card-border-width: 0px;
     --h-card-hover-bg: var(--h0n-ui-color-surface-hover);
 
     width: 100%;
     background: var(--h-card-bg);
-    border: 1px solid var(--h-card-border);
+    border: var(--h-card-border-width) solid var(--h-card-border);
     border-top-left-radius: var(--h-card-radius-top-left);
     border-top-right-radius: var(--h-card-radius-top-right);
     border-bottom-left-radius: var(--h-card-radius-bottom-left);
@@ -140,6 +141,7 @@ function handlePointerDown(event: PointerEvent) {
     &--outline {
         --h-card-bg: transparent;
         --h-card-border: var(--h0n-ui-color-border);
+        --h-card-border-width: 1px;
         --h-card-hover-bg: color-mix(in srgb, var(--h0n-ui-color-secondary) 54%, transparent);
     }
 

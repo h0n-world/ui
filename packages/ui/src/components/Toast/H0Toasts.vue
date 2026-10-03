@@ -19,7 +19,8 @@ const props = withDefaults(
 )
 
 const toastService = props.service ?? useH0Toast()
-const visibleToasts = computed(() => toastService.state.toasts.slice(-props.maxVisible).reverse())
+const visibleLimit = computed(() => Number.isFinite(props.maxVisible) ? Math.max(0, Math.floor(props.maxVisible)) : 4)
+const visibleToasts = computed(() => visibleLimit.value ? toastService.state.toasts.slice(-visibleLimit.value).reverse() : [])
 const placement = computed(() => toastService.state.placement)
 const placementClasses = computed(() => [`h-toasts--${placement.value}`])
 
@@ -27,7 +28,7 @@ function getToastStyle(index: number): CSSProperties {
     const offset = placement.value.startsWith('bottom') ? index * -12 : index * 12
 
     return {
-        zIndex: props.maxVisible - index,
+        zIndex: visibleLimit.value - index,
         '--h-toast-stack-opacity': Math.max(1 - index * 0.14, 0.5),
         '--h-toast-stack-transform': `translate3d(0, ${offset}px, 0) scale(${Math.max(1 - index * 0.035, 0.88)})`
     }

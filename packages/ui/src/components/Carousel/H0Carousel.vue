@@ -3,6 +3,7 @@ import arrowLeftIcon from '@h0nio/icons/alt-arrow-left-stroke'
 import arrowRightIcon from '@h0nio/icons/alt-arrow-right-stroke'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
+import { useH0Theme } from '../../theme'
 import { useH0Locale } from '../../locale'
 import { toH0CssSize } from '../_shared/utils'
 import H0Icon from '../Icon/H0Icon.vue'
@@ -45,6 +46,7 @@ const viewport = ref<HTMLElement>()
 const track = ref<HTMLElement>()
 const state = useH0ControllableState({ modelValue: () => props.modelValue, defaultValue: () => props.defaultValue, onUpdate: (value) => emit('update:modelValue', value) })
 const { locale } = useH0Locale()
+const { resolvedAnimation } = useH0Theme()
 const baseOffset = ref(0)
 const dragOffset = ref(0)
 const isDragging = ref(false)
@@ -63,7 +65,7 @@ const hasMultipleSlides = computed(() => slideCount.value > 1)
 const canGoPrevious = computed(() => props.loop || currentIndex.value > 0)
 const canGoNext = computed(() => props.loop || currentIndex.value < slideCount.value - 1)
 const isAutoplayPaused = computed(() => (props.pauseOnHover && isHovering.value) || (props.pauseOnFocus && hasFocusWithin.value))
-const canAutoplay = computed(() => isPlaybackRequested.value && hasMultipleSlides.value && !isAutoplayPaused.value && (props.loop || currentIndex.value < slideCount.value - 1))
+const canAutoplay = computed(() => resolvedAnimation.value !== 'off' && isPlaybackRequested.value && hasMultipleSlides.value && !isAutoplayPaused.value && (props.loop || currentIndex.value < slideCount.value - 1))
 const normalizedWidth = computed(() => toH0CssSize(props.width))
 const normalizedHeight = computed(() => toH0CssSize(props.height))
 const normalizedSlideWidth = computed(() => toH0CssSize(props.slideWidth) ?? '100%')

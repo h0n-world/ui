@@ -15,7 +15,7 @@ export const infiniteScrollAgentRecord = {
             { name: 'rootMargin', type: 'string', default: "'0px 0px 160px 0px'", description: 'IntersectionObserver CSS margin used to prefetch before the boundary.' },
             { name: 'threshold', type: 'number', default: '0', description: 'Unvalidated IntersectionObserver ratio from 0 to 1 required to request loading.' },
             { name: 'loadingText', type: 'string', default: 'Localized loading text', description: 'Accessible status label and default loader copy; an empty value uses locale fallback.' },
-            { name: 'observeOnMount', type: 'boolean', default: 'true', description: 'Static mount-time flag for initial observer creation; no imperative start method is exposed.' },
+            { name: 'observeOnMount', type: 'boolean', default: 'true', description: 'Enable automatic observation. Runtime changes disconnect or resume the observer; no imperative start method is exposed.' },
         ],
         events: [{ name: 'load', type: '\u2014', description: 'Requests the next chunk without a payload when the sentinel intersects.' }],
         slots: [

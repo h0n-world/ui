@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="Row extends H0TableRow = H0TableRow">
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useH0ControllableState } from '../../composables/useH0ControllableState'
 import { defaultH0DataTableLocale } from '../../locale'
 import { useH0LocaleSection } from '../_shared/useLocaleSection'
@@ -112,6 +112,7 @@ const currentPageSize = pageSizeState.value
 const resolvedEmptyText = computed(() => props.emptyText || dataTableLocale.value.empty)
 const resolvedLoadingText = computed(() => props.loadingText || dataTableLocale.value.loading)
 const resolvedAriaLabel = computed(() => props.ariaLabel || dataTableLocale.value.label)
+const root = ref<HTMLElement | null>(null)
 const scrollTop = ref(0)
 const viewportHeight = ref(typeof props.scrollHeight === 'number' ? props.scrollHeight : Number.parseFloat(props.scrollHeight ?? '') || 320)
 const loadLocked = ref(false)
@@ -125,23 +126,22 @@ const tableColumns = computed<H0TableColumn[]>(() => {
     return props.selectionMode === 'none' ? columns : [selectionColumn, ...columns]
 })
 const normalizedPageSize = computed(() => Math.max(1, Math.floor(currentPageSize.value || 1)))
+const sortCollator = computed(() => new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }))
 
 const filteredRows = computed(() => {
     if (props.mode === 'server') {
         return props.rows
     }
 
+    const filters = Object.entries(currentFilters.value).flatMap(([key, filterValue]) => {
+        if (filterValue === null || filterValue === '') return []
+        const column = props.columns.find((item) => item.key === key)
+        return column ? [{ column, filterValue, text: column.filter?.type === 'text' ? String(filterValue).toLocaleLowerCase() : '' }] : []
+    })
+    if (!filters.length) return props.rows
+
     return props.rows.filter((row) =>
-        Object.entries(currentFilters.value).every(([key, filterValue]) => {
-            if (filterValue === null || filterValue === '') {
-                return true
-            }
-
-            const column = props.columns.find((item) => item.key === key)
-
-            if (!column) {
-                return true
-            }
+        filters.every(({ column, filterValue, text }) => {
 
             if (column.filterPredicate) {
                 return column.filterPredicate(row, filterValue)
@@ -152,7 +152,7 @@ const filteredRows = computed(() => {
             return column.filter?.type === 'text'
                 ? String(rowValue ?? '')
                       .toLocaleLowerCase()
-                      .includes(String(filterValue).toLocaleLowerCase())
+                      .includes(text)
                 : rowValue === filterValue
         })
     )
@@ -172,10 +172,10 @@ const sortedRows = computed(() => {
     const direction = currentSort.value.direction === 'asc' ? 1 : -1
 
     return filteredRows.value
-        .map((row, index) => ({ row, index }))
+        .map((row, index) => ({ row, index, value: column.compare ? undefined : resolveSortValue(row, column) }))
         .sort((left, right) => {
-            const leftValue = resolveSortValue(left.row, column)
-            const rightValue = resolveSortValue(right.row, column)
+            const leftValue = left.value
+            const rightValue = right.value
             const compared = column.compare
                 ? column.compare(left.row, right.row) * direction
                 : leftValue == null || rightValue == null
@@ -199,15 +199,17 @@ const pageRows = computed(() => {
     const start = (Math.max(1, Math.floor(currentPage.value || 1)) - 1) * normalizedPageSize.value
     return sortedRows.value.slice(start, start + normalizedPageSize.value)
 })
-const canVirtualize = computed(() => props.virtual && props.paginationMode !== 'page')
-const virtualStart = computed(() => (canVirtualize.value ? Math.max(0, Math.floor(scrollTop.value / props.rowHeight) - Math.max(0, props.overscan)) : 0))
-const virtualCount = computed(() => (canVirtualize.value ? Math.ceil(viewportHeight.value / props.rowHeight) + Math.max(0, props.overscan) * 2 : pageRows.value.length))
+const hasScrollHeight = computed(() => typeof props.scrollHeight === 'number' ? Number.isFinite(props.scrollHeight) && props.scrollHeight > 0 : Boolean(props.scrollHeight?.trim()))
+const canVirtualize = computed(() => props.virtual && props.paginationMode !== 'page' && hasScrollHeight.value && Number.isFinite(props.rowHeight) && props.rowHeight > 0)
+const normalizedOverscan = computed(() => Number.isFinite(props.overscan) ? Math.max(0, Math.floor(props.overscan)) : 0)
+const virtualCount = computed(() => (canVirtualize.value ? Math.max(1, Math.ceil(viewportHeight.value / props.rowHeight)) + normalizedOverscan.value * 2 : pageRows.value.length))
+const virtualStart = computed(() => canVirtualize.value ? Math.min(Math.max(0, pageRows.value.length - virtualCount.value), Math.max(0, Math.floor(scrollTop.value / props.rowHeight) - normalizedOverscan.value)) : 0)
 const displayRows = computed(() => (canVirtualize.value ? pageRows.value.slice(virtualStart.value, virtualStart.value + virtualCount.value) : pageRows.value))
-const topSpacerHeight = computed(() => virtualStart.value * props.rowHeight)
-const bottomSpacerHeight = computed(() => Math.max(0, pageRows.value.length - virtualStart.value - displayRows.value.length) * props.rowHeight)
+const topSpacerHeight = computed(() => canVirtualize.value ? virtualStart.value * props.rowHeight : 0)
+const bottomSpacerHeight = computed(() => canVirtualize.value ? Math.max(0, pageRows.value.length - virtualStart.value - displayRows.value.length) * props.rowHeight : 0)
 const selectedKeys = computed(() => new Set(currentSelection.value))
 const selectionRows = computed(() => (props.paginationMode === 'page' ? pageRows.value : props.mode === 'server' ? props.rows : sortedRows.value))
-const selectableKeys = computed(() => selectionRows.value.filter(props.isRowSelectable).map((row, index) => props.getRowKey(row, index)))
+const selectableKeys = computed(() => selectionRows.value.flatMap((row, index) => props.isRowSelectable(row) ? [props.getRowKey(row, index)] : []))
 const allSelected = computed(() => selectableKeys.value.length > 0 && selectableKeys.value.every((key) => selectedKeys.value.has(key)))
 const someSelected = computed(() => !allSelected.value && selectableKeys.value.some((key) => selectedKeys.value.has(key)))
 
@@ -220,7 +222,7 @@ function compareValues(left: unknown, right: unknown) {
         return left - right
     }
 
-    return String(left).localeCompare(String(right), undefined, { numeric: true, sensitivity: 'base' })
+    return sortCollator.value.compare(String(left), String(right))
 }
 
 function setSelectFilter(column: H0DataTableColumn<Row>, value: H0SelectValue | H0SelectValue[] | null) {
@@ -283,6 +285,28 @@ function handleScroll(event: Event) {
     }
 }
 
+let viewportObserver: ResizeObserver | undefined
+onMounted(() => {
+    const viewport = root.value?.querySelector<HTMLElement>('.h-table__viewport')
+    if (!viewport) return
+    const measure = () => {
+        // A hidden tab has no measurable viewport; retain the last usable size.
+        if (viewport.clientHeight > 0) viewportHeight.value = viewport.clientHeight
+        scrollTop.value = viewport.scrollTop
+    }
+    watch(canVirtualize, enabled => {
+        viewportObserver?.disconnect()
+        viewportObserver = undefined
+        if (!enabled) return
+        measure()
+        if (typeof ResizeObserver !== 'undefined') {
+            viewportObserver = new ResizeObserver(measure)
+            viewportObserver.observe(viewport)
+        }
+    }, { immediate: true })
+})
+onBeforeUnmount(() => viewportObserver?.disconnect())
+
 function handleRowClick(row: Row, localIndex: number, event: MouseEvent) {
     emit('row-click', row, virtualStart.value + localIndex, event)
 }
@@ -304,7 +328,7 @@ watch(
 watch(
     () => [props.virtual, props.paginationMode, props.scrollHeight, props.rowHeight],
     () => {
-        if (props.virtual && (props.paginationMode === 'page' || !props.scrollHeight || props.rowHeight <= 0)) {
+        if (props.virtual && !canVirtualize.value) {
             console.warn('[H0N UI] H0DataTable virtualization requires scrollHeight, rowHeight > 0, and paginationMode other than page.')
         }
     },
@@ -313,7 +337,7 @@ watch(
 </script>
 
 <template>
-    <div data-h0n-component="data-table" class="h-data-table" :style="virtual ? { '--h-data-table-row-height': `${rowHeight}px` } : undefined">
+    <div ref="root" data-h0n-component="data-table" class="h-data-table" :style="canVirtualize ? { '--h-data-table-row-height': `${rowHeight}px` } : undefined">
         <div v-if="$slots.toolbar" class="h-data-table__toolbar"><slot name="toolbar" :filters="filters" :set-filter="setFilter" /></div>
         <div v-if="error && rows.length" class="h-data-table__error" role="alert">{{ error }}</div>
 

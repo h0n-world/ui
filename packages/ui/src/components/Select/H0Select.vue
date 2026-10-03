@@ -119,11 +119,15 @@ const scrollTop = ref(0)
 const isPopoverLeaving = ref(false)
 const lockedPopoverWidth = ref<number>()
 let stopAutoUpdate: (() => void) | undefined
+let disposed = false
+let disclosure = 0
+let positionRequest = 0
+const viewportHeight = ref(0)
 const { locale } = useH0Locale()
 const state = useH0ControllableState<Value | Value[] | null>({ modelValue: () => props.modelValue, defaultValue: () => props.defaultValue, onUpdate: (value) => emit('update:modelValue', value) })
 const currentValue = state.value
 
-const isInteractive = computed(() => !props.disabled && !props.loading)
+const isInteractive = computed(() => !resolvedDisabled.value && !props.loading)
 const shouldCloseOnSelect = computed(() => props.closeOnSelect ?? !props.multiple)
 const selectedValues = computed<Value[]>(() => {
     if (props.multiple) {
@@ -136,18 +140,22 @@ const resolvedPlaceholder = computed(() => props.placeholder || locale.value.sel
 const resolvedEmptyText = computed(() => props.emptyText || locale.value.select.empty)
 const resolvedListAriaLabel = computed(() => props.listAriaLabel || locale.value.select.listLabel)
 const resolvedScrollHeight = computed(() => toH0CssSize(props.scrollHeight))
+const canVirtualize = computed(() => props.virtual && Number.isFinite(props.optionHeight) && props.optionHeight > 0)
+const normalizedOverscan = computed(() => Number.isFinite(props.overscan) ? Math.max(0, Math.floor(props.overscan)) : 0)
 const virtualWindow = computed(() => {
-    if (!props.virtual) return { start: 0, end: props.options.length }
-    const height = typeof props.scrollHeight === 'number' ? props.scrollHeight : Number.parseFloat(props.scrollHeight) || 320
-    const start = Math.max(0, Math.floor(scrollTop.value / props.optionHeight) - props.overscan)
-    const end = Math.min(props.options.length, Math.ceil((scrollTop.value + height) / props.optionHeight) + props.overscan)
+    if (!canVirtualize.value) return { start: 0, end: props.options.length }
+    const fallbackHeight = typeof props.scrollHeight === 'number' && Number.isFinite(props.scrollHeight) && props.scrollHeight > 0 ? props.scrollHeight : 320
+    const height = viewportHeight.value || fallbackHeight
+    const count = Math.max(1, Math.ceil(height / props.optionHeight)) + normalizedOverscan.value * 2
+    const start = Math.min(Math.max(0, props.options.length - count), Math.max(0, Math.floor(scrollTop.value / props.optionHeight) - normalizedOverscan.value))
+    const end = Math.min(props.options.length, start + count)
     return { start, end }
 })
 const visibleOptions = computed(() =>
     props.options.slice(virtualWindow.value.start, virtualWindow.value.end).map((option, visibleIndex) => ({ option, index: virtualWindow.value.start + visibleIndex, visibleIndex }))
 )
-const virtualTop = computed(() => virtualWindow.value.start * props.optionHeight)
-const virtualBottom = computed(() => Math.max(0, (props.options.length - virtualWindow.value.end) * props.optionHeight))
+const virtualTop = computed(() => canVirtualize.value ? virtualWindow.value.start * props.optionHeight : 0)
+const virtualBottom = computed(() => canVirtualize.value ? Math.max(0, (props.options.length - virtualWindow.value.end) * props.optionHeight) : 0)
 
 const {
     controlId: selectId,
@@ -200,6 +208,7 @@ const { activeIndex, closeSelect, handleTriggerKeydown, isOpen, setActiveIndex, 
     options: () => props.options
 })
 const activeOptionId = computed(() => (isOpen.value && activeIndex.value >= 0 ? getOptionId(activeIndex.value) : undefined))
+watch(isInteractive, interactive => { if (!interactive) closeSelect() })
 
 function isSelected(option: H0SelectOption<Value>) {
     return selectedValues.value.includes(option.value)
@@ -258,10 +267,15 @@ function handleDocumentKeydown(event: KeyboardEvent) {
 }
 
 async function updatePopoverPosition() {
-    if (!isOpen.value || !triggerRef.value || !popoverRef.value) {
+    if (disposed || !isOpen.value || !triggerRef.value || !popoverRef.value) {
         return
     }
-    const result = await computePosition(triggerRef.value, popoverRef.value, {
+    const trigger = triggerRef.value
+    const popover = popoverRef.value
+    const currentDisclosure = disclosure
+    const request = ++positionRequest
+    const isCurrent = () => !disposed && isOpen.value && disclosure === currentDisclosure && request === positionRequest && triggerRef.value === trigger && popoverRef.value === popover
+    const result = await computePosition(trigger, popover, {
         placement: 'bottom-start',
         strategy: 'fixed',
         middleware: [
@@ -271,6 +285,7 @@ async function updatePopoverPosition() {
             floatingSize({
                 padding: 8,
                 apply({ availableHeight, availableWidth, rects, elements }) {
+                    if (!isCurrent()) return
                     const maximumWidth = Math.max(0, availableWidth)
                     if (lockedPopoverWidth.value == null) {
                         const measuredWidth = elements.floating.getBoundingClientRect().width
@@ -278,7 +293,7 @@ async function updatePopoverPosition() {
                     }
 
                     Object.assign(elements.floating.style, {
-                        maxHeight: `${Math.max(0, Math.min(availableHeight, Number.parseFloat(resolvedScrollHeight.value ?? '') || 320))}px`,
+                        maxHeight: `min(${Math.max(0, availableHeight)}px, ${resolvedScrollHeight.value || '320px'})`,
                         maxWidth: `${maximumWidth}px`,
                         width: `${Math.min(maximumWidth, lockedPopoverWidth.value)}px`
                     })
@@ -286,6 +301,10 @@ async function updatePopoverPosition() {
             })
         ]
     })
+    if (!isCurrent()) return
+    const firstMeasurement = viewportHeight.value === 0
+    if (popover.clientHeight > 0) viewportHeight.value = popover.clientHeight
+    if (firstMeasurement) scrollActiveOption()
     popoverStyle.value = {
         left: `${result.x}px`,
         top: `${result.y}px`,
@@ -294,24 +313,31 @@ async function updatePopoverPosition() {
 }
 
 function removeOpenListeners() {
-    document.removeEventListener('pointerdown', handleDocumentPointerDown)
-    document.removeEventListener('keydown', handleDocumentKeydown)
+    if (typeof document !== 'undefined') {
+        document.removeEventListener('pointerdown', handleDocumentPointerDown)
+        document.removeEventListener('keydown', handleDocumentKeydown)
+    }
     stopAutoUpdate?.()
     stopAutoUpdate = undefined
 }
 
 watch(isOpen, async (open) => {
+    const currentDisclosure = ++disclosure
+    removeOpenListeners()
     if (!open) {
         isPopoverLeaving.value = true
-        removeOpenListeners()
         return
     }
 
     lockedPopoverWidth.value = undefined
+    scrollTop.value = 0
+    viewportHeight.value = 0
     isPopoverLeaving.value = false
     await nextTick()
 
-    if (isOpen.value) {
+    if (!disposed && disclosure === currentDisclosure && isOpen.value && triggerRef.value && popoverRef.value) {
+        popoverRef.value.scrollTop = 0
+        scrollActiveOption()
         stopAutoUpdate = autoUpdate(triggerRef.value!, popoverRef.value!, updatePopoverPosition)
         document.addEventListener('pointerdown', handleDocumentPointerDown)
         document.addEventListener('keydown', handleDocumentKeydown)
@@ -329,16 +355,21 @@ function finishPopoverLeave() {
 }
 
 onBeforeUnmount(() => {
+    disposed = true
+    disclosure += 1
     removeOpenListeners()
 })
 
-watch(activeIndex, (index) => {
-    if (!props.virtual || index < 0 || !popoverRef.value) return
+function scrollActiveOption() {
+    const index = activeIndex.value
+    if (!canVirtualize.value || index < 0 || !popoverRef.value) return
     const top = index * props.optionHeight
     const bottom = top + props.optionHeight
     if (top < popoverRef.value.scrollTop) popoverRef.value.scrollTop = top
     else if (bottom > popoverRef.value.scrollTop + popoverRef.value.clientHeight) popoverRef.value.scrollTop = bottom - popoverRef.value.clientHeight
-})
+    scrollTop.value = popoverRef.value.scrollTop
+}
+watch(activeIndex, scrollActiveOption, { flush: 'post' })
 </script>
 
 <template>
@@ -433,12 +464,13 @@ watch(activeIndex, (index) => {
                             :key="entry.option.value"
                             :id="getOptionId(entry.index)"
                             class="h-select__option"
-                            :style="virtual ? { height: `${optionHeight}px`, overflow: 'hidden' } : undefined"
+                            :style="canVirtualize ? { height: `${optionHeight}px`, overflow: 'hidden' } : undefined"
                             :active="isSelected(entry.option) || entry.index === activeIndex"
                             :aria-selected="isSelected(entry.option)"
                             :aria-disabled="isOptionDisabled(entry.option) || undefined"
                             :disabled="isOptionDisabled(entry.option)"
                             role="option"
+                            :tabindex="-1"
                             size="sm"
                             border-radius="var(--h0n-ui-radius-xl)"
                             @click="selectOption(entry.option)"

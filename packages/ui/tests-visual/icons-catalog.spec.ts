@@ -17,7 +17,7 @@ test('icon catalog renders definitions across theme and size controls', async ({
     await expect(firstIcon).toBeVisible()
 
     await page.getByRole('combobox', { name: 'Preview size' }).click()
-    await page.getByRole('listbox', { name: 'Select options' }).getByRole('button', { name: '46px' }).click()
+    await page.getByRole('listbox', { name: 'Select options' }).getByRole('option', { name: '46px' }).click()
     await expect(firstIcon).toHaveAttribute('width', '46')
     await expect(firstIcon).toHaveAttribute('height', '46')
 

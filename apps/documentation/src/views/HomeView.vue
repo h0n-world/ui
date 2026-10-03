@@ -30,6 +30,8 @@ import IconH0N from '@/components/icons/IconH0N.vue'
 import SystemHeader from '@/components/system/SystemHeader.vue'
 import { siteConfig } from '@/content/site'
 
+import HomeHero from './components/HomeHero.vue'
+
 const demoTabs: H0TabItem<string>[] = [
     { value: 'profile', label: 'Profile' },
     { value: 'appearance', label: 'Appearance' },
@@ -55,7 +57,8 @@ const interfaceTips = ref(false)
         <SystemHeader />
 
         <main>
-            <H0Container as="section" size="full" class="hero-section">
+            <HomeHero />
+            <!-- <H0Container as="section" size="full" class="hero-section">
                 <div class="hero-section__glow" aria-hidden="true" />
                 <H0Stack class="hero-section__content" align="center" gap="lg">
                     <H0Badge tone="primary" dot>H0N UI · {{ siteConfig.version }}</H0Badge>
@@ -76,10 +79,10 @@ const interfaceTips = ref(false)
                     </H0Typography>
 
                     <H0Inline gap="sm" justify="center">
-                        <H0Button :as="RouterLink" to="/docs/quick-start" tone="primary" size="lg">
+                        <H0Button :as="RouterLink" to="/docs/quick-start" tone="primary">
                             Start building
                         </H0Button>
-                        <H0Button :as="RouterLink" to="/components/all" variant="outline" size="lg">
+                        <H0Button :as="RouterLink" to="/components/all" variant="outline">
                             Browse components
                         </H0Button>
                     </H0Inline>
@@ -96,7 +99,7 @@ const interfaceTips = ref(false)
                         </H0Inline>
                     </H0Inline>
                 </H0Stack>
-            </H0Container>
+            </H0Container> -->
 
             <H0Container
                 as="section"
@@ -348,7 +351,7 @@ const interfaceTips = ref(false)
                             >Explore the catalog, copy a live example, and keep your application
                             focused on its own product decisions.</H0Typography
                         >
-                        <H0Button :as="RouterLink" to="/components/all" tone="primary" size="lg">
+                        <H0Button :as="RouterLink" to="/components/all" tone="primary">
                             Explore all components
                         </H0Button>
                     </H0Stack>
@@ -419,8 +422,7 @@ const interfaceTips = ref(false)
     }
 
     &__title {
-        font-size: clamp(3.2rem, 8vw, 6.8rem);
-        letter-spacing: -0.065em;
+        font-size: clamp(3.2rem, 8vw, 5rem);
         line-height: 0.95;
 
         span {
@@ -524,7 +526,7 @@ const interfaceTips = ref(false)
         padding-top: 4.5rem;
 
         &__title {
-            font-size: clamp(2.8rem, 14vw, 4.2rem);
+            font-size: clamp(2.8rem, 11vw, 4.2rem);
         }
     }
 

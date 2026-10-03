@@ -13,6 +13,8 @@ const budgets = [
     { file: 'dist/h0n-ui.css', raw: 225 * kibibyte, gzip: 32 * kibibyte },
     { file: 'test-consumer/dist/root-button/bundle.js', raw: 20 * kibibyte, gzip: 7 * kibibyte },
     { file: 'test-consumer/dist/subpath-button/bundle.js', raw: 20 * kibibyte, gzip: 7 * kibibyte },
+    { file: 'test-consumer/dist/subpath-textshimmer/bundle.js', gzip: 2 * kibibyte },
+    { file: 'test-consumer/dist/subpath-textshimmer/bundle.css', gzip: 4 * kibibyte },
     { file: 'test-consumer/dist/subpath-icons/bundle.js', raw: 4 * kibibyte, gzip: 2 * kibibyte },
     { file: 'test-consumer/dist/icon-source/bundle.js', raw: 12 * kibibyte, gzip: 5 * kibibyte },
     { file: 'test-consumer/dist/subpath-datatable/bundle.js', gzip: 19 * kibibyte },
@@ -21,7 +23,9 @@ const budgets = [
     { file: 'test-consumer/dist/subpath-fileupload/bundle.js', gzip: 14 * kibibyte },
     { file: 'test-consumer/dist/layout-css/bundle.css', gzip: 5 * kibibyte },
     { file: 'test-consumer/dist/integration-app/bundle.js', gzip: 75 * kibibyte },
-    { file: 'test-consumer/dist/integration-app/bundle.css', gzip: 24 * kibibyte },
+    // Full-library CSS now includes Dropdown and TextShimmer; selective entries
+    // retain their individual limits above and the 10 KiB family ceiling below.
+    { file: 'test-consumer/dist/integration-app/bundle.css', gzip: 24.5 * kibibyte },
     { file: 'dist/composables/index.js', gzip: 6 * kibibyte }
 ]
 

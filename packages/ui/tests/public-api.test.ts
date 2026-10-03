@@ -5,6 +5,7 @@ import H0Nui, { h0ComponentManifest } from '../src'
 describe('public plugin registry', () => {
     it('registers every public component under a unique H0 name', () => {
         const registrations: string[] = []
+        const cleanup: Array<() => void> = []
         const app = {
             component(name: string, _component: Component) {
                 registrations.push(name)
@@ -12,6 +13,12 @@ describe('public plugin registry', () => {
             },
             provide() {
                 return this
+            },
+            mixin() {
+                return this
+            },
+            onUnmount(callback: () => void) {
+                cleanup.push(callback)
             }
         } as unknown as App
 
@@ -26,5 +33,6 @@ describe('public plugin registry', () => {
         expect(registrations).toContain('H0RadioGroup')
         expect(registrations).toContain('H0DataTable')
         expect(registrations).toEqual(expect.arrayContaining(['H0SideNav', 'H0SideNavGroup', 'H0SideNavItem']))
+        cleanup.forEach(callback => callback())
     })
 })

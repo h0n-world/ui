@@ -148,7 +148,7 @@ test('record validation reports duplicates and invalid relationships', () => {
             '/components/checkbox', '/components/datatable', '/components/description', '/components/emptystate', '/components/errormessage', '/components/field', '/components/fileupload', '/components/form', '/components/icon', '/components/image', '/components/imageupload', '/components/infinitescroll', '/components/input', '/components/inputotp', '/components/label', '/components/list',
             '/components/grid', '/components/layout', '/components/message', '/components/numberinput', '/components/passwordinput', '/components/radio', '/components/ripple', '/components/scrollarea', '/components/searchfield', '/components/select', '/components/skeleton', '/components/spinner', '/components/switch', '/components/table', '/components/textarea', '/components/toast', '/components/toolbar', '/components/typography',
             '/components/breadcrumbs', '/components/link', '/components/pagination', '/components/segment', '/components/sidenav', '/components/stepper', '/components/tabs',
-            '/components/alertdialog', '/components/drawer', '/components/modal', '/components/sheet', '/components/tooltip',
+            '/components/alertdialog', '/components/drawer', '/components/dropdown', '/components/modal', '/components/sheet', '/components/tooltip', '/components/textshimmer',
         ],
         exampleKeys: componentAgentRecords.flatMap((record) => record.examples.map((example) => example.key)),
     }

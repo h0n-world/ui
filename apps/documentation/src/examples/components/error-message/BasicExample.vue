@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { H0Button, H0ErrorMessage } from '@h0nio/ui'
 import { ref } from 'vue'
 
@@ -16,7 +17,9 @@ const dynamic = ref(false)
             <strong>Neutral block</strong>
             <H0ErrorMessage as="div">The requested action is unavailable.</H0ErrorMessage>
         </div>
-        <H0Button size="sm" @click="dynamic = !dynamic">{{ dynamic ? 'Clear dynamic error' : 'Show dynamic error' }}</H0Button>
+        <DocumentationPreviewActions>
+            <H0Button size="sm" @click="dynamic = !dynamic">{{ dynamic ? 'Clear dynamic error' : 'Show dynamic error' }}</H0Button>
+        </DocumentationPreviewActions>
         <H0ErrorMessage v-if="dynamic" role="alert">We could not complete the request. Try again.</H0ErrorMessage>
     </div>
 </template>

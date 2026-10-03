@@ -12,6 +12,21 @@ H0N UI is the Vue 3 component library and design-system foundation built for H0N
 - keyboard interaction, focus management, reduced-motion, RTL, forced-colors, and SSR-aware behavior;
 - live documentation with executable examples and machine-readable resources for AI coding agents.
 
+`H0Dropdown` reveals arbitrary floating content from a consumer-owned trigger:
+
+```vue
+<H0Dropdown :min-width="220" :max-height="320">
+    <H0Button>Actions</H0Button>
+    <template #content="{ close }">
+        <H0Button @click="close">New file</H0Button>
+    </template>
+</H0Dropdown>
+```
+
+Use exactly one trigger which forwards attributes and events to its focusable
+root. Content supports custom markup, forms, or library components. See the
+Dropdown documentation for state control, sizing and keyboard behavior.
+
 ## Requirements
 
 - Vue `3.5` or newer;
@@ -103,6 +118,18 @@ Do not combine multiple copies of global and selective styles. Use `@h0nio/ui/st
 
 ## Runtime appearance
 
+Choose an accent palette independently of light/dark mode at installation:
+
+```ts
+app.use(H0Nui, { theme: 'system', accent: 'telegram' })
+```
+
+`accent` accepts `default` (existing colors), `telegram` (blue and cool surfaces),
+or `uber` (monochrome). Each preset includes light and dark palettes. The default
+is `default`. With `storageKey` enabled, accent persists under `<storageKey>:accent`
+and valid saved appearance takes precedence over configuration. Storage is off by
+default. The service applies `data-h0n-accent` alongside `data-h0n-theme` to its target.
+
 The plugin provides app-scoped runtime services. Appearance can be changed from a Vue setup context:
 
 ```ts
@@ -111,9 +138,29 @@ import { useH0Theme } from '@h0nio/ui'
 const appearance = useH0Theme()
 
 appearance.setTheme('dark')
+appearance.setAccent('uber')
 appearance.setDensity('compact')
 appearance.setAnimation('low')
 ```
+
+Animation accepts `off | low | medium | high | recommended` (default `low`).
+Recommended combines available resource/graphics hints with a bounded foreground
+frame sample. The system reduced-motion preference always resolves to Off, even
+when High was requested. Static loading and control semantics remain available.
+
+```ts
+import { useH0Animation } from '@h0nio/ui'
+
+const motion = useH0Animation()
+motion.setPreference('recommended')
+// Read quality.value, recommendedQuality.value, recommendationReason.value,
+// isEvaluating.value, enabled.value, reducedMotion.value, continuous.value,
+// and rich.value to coordinate application effects with the library.
+```
+
+The recommendation is a conservative heuristic, not a guarantee that browser GPU
+acceleration is enabled. See [Animations](https://ui.h0n.io/docs/animations) for
+signal limitations, SSR, refresh and lifecycle behavior.
 
 Application CSS can use stable public variables with the `--h0n-ui-*` prefix. Component-local variables and internal class names are not part of the public styling contract.
 

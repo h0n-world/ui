@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { H0Button, H0Carousel } from '@h0nio/ui'
 import { ref } from 'vue'
 
@@ -26,7 +27,9 @@ function togglePlayback() {
                 <div class="slide">{{ item }}</div>
             </template>
         </H0Carousel>
-        <H0Button size="sm" variant="soft" @click="togglePlayback">{{ isPlaying ? 'Pause autoplay' : 'Play autoplay' }}</H0Button>
+        <DocumentationPreviewActions>
+            <H0Button size="sm" variant="soft" @click="togglePlayback">{{ isPlaying ? 'Pause autoplay' : 'Play autoplay' }}</H0Button>
+        </DocumentationPreviewActions>
     </div>
 </template>
 

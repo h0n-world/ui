@@ -500,32 +500,32 @@
     "align-horizonta-spacing": {
       "style": "solid",
       "categories": ["design"],
-      "tags": ["align", "horizonta", "spacing"]
+      "tags": ["align", "horizonta", "spacing", "align-horizontal"]
     },
     "align-horizonta-spacing-duotone": {
       "style": "duotone",
       "categories": ["design"],
-      "tags": ["align", "horizonta", "spacing"]
+      "tags": ["align", "horizonta", "spacing", "align-horizontal"]
     },
     "align-horizonta-spacing-stroke": {
       "style": "stroke",
       "categories": ["design"],
-      "tags": ["align", "horizonta", "spacing"]
+      "tags": ["align", "horizonta", "spacing", "align-horizontal"]
     },
     "align-horizontal-center": {
       "style": "solid",
       "categories": ["design"],
-      "tags": ["align", "horizontal", "center"]
+      "tags": ["align", "horizontal", "center", "align-horizontal"]
     },
     "align-horizontal-center-duotone": {
       "style": "duotone",
       "categories": ["design"],
-      "tags": ["align", "horizontal", "center"]
+      "tags": ["align", "horizontal", "center", "align-horizontal"]
     },
     "align-horizontal-center-stroke": {
       "style": "stroke",
       "categories": ["design"],
-      "tags": ["align", "horizontal", "center"]
+      "tags": ["align", "horizontal", "center", "align-horizontal"]
     },
     "align-left": {
       "style": "solid",
@@ -700,17 +700,17 @@
     "archive-down-minimlistic": {
       "style": "solid",
       "categories": ["productivity"],
-      "tags": ["archive", "down", "minimlistic"]
+      "tags": ["archive", "down", "minimlistic", "minimalistic"]
     },
     "archive-down-minimlistic-duotone": {
       "style": "duotone",
       "categories": ["productivity"],
-      "tags": ["archive", "down", "minimlistic"]
+      "tags": ["archive", "down", "minimlistic", "minimalistic"]
     },
     "archive-down-minimlistic-stroke": {
       "style": "stroke",
       "categories": ["productivity"],
-      "tags": ["archive", "down", "minimlistic"]
+      "tags": ["archive", "down", "minimlistic", "minimalistic"]
     },
     "archive-down-stroke": {
       "style": "stroke",
@@ -755,17 +755,17 @@
     "archive-up-minimlistic": {
       "style": "solid",
       "categories": ["productivity"],
-      "tags": ["archive", "up", "minimlistic"]
+      "tags": ["archive", "up", "minimlistic", "minimalistic"]
     },
     "archive-up-minimlistic-duotone": {
       "style": "duotone",
       "categories": ["productivity"],
-      "tags": ["archive", "up", "minimlistic"]
+      "tags": ["archive", "up", "minimlistic", "minimalistic"]
     },
     "archive-up-minimlistic-stroke": {
       "style": "stroke",
       "categories": ["productivity"],
-      "tags": ["archive", "up", "minimlistic"]
+      "tags": ["archive", "up", "minimlistic", "minimalistic"]
     },
     "archive-up-stroke": {
       "style": "stroke",
@@ -2710,17 +2710,17 @@
     "card-recive": {
       "style": "solid",
       "categories": ["finance"],
-      "tags": ["card", "recive"]
+      "tags": ["card", "recive", "card-receive"]
     },
     "card-recive-duotone": {
       "style": "duotone",
       "categories": ["finance"],
-      "tags": ["card", "recive"]
+      "tags": ["card", "recive", "card-receive"]
     },
     "card-recive-stroke": {
       "style": "stroke",
       "categories": ["finance"],
-      "tags": ["card", "recive"]
+      "tags": ["card", "recive", "card-receive"]
     },
     "card-search": {
       "style": "solid",
@@ -4280,17 +4280,17 @@
     "clound-cross": {
       "style": "solid",
       "categories": ["weather"],
-      "tags": ["clound", "cross"]
+      "tags": ["clound", "cross", "cloud"]
     },
     "clound-cross-duotone": {
       "style": "duotone",
       "categories": ["weather"],
-      "tags": ["clound", "cross"]
+      "tags": ["clound", "cross", "cloud"]
     },
     "clound-cross-stroke": {
       "style": "stroke",
       "categories": ["weather"],
-      "tags": ["clound", "cross"]
+      "tags": ["clound", "cross", "cloud"]
     },
     "code": {
       "style": "solid",
@@ -4385,17 +4385,17 @@
     "colour-tuneing": {
       "style": "solid",
       "categories": ["design"],
-      "tags": ["colour", "tuneing"]
+      "tags": ["colour", "tuneing", "colour-tuning"]
     },
     "colour-tuneing-duotone": {
       "style": "duotone",
       "categories": ["design"],
-      "tags": ["colour", "tuneing"]
+      "tags": ["colour", "tuneing", "colour-tuning"]
     },
     "colour-tuneing-stroke": {
       "style": "stroke",
       "categories": ["design"],
-      "tags": ["colour", "tuneing"]
+      "tags": ["colour", "tuneing", "colour-tuning"]
     },
     "command": {
       "style": "solid",
@@ -4485,32 +4485,32 @@
     "condicioner": {
       "style": "solid",
       "categories": ["home"],
-      "tags": ["condicioner"]
+      "tags": ["condicioner", "conditioner"]
     },
     "condicioner-2": {
       "style": "solid",
       "categories": ["home"],
-      "tags": ["condicioner", "2"]
+      "tags": ["condicioner", "2", "conditioner"]
     },
     "condicioner-2-duotone": {
       "style": "duotone",
       "categories": ["home"],
-      "tags": ["condicioner", "2"]
+      "tags": ["condicioner", "2", "conditioner"]
     },
     "condicioner-2-stroke": {
       "style": "stroke",
       "categories": ["home"],
-      "tags": ["condicioner", "2"]
+      "tags": ["condicioner", "2", "conditioner"]
     },
     "condicioner-duotone": {
       "style": "duotone",
       "categories": ["home"],
-      "tags": ["condicioner"]
+      "tags": ["condicioner", "conditioner"]
     },
     "condicioner-stroke": {
       "style": "stroke",
       "categories": ["home"],
-      "tags": ["condicioner"]
+      "tags": ["condicioner", "conditioner"]
     },
     "confetti": {
       "style": "solid",
@@ -9385,62 +9385,62 @@
     "magnifer": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["magnifer"]
+      "tags": ["magnifer", "magnifier"]
     },
     "magnifer-bug": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["magnifer", "bug"]
+      "tags": ["magnifer", "bug", "magnifier"]
     },
     "magnifer-bug-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["magnifer", "bug"]
+      "tags": ["magnifer", "bug", "magnifier"]
     },
     "magnifer-bug-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["magnifer", "bug"]
+      "tags": ["magnifer", "bug", "magnifier"]
     },
     "magnifer-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["magnifer"]
+      "tags": ["magnifer", "magnifier"]
     },
     "magnifer-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["magnifer"]
+      "tags": ["magnifer", "magnifier"]
     },
     "magnifer-zoom-in": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["magnifer", "zoom", "in"]
+      "tags": ["magnifer", "zoom", "in", "magnifier"]
     },
     "magnifer-zoom-in-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["magnifer", "zoom", "in"]
+      "tags": ["magnifer", "zoom", "in", "magnifier"]
     },
     "magnifer-zoom-in-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["magnifer", "zoom", "in"]
+      "tags": ["magnifer", "zoom", "in", "magnifier"]
     },
     "magnifer-zoom-out": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["magnifer", "zoom", "out"]
+      "tags": ["magnifer", "zoom", "out", "magnifier"]
     },
     "magnifer-zoom-out-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["magnifer", "zoom", "out"]
+      "tags": ["magnifer", "zoom", "out", "magnifier"]
     },
     "magnifer-zoom-out-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["magnifer", "zoom", "out"]
+      "tags": ["magnifer", "zoom", "out", "magnifier"]
     },
     "mailbox": {
       "style": "solid",
@@ -10105,62 +10105,62 @@
     "minimalistic-magnifer": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer"]
+      "tags": ["minimalistic", "magnifer", "magnifier"]
     },
     "minimalistic-magnifer-bug": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "bug"]
+      "tags": ["minimalistic", "magnifer", "bug", "magnifier"]
     },
     "minimalistic-magnifer-bug-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "bug"]
+      "tags": ["minimalistic", "magnifer", "bug", "magnifier"]
     },
     "minimalistic-magnifer-bug-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "bug"]
+      "tags": ["minimalistic", "magnifer", "bug", "magnifier"]
     },
     "minimalistic-magnifer-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer"]
+      "tags": ["minimalistic", "magnifer", "magnifier"]
     },
     "minimalistic-magnifer-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer"]
+      "tags": ["minimalistic", "magnifer", "magnifier"]
     },
     "minimalistic-magnifer-zoom-in": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "zoom", "in"]
+      "tags": ["minimalistic", "magnifer", "zoom", "in", "magnifier"]
     },
     "minimalistic-magnifer-zoom-in-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "zoom", "in"]
+      "tags": ["minimalistic", "magnifer", "zoom", "in", "magnifier"]
     },
     "minimalistic-magnifer-zoom-in-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "zoom", "in"]
+      "tags": ["minimalistic", "magnifer", "zoom", "in", "magnifier"]
     },
     "minimalistic-magnifer-zoom-out": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "zoom", "out"]
+      "tags": ["minimalistic", "magnifer", "zoom", "out", "magnifier"]
     },
     "minimalistic-magnifer-zoom-out-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "zoom", "out"]
+      "tags": ["minimalistic", "magnifer", "zoom", "out", "magnifier"]
     },
     "minimalistic-magnifer-zoom-out-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["minimalistic", "magnifer", "zoom", "out"]
+      "tags": ["minimalistic", "magnifer", "zoom", "out", "magnifier"]
     },
     "minimize": {
       "style": "solid",
@@ -13140,62 +13140,62 @@
     "rounded-magnifer": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer"]
+      "tags": ["rounded", "magnifer", "magnifier"]
     },
     "rounded-magnifer-bug": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "bug"]
+      "tags": ["rounded", "magnifer", "bug", "magnifier"]
     },
     "rounded-magnifer-bug-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "bug"]
+      "tags": ["rounded", "magnifer", "bug", "magnifier"]
     },
     "rounded-magnifer-bug-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "bug"]
+      "tags": ["rounded", "magnifer", "bug", "magnifier"]
     },
     "rounded-magnifer-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer"]
+      "tags": ["rounded", "magnifer", "magnifier"]
     },
     "rounded-magnifer-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer"]
+      "tags": ["rounded", "magnifer", "magnifier"]
     },
     "rounded-magnifer-zoom-in": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "zoom", "in"]
+      "tags": ["rounded", "magnifer", "zoom", "in", "magnifier"]
     },
     "rounded-magnifer-zoom-in-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "zoom", "in"]
+      "tags": ["rounded", "magnifer", "zoom", "in", "magnifier"]
     },
     "rounded-magnifer-zoom-in-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "zoom", "in"]
+      "tags": ["rounded", "magnifer", "zoom", "in", "magnifier"]
     },
     "rounded-magnifer-zoom-out": {
       "style": "solid",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "zoom", "out"]
+      "tags": ["rounded", "magnifer", "zoom", "out", "magnifier"]
     },
     "rounded-magnifer-zoom-out-duotone": {
       "style": "duotone",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "zoom", "out"]
+      "tags": ["rounded", "magnifer", "zoom", "out", "magnifier"]
     },
     "rounded-magnifer-zoom-out-stroke": {
       "style": "stroke",
       "categories": ["interface"],
-      "tags": ["rounded", "magnifer", "zoom", "out"]
+      "tags": ["rounded", "magnifer", "zoom", "out", "magnifier"]
     },
     "route": {
       "style": "solid",
@@ -14170,17 +14170,17 @@
     "siderbar": {
       "style": "solid",
       "categories": ["development"],
-      "tags": ["siderbar"]
+      "tags": ["siderbar", "sidebar"]
     },
     "siderbar-duotone": {
       "style": "duotone",
       "categories": ["development"],
-      "tags": ["siderbar"]
+      "tags": ["siderbar", "sidebar"]
     },
     "siderbar-stroke": {
       "style": "stroke",
       "categories": ["development"],
-      "tags": ["siderbar"]
+      "tags": ["siderbar", "sidebar"]
     },
     "signpost": {
       "style": "solid",
@@ -15055,47 +15055,47 @@
     "spedometer-low": {
       "style": "solid",
       "categories": ["transport"],
-      "tags": ["spedometer", "low"]
+      "tags": ["spedometer", "low", "speedometer"]
     },
     "spedometer-low-duotone": {
       "style": "duotone",
       "categories": ["transport"],
-      "tags": ["spedometer", "low"]
+      "tags": ["spedometer", "low", "speedometer"]
     },
     "spedometer-low-stroke": {
       "style": "stroke",
       "categories": ["transport"],
-      "tags": ["spedometer", "low"]
+      "tags": ["spedometer", "low", "speedometer"]
     },
     "spedometer-max": {
       "style": "solid",
       "categories": ["transport"],
-      "tags": ["spedometer", "max"]
+      "tags": ["spedometer", "max", "speedometer"]
     },
     "spedometer-max-duotone": {
       "style": "duotone",
       "categories": ["transport"],
-      "tags": ["spedometer", "max"]
+      "tags": ["spedometer", "max", "speedometer"]
     },
     "spedometer-max-stroke": {
       "style": "stroke",
       "categories": ["transport"],
-      "tags": ["spedometer", "max"]
+      "tags": ["spedometer", "max", "speedometer"]
     },
     "spedometer-middle": {
       "style": "solid",
       "categories": ["transport"],
-      "tags": ["spedometer", "middle"]
+      "tags": ["spedometer", "middle", "speedometer"]
     },
     "spedometer-middle-duotone": {
       "style": "duotone",
       "categories": ["transport"],
-      "tags": ["spedometer", "middle"]
+      "tags": ["spedometer", "middle", "speedometer"]
     },
     "spedometer-middle-stroke": {
       "style": "stroke",
       "categories": ["transport"],
-      "tags": ["spedometer", "middle"]
+      "tags": ["spedometer", "middle", "speedometer"]
     },
     "square-academic-cap": {
       "style": "solid",

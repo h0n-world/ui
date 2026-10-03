@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { H0Button, H0Input } from '@h0nio/ui'
 import { ref } from 'vue'
 
@@ -13,7 +14,9 @@ function validate() {
 <template>
     <div class="validation-example">
         <H0Input v-model="email" id="account-email" name="email" label="Email address" :error="error" />
-        <H0Button size="sm" @click="validate">Validate email</H0Button>
+        <DocumentationPreviewActions>
+            <H0Button size="sm" @click="validate">Validate email</H0Button>
+        </DocumentationPreviewActions>
     </div>
 </template>
 

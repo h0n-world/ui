@@ -197,6 +197,7 @@ const typographyWeight: H0TypographyWeight = 500
 const sharedSize: H0Public.H0Size = 'md'
 const semanticTone: H0Public.H0SemanticTone = 'danger'
 const pluginConfig: H0Public.H0PluginConfig = {
+    accent: 'telegram' satisfies H0Public.H0AccentName,
     locale: {
         pagination: {
             next: 'Forward'

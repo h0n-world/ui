@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DocumentationPreviewActions from '@/components/documentation/DocumentationPreviewActions.vue'
 import { H0Button, H0RadioGroup, type H0RadioOption, type H0RadioValue } from '@h0nio/ui'
 import { ref } from 'vue'
 
@@ -12,8 +13,18 @@ const options: H0RadioOption[] = [
 
 <template>
     <div class="stack">
-        <H0RadioGroup ref="group" v-model="value" :options="options" label="Delivery method" variant="cards" :columns="2" required />
-        <H0Button @click="group?.validate()">Validate selection</H0Button>
+        <H0RadioGroup
+            ref="group"
+            v-model="value"
+            :options="options"
+            label="Delivery method"
+            variant="cards"
+            :columns="2"
+            required
+        />
+        <DocumentationPreviewActions>
+            <H0Button @click="group?.validate()">Validate selection</H0Button>
+        </DocumentationPreviewActions>
     </div>
 </template>
 

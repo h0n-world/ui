@@ -53,9 +53,9 @@ function handleKeydown(event: KeyboardEvent) {
         v-bind="attrs"
         :type="isNativeButton ? type : undefined"
         :disabled="isNativeButton ? disabled : undefined"
-        :aria-disabled="!isNativeButton && disabled ? 'true' : undefined"
-        :role="isCustomInteractive ? 'button' : undefined"
-        :tabindex="isCustomInteractive && !disabled ? 0 : disabled && !isNativeButton ? -1 : undefined"
+        :aria-disabled="!isNativeButton && disabled ? 'true' : attrs['aria-disabled']"
+        :role="attrs.role ?? (isCustomInteractive ? 'button' : undefined)"
+        :tabindex="disabled && !isNativeButton ? -1 : attrs.tabindex ?? (isCustomInteractive ? 0 : undefined)"
         @click.capture="handleClick"
         @keydown="handleKeydown"
     >

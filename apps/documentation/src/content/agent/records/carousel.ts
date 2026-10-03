@@ -38,7 +38,7 @@ export const carouselAgentRecord = {
     useWhen: ['A compact viewport presents several peer cards, images, or panels.', 'Users need drag, keyboard, pagination, autoplay, or imperative slide control.'],
     avoidWhen: ['All content should remain visible for scanning.', 'The content is primary navigation between application views.', 'Autoplay would distract from a task.'],
     accessibility: ['Provide a specific ariaLabel.', 'Keep pauseOnFocus enabled and provide a persistent Play/Pause control for autoplay.', 'Keep inactive slides hidden and inert unless simultaneous accessibility is intentional.', 'Preserve visible controls or another clear navigation mechanism.'],
-    styling: ['Style slides through the default slot.', 'Treat track transforms and carousel selectors as implementation details.'],
+    styling: ['Style slides through the default slot.', 'Treat track transforms and carousel selectors as implementation details.', 'Effective Off or system reduced motion pauses autoplay; explicit navigation remains available and uses the current animation quality.'],
     responsive: ['Use fullWidth and CSS slideWidth values for fluid and peek layouts.', 'Avoid explicit widths wider than the container.'],
     performance: ['Keep item arrays stable.', 'Keep inactive slide trees lightweight.', 'Avoid short autoplay intervals and excessive slides.'],
     examples: [

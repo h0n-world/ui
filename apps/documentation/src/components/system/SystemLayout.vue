@@ -10,6 +10,7 @@ import AllComponentsCatalog from '@/components/documentation/AllComponentsCatalo
 import ColorTokenCatalog from '@/components/documentation/ColorTokenCatalog.vue'
 import IconCatalogSkeleton from '@/components/documentation/IconCatalogSkeleton.vue'
 import RelatedComponentsCatalog from '@/components/documentation/RelatedComponentsCatalog.vue'
+import DocumentationResourceLinks from '@/components/documentation/DocumentationResourceLinks.vue'
 import SystemHeader from '@/components/system/SystemHeader.vue'
 import SystemSidebar from '@/components/system/SystemSidebar.vue'
 import {
@@ -161,7 +162,8 @@ onBeforeUnmount(() => {
 
                     <h1 class="article-title">{{ page.title }}</h1>
 
-                    <p class="article-description">{{ page.description }}</p>
+                    <p class="article-description" :class="{ 'article-description--with-resources': page.resourceLinks.length }">{{ page.description }}</p>
+                    <DocumentationResourceLinks :links="page.resourceLinks" />
                     <MarkdownContent
                         :alerts="page.alerts"
                         :examples="page.examples"
@@ -297,6 +299,10 @@ onBeforeUnmount(() => {
     line-height: 1.7;
     margin: 0 190px 40px 0;
     max-width: 620px;
+
+    &--with-resources {
+        margin-bottom: var(--h0n-ui-spacing-lg);
+    }
 }
 
 .article-title {
@@ -414,6 +420,10 @@ onBeforeUnmount(() => {
 
     .article-description {
         margin: 18px 0 32px;
+
+        &--with-resources {
+            margin-bottom: var(--h0n-ui-spacing-lg);
+        }
     }
 
     .article-title {

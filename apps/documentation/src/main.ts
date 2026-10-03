@@ -9,9 +9,8 @@ import router from './router'
 
 createApp(App)
     .use(H0Nui, {
-        animation: 'high',
+        animation: 'recommended',
         density: 'compact',
-        radiusSize: 'lg',
         storageKey: 'documentation-theme',
         theme: 'system',
         typographySize: 'md',

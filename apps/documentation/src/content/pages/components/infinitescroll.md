@@ -42,7 +42,9 @@ Automatic loading requires browser support for `IntersectionObserver`. When the 
 
 `disabled` prevents requests and reduces the opacity of the complete component. `hasMore=false` also prevents requests and displays completion content; it should represent a terminal data-source state rather than observer teardown.
 
-Treat `observeOnMount` as a static mount-time setting. Setting it to false skips initial observer creation, but the component exposes no imperative start method and does not watch this prop directly. Changing only `observeOnMount` after mounting does not reliably start or stop observation.
+`observeOnMount` controls automatic observation. Setting it to false disconnects
+the observer; setting it back to true resumes observation. Queued callbacks from
+replaced observers or an unmounted component do not request more data.
 
 ## Loading and completion content
 

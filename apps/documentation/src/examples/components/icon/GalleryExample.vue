@@ -4,7 +4,7 @@ import bellIcon from '@h0nio/icons/bell-stroke'
 import checkIcon from '@h0nio/icons/check-circle-stroke'
 import heartIcon from '@h0nio/icons/heart-duotone'
 import paletteIcon from '@h0nio/icons/palette-duotone'
-import searchIcon from '@h0nio/icons/search'
+// import searchIcon from '@h0nio/icons/search'
 import settingsIcon from '@h0nio/icons/settings-stroke'
 import trashIcon from '@h0nio/icons/trash-bin-trash-stroke'
 import userIcon from '@h0nio/icons/user-stroke'
@@ -16,43 +16,35 @@ const icons: H0IconSource[] = [
     checkIcon,
     heartIcon,
     paletteIcon,
-    searchIcon,
+    userIcon,
     settingsIcon,
     trashIcon,
-    userIcon
 ]
 </script>
 
 <template>
-    <div class="icon-grid">
-        <div v-for="icon in icons" :key="icon.name">
-            <H0Icon :icon="icon" :size="24" />
-            <code>{{ icon.name }}</code>
-        </div>
-    </div>
+    <H0Grid variant="three" gap="md" columns="repeat(auto-fit, minmax(10rem, 1fr))">
+        <H0Card v-for="icon in icons" :key="icon.name" padding>
+            <div class="content-icon">
+                <H0Icon :icon="icon" :size="24" />
+                <code>{{ icon.name }}</code>
+            </div>
+        </H0Card>
+    </H0Grid>
 </template>
 
 <style scoped>
-.icon-grid {
-    display: grid;
-    gap: var(--h0n-ui-spacing-sm);
-    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-    width: 100%;
-}
-
-.icon-grid > div {
+.content-icon {
+    display: flex;
     align-items: center;
-    background: var(--h0n-ui-color-surface);
-    border: 1px solid var(--h0n-ui-color-border);
-    border-radius: var(--h0n-ui-radius-md);
-    display: grid;
-    gap: var(--h0n-ui-spacing-sm);
-    justify-items: center;
-    padding: var(--h0n-ui-spacing-md);
-}
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    gap: 10px;
 
-.icon-grid code {
-    color: var(--h0n-ui-color-muted);
-    font-size: var(--h0n-ui-typography-body-xs-size);
+    code {
+        color: var(--h0n-ui-color-muted);
+        font-size: var(--h0n-ui-typography-body-xs-size);
+    }
 }
 </style>

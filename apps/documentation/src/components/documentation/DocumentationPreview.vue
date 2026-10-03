@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { H0Button, H0Segment, type H0SegmentItem, type H0SegmentValue } from '@h0nio/ui'
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { H0Button, H0Dropdown, H0Segment, type H0SegmentItem, type H0SegmentValue } from '@h0nio/ui'
+import { computed, defineComponent, onBeforeUnmount, onMounted, provide, ref, shallowRef, useSlots, watch, type Slot } from 'vue'
 
 import DocumentationCodeBlock from './DocumentationCodeBlock.vue'
+import { previewActionsKey } from './previewActions'
 
 defineOptions({
     name: 'DocumentationPreview',
@@ -32,6 +33,38 @@ const props = withDefaults(
 const activeViewport = ref<PreviewViewport>(props.defaultViewport)
 const copied = ref(false)
 const expanded = ref(false)
+const actionsOpen = ref(false)
+const screenIsMobile = ref(false)
+const isMobile = computed(() => screenIsMobile.value || activeViewport.value === 'mobile')
+const actions = shallowRef<Slot>()
+const slots = useSlots()
+provide(previewActionsKey, actions)
+const hasActions = computed(() => Boolean(slots.actions || actions.value))
+const PreviewActions = defineComponent({
+    name: 'PreviewActions',
+    setup: () => () => (slots.actions || actions.value)?.(),
+})
+let mobileQuery: MediaQueryList | undefined
+
+function syncMobile() {
+    screenIsMobile.value = mobileQuery?.matches ?? false
+}
+
+function closeActionsOnActivation(event: MouseEvent) {
+    if (event.target instanceof Element && event.target.closest('button, a[href], [role="button"]')) {
+        actionsOpen.value = false
+    }
+}
+
+watch(isMobile, (mobile) => {
+    if (!mobile) actionsOpen.value = false
+})
+
+onMounted(() => {
+    mobileQuery = window.matchMedia('(max-width: 720px)')
+    syncMobile()
+    mobileQuery.addEventListener('change', syncMobile)
+})
 let copiedTimeout: ReturnType<typeof setTimeout> | undefined
 
 const viewportItems: H0SegmentItem[] = viewportOrder.map((viewport) => ({
@@ -73,6 +106,7 @@ async function copyCode() {
 
 onBeforeUnmount(() => {
     if (copiedTimeout) window.clearTimeout(copiedTimeout)
+    mobileQuery?.removeEventListener('change', syncMobile)
 })
 </script>
 
@@ -87,17 +121,51 @@ onBeforeUnmount(() => {
                 aria-label="Preview size"
                 @update:model-value="selectViewport"
             />
+            <H0Dropdown
+                v-if="hasActions && isMobile && !screenIsMobile"
+                v-model="actionsOpen"
+                aria-label="Preview actions"
+                :min-width="180"
+            >
+                <H0Button size="sm" variant="soft">Actions</H0Button>
+                <template #content>
+                    <div class="documentation-preview__actions documentation-preview__actions--dropdown" @click="closeActionsOnActivation">
+                        <PreviewActions />
+                    </div>
+                </template>
+            </H0Dropdown>
             <span>{{ selectedViewportConfig.width }}</span>
         </div>
 
-        <div class="documentation-preview__mobile-width" aria-label="Preview width">100%</div>
+        <div class="documentation-preview__mobile-width">
+            <H0Dropdown
+                v-if="hasActions && screenIsMobile"
+                v-model="actionsOpen"
+                aria-label="Preview actions"
+                :min-width="180"
+            >
+                <H0Button size="sm" variant="soft">Actions</H0Button>
+                <template #content>
+                    <div class="documentation-preview__actions documentation-preview__actions--dropdown" @click="closeActionsOnActivation">
+                        <PreviewActions />
+                    </div>
+                </template>
+            </H0Dropdown>
+            <span aria-label="Preview width">100%</span>
+        </div>
 
         <div class="documentation-preview__stage" :data-preview-viewport="activeViewport">
             <div
                 class="documentation-preview__frame"
+                :class="{ 'documentation-preview__frame--with-actions': hasActions }"
                 :style="{ '--documentation-preview-width': selectedViewportConfig.width }"
             >
-                <slot />
+                <aside v-if="hasActions && !isMobile" class="documentation-preview__actions" aria-label="Preview actions">
+                    <PreviewActions />
+                </aside>
+                <div class="documentation-preview__content">
+                    <slot />
+                </div>
             </div>
         </div>
 
@@ -135,11 +203,13 @@ onBeforeUnmount(() => {
         background: var(--h0n-ui-color-surface);
         border-bottom: 1px solid var(--h0n-ui-color-border);
         display: flex;
+        gap: var(--h0n-ui-spacing-sm);
         justify-content: space-between;
         min-height: 52px;
         padding: var(--h0n-ui-spacing-sm) var(--h0n-ui-spacing-md);
 
         > span {
+            margin-left: auto;
             color: var(--h0n-ui-color-muted);
             font:
                 0.7rem/1.4 'SFMono-Regular',
@@ -176,6 +246,46 @@ onBeforeUnmount(() => {
         padding: var(--h0n-ui-spacing-xl);
         transition: width var(--h0n-ui-duration-normal);
         width: var(--documentation-preview-width);
+
+        &--with-actions {
+            align-items: stretch;
+            padding: 0;
+        }
+    }
+
+    &__actions {
+        border-right: 1px solid var(--h0n-ui-color-border);
+        display: flex;
+        flex: 0 0 20%;
+        flex-direction: column;
+        gap: var(--h0n-ui-spacing-sm);
+        min-width: 0;
+        padding: var(--h0n-ui-spacing-md);
+        overflow-wrap: anywhere;
+
+        :deep([data-h0n-component="button"]) {
+            line-height: 1.4;
+            padding-block: var(--h0n-ui-spacing-xs);
+            white-space: normal;
+        }
+
+        &--dropdown {
+            border: 0;
+            padding: 0;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+        container-name: documentation-preview;
+        container-type: inline-size;
+    }
+
+    &__frame--with-actions &__content {
+        padding: var(--h0n-ui-spacing-xl);
     }
 
     &__code {
@@ -238,6 +348,10 @@ onBeforeUnmount(() => {
             justify-content: flex-end;
             min-height: 32px;
             padding: 0 var(--h0n-ui-spacing-md);
+
+            > span:last-child {
+                margin-left: auto;
+            }
         }
 
         &__stage {
@@ -248,6 +362,14 @@ onBeforeUnmount(() => {
             flex-basis: 100%;
             padding: var(--h0n-ui-spacing-md);
             width: 100%;
+
+            &--with-actions {
+                padding: 0;
+            }
+        }
+
+        &__frame--with-actions &__content {
+            padding: var(--h0n-ui-spacing-md);
         }
     }
 }

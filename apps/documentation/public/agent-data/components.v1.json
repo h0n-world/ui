@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "library": {
     "name": "@h0nio/ui",
-    "version": "1.2.0"
+    "version": "1.3.0"
   },
   "components": [
     {
@@ -295,7 +295,7 @@
       "accessibility": [
         "Use alerts deliberately because role=alert is assertive, including during loading.",
         "Pair tone with explicit text.",
-        "Loading rotation runs only in high animation mode and stops for the system reduced-motion preference.",
+        "Loading rotation runs in effective Medium or High; Off, Low, and the system reduced-motion preference retain a static status.",
         "Give repeated close controls contextual localized labels.",
         "Restore focus after removing a focused close control.",
         "Keep action-slot content non-interactive and handle activation through the action event."
@@ -1973,7 +1973,8 @@
       ],
       "styling": [
         "Style slides through the default slot.",
-        "Treat track transforms and carousel selectors as implementation details."
+        "Treat track transforms and carousel selectors as implementation details.",
+        "Effective Off or system reduced motion pauses autoplay; explicit navigation remains available and uses the current animation quality."
       ],
       "responsive": [
         "Use fullWidth and CSS slideWidth values for fluid and peek layouts.",
@@ -3712,13 +3713,13 @@
             "name": "rowHeight",
             "type": "number",
             "default": "48",
-            "description": "Positive fixed virtual row height and infinite trigger unit in pixels."
+            "description": "Finite positive fixed virtual row height and infinite trigger unit in pixels. Invalid heights disable virtualization."
           },
           {
             "name": "overscan",
             "type": "number",
             "default": "5",
-            "description": "Virtual rows rendered before and after the visible window; negative values act as zero."
+            "description": "Virtual rows rendered before and after the visible window, rounded down; negative or non-finite values act as zero."
           },
           {
             "name": "scrollHeight",
@@ -4515,6 +4516,236 @@
     },
     {
       "schemaVersion": 1,
+      "component": "H0Dropdown",
+      "status": "migrated",
+      "summary": "Floating disclosure with a consumer-owned trigger and arbitrary interactive content.",
+      "imports": {
+        "components": [
+          "H0Dropdown"
+        ],
+        "types": [
+          "H0DropdownProps",
+          "H0DropdownExpose",
+          "H0FloatingPlacement"
+        ],
+        "styles": [
+          "@h0nio/ui/style.css"
+        ]
+      },
+      "api": {
+        "props": [
+          {
+            "name": "modelValue",
+            "type": "boolean",
+            "default": "undefined",
+            "description": "Controlled open state; update:modelValue must be applied by the owner."
+          },
+          {
+            "name": "defaultValue",
+            "type": "boolean",
+            "default": "false",
+            "description": "Initial uncontrolled open state."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Prevents opening and hides the surface. Does not disable unrelated trigger actions."
+          },
+          {
+            "name": "placement",
+            "type": "H0FloatingPlacement",
+            "default": "'bottom-start'",
+            "description": "Preferred position; flips and shifts at viewport boundaries."
+          },
+          {
+            "name": "offset",
+            "type": "number",
+            "default": "6",
+            "description": "Distance from the trigger in pixels."
+          },
+          {
+            "name": "minWidth",
+            "type": "H0CssSize",
+            "default": "160",
+            "description": "Minimum container width; number is pixels, string is a CSS length. Clamped to maxWidth and viewport."
+          },
+          {
+            "name": "maxWidth",
+            "type": "H0CssSize",
+            "default": "360",
+            "description": "Maximum container width, also limited by viewport space."
+          },
+          {
+            "name": "minHeight",
+            "type": "H0CssSize",
+            "default": "0",
+            "description": "Minimum container height, capped by maxHeight and available space."
+          },
+          {
+            "name": "maxHeight",
+            "type": "H0CssSize",
+            "default": "320",
+            "description": "Maximum container height; overflow scrolls within the available space."
+          },
+          {
+            "name": "teleportTo",
+            "type": "string | HTMLElement",
+            "default": "'body'",
+            "description": "Destination for the floating surface; must exist when mounted."
+          },
+          {
+            "name": "teleportDisabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders content locally, subject to ancestor overflow and stacking contexts."
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "default": "Generated with useId()",
+            "description": "Stable surface ID referenced by aria-controls."
+          },
+          {
+            "name": "ariaLabel",
+            "type": "string",
+            "default": "''",
+            "description": "Accessible surface name; otherwise uses the trigger label."
+          },
+          {
+            "name": "contentAttrs",
+            "type": "Record<string, unknown>",
+            "default": "undefined",
+            "description": "Native/ARIA attributes, classes and styles routed to the content container. Keep role dialog unless implementing a complete custom keyboard model."
+          }
+        ],
+        "events": [
+          {
+            "name": "update:modelValue",
+            "type": "boolean",
+            "description": "Requests a change in open state."
+          },
+          {
+            "name": "open",
+            "type": "—",
+            "description": "The rendered disclosure opened."
+          },
+          {
+            "name": "close",
+            "type": "—",
+            "description": "The rendered disclosure closed."
+          }
+        ],
+        "slots": [
+          {
+            "name": "default",
+            "type": "{ open: boolean; close: () => void; toggle: () => void }",
+            "description": "Exactly one native element or component which forwards attributes and events to one focusable root. Interaction and ARIA are applied automatically."
+          },
+          {
+            "name": "content",
+            "type": "{ open: boolean; close: () => void; toggle: () => void }",
+            "description": "Arbitrary content. Call close after actions when desired; content clicks do not close automatically."
+          }
+        ],
+        "exposed": [
+          {
+            "name": "open",
+            "type": "() => void",
+            "description": "Requests opening unless disabled."
+          },
+          {
+            "name": "close",
+            "type": "() => void",
+            "description": "Requests closing and restores focus when it was inside."
+          },
+          {
+            "name": "toggle",
+            "type": "() => void",
+            "description": "Requests the opposite open state."
+          }
+        ],
+        "types": [
+          {
+            "name": "H0DropdownProps",
+            "fields": [
+              {
+                "name": "H0DropdownProps",
+                "type": "object",
+                "description": "Complete public props contract, including open state, positioning and container constraints."
+              }
+            ]
+          },
+          {
+            "name": "H0DropdownExpose",
+            "fields": [
+              {
+                "name": "open / close / toggle",
+                "type": "() => void",
+                "description": "Imperative requests; controlled state remains owned by the parent."
+              }
+            ]
+          }
+        ]
+      },
+      "useWhen": [
+        "A button, image or other control reveals custom actions or a compact form.",
+        "Content needs a floating container without a built-in trigger or item layout."
+      ],
+      "avoidWhen": [
+        "Selecting a value from options requires H0Select.",
+        "A modal task requires focus containment and background scroll locking."
+      ],
+      "accessibility": [
+        "Give every trigger an accessible name; native non-interactive elements receive role button and tabindex.",
+        "Custom trigger components must forward attributes and events to their actual control.",
+        "Initial focus enters the first enabled control or the panel. Escape closes and restores focus.",
+        "Tab traverses content and exits at its boundary; clicking or focusing elsewhere dismisses without stealing focus.",
+        "Custom semantic menus must implement their own menuitem roles and arrow-key model."
+      ],
+      "styling": [
+        "Use contentAttrs for container classes/styles and layout your own slot content.",
+        "Colors, radius, spacing, shadows and motion use shared tokens; internal selectors are private."
+      ],
+      "responsive": [
+        "Width and height constraints yield to available viewport space.",
+        "Logical start/end placement follows trigger direction; resize and scrolling update position."
+      ],
+      "performance": [
+        "Closed content is unmounted; position observers and dismissal listeners are cleaned up.",
+        "Use lightweight content for frequently repeated triggers."
+      ],
+      "examples": [
+        {
+          "key": "components/dropdown/BasicExample",
+          "purpose": "Custom actions and explicit close after selection."
+        },
+        {
+          "key": "components/dropdown/CustomExample",
+          "purpose": "Image trigger, arbitrary form content, controlled state and size limits."
+        },
+        {
+          "key": "components/dropdown/OverlayExample",
+          "purpose": "Nested modal/Select layering, constrained scrolling and disabled trigger."
+        }
+      ],
+      "relatedComponents": [
+        "H0Button",
+        "H0Select",
+        "H0Modal",
+        "H0Tooltip",
+        "H0Input"
+      ],
+      "manifest": {
+        "family": "Dropdown",
+        "familyRole": "root",
+        "category": "overlays",
+        "docsPath": "/components/dropdown",
+        "styleEntry": "components/Dropdown/style.css"
+      }
+    },
+    {
+      "schemaVersion": 1,
       "component": "H0EmptyState",
       "status": "migrated",
       "summary": "Centered empty-content explanation with visual, description, actions, and inline, surface, or page layout.",
@@ -5025,7 +5256,7 @@
             "name": "concurrency",
             "type": "number",
             "default": "3",
-            "description": "Maximum simultaneous uploads."
+            "description": "Maximum simultaneous uploads, rounded down and clamped to one. Non-finite input uses one; lowering the limit does not abort existing transfers."
           },
           {
             "name": "reorderable",
@@ -5180,12 +5411,12 @@
           {
             "name": "retry",
             "type": "(id: string) => void",
-            "description": "Retries a failed upload."
+            "description": "Retries an item; ignores an already running upload."
           },
           {
             "name": "cancel",
             "type": "(id: string) => void",
-            "description": "Cancels an upload."
+            "description": "Aborts an upload. Cancellation settles with the adapter; late progress and successful results after abort are ignored."
           },
           {
             "name": "remove",
@@ -6667,7 +6898,7 @@
             "name": "observeOnMount",
             "type": "boolean",
             "default": "true",
-            "description": "Static mount-time flag for initial observer creation; no imperative start method is exposed."
+            "description": "Enable automatic observation. Runtime changes disconnect or resume the observer; no imperative start method is exposed."
           }
         ],
         "events": [
@@ -10561,19 +10792,19 @@
             "name": "optionHeight",
             "type": "number",
             "default": "44",
-            "description": "Virtual row height."
+            "description": "Finite positive virtual row height. Invalid values use ordinary rendering."
           },
           {
             "name": "overscan",
             "type": "number",
             "default": "5",
-            "description": "Extra virtual rows."
+            "description": "Extra virtual rows, rounded down. Negative and non-finite values use zero."
           },
           {
             "name": "scrollHeight",
             "type": "number | string",
             "default": "320",
-            "description": "Listbox maximum height."
+            "description": "Listbox maximum height in pixels or a CSS length, including relative units."
           },
           {
             "name": "teleportTo",
@@ -11372,7 +11603,7 @@
           {
             "name": "radius",
             "type": "string",
-            "default": "'var(--h0n-ui-radius-md)'",
+            "default": "'var(--h0n-ui-radius-xl)'",
             "description": "CSS corner radius."
           },
           {
@@ -11598,7 +11829,7 @@
         "Use a task-specific label.",
         "Avoid several independently announced spinners for one loading region.",
         "Prevent duplicate actions while work is active.",
-        "Rotation stops in low animation mode and for the system reduced-motion preference while the static status remains visible."
+        "Rotation runs in effective Medium or High; Off, Low, and the system reduced-motion preference retain a static status."
       ],
       "styling": [
         "Spinner inherits currentColor.",
@@ -13216,6 +13447,135 @@
     },
     {
       "schemaVersion": 1,
+      "component": "H0TextShimmer",
+      "status": "migrated",
+      "summary": "Readable status text with a subtle moving highlight in the High animation profile.",
+      "imports": {
+        "components": [
+          "H0TextShimmer"
+        ],
+        "types": [
+          "H0TextShimmerProps",
+          "H0TextShimmerElement"
+        ],
+        "styles": [
+          "@h0nio/ui/style.css"
+        ]
+      },
+      "api": {
+        "props": [
+          {
+            "name": "as",
+            "type": "H0TextShimmerElement",
+            "default": "'span'",
+            "description": "Root text element: span, p, or div."
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "default": "true",
+            "description": "Allows shimmer when the library animation policy permits it. False renders static text."
+          },
+          {
+            "name": "duration",
+            "type": "number",
+            "default": "2000",
+            "description": "Sweep duration in milliseconds. Non-positive or non-finite values fall back to 2000."
+          }
+        ],
+        "events": [],
+        "slots": [
+          {
+            "name": "default",
+            "type": "—",
+            "description": "Text content, optionally with simple inline markup inheriting the text color. Do not place controls or independently colored elements inside."
+          }
+        ],
+        "exposed": [],
+        "types": [
+          {
+            "name": "H0TextShimmerElement",
+            "fields": [
+              {
+                "name": "H0TextShimmerElement",
+                "type": "'span' | 'p' | 'div'",
+                "description": "Supported root elements."
+              }
+            ]
+          },
+          {
+            "name": "H0TextShimmerProps",
+            "fields": [
+              {
+                "name": "as",
+                "type": "H0TextShimmerElement",
+                "description": "Root element."
+              },
+              {
+                "name": "active",
+                "type": "boolean",
+                "description": "Effect activation."
+              },
+              {
+                "name": "duration",
+                "type": "number",
+                "description": "Positive sweep duration in milliseconds."
+              }
+            ]
+          }
+        ]
+      },
+      "useWhen": [
+        "A short label describes ongoing loading, thinking, processing, or streaming.",
+        "Text should remain readable when motion is disabled."
+      ],
+      "avoidWhen": [
+        "Progress needs a numerical value or completion estimate.",
+        "Content contains interactive controls.",
+        "Essential information would be communicated by animation alone."
+      ],
+      "accessibility": [
+        "Real slot text remains present once in the accessibility tree.",
+        "No live region is created automatically. Add role status or aria-live when actual text updates need announcements.",
+        "Reduced motion, forced colors, and unsupported text clipping retain readable static text."
+      ],
+      "styling": [
+        "Typography inherits from the surrounding context; native attributes/classes/styles reach the root.",
+        "Existing secondary/text tokens define the base and moving highlight. Private effect selectors and variables are not public API."
+      ],
+      "responsive": [
+        "Text wraps within the available width; shimmer does not change its dimensions.",
+        "Direction is inherited; use dir rtl for RTL text."
+      ],
+      "performance": [
+        "CSS-only animation; no JavaScript timers, observers or duplicate text.",
+        "Decorative shimmer runs only in effective High, like Skeleton shimmer. Off, Low and Medium are static."
+      ],
+      "examples": [
+        {
+          "key": "components/text-shimmer/BasicExample",
+          "purpose": "Status labels with live animation-profile controls."
+        },
+        {
+          "key": "components/text-shimmer/CustomExample",
+          "purpose": "Duration, active state, inherited typography and multiline RTL text."
+        }
+      ],
+      "relatedComponents": [
+        "H0Spinner",
+        "H0Skeleton",
+        "H0Typography"
+      ],
+      "manifest": {
+        "family": "TextShimmer",
+        "familyRole": "root",
+        "category": "feedback",
+        "docsPath": "/components/textshimmer",
+        "styleEntry": "components/TextShimmer/style.css"
+      }
+    },
+    {
+      "schemaVersion": 1,
       "component": "H0Toast",
       "status": "migrated",
       "summary": "Visual transient notification with semantic tone, icon, content slots, localized close control, and polite status announcement.",
@@ -13591,7 +13951,7 @@
             "name": "maxVisible",
             "type": "number",
             "default": "4",
-            "description": "Maximum recent service items rendered in the stack."
+            "description": "Maximum recent service items rendered in the stack. Finite values are floored and clamped to zero; non-finite values use 4. Zero hides the stack without dismissing service items."
           },
           {
             "name": "service",

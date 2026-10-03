@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { H0Avatar } from '@h0nio/ui'
+import { H0Avatar } from '@h0nio/ui';
 </script>
 
 <template>
@@ -12,5 +12,11 @@ import { H0Avatar } from '@h0nio/ui'
 </template>
 
 <style scoped>
-.avatar-row { align-items: center; display: flex; flex-wrap: wrap; gap: var(--h0n-ui-spacing-md); justify-content: center; }
+.avatar-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--h0n-ui-spacing-md);
+    justify-content: center;
+}
 </style>

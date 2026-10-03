@@ -23,7 +23,7 @@ const tierBEntries = [
     ['Toolbar', 'toolbar', 'actions'], ['ToolbarGroup', 'toolbargroup', 'actions'], ['ToolbarItem', 'toolbaritem', 'actions'], ['ToolbarSeparator', 'toolbarseparator', 'actions'],
 ] as const
 
-const entries = [...baseEntries, ...tierBEntries] as const
+const entries = [...baseEntries, ...tierBEntries, ['Dropdown', 'dropdown', 'overlays'], ['TextShimmer', 'textshimmer', 'feedback']] as const
 
 const familyOverrides: Record<string, string> = {
     AlertDialog: 'Alert', CheckboxGroup: 'Checkbox',

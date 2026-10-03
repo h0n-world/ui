@@ -33,7 +33,7 @@ withDefaults(
     width: var(--h-spinner-size);
 }
 
-:global([data-h0n-animation='low']) .h-spinner {
+[data-h0n-animation='low'] .h-spinner {
     animation: none;
 }
 
